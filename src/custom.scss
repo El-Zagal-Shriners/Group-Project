@@ -1,0 +1,16 @@
+// // Required
+// @import "../node_modules/bootstrap/scss/functions";
+// // Required
+// @import "../node_modules/bootstrap/scss/variables";
+// @import "../node_modules/bootstrap/scss/bootstrap";
+
+// Custom variables
+$secondary: #d2d2d2; // Secondary
+$dark: #09435b; // Dark
+$primary: #820a1e; // Primary
+$danger: #ee4b4c; // Danger
+$warning: #f9d76f; // Warning
+$success: #61c250; // Success
+$info: #29b1bd; // Info
+
+@import "../node_modules/bootstrap/scss/bootstrap";

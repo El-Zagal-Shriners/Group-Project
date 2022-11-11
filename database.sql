@@ -23,7 +23,7 @@ CREATE TABLE "vendors" (
 	"id" serial NOT NULL,
 	"name" varchar(1000) NOT NULL,
 	"address" varchar(1000),
-	"city" varchar(80) NOT NULL,
+	"city" varchar(100) NOT NULL,
 	"state_code" varchar(2) NOT NULL,
 	"zip" int(5),
 	CONSTRAINT "vendors_pk" PRIMARY KEY ("id")
@@ -73,13 +73,13 @@ CREATE TABLE "discounts_tracked" (
 
 
 
-CREATE TABLE "events" (
+CREATE TABLE "location" (
 	"id" serial NOT NULL,
-	"name" varchar(255) NOT NULL,
-	"description" varchar(1000) NOT NULL,
-	"location" varchar(1000) NOT NULL,
-	"date" DATE NOT NULL,
-	CONSTRAINT "events_pk" PRIMARY KEY ("id")
+	"city" varchar(100) NOT NULL,
+	"state_code" varchar(2) NOT NULL,
+	"lng" DECIMAL NOT NULL,
+	"lat" DECIMAL NOT NULL,
+	CONSTRAINT "location_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
