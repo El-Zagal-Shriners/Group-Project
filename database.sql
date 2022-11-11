@@ -6,9 +6,12 @@ CREATE TABLE "user" (
 	"last_name" varchar(80) NOT NULL,
 	"email" varchar(500) NOT NULL,
 	"primary_member_id" bigint NOT NULL,
-	"access_allowed" BOOLEAN NOT NULL DEFAULT 'false',
-	"dues_paid" BOOLEAN NOT NULL DEFAULT 'false',
+	"is_authorized" BOOLEAN NOT NULL DEFAULT 'false',
+	"is_verified" BOOLEAN NOT NULL DEFAULT 'false',
+	"review_pending" BOOLEAN NOT NULL DEFAULT 'false',
+	"dues_paid" DATE NOT NULL DEFAULT 'false',
 	"membership_number" int,
+	"admin_level" int NOT NULL DEFAULT '0',
 	CONSTRAINT "user_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -38,6 +41,8 @@ CREATE TABLE "discounts" (
 	"expiration_date" DATE,
 	"discount_code" varchar(255),
 	"category_id" int NOT NULL,
+	"is_shown" BOOLEAN NOT NULL DEFAULT 'true',
+	"is_regional" BOOLEAN NOT NULL DEFAULT 'false',
 	CONSTRAINT "discounts_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -48,6 +53,7 @@ CREATE TABLE "discounts" (
 CREATE TABLE "categories" (
 	"id" serial NOT NULL,
 	"name" serial(255) NOT NULL,
+	"icon_class" varchar(255) NOT NULL,
 	CONSTRAINT "categories_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
