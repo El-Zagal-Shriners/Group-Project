@@ -10,7 +10,7 @@ function UpdatedNavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand className="w-75" href="#home">
           <img
             className="shriner_logo"
             src="https://www.elzagal.org/wp-content/themes/ElZagal/images/logo.png"
