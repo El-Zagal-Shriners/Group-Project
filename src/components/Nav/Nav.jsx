@@ -26,7 +26,7 @@ function UpdatedNavBar() {
             <Nav.Link className="fs-4 text-primary" href="#discounts">
               Discounts
             </Nav.Link>
-            <Nav.Link className="fs-4 text-primary" href="#profile">
+            <Nav.Link className="fs-4 text-primary" href="#user">
               Profile
             </Nav.Link>
             {user.admin_level > 0 && (
