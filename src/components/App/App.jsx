@@ -8,8 +8,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import UpdatedNavBar from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 
@@ -70,11 +68,8 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
+          <Route exact path="/login">
+            {user.id ? (
               // If the user is already logged in,
               // redirect to the /user page
               <Redirect to="/user" />
@@ -84,11 +79,8 @@ function App() {
             )}
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
+          <Route exact path="/registration">
+            {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
@@ -98,18 +90,15 @@ function App() {
             )}
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
+          <Route exact path="/home">
+            {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
-              :
+              <Redirect to="/discounts" />
+            ) : (
               // Otherwise, show the Landing page
               <LandingPage />
-            }
+            )}
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
