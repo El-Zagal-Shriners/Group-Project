@@ -3,9 +3,7 @@ import axios from "axios";
 
 function* getCategories() {
   try {
-    console.log("In categories saga");
     const categories = yield axios.get(`api/categories`);
-    console.log("Categories back", categories.data);
     yield put({
       type: "SET_CATEGORIES",
       payload: categories.data,
