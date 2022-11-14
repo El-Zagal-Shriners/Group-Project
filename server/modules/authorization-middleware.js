@@ -4,6 +4,7 @@ const rejectUnauthorizedUser = async (req, res, next) => {
   // Declare initial setup values
   let isUserAuthorized = false;
   let currentUserInfo = {};
+  // Remove password from query
   const userQueryText = `SELECT
     id,
     username,
@@ -35,6 +36,7 @@ const rejectUnauthorizedUser = async (req, res, next) => {
     // If user is a Shriner then set their authorization to their current database authorization
     isUserAuthorized = currentUserInfo.is_authorized;
   } else if (
+    // Check if user is a dependent and currently authorized
     !currentUserInfo.membership_number &&
     currentUserInfo.is_authorized
   ) {
@@ -54,9 +56,11 @@ const rejectUnauthorizedUser = async (req, res, next) => {
       });
   }
 
+  // If the user was NOT switched to authorized above return 403
   if (!isUserAuthorized) {
     res.sendStatus(403);
   } else if (isUserAuthorized) {
+    // If user was authorized above pass to next
     next();
   }
 };
