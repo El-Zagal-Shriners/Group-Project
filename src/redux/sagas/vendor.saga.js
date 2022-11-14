@@ -20,8 +20,8 @@ function* fetchVendors() {
 
 // worker Saga will fire on "FETCH_VENDORS"
 
-function* vendorsSaga() {
+function* vendorSaga() {
   yield takeEvery("FETCH_VENDORS", fetchVendors);
 }
 
-export default vendorsSaga;
+export default vendorSaga;
