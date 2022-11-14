@@ -12,7 +12,7 @@ import discount from "./discount.reducer";
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  discount, // contains all discounts from database
+  discounts, // contains all discounts from database
 });
 
 export default rootReducer;
