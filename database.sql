@@ -25,7 +25,7 @@ CREATE TABLE "vendors" (
 	"address" varchar(1000),
 	"city" varchar(100) NOT NULL,
 	"state_code" varchar(2) NOT NULL,
-	"zip" int(5),
+	"zip" numeric(5,0),
 	CONSTRAINT "vendors_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
