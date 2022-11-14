@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   HashRouter as Router,
   Redirect,
@@ -8,7 +9,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
+import UpdatedNavBar from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -35,7 +36,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <UpdatedNavBar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -69,6 +70,9 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
+          <Route exact path="/login">
+            {user.id ? (
+              // If the user is already logged in,
           <ProtectedRoute
             // logged in brings users to DiscountsPage else shows LoginPage
             exact
