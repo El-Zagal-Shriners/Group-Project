@@ -6,6 +6,7 @@ import citiesSaga from "./cities.saga";
 import discountSaga from "./discount.saga";
 import accountsSaga from "./accounts.saga";
 import vendorSaga from "./vendor.saga";
+import categoriesSaga from "./categories.saga";
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     discountSaga(),
     vendorSaga(),
     citiesSaga(),
+    categoriesSaga()
   ]);
 }

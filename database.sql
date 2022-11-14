@@ -107,6 +107,18 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 ('Ada', 'MN', '-96.515346', '47.299689'),
 ('Valley City', 'ND', '-98.003159', '46.923313');
 
+-- SAMPLE CATEGORIES
+INSERT INTO "categories" ("name", "icon_class")
+VALUES					('Personal Care/Beauty', 'CgPill'),
+						('Restaurants', 'MdFastfood'),
+						('Bars/Drinks', 'BiBeer'),
+						('Sports', 'MdSportsBaseball'),
+						('Entertainment', 'FaTicketAlt'),
+						('Lodging', 'MdHotel'),
+						('Shopping', 'FaShoppingCart'),
+						('Rentals', 'MdCarRental'),
+						('Misc.', 'RiCheckboxBlankCircleLine');
+						
 --Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
 SELECT "discounts".*, 
 	count("discounts_tracked"."id") AS "discounts_all_time", 

@@ -13,6 +13,7 @@ const citiesRouter = require("./routes/cities.router");
 const accountsRouter = require("./routes/accounts.router");
 const discountsRouter = require("./routes/discounts.router");
 const vendorRouter = require("./routes/vendor.router");
+const categoriesRouter = require("./routes/categories.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use("/api/accounts", accountsRouter);
 app.use("/api/discounts", discountsRouter);
 app.use("/api/vendors", vendorRouter);
 app.use("/api/cities", citiesRouter);
+app.use("/api/categories", categoriesRouter);
 
 // Serve static files
 app.use(express.static("build"));

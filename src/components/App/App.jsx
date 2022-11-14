@@ -20,6 +20,7 @@ import InfoPage from "../InfoPage/InfoPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
+import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 import "./App.css";
 
@@ -69,6 +70,14 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            // logged in brings users to DiscountsPage else shows LoginPage
+            exact
+            path="/discounts"
+          >
+            <DiscountsPage />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
@@ -96,6 +105,7 @@ function App() {
               // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/discounts" />
+              
             ) : (
               // Otherwise, show the Landing page
               <LandingPage />
