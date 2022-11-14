@@ -7,6 +7,7 @@ const axios = require("axios");
 function* citiesSaga() {
   yield takeEvery("GET_ALL_CITIES", getAllCities);
   yield takeEvery("GET_CLOSE_CITIES", getCloseCities);
+  yield takeEvery("CHECK_CITIES", checkCity);
 }
 
 // saga to get all cities and store them in redux.
@@ -32,9 +33,21 @@ function* getCloseCities(action) {
       `/api/cities/close?lat=${coords.lat}&lng=${coords.lng}`
     );
     // store the closest cities in redux.
-    yield put({ type: "SET_LOCATIONS", payload: response.data });
+    yield put({ type: "SET_CLOSE_CITIES", payload: response.data });
   } catch (err) {
     console.log("Error in getting cities closest to user", err);
+  }
+}
+
+// saga to check if the user's location is not in the DB and add it if it is not.
+function* checkCity(action) {
+  try {
+    // shorten the action.payload by assigning it to coords.
+    const coords = action.payload;
+    // console.log(coords);
+    yield axios.get(`/api/cities/check?lat=${coords.lat}&lng=${coords.lng}`);
+  } catch (err) {
+    console.log("Error in adding city closest to user", err);
   }
 }
 

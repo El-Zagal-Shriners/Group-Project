@@ -4,6 +4,7 @@ const {
 } = require("../modules/authentication-middleware");
 const pool = require("../modules/pool");
 const url = require("url");
+const axios = require("axios");
 const router = express.Router();
 
 // route: /api/cities
@@ -48,6 +49,59 @@ router.get("/close", rejectUnauthenticated, (req, res) => {
     .catch((err) => {
       console.log("Error getting closest cities", err);
       res.sendStatus(500);
+    });
+});
+
+// a get route to check if a users location already exists,
+// if not post the location to the database.
+router.get("/check", (req, res) => {
+  // Get the url and parse it for the query values.
+  const reqUrl = url.parse(req.url, true);
+  const coords = { lat: reqUrl.query.lat, lng: reqUrl.query.lng };
+  //   use the user's current coordinates to get their location info.
+  axios
+    .get(
+      `https://nominatim.openstreetmap.org/reverse?&lat=${coords.lat}&lon=${coords.lng}&format=json`
+    )
+    .then((response) => {
+      // extract the state code from the region code.
+      let state = response.data.address["ISO3166-2-lvl4"];
+      state = state.substring(state.indexOf("-") + 1);
+      const city = response.data.address.city;
+      // query to find cities within 30 miles of user.
+      const queryText = `SELECT *
+      FROM (SELECT *,
+        ROUND(3959 * ACOS(COS(RADIANS($1)) * COS(RADIANS("lat")) * 
+        COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) * 
+        SIN(RADIANS("lat")))) AS "distance" FROM "location") AS d
+      WHERE "distance" <= '30'
+      ORDER BY "distance";`;
+      pool
+        .query(queryText, [coords.lat, coords.lng])
+        .then((response) => {
+          // check if the city exists within the response and if not
+          // post a query to add the city to the database.
+          if (response.rows.some((e) => e.city === city)) {
+            res.status(200).send("City already exists");
+          } else {
+            const queryText = `INSERT INTO "location" ("city", "state_code", "lng", "lat")
+                VALUES($1,$2,$3,$4);`;
+            pool
+              .query(queryText, [city, state, coords.lng, coords.lat])
+              .then((response) => {
+                res.sendStatus(201);
+              })
+              .catch((err) => {
+                console.log("Error adding city", err);
+                res.sendStatus(500);
+              });
+            res.sendStatus(201);
+          }
+        })
+        .catch((err) => {
+          console.log("Error getting cities within 30 miles of user", err);
+          res.sendStatus(500);
+        });
     });
 });
 
