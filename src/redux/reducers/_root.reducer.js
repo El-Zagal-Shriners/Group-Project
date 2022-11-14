@@ -4,6 +4,8 @@ import errors from "./errors.reducer";
 import user from "./user.reducer";
 import discounts from "./discount.reducer";
 import accounts from "./accounts.reducer";
+import vendors from "./vendor.reducer";
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   discounts, // contains all discounts from database
+  vendors, // will be an array of objects for vendors
 });
 
 export default rootReducer;
