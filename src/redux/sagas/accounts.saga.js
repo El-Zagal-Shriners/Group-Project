@@ -3,7 +3,11 @@ import axios from 'axios';
 
 function* fetchAllAccounts(){
     try {
-      const accounts=yield axios.get('/api/accounts');
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+      const accounts=yield axios.get('/api/accounts', config);
       console.log('GET accounts', accounts.data);
       yield put ({type: 'FETCH_ACCOUNTS',
                   payload: accounts.data})
