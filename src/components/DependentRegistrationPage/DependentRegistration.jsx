@@ -61,16 +61,11 @@ function DependentRegistrationPage(props) {
           onChange={(event) => setPassword(event.target.value)}
         />
         <div>
-            <button type="submit">
-                Create Account
-            </button>
+          <button type="submit">Create Account</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default DependentRegistrationPage
-
-//SELECT "username", "password", "first_name", "last_name",
-// "email" FROM "user";
+export default DependentRegistrationPage;
