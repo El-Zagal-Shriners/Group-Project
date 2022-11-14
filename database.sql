@@ -9,7 +9,7 @@ CREATE TABLE "user" (
 	"is_authorized" BOOLEAN NOT NULL DEFAULT 'false',
 	"is_verified" BOOLEAN NOT NULL DEFAULT 'false',
 	"review_pending" BOOLEAN NOT NULL DEFAULT 'false',
-	"dues_paid" DATE NOT NULL DEFAULT 'false',
+	"dues_paid" DATE NOT NULL,
 	"membership_number" int,
 	"admin_level" int NOT NULL DEFAULT '0',
 	CONSTRAINT "user_pk" PRIMARY KEY ("id")
@@ -52,7 +52,7 @@ CREATE TABLE "discounts" (
 
 CREATE TABLE "categories" (
 	"id" serial NOT NULL,
-	"name" serial(255) NOT NULL,
+	"name" varchar(255) NOT NULL,
 	"icon_class" varchar(255) NOT NULL,
 	CONSTRAINT "categories_pk" PRIMARY KEY ("id")
 ) WITH (
