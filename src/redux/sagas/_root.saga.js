@@ -6,6 +6,7 @@ import citiesSaga from "./cities.saga";
 import discountSaga from "./discount.saga";
 import accountsSaga from "./accounts.saga";
 import vendorSaga from "./vendor.saga";
+import dependentSaga from "./dependentRegistration.saga";
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -16,7 +17,8 @@ import vendorSaga from "./vendor.saga";
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
-    accountsSaga(), // accounts soga is now registered
+    dependentSaga(), // dependent saga for registering dependents
+    accountsSaga(), // accounts saga is now registered
     loginSaga(), // login saga is now registered
     registrationSaga(),
     userSaga(),
