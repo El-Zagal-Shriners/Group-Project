@@ -1,8 +1,10 @@
-import { combineReducers } from "redux";
-import errors from "./errors.reducer";
-import user from "./user.reducer";
+import { combineReducers } from 'redux';
+import errors from './errors.reducer';
+import user from './user.reducer';
+import discounts from "./discount.reducer";
+import accounts from "./accounts.reducer";
+import vendors from "./vendor.reducer";
 import cities from "./cities.reducer";
-
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -10,8 +12,11 @@ import cities from "./cities.reducer";
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
+  accounts,
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
+  discounts, // contains all discounts from database
+  vendors, // will be an array of objects for vendors
   cities, // contains the allCitiesReducer and closeCitiesReducer
 });
 

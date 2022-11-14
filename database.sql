@@ -1,3 +1,5 @@
+-- Database should be named: el_zagal_shriners
+
 CREATE TABLE "user" (
 	"id" serial NOT NULL,
 	"username" varchar(80) NOT NULL UNIQUE,
