@@ -25,8 +25,8 @@ Container
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
-/* 
-.btn {
+
+/* .btn {
   display: inline-block;
   padding: 10px 20px;
   border-color: #014041;
@@ -37,7 +37,7 @@ Button
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
-}
+} */
 
 .btn_sizeMin {
   min-height: 50px;
@@ -54,7 +54,7 @@ Button
   width: 100%;
 }
 
-.btn:hover {
+/* .btn:hover {
   background-color: #008183;
   text-decoration: none;
 } */
