@@ -70,9 +70,6 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route exact path="/login">
-            {user.id ? (
-              // If the user is already logged in,
           <ProtectedRoute
             // logged in brings users to DiscountsPage else shows LoginPage
             exact
