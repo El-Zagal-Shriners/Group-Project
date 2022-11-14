@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 // reducer to store all cities.
-const citiesReducer = (state = [], action) => {
+const allCitiesReducer = (state = [], action) => {
   switch (action.type) {
     case "SET_ALL_CITIES":
       return action.payload;
@@ -21,6 +21,6 @@ const closeCitiesReducer = (state = [], action) => {
 };
 
 export default combineReducers({
-  citiesReducer,
+  allCitiesReducer,
   closeCitiesReducer,
 });
