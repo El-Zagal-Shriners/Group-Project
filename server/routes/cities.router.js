@@ -15,7 +15,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText)
     .then((response) => {
-      console.log("All Cities:", response.rows);
+      //   console.log("All Cities:", response.rows);
       res.send(response.rows);
     })
     .catch((err) => {
@@ -43,7 +43,7 @@ router.get("/close", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [coords.lat, coords.lng])
     .then((response) => {
-      console.log("Closest Cities:", response.rows);
+      //   console.log("Closest Cities:", response.rows);
       res.send(response.rows);
     })
     .catch((err) => {
@@ -54,7 +54,7 @@ router.get("/close", rejectUnauthenticated, (req, res) => {
 
 // a get route to check if a users location already exists,
 // if not post the location to the database.
-router.get("/check", (req, res) => {
+router.get("/check", rejectUnauthenticated, (req, res) => {
   // Get the url and parse it for the query values.
   const reqUrl = url.parse(req.url, true);
   const coords = { lat: reqUrl.query.lat, lng: reqUrl.query.lng };
