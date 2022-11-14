@@ -1,7 +1,9 @@
-import { combineReducers } from 'redux';
-import errors from './errors.reducer';
-import user from './user.reducer';
-import accounts from './accounts.reducer';
+
+import { combineReducers } from "redux";
+import errors from "./errors.reducer";
+import user from "./user.reducer";
+import discounts from "./discount.reducer";
+import accounts from "./accounts.reducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -13,6 +15,7 @@ const rootReducer = combineReducers({
   accounts,
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
+  discounts, // contains all discounts from database
 });
 
 export default rootReducer;
