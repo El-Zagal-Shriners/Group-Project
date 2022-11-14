@@ -1,47 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import "./Nav.css";
+import { useSelector } from "react-redux";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
-function Nav() {
+function UpdatedNavBar() {
   const user = useSelector((store) => store.user);
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
-      </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
-      </div>
-    </div>
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
+      <Container>
+        <Navbar.Brand href="#home">
+          <img
+            className="shriner_logo"
+            src="https://www.elzagal.org/wp-content/themes/ElZagal/images/logo.png"
+            alt="El Zagal Shriner Logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle
+          className="bg-primary rounded-pill"
+          aria-controls="responsive-navbar-nav"
+        />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link className="fs-4 text-primary" href="#discounts">
+              Discounts
+            </Nav.Link>
+            <Nav.Link className="fs-4 text-primary" href="#profile">
+              Profile
+            </Nav.Link>
+            {user.admin_level > 0 && (
+              <Nav.Link className="fs-4 text-primary" href="#admin">
+                Admin
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
-export default Nav;
+export default UpdatedNavBar;
