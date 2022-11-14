@@ -1,4 +1,7 @@
 const express = require("express");
+const {
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 const pool = require("../modules/pool");
 const url = require("url");
 const router = express.Router();
