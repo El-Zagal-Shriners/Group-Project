@@ -97,3 +97,12 @@ ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id
 
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id");
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
+
+INSERT INTO "location" ("city", "state_code", "lng", "lat")
+VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
+('Jamestown', 'ND', '-98.708534', '46.909538'),
+('Detroit Lakes', 'MN', '-95.848160', '46.827316'),
+('Bismarck', 'ND', '-100.778275', '46.825905'),
+('Mandan', 'ND', '-100.889580', '46.826660'),
+('Ada', 'MN', '-96.515346', '47.299689'),
+('Valley City', 'ND', '-98.003159', '46.923313');
