@@ -8,7 +8,7 @@ const router = express.Router();
 // This GET will return all categories in the database
 router.get("/", rejectUnauthenticated, (req, res) => {
   // select all from categories
-  console.log("in categories GET");
+  // console.log("in categories GET");
   const query = `SELECT * FROM "categories";`;
   pool
     .query(query)

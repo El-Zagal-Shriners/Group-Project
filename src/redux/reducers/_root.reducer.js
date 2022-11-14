@@ -5,6 +5,7 @@ import discounts from "./discount.reducer";
 import accounts from "./accounts.reducer";
 import vendors from "./vendor.reducer";
 import cities from "./cities.reducer";
+import categories from "./categories.reducer";
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   discounts, // contains all discounts from database
   vendors, // will be an array of objects for vendors
   cities, // contains the allCitiesReducer and closeCitiesReducer
+  categories,
 });
 
 export default rootReducer;
