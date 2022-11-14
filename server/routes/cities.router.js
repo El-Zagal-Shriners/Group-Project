@@ -9,7 +9,7 @@ const router = express.Router();
 // route: /api/cities
 
 // route to get all cities from the database.
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "location";`;
   pool
     .query(queryText)
@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 });
 
 // route to get the four closest cities to the user.
-router.get("/close", (req, res) => {
+router.get("/close", rejectUnauthenticated, (req, res) => {
   // url should look like: `/api/locations/close?lat=value&lng=value`
   // Get the url and parse it for the query values.
   const reqUrl = url.parse(req.url, true);
