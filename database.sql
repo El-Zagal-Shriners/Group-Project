@@ -106,3 +106,19 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 ('Mandan', 'ND', '-100.889580', '46.826660'),
 ('Ada', 'MN', '-96.515346', '47.299689'),
 ('Valley City', 'ND', '-98.003159', '46.923313');
+
+
+
+
+-- SAMPLE CATEGORIES
+INSERT INTO "categories" ("name", "icon_class")
+VALUES					('Personal Care/Beauty', 'CgPill'),
+						('Restaurants', 'MdFastfood'),
+						('Bars/Drinks', 'BiBeer'),
+						('Sports', 'MdSportsBaseball'),
+						('Entertainment', 'FaTicketAlt'),
+						('Lodging', 'MdHotel'),
+						('Shopping', 'FaShoppingCart'),
+						('Rentals', 'MdCarRental'),
+						('Misc.', 'RiCheckboxBlankCircleLine');
+						
