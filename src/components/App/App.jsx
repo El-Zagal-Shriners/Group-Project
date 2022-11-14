@@ -4,6 +4,7 @@ import {
   Redirect,
   Route,
   Switch,
+  useHistory,
 } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -103,7 +104,8 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/discounts" />
+              
             ) : (
               // Otherwise, show the Landing page
               <LandingPage />

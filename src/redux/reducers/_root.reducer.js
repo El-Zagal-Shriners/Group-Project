@@ -13,7 +13,7 @@ import categories from "./categories.reducer";
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
-  accounts,
+  accounts, // contains all account information for members and dependents
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   discounts, // contains all discounts from database
