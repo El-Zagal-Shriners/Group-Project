@@ -8,7 +8,8 @@ const sessionMiddleware = require("./modules/session-middleware");
 const passport = require("./strategies/user.strategy");
 
 // Route includes
-const userRouter = require("./routes/user.router");
+const userRouter = require('./routes/user.router');
+const accountsRouter = require('./routes/accounts.router');
 const discountsRouter = require("./routes/discounts.router");
 
 // Body parser middleware
@@ -23,7 +24,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
-app.use("/api/user", userRouter);
+app.use('/api/user', userRouter);
+app.use('/api/accounts', accountsRouter);
 app.use("/api/discounts", discountsRouter);
 
 // Serve static files
