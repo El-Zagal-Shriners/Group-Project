@@ -16,12 +16,12 @@ function* fetchVendors() {
   } catch (error) {
     console.log("error caught in FETCH_VENDORS :>> ", error);
   }
-}
+} // End fetchVendors
 
 // worker Saga will fire on "FETCH_VENDORS"
 
 function* vendorSaga() {
   yield takeEvery("FETCH_VENDORS", fetchVendors);
-}
+} // End vendorSaga
 
 export default vendorSaga;
