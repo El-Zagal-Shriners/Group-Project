@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
@@ -13,6 +13,7 @@ import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 function ProtectedAdminRoute({ component, children, ...props }) {
   const user = useSelector((store) => store.user);
+  const history = useHistory();
 
   // Get component from props
   const ProtectedComponent = component || (() => children);
@@ -27,7 +28,7 @@ function ProtectedAdminRoute({ component, children, ...props }) {
         <ProtectedComponent />
       ) : (
         // Otherwise, redirect to the Discounts page
-        <DiscountsPage />
+        history.replace("/discounts")
       )}
     </Route>
   );
