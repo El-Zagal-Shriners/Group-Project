@@ -9,10 +9,11 @@ import { BiBeer } from "react-icons/bi";
 import { FaTicketAlt, FaShoppingCart } from "react-icons/fa";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 // this object holds all jsx icon components in the app
 export const allIconComponents = {
-    // categories
+  // category icons
   health: <CgPill />,
   food: <MdFastfood />,
   drinks: <BiBeer />,
@@ -22,5 +23,8 @@ export const allIconComponents = {
   shopping: <FaShoppingCart />,
   rental: <MdCarRental />,
   misc: <RiCheckboxBlankCircleLine />,
+
+  // other
   checkmark: <BsFillCheckCircleFill />,
+  exit: <AiFillCloseCircle />,
 };
