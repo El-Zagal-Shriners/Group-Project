@@ -9,13 +9,16 @@ const router = express.Router();
 
 // Begin GET route for all vendors
 router.get("/", rejectUnauthenticated, (req, res) => {
-  // GET route code here
+  // SQL for GET
   const query = `SELECT * FROM "vendors"`;
+  // Run SQL against the database
   pool.query(query)
       .then(result => {
+        // Send back results
         res.send(result.rows);
       })
       .catch((err) => {
+        // Log error and send error status if error occurs
         console.log('Error in getting vendors: ', err);
         res.sendStatus(500);
       })
@@ -28,8 +31,10 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   const city = req.body.city;
   const stateCode = req.body.stateCode;
   const zip = req.body.zip;
+  // SQL for POST
   const query = `INSERT INTO "vendors" ("name", "address", "city", "state_code", "zip")
                  VALUES ($1, $2, $3, $4, $5);`;
+  // Run SQL against the database
   pool.query(query, [name, address, city, stateCode, zip])
       .then(result => {
         // send success status
