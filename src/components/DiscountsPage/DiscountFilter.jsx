@@ -97,17 +97,6 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
     return filteredArr;
   }
 
-  console.log("categories array", selectedCategories);
-
-  useEffect(
-    () => console.log("in Discount filter", selectedCities),
-    [selectedCities]
-  );
-  useEffect(
-    () => console.log("categories array", selectedCategories),
-    [selectedCategories]
-  );
-
   useEffect(() => {
     dispatch({ type: "GET_CATEGORIES" });
     dispatch({ type: "GET_ALL_CITIES" });
@@ -151,10 +140,11 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
 
           <DropdownButton id="city-select-dropdown" title="Select">
             <Dropdown.ItemText>Select A City</Dropdown.ItemText>
-            {allCities.map((thisCity) => {
+            {allCities.map((thisCity, index) => {
               return (
                 <Dropdown.Item
                   as="button"
+                  key={index}
                   onClick={() => handleCitySelection(thisCity.city, false)}
                 >
                   {thisCity.city}
@@ -228,6 +218,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
               return (
                 <Button
                   size="sm"
+                  key={index}
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
                     setSelectedCategories(
