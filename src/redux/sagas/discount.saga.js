@@ -29,22 +29,22 @@ function* addDiscount(action) {
 // PUT to edit an existing discount by discount_id
 function* editDiscount(action) {
   try {
-      console.log('In edit discount with: ', action.payload);
-      yield axios.put(`api/discounts`, action.payload);
-      yield put({ type: "GET_DISCOUNTS" });
+    console.log("In edit discount with: ", action.payload);
+    yield axios.put(`api/discounts`, action.payload);
+    yield put({ type: "GET_DISCOUNTS" });
   } catch (err) {
-      console.log('Error editing discount: ', err);
+    console.log("Error editing discount: ", err);
   }
 } // End edit discount
 
 // DELETE to remove a discount by id
 function* removeDiscount(action) {
   try {
-      console.log('In remove discount with: ', action.payload);
-      yield axios.delete(`api/discounts/${action.payload}`);
-      yield put({ type: "GET_DISCOUNTS" });
+    console.log("In remove discount with: ", action.payload);
+    yield axios.delete(`api/discounts/${action.payload}`);
+    yield put({ type: "GET_DISCOUNTS" });
   } catch (err) {
-      console.log('Error removing discount: ', err);
+    console.log("Error removing discount: ", err);
   }
 } // End remove a discount
 
