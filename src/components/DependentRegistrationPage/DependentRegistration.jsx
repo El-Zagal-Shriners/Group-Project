@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage(props) {
   const [firstName, setFirstName] = useState("");
@@ -26,45 +27,48 @@ function DependentRegistrationPage(props) {
   };
 
   return (
-    <div>
-      <h2 className="header">Dependent Registration Page</h2>
+    <>
+      <UpdatedNavBar />
+      <div>
+        <h2 className="header">Dependent Registration Page</h2>
 
-      <form onSubmit={createAccount} className="createAccount">
-        <input
-          required
-          placeholder="First Name"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-        />
-        <input
-          required
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-        />
-        <input
-          required
-          placeholder="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <input
-          required
-          placeholder="Username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <input
-          required
-          placeholder="Password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <div>
-          <button type="submit">Create Account</button>
-        </div>
-      </form>
-    </div>
+        <form onSubmit={createAccount} className="createAccount">
+          <input
+            required
+            placeholder="First Name"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+          <input
+            required
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+          />
+          <input
+            required
+            placeholder="Email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <input
+            required
+            placeholder="Username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <input
+            required
+            placeholder="Password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <div>
+            <button type="submit">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
 
