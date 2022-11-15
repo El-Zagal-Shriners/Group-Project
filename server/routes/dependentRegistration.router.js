@@ -2,14 +2,14 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 const {
-    rejectUnauthenticated,
-  } = require("../modules/authentication-middleware");
-  const {
-    rejectUnauthorizedUser,
-  } = require("../modules/authorization-middleware");
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
+const {
+  rejectUnauthorizedUser,
+} = require("../modules/authorization-middleware");
 
 router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
-    const queryText = `SELECT
+  const queryText = `SELECT
       id,
       username,
       first_name,
@@ -23,16 +23,16 @@ router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
       membership_number,
       admin_level
       FROM "user";`;
-    pool
-      .query(queryText)
-      .then((result) => {
-        res.send(result.rows);
-      })
-      .catch((error) => {
-        console.log("Error in GET request", error);
-        res.sendStatus(500);
-      });
-  });
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log("Error in GET request", error);
+      res.sendStatus(500);
+    });
+});
 
 // router to post to "user" table first_name, last_name, email, username, and password columns
 router.post("/", (req, res) => {
