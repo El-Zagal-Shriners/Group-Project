@@ -24,6 +24,6 @@ export default function* rootSaga() {
     discountSaga(),
     vendorSaga(),
     citiesSaga(),
-    categoriesSaga()
+    categoriesSaga(),
   ]);
 }
