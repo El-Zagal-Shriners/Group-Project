@@ -87,7 +87,7 @@ router.put('/:discountid', rejectUnauthenticated, (req, res) => {
           console.log('Error toggling player approved: ', err);
           res.sendStatus(500);
       });
-}); // End approved PUT
+}); // End edit discount PUT
 
 // export the router
 module.exports = router;
