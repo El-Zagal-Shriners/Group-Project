@@ -25,7 +25,7 @@ function* addVendor(action) {
       yield axios.post(`/api/vendors`, action.payload, config);
       yield put({ type: "FETCH_VENDORS" });
   } catch (error){
-      console.log('Error in adding vendor', error);
+      console.log('Error in adding new vendor', error);
   }
 } // End POST new vendor
 
