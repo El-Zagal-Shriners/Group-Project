@@ -11,7 +11,7 @@ CREATE TABLE "user" (
 	"is_authorized" BOOLEAN NOT NULL DEFAULT 'false',
 	"is_verified" BOOLEAN NOT NULL DEFAULT 'false',
 	"review_pending" BOOLEAN NOT NULL DEFAULT 'false',
-	"dues_paid" DATE NOT NULL,
+	"dues_paid" DATE,
 	"membership_number" int,
 	"admin_level" int NOT NULL DEFAULT '0',
 	CONSTRAINT "user_pk" PRIMARY KEY ("id")
