@@ -29,5 +29,30 @@ router.get("/discounts", rejectUnauthenticated, (req, res) => {
     });
 }); // End GET discounts
 
+// This POST will add a new discount to the discount table
+router.post('/discount', rejectUnauthenticated, (req, res) => {
+  const vendorId = req.body.vendorId;
+  const description = req.body.description;
+  const startDate = req.body.startDate ? req.body.startDate:null;
+  const expDate = req.body.expDate ? req.body.expDate:null;
+  const discountCode = req.body.discountCode ? req.body.discountCode:null;
+  const category = req.body.category;
+  const isShown = req.body.isShown;
+  const isRegional = req.body.isRegional;
+  // POST sql query
+  const query = `INSERT INTO "discount" ("vendor_id", "description", "start_date", "expiration_date", discount_code, category_id, is_shown, is_regional)
+                 VALUES ($1, $2, $3, $4, $5, $6 ,$7, $8);`;
+  pool.query(query, [vendorId, description, startDate, expDate, discountCode, category, isShown, isRegional])
+      .then(result => {
+          // send success status
+          res.sendStatus(201);
+      })
+      .catch((err) => {
+          // Log error if one occurs
+          console.log('Error in POST new discount: ', err);
+          res.sendStatus(500);
+      })
+}); // End POST new discount
+
 // export the router
 module.exports = router;
