@@ -14,7 +14,6 @@ function DependentRegistrationPage() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  
 
   const createAccount = (event) => {
     event.preventDefault();
@@ -38,8 +37,8 @@ function DependentRegistrationPage() {
 
       <div class="container text-center">
         <h2 className="header">Dependent Registration Page</h2>
-        </div>
-        <form onSubmit={createAccount} className="createAccount">
+      </div>
+      <form onSubmit={createAccount} className="createAccount">
         <div class="container text-center">
           <input
             required
@@ -47,46 +46,44 @@ function DependentRegistrationPage() {
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
           />
-          </div>
-          <div class="container text-center">
+        </div>
+        <div class="container text-center">
           <input
             required
             placeholder="Last Name"
             value={lastName}
             onChange={(event) => setLastName(event.target.value)}
           />
-          </div>
-          <div class="container text-center">
+        </div>
+        <div class="container text-center">
           <input
             required
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-          </div>
-          <div class="container text-center">
+        </div>
+        <div class="container text-center">
           <input
             required
             placeholder="Username"
             value={usernameIn}
             onChange={(event) => setUsernameIn(event.target.value)}
           />
-          </div>
-          <div class="container text-center">
+        </div>
+        <div class="container text-center">
           <input
             required
             placeholder="Password"
             value={passwordIn}
             onChange={(event) => setPasswordIn(event.target.value)}
           />
-          </div>
-          <div className="params">
-            {params.get(setSearchParams)}
-          </div>
-          <div class="container text-center">
-            <Button variant="primary">Create Account</Button>
-          </div>
-        </form>
+        </div>
+        <div className="params">{searchParams.get(setSearchParams)}</div>
+        <div class="container text-center">
+          <Button variant="primary">Create Account</Button>
+        </div>
+      </form>
     </>
   );
 }
