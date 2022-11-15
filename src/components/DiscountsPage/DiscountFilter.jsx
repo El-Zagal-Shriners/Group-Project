@@ -10,6 +10,9 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Button } from "react-bootstrap";
 
+// react icons object imported from module
+import {allIconComponents} from "../../allIconComponents/allIconComponents";
+
 function DiscountFilter() {
   const dispatch = useDispatch();
 
@@ -29,7 +32,12 @@ function DiscountFilter() {
   // state that contains a list of selected cities
   const [selectedCities, setSelectedCities] = useState([]);
 
+
+
+
+
   useEffect(() => dispatch({ type: "GET_CATEGORIES" }), []);
+  useEffect(()=> dispatch({type: "GET_ALL_CITIES"}), []);
 
   return (
     <Container>
@@ -41,11 +49,10 @@ function DiscountFilter() {
           </label>
           <Dropdown id="category-select-dropdown">
             <Dropdown.Toggle variant="primary">Select</Dropdown.Toggle>
-
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Drinks</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Food</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Entertainment</Dropdown.Item>
+              {allCategories.map((thisCat, index)=> {
+                return <Dropdown.Item key={index}>{thisCat.name}</Dropdown.Item>
+              })}
             </Dropdown.Menu>
           </Dropdown>
         </div>
