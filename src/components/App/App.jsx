@@ -21,6 +21,7 @@ import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
 import AdminMembershipPage from "../AdminMembershipPage/AdminMembershipPage";
 import AdminDiscountPage from "../AdminDiscountPage/AdminDiscountPage";
 import AdminTrackingPage from "../AdminTrackingPage/AdminTrackingPage";
+import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 
 function App() {
   const dispatch = useDispatch();
@@ -88,6 +89,10 @@ function App() {
             path="/admintracking"
           >
             <AdminTrackingPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/dependents">
+            <DependentRegistrationPage />
           </ProtectedRoute>
 
           <Route exact path="/login">

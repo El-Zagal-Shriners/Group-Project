@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./DependentRegistrationPage.css";
 import UpdatedNavBar from "../Nav/Nav";
 
-function DependentRegistrationPage(props) {
+function DependentRegistrationPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [usernameIn, setUsernameIn] = useState("");
+  const [passwordIn, setPasswordIn] = useState("");
+  const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const createAccount = (event) => {
     event.preventDefault();
-    console.log(`dependent registration page`, { firstName, lastName });
 
     dispatch({
-      //need to find type:
+      type: "REGISTER",
       payload: {
         first_name: firstName,
         last_name: lastName,
         email: email,
-        username: username,
-        password: password,
+        username: usernameIn,
+        password: passwordIn,
       },
     });
   };
@@ -29,6 +30,7 @@ function DependentRegistrationPage(props) {
   return (
     <>
       <UpdatedNavBar />
+
       <div>
         <h2 className="header">Dependent Registration Page</h2>
 
