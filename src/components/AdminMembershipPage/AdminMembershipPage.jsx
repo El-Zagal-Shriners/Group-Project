@@ -28,19 +28,20 @@ function AdminMembershipPage() {
   }, []);
 
   return (
-    <>
+    <div className="vw-100">
       <UpdatedNavBar />
       <h2>Admin Membership Page</h2>
       {/* Make these Components? */}
       {/* Spot for new Members awaiting approval */}
       <ApprovalTable approvals={approvals} />
       {/* spot for current members needing review */}
-      <ReviewTable reviews={reviews}/>
+      <ReviewTable reviews={reviews} />
       {/* spot for filtering members */}
+      <h3>Filter: WIP</h3>
       {/* spot for all members
         drop down for dependents */}
       <MemberTable members={members} />
-    </>
+    </div>
   );
 }
 
