@@ -27,13 +27,24 @@ function* addVendor(action) {
   } catch (error){
       console.log('Error in adding vendor', error);
   }
-}
+} // End POST new vendor
+
+// PUT to edit an existing vendor
+function* editVendor(action) {
+  try {
+      yield axios.put(`/api/vendors`, action.payload, config);
+      yield put({ type: "FETCH_VENDORS" });
+  } catch (err) {
+      console.log('Error editing existing vendor: ', err);
+  }
+} // End PUT edit vendor
 
 // worker Saga will fire on "FETCH_VENDORS"
 
 function* vendorSaga() {
   yield takeEvery("FETCH_VENDORS", fetchVendors);
   yield takeEvery("ADD_VENDOR", addVendor);
+  yield takeEvery("EDIT_VENDOR", editVendor);
 } // End vendorSaga
 
 export default vendorSaga;
