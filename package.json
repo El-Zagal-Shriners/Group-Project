@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "boostrap": "^2.0.0",
     "bootstrap": "^5.2.2",
     "cookie-session": "^2.0.0",
     "dotenv": "^8.6.0",

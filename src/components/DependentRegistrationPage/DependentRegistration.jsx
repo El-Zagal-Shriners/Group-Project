@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DependentRegistrationPage.css";
+import Button from "react-bootstrap/Button";
 import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
@@ -31,45 +32,54 @@ function DependentRegistrationPage() {
     <>
       <UpdatedNavBar />
 
-      <div>
+      <div class="container text-center">
         <h2 className="header">Dependent Registration Page</h2>
-
+        </div>
         <form onSubmit={createAccount} className="createAccount">
+        <div class="container text-center">
           <input
             required
             placeholder="First Name"
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
           />
+          </div>
+          <div class="container text-center">
           <input
             required
             placeholder="Last Name"
             value={lastName}
             onChange={(event) => setLastName(event.target.value)}
           />
+          </div>
+          <div class="container text-center">
           <input
             required
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
+          </div>
+          <div class="container text-center">
           <input
             required
             placeholder="Username"
             value={usernameIn}
             onChange={(event) => setUsernameIn(event.target.value)}
           />
+          </div>
+          <div class="container text-center">
           <input
             required
             placeholder="Password"
             value={passwordIn}
             onChange={(event) => setPasswordIn(event.target.value)}
           />
-          <div>
-            <button type="submit">Create Account</button>
+          </div>
+          <div class="container text-center">
+            <Button variant="primary">Create Account</Button>
           </div>
         </form>
-      </div>
     </>
   );
 }
