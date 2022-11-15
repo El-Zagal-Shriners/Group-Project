@@ -12,6 +12,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 
 // this object holds all jsx icon components in the app
 export const allIconComponents = {
+    // categories
   health: <CgPill />,
   food: <MdFastfood />,
   drinks: <BiBeer />,
