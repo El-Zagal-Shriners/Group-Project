@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Dropdown from "react-bootstrap/Dropdown";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Button } from "react-bootstrap";
 
@@ -97,15 +97,23 @@ function DiscountFilter({setFilteredDiscounts}) {
           <label htmlFor="city-select-dropdown" className="mx-1">
             Select a city:
           </label>
-          <Dropdown id="city-select-dropdown">
-            <Dropdown.Toggle variant="primary">Select</Dropdown.Toggle>
 
+          <DropdownButton id="city-select-dropdown" title="Select">
+            <Dropdown.ItemText>Select A City</Dropdown.ItemText>
+            {allCities.map((thisCity)=>{
+                return <Dropdown.Item as="button">{thisCity.city}</Dropdown.Item>
+              })}
+            
+          </DropdownButton>
+
+          {/* <Dropdown id="city-select-dropdown">   
+            <Dropdown.Toggle variant="primary">Select</Dropdown.Toggle>
             <Dropdown.Menu>
               {allCities.map((thisCity)=>{
                 return <Dropdown.Item>{thisCity.city}</Dropdown.Item>
               })}
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
         </div>
       
 
