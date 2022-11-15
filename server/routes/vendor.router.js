@@ -69,4 +69,23 @@ router.put('/', rejectUnauthenticated, (req, res) => {
       });
 }); // End vendor editing PUT
 
+// DELETE for removing a vendor by vendorId
+router.delete('/:vendorid', rejectUnauthenticated, (req, res) => {
+  const vendorId = req.params.vendorid;
+  // SQL for DELETE
+  const query = `DELETE FROM "vendors" 
+                 WHERE "id"=$1;`;
+  // Run SQL against database
+  pool.query(query, [vendorId])
+      .then(result => {
+        // Send success status
+          res.sendStatus(200);
+      })
+      .catch(err => {
+        // Log error and send error status if error occurs
+          console.log('Error deleting a vendor', err);
+          res.sendStatus(500);
+      });
+}); // End vendor delete
+
 module.exports = router;
