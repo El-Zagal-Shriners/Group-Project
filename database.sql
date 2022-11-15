@@ -112,7 +112,7 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 
 -- SAMPLE CATEGORIES
 INSERT INTO "categories" ("name", "icon_class")
-VALUES					('Personal Care/Beauty', 'CgPill'),
+VALUES					
 						('Restaurants', 'MdFastfood'),
 						('Bars/Drinks', 'BiBeer'),
 						('Sports', 'MdSportsBaseball'),
@@ -120,7 +120,8 @@ VALUES					('Personal Care/Beauty', 'CgPill'),
 						('Lodging', 'MdHotel'),
 						('Shopping', 'FaShoppingCart'),
 						('Rentals', 'MdCarRental'),
-						('Misc.', 'RiCheckboxBlankCircleLine');
+						('Misc.', 'RiCheckboxBlankCircleLine'),
+						('Health/Beauty', 'CgPill');
 						
 --Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
 SELECT "discounts".*, 

@@ -105,7 +105,6 @@ function App() {
               // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/discounts" />
-              
             ) : (
               // Otherwise, show the Landing page
               <LandingPage />

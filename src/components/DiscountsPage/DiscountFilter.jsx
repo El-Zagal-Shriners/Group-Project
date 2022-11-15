@@ -6,14 +6,14 @@ import { useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import DropdownButton from "react-bootstrap/DropdownButton";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Button } from "react-bootstrap";
 
 // react icons object imported from module
-import {allIconComponents} from "../../allIconComponents/allIconComponents";
+import { allIconComponents } from "../../allIconComponents/allIconComponents";
 
-function DiscountFilter({setFilteredDiscounts}) {
+function DiscountFilter({ setFilteredDiscounts }) {
   const dispatch = useDispatch();
 
   // selects array of objects from discounts reducer with all available discounts
@@ -34,41 +34,38 @@ function DiscountFilter({setFilteredDiscounts}) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
-
-  function handleCitySelection(thisCity, cityIsSelected){
-
-      // if city is already selected, remove it from the selectedCities array
-      // else (city not yet selected), add it to the selected Cities array
-      if(cityIsSelected){
-        const updatedCitiesArr = removeItemFromArray(thisCity, selectedCities);
-        setSelectedCities(updatedCitiesArr);
-        console.log('in handleCitySelection, deselecting city', updatedCitiesArr);
-      } else {
-        const updatedCitiesArr = selectedCities;
-        updatedCitiesArr.push(thisCity);
-        setSelectedCities(updatedCitiesArr);
-      }
+  function handleCitySelection(thisCity, cityIsSelected) {
+    // if city is already selected, remove it from the selectedCities array
+    // else (city not yet selected), add it to the selected Cities array
+    if (cityIsSelected) {
+      const updatedCitiesArr = removeItemFromArray(thisCity, selectedCities);
+      setSelectedCities(updatedCitiesArr);
+      console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
+    } else {
+      const updatedCitiesArr = selectedCities;
+      updatedCitiesArr.push(thisCity);
+      setSelectedCities(updatedCitiesArr);
+    }
   }
 
+  function handleCategorySelection(thisCat, catIsSelected) {}
 
   // this function removes from the selected categories
   // and/or cities arrays items that the user deselects
-  function removeItemFromArray(itemToRemove, array){
-    console.log('inRemoveItemFromArray', array, itemToRemove);
+  function removeItemFromArray(itemToRemove, array) {
+    console.log("inRemoveItemFromArray", array, itemToRemove);
 
-    let filteredArr = array.filter((thisItem)=>{
+    let filteredArr = array.filter((thisItem) => {
       return thisItem !== itemToRemove;
     });
     return filteredArr;
   }
 
-
-  console.log('selected cities are', selectedCities);
-
+  console.log("selected cities are", selectedCities);
 
   useEffect(() => dispatch({ type: "GET_CATEGORIES" }), []);
-  useEffect(()=> dispatch({type: "GET_ALL_CITIES"}), []);
-  useEffect(()=> dispatch({type: "GET_CLOSE_CITIES"}), []);
+  useEffect(() => dispatch({ type: "GET_ALL_CITIES" }), []);
+  useEffect(() => dispatch({ type: "GET_CLOSE_CITIES" }), []);
 
   return (
     <Container>
@@ -81,8 +78,10 @@ function DiscountFilter({setFilteredDiscounts}) {
           <Dropdown id="category-select-dropdown">
             <Dropdown.Toggle variant="primary">Select</Dropdown.Toggle>
             <Dropdown.Menu>
-              {allCategories.map((thisCat, index)=> {
-                return <Dropdown.Item key={index}>{thisCat.name}</Dropdown.Item>
+              {allCategories.map((thisCat, index) => {
+                return (
+                  <Dropdown.Item key={index}>{thisCat.name}</Dropdown.Item>
+                );
               })}
             </Dropdown.Menu>
           </Dropdown>
@@ -100,73 +99,63 @@ function DiscountFilter({setFilteredDiscounts}) {
 
           <DropdownButton id="city-select-dropdown" title="Select">
             <Dropdown.ItemText>Select A City</Dropdown.ItemText>
-            {allCities.map((thisCity)=>{
-                return <Dropdown.Item as="button">{thisCity.city}</Dropdown.Item>
-              })}
-            
+            {allCities.map((thisCity) => {
+              return <Dropdown.Item as="button">{thisCity.city}</Dropdown.Item>;
+            })}
           </DropdownButton>
-
-          {/* <Dropdown id="city-select-dropdown">   
-            <Dropdown.Toggle variant="primary">Select</Dropdown.Toggle>
-            <Dropdown.Menu>
-              {allCities.map((thisCity)=>{
-                return <Dropdown.Item>{thisCity.city}</Dropdown.Item>
-              })}
-            </Dropdown.Menu>
-          </Dropdown> */}
         </div>
-      
 
-      {/* Select Nearest Cities  */}
-      <div className="d-flex justify-content-between flex-column m-1 p-1">
-        <div>
-          <div className="text-center">Or Select A City Nearby</div>
-          <div className="text-center">(select multiple)</div>
-        </div>
-        <div className= "d-flex justify-content-between flex-row m-1 p-1">
-          <ToggleButton
-            className="mb-2"
-            type="checkbox"
-            variant="outline-primary"
-            checked={cityOneChecked}
-            onClick={() => {
-              handleCitySelection(allCities[0].city, cityOneChecked); 
-              setCityOneChecked(!cityOneChecked)}}
-          >
-            {allCities.length>0 && allCities[0].city}
-            {cityOneChecked && allIconComponents.BsFillCheckCircleFill}
-          </ToggleButton>
+        {/* Select Nearest Cities  */}
+        <div className="d-flex justify-content-between flex-column m-1 p-1">
+          <div>
+            <div className="text-center">Or Select A City Nearby</div>
+            <div className="text-center">(select multiple)</div>
+          </div>
+          <div className="d-flex justify-content-between flex-row m-1 p-1">
+            <ToggleButton
+              className="mb-2"
+              type="checkbox"
+              variant="outline-primary"
+              checked={cityOneChecked}
+              onClick={() => {
+                handleCitySelection(allCities[0].city, cityOneChecked);
+                setCityOneChecked(!cityOneChecked);
+              }}
+            >
+              {allCities.length > 0 && allCities[0].city}
+              {cityOneChecked && allIconComponents.BsFillCheckCircleFill}
+            </ToggleButton>
 
-          <ToggleButton
-            className="mb-2"
-            type="checkbox"
-            variant="outline-primary"
-            checked={cityTwoChecked}
-            onClick={() => {
-              handleCitySelection(allCities[1].city, cityTwoChecked); 
-              setCityTwoChecked(!cityTwoChecked)}}
-          >
-            {allCities.length>0 && allCities[1].city}
-            {cityTwoChecked && allIconComponents.BsFillCheckCircleFill}
-          </ToggleButton>
+            <ToggleButton
+              className="mb-2"
+              type="checkbox"
+              variant="outline-primary"
+              checked={cityTwoChecked}
+              onClick={() => {
+                handleCitySelection(allCities[1].city, cityTwoChecked);
+                setCityTwoChecked(!cityTwoChecked);
+              }}
+            >
+              {allCities.length > 0 && allCities[1].city}
+              {cityTwoChecked && allIconComponents.BsFillCheckCircleFill}
+            </ToggleButton>
 
-          <ToggleButton
-            className="mb-2"
-            type="checkbox"
-            variant="outline-primary"
-            checked={cityThreeChecked}
-            onClick={() => {
-              handleCitySelection(allCities[2].city, cityThreeChecked); 
-              setCityThreeChecked(!cityThreeChecked)}}
-          >
-            {allCities.length>0 && allCities[2].city}
-            {cityThreeChecked && allIconComponents.BsFillCheckCircleFill}
-          </ToggleButton>
+            <ToggleButton
+              className="mb-2"
+              type="checkbox"
+              variant="outline-primary"
+              checked={cityThreeChecked}
+              onClick={() => {
+                handleCitySelection(allCities[2].city, cityThreeChecked);
+                setCityThreeChecked(!cityThreeChecked);
+              }}
+            >
+              {allCities.length > 0 && allCities[2].city}
+              {cityThreeChecked && allIconComponents.BsFillCheckCircleFill}
+            </ToggleButton>
+          </div>
         </div>
       </div>
-      </div>
-
-      
 
       {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
       <div>
@@ -191,13 +180,17 @@ function DiscountFilter({setFilteredDiscounts}) {
             </div>
             <div>IN</div>
             <div>
-              <Badge
-                pill
-                className="d-flex justify-content-center align-items-center m-1"
-                bg="primary"
-              >
-                Fargo
-              </Badge>
+              {selectedCities.map((thisCity) => {
+                return (
+                  <Badge
+                    pill
+                    className="d-flex justify-content-center align-items-center m-1"
+                    bg="primary"
+                  >
+                    {thisCity}
+                  </Badge>
+                );
+              })}
             </div>
           </div>
         </div>
