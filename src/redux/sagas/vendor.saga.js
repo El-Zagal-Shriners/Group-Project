@@ -39,12 +39,21 @@ function* editVendor(action) {
   }
 } // End PUT edit vendor
 
-// worker Saga will fire on "FETCH_VENDORS"
+// DELETE to remove an existing vendor by id
+function* removeVendor(action) {
+  try {
+      yield axios.delete(`api/vendors/${action.payload}`);
+      yield put({ type: "FETCH_VENDORS" });
+  } catch (err) {
+      console.log('Error removing vendor: ', err);
+  }
+} // End DELETE vendor
 
 function* vendorSaga() {
   yield takeEvery("FETCH_VENDORS", fetchVendors);
   yield takeEvery("ADD_VENDOR", addVendor);
   yield takeEvery("EDIT_VENDOR", editVendor);
+  yield takeEvery("REMOVE_VENDOR", removeVendor);
 } // End vendorSaga
 
 export default vendorSaga;
