@@ -23,6 +23,7 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 import "./App.css";
+import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +79,10 @@ function App() {
             <DiscountsPage />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/dependents">
+            <DependentRegistrationPage />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
@@ -105,7 +110,6 @@ function App() {
               // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/discounts" />
-              
             ) : (
               // Otherwise, show the Landing page
               <LandingPage />
