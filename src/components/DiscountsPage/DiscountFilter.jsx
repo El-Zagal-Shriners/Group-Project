@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 
 // react boostrap components
 import Container from "react-bootstrap/Container";
-import Badge from "react-bootstrap/Badge";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -34,10 +33,16 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
+  function filterSearchResults(){
+    console.log('in filterSearchResults', allDiscounts);
+  }
+
+
+
+  useEffect(()=> filterSearchResults(), [selectedCategories, selectedCities]);
+
+
   function handleCitySelection(thisCity, cityIsSelected) {
-    console.log("in handleCitySelection, city is", thisCity);
-    console.log("in selected cities?", selectedCities.includes(thisCity));
-    console.log("is city selected?", cityIsSelected);
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
@@ -60,19 +65,12 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   function handleCategorySelection(thisCat, catIsSelected) {
     // if category is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
-    console.log("in handleCategorySelection, city is", thisCat);
-    console.log("in selected cities?", selectedCities.includes(thisCat));
-    console.log("is city selected?", catIsSelected);
     if (catIsSelected) {
       const updatedCategoriesArr = removeItemFromArray(
         thisCat,
         selectedCategories
       );
       setSelectedCategories(updatedCategoriesArr);
-      console.log(
-        "in handleCategorySelection, deselecting cat",
-        updatedCategoriesArr
-      );
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
