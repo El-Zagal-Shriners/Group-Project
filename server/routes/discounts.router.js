@@ -15,7 +15,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "1_year_count"
 	FROM "discounts" 
 	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id" 
-	GROUP BY "discounts_tracked"."discount_id", "discounts"."id" 
+	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";`;
   pool
     .query(query)
