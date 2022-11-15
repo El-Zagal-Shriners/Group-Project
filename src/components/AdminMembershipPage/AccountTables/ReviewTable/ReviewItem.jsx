@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import { ListGroup } from "react-bootstrap";
 
 function ReviewItem({ review }) {
-    const dues = review.dues_paid.split("-")[0];
+  const dues = review.dues_paid.split("-")[0];
 
   return (
     <ListGroup.Item className="p-1">
