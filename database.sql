@@ -97,3 +97,35 @@ ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id
 
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id");
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
+
+INSERT INTO "location" ("city", "state_code", "lng", "lat")
+VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
+('Jamestown', 'ND', '-98.708534', '46.909538'),
+('Detroit Lakes', 'MN', '-95.848160', '46.827316'),
+('Bismarck', 'ND', '-100.778275', '46.825905'),
+('Mandan', 'ND', '-100.889580', '46.826660'),
+('Ada', 'MN', '-96.515346', '47.299689'),
+('Valley City', 'ND', '-98.003159', '46.923313');
+
+-- SAMPLE CATEGORIES
+INSERT INTO "categories" ("name", "icon_class")
+VALUES					('Personal Care/Beauty', 'CgPill'),
+						('Restaurants', 'MdFastfood'),
+						('Bars/Drinks', 'BiBeer'),
+						('Sports', 'MdSportsBaseball'),
+						('Entertainment', 'FaTicketAlt'),
+						('Lodging', 'MdHotel'),
+						('Shopping', 'FaShoppingCart'),
+						('Rentals', 'MdCarRental'),
+						('Misc.', 'RiCheckboxBlankCircleLine');
+						
+--Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
+SELECT "discounts".*, 
+	count("discounts_tracked"."id") AS "discounts_all_time", 
+	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '7 days') AND CURRENT_DATE) AS "7_day_count",
+	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "30_day_count",
+	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "1_year_count"
+	FROM "discounts" 
+	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id" 
+	GROUP BY "discounts_tracked"."discount_id", "discounts"."id" 
+	ORDER BY "discounts"."id";
