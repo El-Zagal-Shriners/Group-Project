@@ -1,24 +1,26 @@
 import React from "react";
 import LoginForm from "../LoginForm/LoginForm";
 import { useHistory } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 function LoginPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div className="d-flex flex-column justify-content-center align-items-center landing_page_size">
       <LoginForm />
 
       <center>
-        <button
-          type="button"
-          className="btn btn_asLink"
+        <Button
+          className="bg_link_opacity"
+          href="#registration"
+          variant="link"
           onClick={() => {
             history.push("/registration");
           }}
         >
           Register
-        </button>
+        </Button>
       </center>
     </div>
   );
