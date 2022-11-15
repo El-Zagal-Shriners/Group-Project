@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 
 // This GET will return all discounts in the database
-router.get("/discounts", rejectUnauthenticated, (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
   const query = `SELECT "discounts".*, 
 	count("discounts_tracked"."id") AS "discounts_all_time", 
@@ -30,7 +30,7 @@ router.get("/discounts", rejectUnauthenticated, (req, res) => {
 }); // End GET discounts
 
 // This POST will add a new discount to the discount table
-router.post('/discount', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   const vendorId = req.body.vendorId;
   const description = req.body.description;
   const startDate = req.body.startDate ? req.body.startDate:null;
@@ -56,7 +56,7 @@ router.post('/discount', rejectUnauthenticated, (req, res) => {
 }); // End POST new discount
 
 // This PUT will edit an existing discount by ID number
-router.put('/:discountid', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
   console.log('In discount PUT with: ', req.body);
   const discountId = req.body.discountId;
   const vendorId = req.body.vendorId;
@@ -75,7 +75,7 @@ router.put('/:discountid', rejectUnauthenticated, (req, res) => {
                  "discount_code"=$5,
                  "category_id"=$6,
                  "is_shown"=$7,
-                 "is_regional"=$8, 
+                 "is_regional"=$8 
                  WHERE "id"=$9;`;
   pool.query(query, [vendorId, description, startDate, expDate, discountCode, categoryId, isShown, isRegional, discountId])
       .then(result => {
@@ -84,7 +84,7 @@ router.put('/:discountid', rejectUnauthenticated, (req, res) => {
       })
       .catch(err => {
         // log error and send back error code if error occurred
-          console.log('Error toggling player approved: ', err);
+          console.log('Error editing discount: ', err);
           res.sendStatus(500);
       });
 }); // End edit discount PUT

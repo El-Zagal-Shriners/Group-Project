@@ -37,10 +37,22 @@ function* editDiscount(action) {
   }
 } // End edit discount
 
+// DELETE to remove a discount by id
+function* removeDiscount(action) {
+  try {
+      console.log('In remove discount with: ', action.payload);
+      yield axios.delete(`api/discounts/${action.payload}`);
+      yield put({ type: "GET_DISCOUNTS" });
+  } catch (err) {
+      console.log('Error removing discount: ', err);
+  }
+} // End remove a discount
+
 function* discountSaga() {
   yield takeLatest("GET_DISCOUNTS", getDiscounts);
   yield takeLatest("ADD_DISCOUNT", addDiscount);
   yield takeLatest("EDIT_DISCOUNT", editDiscount);
+  yield takeLatest("REMOVE_DISCOUNT", removeDiscount);
 }
 
 export default discountSaga;
