@@ -23,6 +23,7 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 import "./App.css";
+import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 
 function App() {
   const dispatch = useDispatch();
@@ -76,6 +77,10 @@ function App() {
             path="/discounts"
           >
             <DiscountsPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/dependents">
+            <DependentRegistrationPage />
           </ProtectedRoute>
 
           <Route exact path="/login">
