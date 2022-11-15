@@ -17,6 +17,10 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 import "./App.css";
+import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
+import AdminMembershipPage from "../AdminMembershipPage/AdminMembershipPage";
+import AdminDiscountPage from "../AdminDiscountPage/AdminDiscountPage";
+import AdminTrackingPage from "../AdminTrackingPage/AdminTrackingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,11 +58,43 @@ function App() {
             <DiscountsPage />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            // logged in brings users to Admin Page else shows LoginPage
+            exact
+            path="/admin"
+          >
+            <AdminLandingPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Membership Page else shows LoginPage
+            exact
+            path="/adminmembership"
+          >
+            <AdminMembershipPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Discounts Page else shows LoginPage
+            exact
+            path="/admindiscounts"
+          >
+            <AdminDiscountPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Tracker else shows LoginPage
+            exact
+            path="/admintracking"
+          >
+            <AdminTrackingPage />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/discounts" />
             ) : (
               // Otherwise, show the login page
               <LoginPage />
@@ -69,7 +105,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/discounts" />
             ) : (
               // Otherwise, show the registration page
               <RegisterPage />
