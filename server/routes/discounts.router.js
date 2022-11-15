@@ -8,13 +8,13 @@ const router = express.Router();
 // This GET will return all discounts in the database
 router.get("/", rejectUnauthenticated, (req, res) => {
   // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
-  const query = `SELECT "discounts".*, 
-	count("discounts_tracked"."id") AS "discounts_all_time", 
+  const query = `SELECT "discounts".*,
+	count("discounts_tracked"."id") AS "discounts_all_time",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '7 days') AND CURRENT_DATE) AS "7_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "30_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "1_year_count"
-	FROM "discounts" 
-	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id" 
+	FROM "discounts"
+	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
 	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";`;
   pool
@@ -40,7 +40,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   const isShown = req.body.isShown;
   const isRegional = req.body.isRegional;
   // POST sql query
-  const query = `INSERT INTO "discounts" 
+  const query = `INSERT INTO "discounts"
                 ("vendor_id", "description", "start_date", "expiration_date", discount_code, category_id, is_shown, is_regional)
                  VALUES ($1, $2, $3, $4, $5, $6 ,$7, $8);`;
   pool
@@ -77,7 +77,7 @@ router.put("/", rejectUnauthenticated, (req, res) => {
   const categoryId = req.body.categoryId;
   const isShown = req.body.isShown;
   const isRegional = req.body.isRegional;
-  const query = `UPDATE "discounts" 
+  const query = `UPDATE "discounts"
                  SET "vendor_id"=$1,
                  "description"=$2,
                  "start_date"=$3,
@@ -85,7 +85,7 @@ router.put("/", rejectUnauthenticated, (req, res) => {
                  "discount_code"=$5,
                  "category_id"=$6,
                  "is_shown"=$7,
-                 "is_regional"=$8 
+                 "is_regional"=$8
                  WHERE "id"=$9;`;
   pool
     .query(query, [
@@ -114,7 +114,7 @@ router.put("/", rejectUnauthenticated, (req, res) => {
 router.delete("/:discountid", rejectUnauthenticated, (req, res) => {
   console.log("In delete a discount with: ", req.params.discountid);
   const discountId = req.params.discountid;
-  const query = `DELETE FROM "discounts" 
+  const query = `DELETE FROM "discounts"
                  WHERE "id"=$1;`;
   pool
     .query(query, [discountId])

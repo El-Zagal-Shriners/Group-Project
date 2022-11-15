@@ -34,8 +34,8 @@ router.get("/close", rejectUnauthenticated, (req, res) => {
   // setup query text to calculate the distances between the user and
   // the cities in the DB and return the shortest closest cities with distance in miles.
   const queryText = `SELECT *,
-  ROUND(3959 * ACOS(COS(RADIANS($1)) * COS(RADIANS("lat")) * 
-  COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) * 
+  ROUND(3959 * ACOS(COS(RADIANS($1)) * COS(RADIANS("lat")) *
+  COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) *
   SIN(RADIANS("lat")))) AS "distance"
   FROM "location"
   ORDER BY "distance"
@@ -71,8 +71,8 @@ router.get("/check", rejectUnauthenticated, (req, res) => {
       // query to find cities within 30 miles of user.
       const queryText = `SELECT *
       FROM (SELECT *,
-        ROUND(3959 * ACOS(COS(RADIANS($1)) * COS(RADIANS("lat")) * 
-        COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) * 
+        ROUND(3959 * ACOS(COS(RADIANS($1)) * COS(RADIANS("lat")) *
+        COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) *
         SIN(RADIANS("lat")))) AS "distance" FROM "location") AS d
       WHERE "distance" <= '30'
       ORDER BY "distance";`;

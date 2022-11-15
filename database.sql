@@ -112,7 +112,7 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 
 -- SAMPLE CATEGORIES
 INSERT INTO "categories" ("name", "icon_class")
-VALUES					
+VALUES
 						('Restaurants', 'MdFastfood'),
 						('Bars/Drinks', 'BiBeer'),
 						('Sports', 'MdSportsBaseball'),
@@ -122,14 +122,14 @@ VALUES
 						('Rentals', 'MdCarRental'),
 						('Misc.', 'RiCheckboxBlankCircleLine'),
 						('Health/Beauty', 'CgPill');
-						
+
 --Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
-SELECT "discounts".*, 
-	count("discounts_tracked"."id") AS "discounts_all_time", 
+SELECT "discounts".*,
+	count("discounts_tracked"."id") AS "discounts_all_time",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '7 days') AND CURRENT_DATE) AS "7_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "30_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "1_year_count"
-	FROM "discounts" 
-	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id" 
-	GROUP BY "discounts_tracked"."discount_id", "discounts"."id" 
+	FROM "discounts"
+	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
+	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";

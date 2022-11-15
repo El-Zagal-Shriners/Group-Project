@@ -22,9 +22,9 @@ function RegisterForm() {
         is_authorized: true,
         is_verified: true,
         review_pending: false,
-        dues_paid: '2022-01-01',
-        membership_number: '1111',
-        admin_level: 4
+        dues_paid: "2022-01-01",
+        membership_number: "1111",
+        admin_level: 4,
       },
     });
   }; // end registerUser

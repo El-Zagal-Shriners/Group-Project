@@ -4,25 +4,23 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory,
 } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import UpdatedNavBar from "../Nav/Nav";
-import Footer from "../Footer/Footer";
-
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
 
 import "./App.css";
+import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
+import AdminMembershipPage from "../AdminMembershipPage/AdminMembershipPage";
+import AdminDiscountPage from "../AdminDiscountPage/AdminDiscountPage";
+import AdminTrackingPage from "../AdminTrackingPage/AdminTrackingPage";
 import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 
 function App() {
@@ -37,19 +35,9 @@ function App() {
   return (
     <Router>
       <div>
-        <UpdatedNavBar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -64,19 +52,43 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-
-          <ProtectedRoute
             // logged in brings users to DiscountsPage else shows LoginPage
             exact
             path="/discounts"
           >
             <DiscountsPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Page else shows LoginPage
+            exact
+            path="/admin"
+          >
+            <AdminLandingPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Membership Page else shows LoginPage
+            exact
+            path="/adminmembership"
+          >
+            <AdminMembershipPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Discounts Page else shows LoginPage
+            exact
+            path="/admindiscounts"
+          >
+            <AdminDiscountPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in brings users to Admin Tracker else shows LoginPage
+            exact
+            path="/admintracking"
+          >
+            <AdminTrackingPage />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/dependents">
@@ -87,7 +99,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/discounts" />
             ) : (
               // Otherwise, show the login page
               <LoginPage />
@@ -98,7 +110,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/discounts" />
             ) : (
               // Otherwise, show the registration page
               <RegisterPage />
@@ -121,7 +133,6 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
-        <Footer />
       </div>
     </Router>
   );

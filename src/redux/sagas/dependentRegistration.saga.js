@@ -1,13 +1,17 @@
 import { put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
-//ADD_DEPENDENT to fire with /api/registraion/dependent route
+//ADD_DEPENDENT to fire with /api/registration/dependent route
 function* addDependent(action) {
   try {
-    yield axios.post("/api/registration/dependent", action.payload);
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    yield axios.post("/api/registration/dependent", action.payload, config);
     yield put({ type: "ADD_DEPENDENT" });
   } catch (error) {
-    console.log("Error POSTING dependent regisration:", error);
+    console.log("Error POSTING dependent registration:", error);
   }
 }
 
