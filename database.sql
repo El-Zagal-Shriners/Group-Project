@@ -90,12 +90,12 @@ CREATE TABLE "location" (
 
 ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
 
-
-ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk0" FOREIGN KEY ("vendor_id") REFERENCES "vendors"("id");
+-- DOUBLE CHECK THAT THE "DELETE ON CASCADE" IS WORKING AS INTENDED || Tested working in Postico
+ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk0" FOREIGN KEY ("vendor_id") REFERENCES "vendors"("id") ON DELETE CASCADE;
 ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id") REFERENCES "categories"("id");
 
-
-ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id");
+-- DOUBLE CHECK THAT THE "DELETE ON CASCADE" IS WORKING AS INTENDED || Tested working in Postico
+ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id") ON DELETE CASCADE;
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 
 
@@ -133,3 +133,35 @@ SELECT "discounts".*,
 	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
 	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";
+
+--Sample discounts
+INSERT INTO "public"."discounts"("id","vendor_id","description","start_date","expiration_date","discount_code","category_id","is_shown","is_regional")
+VALUES
+(2,1,E'Discount A',NULL,NULL,NULL,1,TRUE,FALSE),
+(3,1,E'Discount B',NULL,NULL,NULL,1,TRUE,FALSE),
+(4,2,E'Discount X',NULL,NULL,NULL,1,TRUE,FALSE),
+(5,2,E'Discount Y',NULL,NULL,NULL,1,TRUE,FALSE),
+(6,3,E'Discount T',NULL,NULL,NULL,1,TRUE,FALSE),
+(7,3,E'Discount S',NULL,NULL,NULL,1,TRUE,FALSE);
+
+--Sample discount tracking
+INSERT INTO "public"."discounts_tracked"("id","discount_id","user_id","date")
+VALUES
+(1,2,2,E'2022-10-14'),
+(2,3,2,E'2022-11-14'),
+(3,4,2,E'2022-12-14'),
+(4,5,2,E'2022-11-01'),
+(5,6,2,E'2022-08-14'),
+(6,7,2,E'2020-02-14'),
+(7,2,2,E'2022-11-14'),
+(8,2,2,E'2022-06-14'),
+(9,3,2,E'2022-11-14'),
+(10,3,2,E'2022-08-14'),
+(11,7,2,E'2021-12-14');
+
+--Sample Vendors
+INSERT INTO "public"."vendors"("id","name","address","city","state_code","zip")
+VALUES
+(1,E'ABC',E'123 Some St',E'Fargo',E'ND',58104),
+(2,E'XYZ',E'541 Other St',E'West Fargo',E'ND',58078),
+(3,E'Test Company',E'777 Wrong St',E'Moorhead',E'MN',56560);
