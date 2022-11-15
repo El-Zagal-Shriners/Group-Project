@@ -1,6 +1,7 @@
-import { put, take, takeLatest } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
+// GET all discounts will calculated usage stats from database
 function* getDiscounts() {
   try {
     console.log("In discounts saga");
@@ -12,10 +13,46 @@ function* getDiscounts() {
   } catch (err) {
     console.log("Error setting discounts: ", err);
   }
-}
+} // End getDiscounts
+
+// POST a new discount to the discount table in database
+function* addDiscount(action) {
+  try {
+    console.log("In add discount");
+    yield axios.post(`api/discounts/`, action.payload);
+    yield put({ type: "GET_DISCOUNTS" });
+  } catch (err) {
+    console.log("Error adding discount: ", err);
+  }
+} // End addDiscount
+
+// PUT to edit an existing discount by discount_id
+function* editDiscount(action) {
+  try {
+    console.log("In edit discount with: ", action.payload);
+    yield axios.put(`api/discounts`, action.payload);
+    yield put({ type: "GET_DISCOUNTS" });
+  } catch (err) {
+    console.log("Error editing discount: ", err);
+  }
+} // End edit discount
+
+// DELETE to remove a discount by id
+function* removeDiscount(action) {
+  try {
+    console.log("In remove discount with: ", action.payload);
+    yield axios.delete(`api/discounts/${action.payload}`);
+    yield put({ type: "GET_DISCOUNTS" });
+  } catch (err) {
+    console.log("Error removing discount: ", err);
+  }
+} // End remove a discount
 
 function* discountSaga() {
   yield takeLatest("GET_DISCOUNTS", getDiscounts);
+  yield takeLatest("ADD_DISCOUNT", addDiscount);
+  yield takeLatest("EDIT_DISCOUNT", editDiscount);
+  yield takeLatest("REMOVE_DISCOUNT", removeDiscount);
 }
 
 export default discountSaga;

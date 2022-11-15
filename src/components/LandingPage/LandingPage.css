@@ -1,5 +1,5 @@
 .landing_page_size {
-  height: 65vh;
+  height: 100vh;
   background: url("../../../public/images/Theshrine.png");
   background-size: contain;
   background-position: center center;
@@ -12,4 +12,8 @@
 
 .bg_link_opacity {
   background-color: rgba(255, 255, 255, 0.75);
+}
+
+.bg_link_opacity:hover {
+  background-color: rgba(255, 255, 255, 0.9);
 }

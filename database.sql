@@ -98,6 +98,9 @@ ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id");
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 
+
+
+-- SAMPLE CITIES
 INSERT INTO "location" ("city", "state_code", "lng", "lat")
 VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 ('Jamestown', 'ND', '-98.708534', '46.909538'),
@@ -109,7 +112,7 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 
 -- SAMPLE CATEGORIES
 INSERT INTO "categories" ("name", "icon_class")
-VALUES					('Personal Care/Beauty', 'CgPill'),
+VALUES
 						('Restaurants', 'MdFastfood'),
 						('Bars/Drinks', 'BiBeer'),
 						('Sports', 'MdSportsBaseball'),
@@ -117,15 +120,16 @@ VALUES					('Personal Care/Beauty', 'CgPill'),
 						('Lodging', 'MdHotel'),
 						('Shopping', 'FaShoppingCart'),
 						('Rentals', 'MdCarRental'),
-						('Misc.', 'RiCheckboxBlankCircleLine');
-						
+						('Misc.', 'RiCheckboxBlankCircleLine'),
+						('Health/Beauty', 'CgPill');
+
 --Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
-SELECT "discounts".*, 
-	count("discounts_tracked"."id") AS "discounts_all_time", 
+SELECT "discounts".*,
+	count("discounts_tracked"."id") AS "discounts_all_time",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '7 days') AND CURRENT_DATE) AS "7_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "30_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "1_year_count"
-	FROM "discounts" 
-	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id" 
-	GROUP BY "discounts_tracked"."discount_id", "discounts"."id" 
+	FROM "discounts"
+	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
+	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";

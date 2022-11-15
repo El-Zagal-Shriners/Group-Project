@@ -1,4 +1,5 @@
 import { useState } from "react";
+import UpdatedNavBar from "../Nav/Nav";
 
 // components
 import DiscountCard from "./DiscountCard";
@@ -10,6 +11,7 @@ function DiscountsPage() {
 
   return (
     <>
+      <UpdatedNavBar />
       <DiscountFilter setFilteredDiscounts={setFilteredDiscounts} />
       {filteredDiscounts.map((thisDiscount) => {
         return <DiscountCard thisDiscount={thisDiscount} />;
