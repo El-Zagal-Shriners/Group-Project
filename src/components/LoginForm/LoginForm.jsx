@@ -25,17 +25,21 @@ function LoginForm() {
   }; // end login
 
   return (
-    <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
+    <form
+      className="d-flex flex-column align-items-center bg-light p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
+      onSubmit={login}
+    >
+      <h2 className="text-primary">Login</h2>
       {errors.loginMessage && (
         <h3 className="alert" role="alert">
           {errors.loginMessage}
         </h3>
       )}
       <div>
-        <label htmlFor="username">
+        <label className="text-primary" htmlFor="username">
           Username:
           <input
+            className="border-primary me-auto"
             type="text"
             name="username"
             required
@@ -45,9 +49,10 @@ function LoginForm() {
         </label>
       </div>
       <div>
-        <label htmlFor="password">
+        <label className="text-primary" htmlFor="password">
           Password:
           <input
+            className="border-primary w-auto me-auto"
             type="password"
             name="password"
             required
@@ -57,7 +62,12 @@ function LoginForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        <input
+          className="btn btn-primary"
+          type="submit"
+          name="submit"
+          value="Log In"
+        />
       </div>
     </form>
   );
