@@ -35,6 +35,9 @@ function DiscountFilter({ setFilteredDiscounts }) {
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
   function handleCitySelection(thisCity, cityIsSelected) {
+    console.log('in handleCitySelection, city is', thisCity);
+    console.log('in selected cities?', selectedCities.includes(thisCity));
+    console.log('is city selected?', cityIsSelected);
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
@@ -42,9 +45,15 @@ function DiscountFilter({ setFilteredDiscounts }) {
       setSelectedCities(updatedCitiesArr);
       console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
     } else {
-      const updatedCitiesArr = selectedCities;
-      updatedCitiesArr.push(thisCity);
-      setSelectedCities(updatedCitiesArr);
+      // if thisCity is already in selectedCities arrray, don't add it again (return)
+      // else add thisCity to selectedCities array
+      if(selectedCities.includes(thisCity)){
+        return
+      } else {
+        const updatedCitiesArr = [...selectedCities];
+        updatedCitiesArr.push(thisCity);
+        setSelectedCities(updatedCitiesArr);
+      }
     }
   }
 
@@ -61,11 +70,16 @@ function DiscountFilter({ setFilteredDiscounts }) {
     return filteredArr;
   }
 
-  console.log("selected cities are", selectedCities);
+  
+  useEffect(()=> console.log('in Discount filter', selectedCities),[selectedCities]);
 
-  useEffect(() => dispatch({ type: "GET_CATEGORIES" }), []);
-  useEffect(() => dispatch({ type: "GET_ALL_CITIES" }), []);
-  useEffect(() => dispatch({ type: "GET_CLOSE_CITIES" }), []);
+
+
+  useEffect(() => {
+    dispatch({ type: "GET_CATEGORIES" })
+    dispatch({ type: "GET_ALL_CITIES" })
+    dispatch({ type: "GET_CLOSE_CITIES" })
+  }, []);
 
   return (
     <Container>
@@ -100,7 +114,7 @@ function DiscountFilter({ setFilteredDiscounts }) {
           <DropdownButton id="city-select-dropdown" title="Select">
             <Dropdown.ItemText>Select A City</Dropdown.ItemText>
             {allCities.map((thisCity) => {
-              return <Dropdown.Item as="button">{thisCity.city}</Dropdown.Item>;
+              return <Dropdown.Item as="button" onClick={(()=> handleCitySelection(thisCity.city, false))}>{thisCity.city}</Dropdown.Item>;
             })}
           </DropdownButton>
         </div>
