@@ -89,5 +89,23 @@ router.put('/:discountid', rejectUnauthenticated, (req, res) => {
       });
 }); // End edit discount PUT
 
+// Delete a discount by discount ID
+router.delete('/:discountid', rejectUnauthenticated, (req, res) => {
+  console.log('In delete a discount with: ', req.params.discountid);
+  const discountId = req.params.discountid;
+  const query = `DELETE FROM "discounts" 
+                 WHERE "id"=$1;`;
+  pool.query(query, [discountId])
+      .then(result => {
+          // Send a success status
+          res.sendStatus(200);
+      })
+      .catch(err => {
+          // Log error and send error status if error occurs
+          console.log('Error deleting a player');
+          res.sendStatus(500);
+      });
+}); // End delete a discount
+
 // export the router
 module.exports = router;
