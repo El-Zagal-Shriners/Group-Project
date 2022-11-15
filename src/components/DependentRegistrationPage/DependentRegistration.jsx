@@ -56,14 +56,14 @@ function DependentRegistrationPage() {
           <input
             required
             placeholder="Username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+            value={usernameIn}
+            onChange={(event) => setUsernameIn(event.target.value)}
           />
           <input
             required
             placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={passwordIn}
+            onChange={(event) => setPasswordIn(event.target.value)}
           />
           <div>
             <button type="submit">Create Account</button>

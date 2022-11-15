@@ -14,7 +14,7 @@ const accountsRouter = require("./routes/accounts.router");
 const discountsRouter = require("./routes/discounts.router");
 const vendorRouter = require("./routes/vendor.router");
 const categoriesRouter = require("./routes/categories.router");
-const dependentRegistration = require('./routes/dependentRegistration.router')
+const dependentRegistration = require("./routes/dependentRegistration.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
