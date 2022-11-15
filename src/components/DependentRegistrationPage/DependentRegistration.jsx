@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import './DependentRegistrationPage.css'
+import "./DependentRegistrationPage.css";
 
 function DependentRegistrationPage() {
   const [firstName, setFirstName] = useState("");
@@ -31,47 +31,57 @@ function DependentRegistrationPage() {
       <h2 className="header">Dependent Registration Page</h2>
       <form onSubmit={createAccount} className="createAccount">
         <div class="container text-center">
-        <input className="fs-4 text-primary" 
-          required
-          placeholder="First Name"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-        />
+          <input
+            className="fs-4 text-primary"
+            required
+            placeholder="First Name"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+          />
         </div>
         <div class="container text-center">
-        <input className="fs-4 text-primary" 
-          required
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-        />
+          <input
+            className="fs-4 text-primary"
+            required
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+          />
         </div>
         <div class="container text-center">
-        <input className="fs-4 text-primary" 
-          required
-          placeholder="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+          <input
+            className="fs-4 text-primary"
+            required
+            placeholder="Email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
         </div>
         <div class="container text-center">
-        <input className="fs-4 text-primary" 
-          required
-          placeholder="Username"
-          value={usernameIn}
-          onChange={(event) => setUsernameIn(event.target.value)}
-        />
+          <input
+            className="fs-4 text-primary"
+            required
+            placeholder="Username"
+            value={usernameIn}
+            onChange={(event) => setUsernameIn(event.target.value)}
+          />
         </div>
         <div class="container text-center">
-        <input className="fs-4 text-primary" 
-          required
-          placeholder="Password"
-          value={passwordIn}
-          onChange={(event) => setPasswordIn(event.target.value)}
-        />
+          <input
+            className="fs-4 text-primary"
+            required
+            placeholder="Password"
+            value={passwordIn}
+            onChange={(event) => setPasswordIn(event.target.value)}
+          />
         </div>
         <div class="container text-center">
-          <input className="btn" type="submit" name="submit" value="Create Account" />
+          <input
+            className="btn"
+            type="submit"
+            name="submit"
+            value="Create Account"
+          />
         </div>
       </form>
     </div>
