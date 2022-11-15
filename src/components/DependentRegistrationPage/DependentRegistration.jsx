@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DependentRegistrationPage.css";
 import Button from "react-bootstrap/Button";
+import useSearchParams from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
@@ -12,6 +13,8 @@ function DependentRegistrationPage() {
   const [passwordIn, setPasswordIn] = useState("");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  
 
   const createAccount = (event) => {
     event.preventDefault();
@@ -24,6 +27,7 @@ function DependentRegistrationPage() {
         email: email,
         username: usernameIn,
         password: passwordIn,
+        primary_member_id: searchParams,
       },
     });
   };
@@ -75,6 +79,9 @@ function DependentRegistrationPage() {
             value={passwordIn}
             onChange={(event) => setPasswordIn(event.target.value)}
           />
+          </div>
+          <div className="params">
+            {params.get(setSearchParams)}
           </div>
           <div class="container text-center">
             <Button variant="primary">Create Account</Button>
