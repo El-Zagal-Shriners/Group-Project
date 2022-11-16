@@ -6,6 +6,7 @@ function ReviewItem({ review }) {
   const dues = review.dues_paid.split("-")[0];
   // setup local state
   const [show, setShow] = useState(false);
+  const [authorized, setAuthorized] = useState(true);
 
   return (
     <>
@@ -57,10 +58,10 @@ function ReviewItem({ review }) {
             </Row>
             <Row>
               <Col xs={4}>
-                <Button>Activate</Button>
+                <Button onClick={() => setAuthorized(true)}>Activate</Button>
               </Col>
               <Col>
-                <Button>Deactive</Button>
+                <Button onClick={() => setAuthorized(false)}>Deactive</Button>
               </Col>
             </Row>
           </Container>

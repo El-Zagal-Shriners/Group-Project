@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Col, Container, Form, ListGroup, Modal, Row } from "react-bootstrap";
+import { Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
 function ApprovalItem({ approval }) {
   const dues = approval.dues_paid.split("-")[0];
   // setup local state.
   const [show, setShow] = useState(false);
+  const [verification, setVerification] = useState(false);
 
   return (
     <>
@@ -57,10 +58,10 @@ function ApprovalItem({ approval }) {
             </Row>
             <Row>
               <Col xs={4}>
-                <Button>Approve</Button>
+                <Button onClick={() => setVerification(true)}>Approve</Button>
               </Col>
               <Col>
-                <Button>Deny</Button>
+                <Button onClick={() => setVerification(false)}>Deny</Button>
               </Col>
             </Row>
           </Container>
