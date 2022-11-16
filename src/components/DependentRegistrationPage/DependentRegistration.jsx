@@ -17,7 +17,6 @@ function DependentRegistrationPage() {
 
   const createAccount = (event) => {
     event.preventDefault();
-
     dispatch({
       type: "ADD_DEPENDENT",
       payload: {
