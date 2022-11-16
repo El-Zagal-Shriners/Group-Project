@@ -26,6 +26,9 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
 
   // state for managing search parameters
   const [selectedCities, setSelectedCities] = useState([]);
+  
+
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
@@ -183,9 +186,10 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
             <div className="text-center">(select multiple)</div>
           </div>
           <div className="d-flex justify-content-between flex-row m-1 p-1">
-            {closestThreeCities().map((thisCity) => {
+            {closestThreeCities().map((thisCity, index) => {
               return (
                 <ToggleButton
+                  key ={index}
                   className="mb-2"
                   type="checkbox"
                   variant="outline-primary"
