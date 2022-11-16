@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 import "./DependentRegistrationPage.css";
 import button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
@@ -33,7 +35,36 @@ function DependentRegistrationPage() {
   return (
     <>
       <UpdatedNavBar />
-      <div className="background">
+      <form onSubmit={createAccount}>
+
+      <FloatingLabel controlId="floatingInput" label="First Name">
+        <Form.Control type="name" placeholder="name@example.com" value={firstName}
+              onChange={(event) => setFirstName(event.target.value)} />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput" label="Last Name">
+        <Form.Control type="name" placeholder="name@example.com" value={lastName}
+              onChange={(event) => setLastName(event.target.value)} />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingEmail" label="Email">
+        <Form.Control type="email" placeholder="email" value={email}
+            onChange={(event) => setEmail(event.target.value)} />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingUsername" label="Username">
+        <Form.Control type="name" placeholder="name@example.com" value={usernameIn}
+              onChange={(event) => setUsernameIn(event.target.value)} />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingPassword" label="Password">
+        <Form.Control type="name" placeholder="name@example.com" value={passwordIn}
+              onChange={(event) => setPasswordIn(event.target.value)} />
+      </FloatingLabel>
+
+      </form>
+
+      {/* <div className="background">
         <div class="container text-center">
           <h2 className="header">Dependent Registration Page</h2>
         </div>
@@ -85,7 +116,7 @@ function DependentRegistrationPage() {
             </button>
           </div>
         </form>
-      </div>
+      </div> */}
     </>
   );
 }
