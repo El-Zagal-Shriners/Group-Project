@@ -1,7 +1,7 @@
 import UpdatedNavBar from "../Nav/Nav";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 function AdminLandingPage() {
   const history = useHistory();
@@ -25,37 +25,57 @@ function AdminLandingPage() {
         Admin Landing Page
       </h2>{" "}
       <br />
-      <div class="card text-center">
         <div class="card-body">
-          <h5 class="card-title text-primary">Manage Shriner Members</h5>
+        <div class="container text-center">
+          <h5 class="card-title text-primary">Manage Shriner Members</h5> <br/>
           <p class="card-text">
             Administrative access to member's portal information. Administrator
             can update, edit, remove or delete member and dependent portal
             access.
           </p>
-          <Button onClick={manageMembers}> Manage Members </Button>
+          <Button
+          size="lg"
+          variant="outline-primary"
+          onClick={manageMembers}
+          className="me-2 d-flex justify-content-center container text-center"
+        >
+          Manage Members
+          </Button>
         </div>
       </div>
       <br />
-      <div class="card text-center">
+      <div class="container text-center">
         <div class="card-body">
-          <h5 class="card-title text-primary">Discount Manager</h5>
+          <h5 class="card-title text-primary">Discount Manager</h5> <br/>
           <p class="card-text">
             Administrative access to discount portal information. Administrator
             can update, edit, remove or delete company and discount information.
           </p>
-          <Button onClick={manageDiscounts}> Manage Discounts </Button>
+          <Button
+          size="lg"
+          variant="outline-primary"
+          onClick={manageDiscounts}
+          className="me-2 d-flex justify-content-center container text-center"
+        >
+          Manage Discounts
+          </Button>
         </div>
       </div>
       <br />
-      <div class="card text-center">
+      <div class="container text-center">
         <div class="card-body">
-          <h5 class="card-title text-primary">Discount Tracker</h5>
+          <h5 class="card-title text-primary">Discount Tracker</h5> <br/>
           <p class="card-text">
-            Administrative access to discount portal information. Administrator
-            can update, edit, remove or delete company and discount information.
+            Administrative access to discount tracker. Administrator can view, reset, and delete discount tracker.
           </p>
-          <Button onClick={manageDiscounts}> Manage Discounts </Button>
+          <Button
+          size="lg"
+          variant="outline-primary"
+          onClick={discountTracker}
+          className="me-2 d-flex justify-content-center container text-center"
+        >
+          Track Discounts
+          </Button>
         </div>
       </div>
       {/* <h2> Manage Members</h2>
@@ -66,3 +86,5 @@ function AdminLandingPage() {
 }
 
 export default AdminLandingPage;
+
+//onClick={manageDiscounts
