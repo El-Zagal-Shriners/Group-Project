@@ -41,7 +41,7 @@ function DependentRegistrationPage() {
         <form onSubmit={createAccount}>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingInput"
+            controlId="floatingFirstName"
             label="First Name"
           >
             <Form.Control
@@ -54,7 +54,7 @@ function DependentRegistrationPage() {
 
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingInput"
+            controlId="floatingLastName"
             label="Last Name"
           >
             <Form.Control
