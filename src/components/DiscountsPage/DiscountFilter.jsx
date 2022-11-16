@@ -16,7 +16,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   const dispatch = useDispatch();
 
   // selects array of objects from discounts reducer with all available discounts
-  const allDiscounts = useSelector((store) => store.discounts);
+  const allDiscounts = useSelector((store) => store.discounts.discountsReducer);
 
   // selects all cities ordered closest to farthest
   const allCities = useSelector((store) => store.cities.allCitiesReducer);
@@ -35,6 +35,17 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
 
   function filterSearchResults(){
     console.log('in filterSearchResults', allDiscounts);
+
+    
+
+  //   // filter
+  //   let filteredDiscounts = array.filter((thisItem) => {
+  //     return thisItem !== itemToRemove;
+  //   });
+    
+  //   return filteredArr;
+  // }
+
   }
 
 
@@ -99,6 +110,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
     dispatch({ type: "GET_CATEGORIES" });
     dispatch({ type: "GET_ALL_CITIES" });
     dispatch({ type: "GET_CLOSE_CITIES" });
+    dispatch({ type: "GET_DISCOUNTS"});
   }, []);
 
   return (
