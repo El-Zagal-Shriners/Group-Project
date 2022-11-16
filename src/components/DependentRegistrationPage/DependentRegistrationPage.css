@@ -1,9 +1,18 @@
 .header {
-  color: #820a1e;
-}
-
-.btn-primary:hover{
+    color: #820a1e;
+  }
+  
+  .body {
+    text-align: center;
+    color: #820a1e;
+  }
+  
+  .btn-primary:hover {
     background-color: #820a1e;
     color: white;
- 
-}
+  }
+  
+  .btn-primary{
+      background-color: white;
+      color:#820a1e;
+  }
