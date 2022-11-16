@@ -11,25 +11,20 @@ function ApprovalItem({ approval }) {
     <>
       <ListGroup.Item onClick={() => setShow(true)} className="p-1">
         <ListGroup horizontal>
-          <ListGroup.Item className="col-2 text-center">
+          <ListGroup.Item className="col-4 text-center">
             {approval.first_name}
           </ListGroup.Item>
-          <ListGroup.Item className="col-2 text-center">
+          <ListGroup.Item className="col-4 text-center">
             {approval.last_name}
           </ListGroup.Item>
-          <ListGroup.Item className="col-3 text-center">
+          <ListGroup.Item className="col-4 text-center">
             {approval.membership_number}
-          </ListGroup.Item>
-          <ListGroup.Item className="col-2 text-center">{dues}</ListGroup.Item>
-          <ListGroup.Item className="col text-center">
-            {/* <Button>Approve</Button>
-                  <Button>Deny</Button> */}
           </ListGroup.Item>
         </ListGroup>
       </ListGroup.Item>
-      <Modal 
+      <Modal
         show={show}
-        onHide={()=> setShow(false)}
+        onHide={() => setShow(false)}
         animation={false}
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -41,21 +36,39 @@ function ApprovalItem({ approval }) {
         <Modal.Body className="show-grid">
           <Container>
             <Row>
-              <Col>
-                  <p>{approval.first_name}</p>
+              <Col xs={6}>
+                <p>First Name</p>
+                <p>{approval.first_name}</p>
               </Col>
               <Col>
-                  {approval.last_name}
+                <p>Last Name</p>
+                <p>{approval.last_name}</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6}>
+                <p>Member #</p>
+                <p>{approval.membership_number}</p>
+              </Col>
+              <Col>
+                <p>Dues Paid</p>
+                <p>{dues}</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={4}>
+                <Button>Approve</Button>
+              </Col>
+              <Col>
+                <Button>Deny</Button>
               </Col>
             </Row>
           </Container>
-          <Form>
-          </Form>
         </Modal.Body>
 
         <Modal.Footer>
           {/* make close a cleanup method */}
-          <Button onClick={()=> setShow(false)}>Close</Button>
+          <Button onClick={() => setShow(false)}>Close</Button>
           <Button>Save</Button>
         </Modal.Footer>
       </Modal>

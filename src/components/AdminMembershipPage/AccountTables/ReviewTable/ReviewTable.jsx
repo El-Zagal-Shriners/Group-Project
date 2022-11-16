@@ -8,20 +8,14 @@ function ReviewTable({ reviews }) {
       <ListGroup>
         <ListGroup.Item className="p-1">
           <ListGroup horizontal>
-            <ListGroup.Item className="col-2 p-0 text-center">
+            <ListGroup.Item className="col-4 p-0 text-center">
               First Name
             </ListGroup.Item>
-            <ListGroup.Item className="col-2 p-0 text-center">
+            <ListGroup.Item className="col-4 p-0 text-center">
               Last Name
             </ListGroup.Item>
-            <ListGroup.Item className="col-3 p-0 text-center">
-              Member Number
-            </ListGroup.Item>
-            <ListGroup.Item className="col-2 p-0 text-center">
-              Dues Paid
-            </ListGroup.Item>
             <ListGroup.Item className="col p-0 text-center">
-              Options
+              Member Number
             </ListGroup.Item>
           </ListGroup>
         </ListGroup.Item>
