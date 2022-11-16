@@ -30,19 +30,21 @@ function UserPage() {
         </p>
         <button className="btn btn-info">{allIconComponents.editUser}</button>
         </div>
-        {accounts.accountDependents.length > 0 && 
-          <>
           <div className="d-flex justify-content-between align-items-center">
           <h6 className="text-decoration-underline mb-0 fw-bold">Dependent Accounts</h6>
           <button className="btn btn-success">{allIconComponents.add}</button>
           </div>
+        {accounts.accountDependents.length > 0 ? 
+          <>
             {accounts.accountDependents.map((dependent)=>
-            <div className="d-flex justify-content-between align-items-center">
+            <div key={dependent.id} className="d-flex justify-content-between align-items-center">
               <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
               <button className="btn btn-outline-danger">{allIconComponents.delete}</button>
             </div>
             )}
-          </>}
+          </>
+          :
+          <p>No dependent accounts!</p>}
           <LogOutButton className="btn btn-outline-warning" />
       </div>
     </>
