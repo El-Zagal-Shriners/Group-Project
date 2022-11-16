@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DependentRegistrationPage.css";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 import button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
