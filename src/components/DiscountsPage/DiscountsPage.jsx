@@ -24,29 +24,16 @@ function DiscountsPage() {
   const selectedCategories = useSelector(
     (store) => store.filter.selectedCategoriesReducer
   );
-  // redux store containing all discounts after filter is applied
-  const filteredDiscounts = useSelector(
-    (store) => store.filter.filteredDiscountsReducer
-  )
-  
-  // state for managing opening and closing filter off canvas
-  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
-  
+  // redux store containing all available member discounts
+  const allDiscounts = useSelector(
+    (store) => store.discounts.memberDiscountsReducer
+  );
 
-  // this function will take this list of all discounts and filter it based on the 
-  // user input from the discountFilterOffCanvas and company search bar
-  function filterDiscounts() {
-    
-    //
-
-  }
+  const [showFilter, setShowFilter] = useState(false);
 
 
-
-
-  useEffect(()=>dispatch({ type: "GET_DISCOUNTS"}),[]);
-  useEffect(()=>console.log("allDiscounts is", allDiscounts), [allDiscounts]);
-
+  useEffect(()=> dispatch({type: "GET_MEMBER_DISCOUNTS"}),[]);
+  useEffect(()=> console.log('memberDiscounts are', allDiscounts), [allDiscounts]);
 
   return (
     <>
