@@ -1,7 +1,16 @@
 import { combineReducers } from "redux";
 
-const discountsReducer = (state = [], action) => {
-  if (action.type === "SET_DISCOUNTS") {
+
+const memberDiscountsReducer = (state = [], action) => {
+  if (action.type === "SET_MEMBER_DISCOUNTS") {
+    return action.payload;
+  } else {
+    return state;
+  }
+};
+
+const adminDiscountsReducer = (state = [], action) => {
+  if (action.type === "SET_ADMIN_DISCOUNTS") {
     return action.payload;
   } else {
     return state;
@@ -9,5 +18,6 @@ const discountsReducer = (state = [], action) => {
 };
 
 export default combineReducers({
-  discountsReducer,
+  adminDiscountsReducer,
+  memberDiscountsReducer
 });

@@ -5,8 +5,29 @@ const {
 } = require("../modules/authentication-middleware");
 const router = express.Router();
 
-// This GET will return all discounts in the database
-router.get("/", rejectUnauthenticated, (req, res) => {
+// This GET will return all discounts with their parent vendor info and category info
+// All relevent info for the member discount page
+router.get("/member", rejectUnauthenticated, (req, res) => {
+  // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
+  const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "description", "start_date", "expiration_date", "discount_code", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
+  FROM "discounts"
+  JOIN "vendors" ON "vendors"."id" = "vendor_id"
+  JOIN "categories" ON "categories"."id" = "category_id"
+  WHERE "is_shown"=true;`;
+  pool
+    .query(query)
+    .then((result) => {
+      // return results from query
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      // log the error if one occurs
+      console.log("Error in getting current discounts: ", err);
+    });
+}); // End GET discounts
+
+// This GET will return all discounts in the database (for admin page)
+router.get("/admin", rejectUnauthenticated, (req, res) => {
   // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
   const query = `SELECT "discounts".*,
 	count("discounts_tracked"."id") AS "discounts_all_time",
