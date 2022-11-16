@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 function RegisterForm() {
   const [usernameIn, setUsernameIn] = useState("");
   const [passwordIn, setPasswordIn] = useState("");
+  const [firstNameIn, setFirstNameIn] = useState("");
+  const [lastNameIn, setLastNameIn] = useState("");
+  const [emailIn, setEmailIn] = useState("");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -41,30 +46,80 @@ function RegisterForm() {
         </h3>
       )}
       <div>
-        <label className="text-primary" htmlFor="username">
-          Username:
-          <input
-            className="border-primary me-auto"
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Username"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
             type="text"
             name="username"
             value={usernameIn}
+            placeholder="Username"
             required
             onChange={(event) => setUsernameIn(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label className="text-primary" htmlFor="password">
-          Password:
-          <input
-            className="border-primary me-auto"
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingFirstName"
+          label="First Name"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
+            type="text"
+            name="firstName"
+            value={firstNameIn}
+            placeholder="First Name"
+            required
+            onChange={(event) => setFirstNameIn(event.target.value)}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingLastName"
+          label="Last Name"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
+            type="text"
+            name="lastName"
+            value={lastNameIn}
+            placeholder="Last Name"
+            required
+            onChange={(event) => setLastNameIn(event.target.value)}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingEmail"
+          label="Email"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
+            type="email"
+            name="emailIn"
+            value={emailIn}
+            placeholder="Email"
+            required
+            onChange={(event) => setEmailIn(event.target.value)}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          className="text-primary"
+          controlId="floatingPassword"
+          label="Password"
+        >
+          <Form.Control
             type="password"
             name="password"
+            placeholder="Password"
             value={passwordIn}
             required
             onChange={(event) => setPasswordIn(event.target.value)}
           />
-        </label>
+        </FloatingLabel>
       </div>
       <div>
         <input
