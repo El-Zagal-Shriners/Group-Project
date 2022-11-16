@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 
 // react boostrap components
 import Container from "react-bootstrap/Container";
-import Badge from "react-bootstrap/Badge";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -17,91 +16,119 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   const dispatch = useDispatch();
 
   // selects array of objects from discounts reducer with all available discounts
-  const allDiscounts = useSelector((store) => store.discounts);
+  const allDiscounts = useSelector((store) => store.discounts.discountsReducer);
 
-  // selects all cities ordered closest to farthest
+  // selects all cities
   const allCities = useSelector((store) => store.cities.allCitiesReducer);
 
+  // select all categories
   const allCategories = useSelector((store) => store.categories);
 
-  // state that tracks the checked status of the three nearest cities
-  const [cityOneChecked, setCityOneChecked] = useState(false);
-  const [cityTwoChecked, setCityTwoChecked] = useState(false);
-  const [cityThreeChecked, setCityThreeChecked] = useState(false);
+  // redux stores for managing search parameters
+  const selectedCities = useSelector(
+    (store) => store.filter.selectedCitiesReducer
+  );
+  const selectedCategories = useSelector(
+    (store) => store.filter.selectedCategoriesReducer
+  );
 
-  // state for managing search parameters
-  const [selectedCities, setSelectedCities] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
+  function filterSearchResults() {
+    // console.log('in filterSearchResults', allDiscounts);
+    // filter discounts
+    //   // filter
+    //   let filteredDiscounts = array.filter((thisItem) => {
+    //     return thisItem !== objectToRemove;
+    //   });
+    //   return filteredArr;
+    // }
+  }
+
+  useEffect(() => {
+    filterSearchResults();
+    console.log("selectedcities are", selectedCities);
+  }, [selectedCategories, selectedCities]);
+
   function handleCitySelection(thisCity, cityIsSelected) {
-    console.log("in handleCitySelection, city is", thisCity);
-    console.log("in selected cities?", selectedCities.includes(thisCity));
-    console.log("is city selected?", cityIsSelected);
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
-      const updatedCitiesArr = removeItemFromArray(thisCity, selectedCities);
-      setSelectedCities(updatedCitiesArr);
       console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
+      const updatedCitiesArr = removeObjectFromArray(thisCity, selectedCities);
+      dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
       if (selectedCities.includes(thisCity)) {
+        console.log("city is already in array, dont add again");
         return;
       } else {
+        console.log("adding this city to array");
         const updatedCitiesArr = [...selectedCities];
         updatedCitiesArr.push(thisCity);
-        setSelectedCities(updatedCitiesArr);
+        dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
       }
     }
   }
 
+  // takes a category object
   function handleCategorySelection(thisCat, catIsSelected) {
-    // if category is already selected, remove it from the selectedCities array
-    // else (city not yet selected), add it to the selected Cities array
-    console.log("in handleCategorySelection, city is", thisCat);
-    console.log("in selected cities?", selectedCities.includes(thisCat));
-    console.log("is city selected?", catIsSelected);
-    if (catIsSelected) {
-      const updatedCategoriesArr = removeItemFromArray(
-        thisCat,
-        selectedCategories
-      );
-      setSelectedCategories(updatedCategoriesArr);
-      console.log(
-        "in handleCategorySelection, deselecting cat",
-        updatedCategoriesArr
-      );
+    // if thisCat is already in selectedCategories arrray, don't add it again (return)
+    // else add thisC to selectedCategories array
+    if (selectedCategories.some((catObj) => thisCat.id === catObj.id)) {
+      console.log("cat is already in array, dont add again");
+      return;
     } else {
-      // if thisCity is already in selectedCities arrray, don't add it again (return)
-      // else add thisCity to selectedCities array
-      if (selectedCategories.includes(thisCat)) {
-        return;
-      } else {
-        const updatedCategoriesArr = [...selectedCategories];
-        updatedCategoriesArr.push(thisCat);
-        setSelectedCategories(updatedCategoriesArr);
-      }
+      console.log("adding this cat to array");
+      const updatedCategoriesArr = [...selectedCategories];
+      updatedCategoriesArr.push(thisCat);
+      dispatch({
+        type: "SET_SELECTED_CATEGORIES",
+        payload: updatedCategoriesArr,
+      });
     }
   }
 
-  // this function removes from the selected categories
-  // and/or cities arrays items that the user deselects
-  function removeItemFromArray(itemToRemove, array) {
-    console.log("inRemoveItemFromArray", array, itemToRemove);
-
+  // this function removes an object from an array that has the
+  // same id as the objectToRemove parameter
+  function removeObjectFromArray(objectToRemove, array) {
+    console.log("inRemoveItemFromArray", array, objectToRemove);
     let filteredArr = array.filter((thisItem) => {
-      return thisItem !== itemToRemove;
+      return thisItem.id !== objectToRemove.id;
     });
+    console.log("inRemoveItemFromArray, filtered array is", filteredArr);
+
     return filteredArr;
+  }
+
+  // this function takes an array of city objects and returns
+  // a new array with the first three objects only
+  function closestThreeCities() {
+    const firstThreeCities = [];
+    for (let i = 0; i <= 2; i++) {
+      firstThreeCities.push(allCities[i]);
+    }
+    return firstThreeCities;
   }
 
   useEffect(() => {
     dispatch({ type: "GET_CATEGORIES" });
     dispatch({ type: "GET_ALL_CITIES" });
     dispatch({ type: "GET_CLOSE_CITIES" });
+    dispatch({ type: "GET_DISCOUNTS" });
   }, []);
+
+  // store state in redux, so user can leave and return without re-inputting
+  useEffect(() => {
+    dispatch({
+      type: "SET_FILTER_PARAMS",
+      payload: {
+        selectedCities,
+        selectedCategories,
+      },
+    });
+  }, [selectedCities, selectedCategories]);
 
   return (
     <Container>
@@ -119,7 +146,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                 <Dropdown.Item
                   as="button"
                   key={index}
-                  onClick={() => handleCategorySelection(thisCat.name, false)}
+                  onClick={() => handleCategorySelection(thisCat, false)}
                 >
                   {thisCat.name}
                 </Dropdown.Item>
@@ -145,7 +172,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                 <Dropdown.Item
                   as="button"
                   key={index}
-                  onClick={() => handleCitySelection(thisCity.city, false)}
+                  onClick={() => handleCitySelection(thisCity, false)}
                 >
                   {thisCity.city}
                 </Dropdown.Item>
@@ -161,47 +188,32 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
             <div className="text-center">(select multiple)</div>
           </div>
           <div className="d-flex justify-content-between flex-row m-1 p-1">
-            <ToggleButton
-              className="mb-2"
-              type="checkbox"
-              variant="outline-primary"
-              checked={cityOneChecked}
-              onClick={() => {
-                handleCitySelection(allCities[0].city, cityOneChecked);
-                setCityOneChecked(!cityOneChecked);
-              }}
-            >
-              {allCities.length > 0 && allCities[0].city}
-              {cityOneChecked && allIconComponents.checkmark}
-            </ToggleButton>
-
-            <ToggleButton
-              className="mb-2"
-              type="checkbox"
-              variant="outline-primary"
-              checked={cityTwoChecked}
-              onClick={() => {
-                handleCitySelection(allCities[1].city, cityTwoChecked);
-                setCityTwoChecked(!cityTwoChecked);
-              }}
-            >
-              {allCities.length > 0 && allCities[1].city}
-              {cityTwoChecked && allIconComponents.checkmark}
-            </ToggleButton>
-
-            <ToggleButton
-              className="mb-2"
-              type="checkbox"
-              variant="outline-primary"
-              checked={cityThreeChecked}
-              onClick={() => {
-                handleCitySelection(allCities[2].city, cityThreeChecked);
-                setCityThreeChecked(!cityThreeChecked);
-              }}
-            >
-              {allCities.length > 0 && allCities[2].city}
-              {cityThreeChecked && allIconComponents.checkmark}
-            </ToggleButton>
+            {closestThreeCities().map((thisCity, index) => {
+              return (
+                <ToggleButton
+                  key={index}
+                  className="mb-2"
+                  type="checkbox"
+                  variant="outline-primary"
+                  checked={selectedCities.some(
+                    (selectedCity) => selectedCity.id === thisCity.id
+                  )}
+                  onClick={() => {
+                    handleCitySelection(
+                      thisCity,
+                      selectedCities.some(
+                        (selectedCity) => selectedCity.id === thisCity.id
+                      )
+                    );
+                  }}
+                >
+                  {allCities.length > 0 && thisCity.city}
+                  {selectedCities.some(
+                    (selectedCity) => selectedCity.id === thisCity.id
+                  ) && allIconComponents.checkmark}
+                </ToggleButton>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -221,12 +233,16 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   key={index}
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
-                    setSelectedCategories(
-                      removeItemFromArray(thisCat, selectedCategories)
-                    )
+                    dispatch({
+                      type: "SET_SELECTED_CATEGORIES",
+                      payload: removeObjectFromArray(
+                        thisCat,
+                        selectedCategories
+                      ),
+                    })
                   }
                 >
-                  {thisCat} {allIconComponents.exit}
+                  {thisCat.name} {allIconComponents.exit}
                 </Button>
               );
             })}
@@ -242,12 +258,13 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   size="sm"
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
-                    setSelectedCities(
-                      removeItemFromArray(thisCity, selectedCities)
-                    )
+                    dispatch({
+                      type: "SET_SELECTED_CITIES",
+                      payload: removeObjectFromArray(thisCity, selectedCities),
+                    })
                   }
                 >
-                  {thisCity}
+                  {thisCity.city}
                   {allIconComponents.exit}
                 </Button>
               );
@@ -255,6 +272,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
           </div>
         </div>
       </div>
+
       <div className="d-flex flex-row justify-content-center align-items-center">
         <Button
           size="lg"
