@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
+import "./RegistrationForm.css";
 
 function RegisterForm() {
   const [usernameIn, setUsernameIn] = useState("");
@@ -9,6 +10,8 @@ function RegisterForm() {
   const [firstNameIn, setFirstNameIn] = useState("");
   const [lastNameIn, setLastNameIn] = useState("");
   const [emailIn, setEmailIn] = useState("");
+  const [duesPaid, setDuesPaid] = useState("");
+  const [memberNumber, setMemberNumber] = useState("");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -20,23 +23,18 @@ function RegisterForm() {
       payload: {
         username: usernameIn,
         password: passwordIn,
-        first_name: "Llyod",
-        last_name: "The Unicorn",
-        email: "sample-email@email.com",
-        primary_member_id: 1,
-        is_authorized: true,
-        is_verified: true,
-        review_pending: false,
-        dues_paid: "2022-01-01",
-        membership_number: "1111",
-        admin_level: 4,
+        first_name: firstNameIn,
+        last_name: lastNameIn,
+        email: emailIn,
+        dues_paid: duesPaid,
+        membership_number: memberNumber,
       },
     });
   }; // end registerUser
 
   return (
     <form
-      className="d-flex flex-column align-items-center bg-light p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
+      className="d-flex flex-column align-items-center p-5 rounded-3 border border-2 border-primary shadow-lg mb-3 registration_background"
       onSubmit={registerUser}
     >
       <h2 className="text-primary">Register User</h2>
@@ -107,7 +105,7 @@ function RegisterForm() {
         </FloatingLabel>
 
         <FloatingLabel
-          className="text-primary"
+          className="mb-1 text-primary"
           controlId="floatingPassword"
           label="Password"
         >
@@ -118,6 +116,36 @@ function RegisterForm() {
             value={passwordIn}
             required
             onChange={(event) => setPasswordIn(event.target.value)}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingMemberNumber"
+          label="Membership Number"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
+            type="number"
+            name="memberNumber"
+            value={memberNumber}
+            placeholder="Member Number"
+            required
+            onChange={(event) => setMemberNumber(event.target.value)}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingDueDate"
+          label="Most Recent Dues Paid"
+          className="mb-1 text-primary"
+        >
+          <Form.Control
+            type="date"
+            name="duePaid"
+            value={duesPaid}
+            placeholder="Dues Paid"
+            required
+            onChange={(event) => setDuesPaid(event.target.value)}
           />
         </FloatingLabel>
       </div>
