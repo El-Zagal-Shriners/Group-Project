@@ -27,7 +27,7 @@ function DependentRegistrationPage() {
         email: email,
         username: usernameIn,
         password: passwordIn,
-        primary_member_id: params,
+        primary_member_id: params.memberid,
       },
     });
   };
@@ -35,88 +35,78 @@ function DependentRegistrationPage() {
   return (
     <>
       <UpdatedNavBar />
-      <form onSubmit={createAccount}>
-
-      <FloatingLabel controlId="floatingInput" label="First Name">
-        <Form.Control type="name" placeholder="name@example.com" value={firstName}
-              onChange={(event) => setFirstName(event.target.value)} />
-      </FloatingLabel>
-
-      <FloatingLabel controlId="floatingInput" label="Last Name">
-        <Form.Control type="name" placeholder="name@example.com" value={lastName}
-              onChange={(event) => setLastName(event.target.value)} />
-      </FloatingLabel>
-
-      <FloatingLabel controlId="floatingEmail" label="Email">
-        <Form.Control type="email" placeholder="email" value={email}
-            onChange={(event) => setEmail(event.target.value)} />
-      </FloatingLabel>
-
-      <FloatingLabel controlId="floatingUsername" label="Username">
-        <Form.Control type="name" placeholder="name@example.com" value={usernameIn}
-              onChange={(event) => setUsernameIn(event.target.value)} />
-      </FloatingLabel>
-
-      <FloatingLabel controlId="floatingPassword" label="Password">
-        <Form.Control type="name" placeholder="name@example.com" value={passwordIn}
-              onChange={(event) => setPasswordIn(event.target.value)} />
-      </FloatingLabel>
-
-      </form>
-
-      {/* <div className="background">
-        <div class="container text-center">
-          <h2 className="header">Dependent Registration Page</h2>
-        </div>
-
-        <form onSubmit={createAccount} className="createAccount">
-          <div class="container text-center">
-            <input
-              required
-              placeholder="First Name"
+      <div class="container text-center">
+        <h2 className="text-primary">Dependent Registration Form</h2>
+        <form onSubmit={createAccount}>
+          <FloatingLabel
+            className="fs-5 text-black"
+            controlId="floatingInput"
+            label="First Name"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Last Name"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="fs-5 text-black"
+            controlId="floatingInput"
+            label="Last Name"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Email"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="fs-5 text-black"
+            controlId="floatingEmail"
+            label="Email"
+          >
+            <Form.Control
+              type="email"
+              placeholder="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Username"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="fs-5 text-black"
+            controlId="floatingUsername"
+            label="Username"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={usernameIn}
               onChange={(event) => setUsernameIn(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Password"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="fs-5 text-black"
+            controlId="floatingPassword"
+            label="Password"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={passwordIn}
               onChange={(event) => setPasswordIn(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <button type="submit" class="btn btn-primary">
-              Create Account
-            </button>
-          </div>
+          </FloatingLabel>
+          <button type="submit" class="btn btn-primary">
+            Create Account
+          </button>
         </form>
-      </div> */}
+      </div>
     </>
   );
 }
