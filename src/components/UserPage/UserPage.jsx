@@ -3,6 +3,7 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
+import { allIconComponents } from "../../allIconComponents/allIconComponents";
 
 
 function UserPage() {
@@ -22,19 +23,21 @@ function UserPage() {
       <UpdatedNavBar />
       <div className="container">
         <h2>Welcome, {user.first_name} {user.last_name}!</h2>
+        <div className="d-flex justify-content-between align-content-around">
         <p>Username: {user.username}<br />
           Email: {user.email}<br />
           Member Number: {user.membership_number}
         </p>
-        <button className="btn btn-contained-info">Edit</button>
+        <button className="btn btn-info">{allIconComponents.editUser}</button>
+        </div>
         {accounts.accountDependents.length > 0 && 
           <>
           <h2>Dependent Accounts</h2>
             {accounts.accountDependents.map((dependent)=>
-            <>
+            <div className="d-flex justify-content-between align-content-around">
               <p>Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
-              <button className="btn btn-outline-danger">Remove</button><br/><br />
-            </>
+              <button className="btn btn-outline-danger">{allIconComponents.delete}</button>
+            </div>
             )}
           </>}
           <LogOutButton className="btn btn-outline-warning" />
