@@ -3,7 +3,7 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 // router to post to "user" table first_name, last_name, email, username, and password columns
-router.post("/", (req, res) => {
+router.post("/:memberid", (req, res) => {
   let dependent = req.body;
   console.log("Adding dependent registration information server", dependent);
 
