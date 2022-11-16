@@ -34,13 +34,18 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
   function filterSearchResults(){
-    console.log('in filterSearchResults', allDiscounts);
+    // console.log('in filterSearchResults', allDiscounts);
+
+
+    // filter discounts
+
+
 
     
 
   //   // filter
   //   let filteredDiscounts = array.filter((thisItem) => {
-  //     return thisItem !== itemToRemove;
+  //     return thisItem !== objectToRemove;
   //   });
     
   //   return filteredArr;
@@ -50,22 +55,27 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
 
 
 
-  useEffect(()=> filterSearchResults(), [selectedCategories, selectedCities]);
+  useEffect(()=> {
+    filterSearchResults()
+    console.log('selectedcities are', selectedCities);
+    }, [selectedCategories, selectedCities]);
 
 
   function handleCitySelection(thisCity, cityIsSelected) {
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
-      const updatedCitiesArr = removeItemFromArray(thisCity, selectedCities);
-      setSelectedCities(updatedCitiesArr);
       console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
+      const updatedCitiesArr = removeObjectFromArray(thisCity, selectedCities);
+      setSelectedCities(updatedCitiesArr);
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
       if (selectedCities.includes(thisCity)) {
+        console.log('city is already in array, dont add again');
         return;
       } else {
+        console.log('adding this city to array')
         const updatedCitiesArr = [...selectedCities];
         updatedCitiesArr.push(thisCity);
         setSelectedCities(updatedCitiesArr);
@@ -73,36 +83,30 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
     }
   }
 
+  // takes a category object
   function handleCategorySelection(thisCat, catIsSelected) {
-    // if category is already selected, remove it from the selectedCities array
-    // else (city not yet selected), add it to the selected Cities array
-    if (catIsSelected) {
-      const updatedCategoriesArr = removeItemFromArray(
-        thisCat,
-        selectedCategories
-      );
-      setSelectedCategories(updatedCategoriesArr);
-    } else {
-      // if thisCity is already in selectedCities arrray, don't add it again (return)
-      // else add thisCity to selectedCities array
-      if (selectedCategories.includes(thisCat)) {
+      // if thisCat is already in selectedCategories arrray, don't add it again (return)
+      // else add thisC to selectedCategories array
+      if (selectedCategories.some(catObj => thisCat.id === catObj.id)) {
+        console.log('cat is already in array, dont add again');
         return;
       } else {
+        console.log('adding this cat to array')
         const updatedCategoriesArr = [...selectedCategories];
         updatedCategoriesArr.push(thisCat);
         setSelectedCategories(updatedCategoriesArr);
       }
-    }
   }
 
-  // this function removes from the selected categories
-  // and/or cities arrays items that the user deselects
-  function removeItemFromArray(itemToRemove, array) {
-    console.log("inRemoveItemFromArray", array, itemToRemove);
-
+  // this function removes an object from an array that has the
+  // same id as the objectToRemove parameter
+  function removeObjectFromArray(objectToRemove, array) {
+    console.log("inRemoveItemFromArray", array, objectToRemove);
     let filteredArr = array.filter((thisItem) => {
-      return thisItem !== itemToRemove;
+      return thisItem.id !== objectToRemove.id;
     });
+    console.log("inRemoveItemFromArray, filtered array is", filteredArr);
+    
     return filteredArr;
   }
 
@@ -129,7 +133,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                 <Dropdown.Item
                   as="button"
                   key={index}
-                  onClick={() => handleCategorySelection(thisCat.name, false)}
+                  onClick={() => handleCategorySelection(thisCat, false)}
                 >
                   {thisCat.name}
                 </Dropdown.Item>
@@ -155,7 +159,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                 <Dropdown.Item
                   as="button"
                   key={index}
-                  onClick={() => handleCitySelection(thisCity.city, false)}
+                  onClick={() => handleCitySelection(thisCity, false)}
                 >
                   {thisCity.city}
                 </Dropdown.Item>
@@ -177,7 +181,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
               variant="outline-primary"
               checked={cityOneChecked}
               onClick={() => {
-                handleCitySelection(allCities[0].city, cityOneChecked);
+                handleCitySelection(allCities[0], cityOneChecked);
                 setCityOneChecked(!cityOneChecked);
               }}
             >
@@ -191,7 +195,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
               variant="outline-primary"
               checked={cityTwoChecked}
               onClick={() => {
-                handleCitySelection(allCities[1].city, cityTwoChecked);
+                handleCitySelection(allCities[1], cityTwoChecked);
                 setCityTwoChecked(!cityTwoChecked);
               }}
             >
@@ -205,7 +209,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
               variant="outline-primary"
               checked={cityThreeChecked}
               onClick={() => {
-                handleCitySelection(allCities[2].city, cityThreeChecked);
+                handleCitySelection(allCities[2], cityThreeChecked);
                 setCityThreeChecked(!cityThreeChecked);
               }}
             >
@@ -232,11 +236,11 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
                     setSelectedCategories(
-                      removeItemFromArray(thisCat, selectedCategories)
+                      removeObjectFromArray(thisCat, selectedCategories)
                     )
                   }
                 >
-                  {thisCat} {allIconComponents.exit}
+                  {thisCat.name} {allIconComponents.exit}
                 </Button>
               );
             })}
@@ -253,11 +257,11 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
                     setSelectedCities(
-                      removeItemFromArray(thisCity, selectedCities)
+                      removeObjectFromArray(thisCity, selectedCities)
                     )
                   }
                 >
-                  {thisCity}
+                  {thisCity.city}
                   {allIconComponents.exit}
                 </Button>
               );
