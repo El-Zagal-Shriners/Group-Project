@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import "./DependentRegistrationPage.css";
+import { FloatingLabel } from "react-bootstrap/FloatingLabel";
+import { Form } from "react-bootstrap/Form";
 import button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
@@ -41,7 +43,7 @@ function DependentRegistrationPage() {
         <form onSubmit={createAccount}>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingInput"
+            controlId="floatingFirstName"
             label="First Name"
           >
             <Form.Control
@@ -54,7 +56,7 @@ function DependentRegistrationPage() {
 
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingInput"
+            controlId="floatingLastName"
             label="Last Name"
           >
             <Form.Control
