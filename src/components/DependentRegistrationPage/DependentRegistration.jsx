@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DependentRegistrationPage.css";
+import { FloatingLabel } from "react-bootstrap/FloatingLabel";
+import { Form } from "react-bootstrap/Form";
+import button from "react-bootstrap/Button";
+import { useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
@@ -11,18 +15,19 @@ function DependentRegistrationPage() {
   const [passwordIn, setPasswordIn] = useState("");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+  const params = useParams();
 
   const createAccount = (event) => {
     event.preventDefault();
-
     dispatch({
-      type: "REGISTER",
+      type: "ADD_DEPENDENT",
       payload: {
         first_name: firstName,
         last_name: lastName,
         email: email,
         username: usernameIn,
         password: passwordIn,
+        primary_member_id: params.memberid,
       },
     });
   };
@@ -30,43 +35,56 @@ function DependentRegistrationPage() {
   return (
     <>
       <UpdatedNavBar />
-
-      <div>
-        <h2 className="header">Dependent Registration Page</h2>
+      <div className="background">
+        <div class="container text-center">
+          <h2 className="header">Dependent Registration Page</h2>
+        </div>
 
         <form onSubmit={createAccount} className="createAccount">
-          <input
-            required
-            placeholder="First Name"
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
-          />
-          <input
-            required
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
-          />
-          <input
-            required
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            required
-            placeholder="Username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-          <input
-            required
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <div>
-            <button type="submit">Create Account</button>
+          <div class="container text-center">
+            <input
+              required
+              placeholder="First Name"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+            />
+          </div>
+          <div class="container text-center">
+            <input
+              required
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+            />
+          </div>
+          <div class="container text-center">
+            <input
+              required
+              placeholder="Email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <div class="container text-center">
+            <input
+              required
+              placeholder="Username"
+              value={usernameIn}
+              onChange={(event) => setUsernameIn(event.target.value)}
+            />
+          </div>
+          <div class="container text-center">
+            <input
+              required
+              placeholder="Password"
+              value={passwordIn}
+              onChange={(event) => setPasswordIn(event.target.value)}
+            />
+          </div>
+          <div class="container text-center">
+            <button type="submit" class="btn btn-primary">
+              Create Account
+            </button>
           </div>
         </form>
       </div>
