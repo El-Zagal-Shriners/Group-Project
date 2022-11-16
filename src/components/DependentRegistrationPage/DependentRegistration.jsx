@@ -1,11 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import "./DependentRegistrationPage.css";
-import { FloatingLabel } from "react-bootstrap/FloatingLabel";
-import { Form } from "react-bootstrap/Form";
-import button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
@@ -15,7 +11,6 @@ function DependentRegistrationPage() {
   const [email, setEmail] = useState("");
   const [usernameIn, setUsernameIn] = useState("");
   const [passwordIn, setPasswordIn] = useState("");
-  const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -32,13 +27,12 @@ function DependentRegistrationPage() {
         primary_member_id: params.memberid,
       },
     });
-    console.log(params);
   };
 
   return (
     <>
       <UpdatedNavBar />
-      <div class="container text-center">
+      <div className="container text-center">
         <h2 className="text-primary">Dependent Registration Form</h2>
         <form onSubmit={createAccount}>
           <FloatingLabel
@@ -105,7 +99,7 @@ function DependentRegistrationPage() {
               onChange={(event) => setPasswordIn(event.target.value)}
             />
           </FloatingLabel>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Create Account
           </button>
         </form>

@@ -92,9 +92,9 @@ function App() {
             <AdminTrackingPage />
           </ProtectedAdminRoute>
 
-          <ProtectedRoute exact path="/dependents">
+          <Route exact path="/dependents">
             <DependentRegistrationPage />
-          </ProtectedRoute>
+          </Route>
 
           <Route exact path="/login">
             {user.id ? (
