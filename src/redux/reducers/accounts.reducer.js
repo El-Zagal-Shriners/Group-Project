@@ -13,6 +13,8 @@ const accountDependents = (state = [], action) => {
   switch (action.type) {
     case "SET_DEPENDENTS":
       return action.payload;
+    case "CLEAR_DEPENDENTS":
+      return [];
     default:
       return state;
   }
