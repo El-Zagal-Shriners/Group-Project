@@ -51,9 +51,9 @@ function AdminTrackingPage() {
           })}
         </DropdownButton>
 
-        <div>
+        <section>
           <p>Stuff</p>
-        </div>
+        </section>
       </div>
     </>
   );
