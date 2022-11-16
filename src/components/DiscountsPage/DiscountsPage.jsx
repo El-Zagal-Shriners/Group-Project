@@ -20,15 +20,26 @@ function DiscountsPage() {
     (store) => store.filter.selectedCategoriesReducer
   );
   // redux store containing all available member discounts
-  const allDiscounts = useSelector(
+  const allMemberDiscounts = useSelector(
     (store) => store.discounts.memberDiscountsReducer
   );
+  // redux store containing current filtered list of member discounts
+  const filteredDiscounts = useSelector(
+    (store) => store.filter.filteredDiscountsReducer
+  );
 
-  const [showFilter, setShowFilter] = useState(false);
+  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
+
+  function filterDiscounts(){
+    let discountList = [...allMemberDiscounts];
+    dispatch({ type: 'SET_FILTERED_DISCOUNTS', payload: discountList});
+  }
 
 
   useEffect(()=> dispatch({type: "GET_MEMBER_DISCOUNTS"}),[]);
-  useEffect(()=> console.log('memberDiscounts are', allDiscounts), [allDiscounts]);
+  useEffect(()=> console.log('memberDiscounts are', allMemberDiscounts), [allMemberDiscounts]);
+  // updated filtered discount array when changes made to filter
+  useEffect(()=> filterDiscounts(), [selectedCities, selectedCategories, allMemberDiscounts]);
 
   return (
     <>
