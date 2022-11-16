@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DependentRegistrationPage.css";
-import Button from "react-bootstrap/Button";
-import useSearchParams, { useParams } from "react-router-dom";
+import button from "react-bootstrap/Button";
+import { useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
@@ -34,10 +34,11 @@ function DependentRegistrationPage() {
   return (
     <>
       <UpdatedNavBar />
-
+      <div className="background">
       <div class="container text-center">
         <h2 className="header">Dependent Registration Page</h2>
       </div>
+      
       <form onSubmit={createAccount} className="createAccount">
         <div class="container text-center">
           <input
@@ -80,9 +81,10 @@ function DependentRegistrationPage() {
           />
         </div>
         <div class="container text-center">
-          <Button variant="primary">Create Account</Button>
+          <button type="button" class="btn btn-primary" >Create Account</button>
         </div>
       </form>
+      </div>
     </>
   );
 }
