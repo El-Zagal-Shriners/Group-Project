@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 const accountsReducer = (state = [], action) => {
   switch (action.type) {
     case "FETCH_ACCOUNTS":
@@ -7,4 +9,16 @@ const accountsReducer = (state = [], action) => {
   }
 };
 
-export default accountsReducer;
+const accountDependents = (state = [], action) => {
+  switch (action.type) {
+    case "SET_DEPENDENTS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  accountsReducer,
+  accountDependents
+})

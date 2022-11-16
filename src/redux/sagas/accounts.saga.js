@@ -11,17 +11,17 @@ function* fetchAllAccounts() {
     const accounts = yield axios.get("/api/accounts", config);
     console.log("GET accounts", accounts.data);
     yield put({ type: "FETCH_ACCOUNTS", payload: accounts.data });
-  } catch {
-    console.log("GET accounts error");
+  } catch (err) {
+    console.log("GET accounts error", err);
   }
 }
 
 // SAGA to get all dependent accounts for the current user
 function* getDependents() {
   try {
-  const dependents = yield axios.get(`api/accounts/dependants`, config);
+  const dependents = yield axios.get(`/api/accounts/dependents`, config);
   yield put({
-      type: "SET_DEPENDANTS",
+      type: "SET_DEPENDENTS",
       payload: dependents.data
   });
   } catch (err) {
