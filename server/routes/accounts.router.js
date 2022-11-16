@@ -8,6 +8,7 @@ const {
 const pool = require("../modules/pool");
 const router = express.Router();
 
+// GET all member accounts
 router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   const queryText = `SELECT
     id,
@@ -32,6 +33,38 @@ router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
       console.log("Error in GET request", error);
       res.sendStatus(500);
     });
-});
+}); // End GET for all members
+
+// GET any dependents for the current user
+router.get(
+  "/dependents",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    // SQL query text
+    const queryText = `SELECT 
+        "first_name", 
+        "last_name", 
+        "email", 
+        "id", 
+        "username" 
+      FROM "user" 
+      WHERE "id"!=$1 AND "primary_member_id"=$1;`;
+    // Run query against the database
+    pool
+      .query(queryText, [req.user.id])
+      .then((result) => {
+        // Return results on success
+        res.send(result.rows);
+      })
+      .catch((error) => {
+        // Log and send back error status if error occurs
+        console.log("Error in getting dependents", error);
+        res.sendStatus(500);
+      });
+  }
+); // End GET dependents
+
+
 
 module.exports = router;
