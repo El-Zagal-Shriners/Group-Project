@@ -12,11 +12,6 @@ import DiscountFilterOffCanvas from "./DiscountFilterOffCanvas";
 function DiscountsPage() {
   const dispatch = useDispatch();
 
-  // redux store of allDiscounts
-  const allDiscounts = useSelector(
-    (store) => store.discounts.discountsReducer
-  );
-
   // redux stores for managing search parameters
   const selectedCities = useSelector(
     (store) => store.filter.selectedCitiesReducer

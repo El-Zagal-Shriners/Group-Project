@@ -120,8 +120,9 @@ VALUES
 						('Lodging', 'MdHotel'),
 						('Shopping', 'FaShoppingCart'),
 						('Rentals', 'MdCarRental'),
-						('Misc.', 'RiCheckboxBlankCircleLine'),
-						('Health/Beauty', 'CgPill');
+						('Health/Beauty', 'CgPill'),
+						('Misc.', 'RiCheckboxBlankCircleLine');
+						
 
 --Gets all discounts with counter of uses for all-time, 7 days, 30 days and 1 year
 SELECT "discounts".*,
