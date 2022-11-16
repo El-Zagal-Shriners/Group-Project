@@ -30,17 +30,21 @@ function RegisterForm() {
   }; // end registerUser
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register User</h2>
+    <form
+      className="d-flex flex-column align-items-center bg-light p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
+      onSubmit={registerUser}
+    >
+      <h2 className="text-primary">Register User</h2>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
         </h3>
       )}
       <div>
-        <label htmlFor="username">
+        <label className="text-primary" htmlFor="username">
           Username:
           <input
+            className="border-primary me-auto"
             type="text"
             name="username"
             value={usernameIn}
@@ -50,9 +54,10 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <label htmlFor="password">
+        <label className="text-primary" htmlFor="password">
           Password:
           <input
+            className="border-primary me-auto"
             type="password"
             name="password"
             value={passwordIn}
@@ -62,7 +67,12 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        <input
+          className="btn btn-primary"
+          type="submit"
+          name="submit"
+          value="Register"
+        />
       </div>
     </form>
   );

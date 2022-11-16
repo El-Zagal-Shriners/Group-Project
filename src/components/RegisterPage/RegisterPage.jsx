@@ -13,7 +13,6 @@ function RegisterPage() {
       <center>
         <Button
           className="bg_link_opacity"
-          href="#registration"
           variant="link"
           onClick={() => {
             history.push("/login");
