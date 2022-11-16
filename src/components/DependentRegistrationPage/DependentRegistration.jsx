@@ -19,7 +19,7 @@ function DependentRegistrationPage() {
     event.preventDefault();
 
     dispatch({
-      type: "REGISTER",
+      type: "ADD_DEPENDENT",
       payload: {
         first_name: firstName,
         last_name: lastName,
@@ -81,7 +81,7 @@ function DependentRegistrationPage() {
           />
         </div>
         <div class="container text-center">
-          <button type="button" class="btn btn-primary" >Create Account</button>
+          <button type="submit" class="btn btn-primary" >Create Account</button>
         </div>
       </form>
       </div>
