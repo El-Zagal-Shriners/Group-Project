@@ -22,9 +22,9 @@ function UserPage() {
     <>
       <UpdatedNavBar />
       <div className="container">
-        <h2>Welcome, {user.first_name} {user.last_name}!</h2>
-        <div className="d-flex justify-content-between align-content-around">
-        <p>Username: {user.username}<br />
+        <h2 className="fw-bolder">{user.first_name} {user.last_name}</h2>
+        <div className="d-flex justify-content-between align-items-center">
+        <p className="mb-1">Username: {user.username}<br />
           Email: {user.email}<br />
           Member Number: {user.membership_number}
         </p>
@@ -32,10 +32,13 @@ function UserPage() {
         </div>
         {accounts.accountDependents.length > 0 && 
           <>
-          <h2>Dependent Accounts</h2>
+          <div className="d-flex justify-content-between align-items-center">
+          <h6 className="text-decoration-underline mb-0 fw-bold">Dependent Accounts</h6>
+          <button className="btn btn-success">{allIconComponents.add}</button>
+          </div>
             {accounts.accountDependents.map((dependent)=>
-            <div className="d-flex justify-content-between align-content-around">
-              <p>Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
+            <div className="d-flex justify-content-between align-items-center">
+              <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
               <button className="btn btn-outline-danger">{allIconComponents.delete}</button>
             </div>
             )}
