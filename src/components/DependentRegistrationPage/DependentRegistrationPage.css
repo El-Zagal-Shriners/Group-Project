@@ -3,7 +3,7 @@
 }
 
 .btn-primary:hover{
-    background-color: white;
-    color:#820a1e;
-    font-weight: bold;
+    background-color: #820a1e;
+    color: white;
+ 
 }
