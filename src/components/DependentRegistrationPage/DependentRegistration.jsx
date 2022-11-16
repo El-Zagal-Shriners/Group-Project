@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 import "./DependentRegistrationPage.css";
 import { FloatingLabel } from "react-bootstrap/FloatingLabel";
 import { Form } from "react-bootstrap/Form";
@@ -30,62 +32,82 @@ function DependentRegistrationPage() {
         primary_member_id: params.memberid,
       },
     });
+    console.log(params);
   };
 
   return (
     <>
       <UpdatedNavBar />
-      <div className="background">
-        <div class="container text-center">
-          <h2 className="header">Dependent Registration Page</h2>
-        </div>
-
-        <form onSubmit={createAccount} className="createAccount">
-          <div class="container text-center">
-            <input
-              required
-              placeholder="First Name"
+      <div class="container text-center">
+        <h2 className="text-primary">Dependent Registration Form</h2>
+        <form onSubmit={createAccount}>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="First Name"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Last Name"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingLastName"
+            label="Last Name"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Email"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingEmail"
+            label="Email"
+          >
+            <Form.Control
+              type="email"
+              placeholder="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Username"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingUsername"
+            label="Username"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={usernameIn}
               onChange={(event) => setUsernameIn(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <input
-              required
-              placeholder="Password"
+          </FloatingLabel>
+
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingPassword"
+            label="Password"
+          >
+            <Form.Control
+              type="name"
+              placeholder="name@example.com"
               value={passwordIn}
               onChange={(event) => setPasswordIn(event.target.value)}
             />
-          </div>
-          <div class="container text-center">
-            <button type="submit" class="btn btn-primary">
-              Create Account
-            </button>
-          </div>
+          </FloatingLabel>
+          <button type="submit" class="btn btn-primary">
+            Create Account
+          </button>
         </form>
       </div>
     </>
