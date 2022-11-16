@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -10,6 +10,7 @@ import DiscountCard from "./DiscountCard";
 import DiscountFilter from "./DiscountFilter";
 
 function DiscountsPage() {
+  const dispatch = useDispatch();
   // store all discounts in list after <DiscountFilter/> is applied to allDiscounts;
   const [filteredDiscounts, setFilteredDiscounts] = useState([]);
 
@@ -20,8 +21,16 @@ function DiscountsPage() {
   const selectedCategories = useSelector(
     (store) => store.filter.selectedCategoriesReducer
   );
+  // redux store containing all available member discounts
+  const allDiscounts = useSelector(
+    (store) => store.discounts.memberDiscountsReducer
+  );
 
   const [showFilter, setShowFilter] = useState(false);
+
+
+  useEffect(()=> dispatch({type: "GET_MEMBER_DISCOUNTS"}),[]);
+  useEffect(()=> console.log('memberDiscounts are', allDiscounts), [allDiscounts]);
 
   return (
     <>
