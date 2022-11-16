@@ -30,6 +30,7 @@ function DependentRegistrationPage() {
         primary_member_id: params.memberid,
       },
     });
+    console.log(params);
   };
 
   return (
@@ -39,7 +40,7 @@ function DependentRegistrationPage() {
         <h2 className="text-primary">Dependent Registration Form</h2>
         <form onSubmit={createAccount}>
           <FloatingLabel
-            className="fs-5 text-black"
+            className="mb-1 text-primary"
             controlId="floatingInput"
             label="First Name"
           >
@@ -52,7 +53,7 @@ function DependentRegistrationPage() {
           </FloatingLabel>
 
           <FloatingLabel
-            className="fs-5 text-black"
+            className="mb-1 text-primary"
             controlId="floatingInput"
             label="Last Name"
           >
@@ -65,7 +66,7 @@ function DependentRegistrationPage() {
           </FloatingLabel>
 
           <FloatingLabel
-            className="fs-5 text-black"
+            className="mb-1 text-primary"
             controlId="floatingEmail"
             label="Email"
           >
@@ -78,7 +79,7 @@ function DependentRegistrationPage() {
           </FloatingLabel>
 
           <FloatingLabel
-            className="fs-5 text-black"
+            className="mb-1 text-primary"
             controlId="floatingUsername"
             label="Username"
           >
@@ -91,7 +92,7 @@ function DependentRegistrationPage() {
           </FloatingLabel>
 
           <FloatingLabel
-            className="fs-5 text-black"
+            className="mb-1 text-primary"
             controlId="floatingPassword"
             label="Password"
           >
