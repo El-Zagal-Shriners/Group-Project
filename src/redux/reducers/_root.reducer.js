@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   vendors, // will be an array of objects for vendors
   cities, // contains the allCitiesReducer and closeCitiesReducer
   categories,
-  filter
+  filter,
 });
 
 export default rootReducer;

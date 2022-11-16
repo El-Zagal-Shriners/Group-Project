@@ -24,12 +24,14 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   // select all categories
   const allCategories = useSelector((store) => store.categories);
 
-  // state for managing search parameters
-  const [selectedCities, setSelectedCities] = useState([]);
-  
+  // redux stores for managing search parameters
+  const selectedCities = useSelector(
+    (store) => store.filter.selectedCitiesReducer
+  );
+  const selectedCategories = useSelector(
+    (store) => store.filter.selectedCategoriesReducer
+  );
 
-
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const [companySearchIn, setCompanySearchIn] = useState([]);
 
   function filterSearchResults() {
@@ -54,7 +56,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
     if (cityIsSelected) {
       console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
       const updatedCitiesArr = removeObjectFromArray(thisCity, selectedCities);
-      setSelectedCities(updatedCitiesArr);
+      dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
@@ -65,7 +67,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
         console.log("adding this city to array");
         const updatedCitiesArr = [...selectedCities];
         updatedCitiesArr.push(thisCity);
-        setSelectedCities(updatedCitiesArr);
+        dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
       }
     }
   }
@@ -81,7 +83,10 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
       console.log("adding this cat to array");
       const updatedCategoriesArr = [...selectedCategories];
       updatedCategoriesArr.push(thisCat);
-      setSelectedCategories(updatedCategoriesArr);
+      dispatch({
+        type: "SET_SELECTED_CATEGORIES",
+        payload: updatedCategoriesArr,
+      });
     }
   }
 
@@ -123,10 +128,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
         selectedCategories,
       },
     });
-  }, [
-    selectedCities,
-    selectedCategories,
-  ]);
+  }, [selectedCities, selectedCategories]);
 
   return (
     <Container>
@@ -189,7 +191,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
             {closestThreeCities().map((thisCity, index) => {
               return (
                 <ToggleButton
-                  key ={index}
+                  key={index}
                   className="mb-2"
                   type="checkbox"
                   variant="outline-primary"
@@ -231,9 +233,13 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   key={index}
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
-                    setSelectedCategories(
-                      removeObjectFromArray(thisCat, selectedCategories)
-                    )
+                    dispatch({
+                      type: "SET_SELECTED_CATEGORIES",
+                      payload: removeObjectFromArray(
+                        thisCat,
+                        selectedCategories
+                      ),
+                    })
                   }
                 >
                   {thisCat.name} {allIconComponents.exit}
@@ -252,9 +258,10 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
                   size="sm"
                   className="d-flex justify-content-center align-items-center m-1"
                   onClick={() =>
-                    setSelectedCities(
-                      removeObjectFromArray(thisCity, selectedCities)
-                    )
+                    dispatch({
+                      type: "SET_SELECTED_CITIES",
+                      payload: removeObjectFromArray(thisCity, selectedCities),
+                    })
                   }
                 >
                   {thisCity.city}
