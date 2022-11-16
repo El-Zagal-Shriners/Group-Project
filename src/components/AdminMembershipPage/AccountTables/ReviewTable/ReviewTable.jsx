@@ -1,5 +1,4 @@
 import { ListGroup } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
 import ReviewItem from "./ReviewItem";
 
 function ReviewTable({ reviews }) {

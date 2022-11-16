@@ -20,7 +20,7 @@ function MemberItem({ member, members }) {
   const [edit, setEdit] = useState(false);
 
   // local state for form.
-  const [memberNumber, setMemberNumber] = useState('');
+  const [memberNumber, setMemberNumber] = useState("");
   const [duesPaid, setDuesPaid] = useState(null);
   // assume member is authorized.
   const [authorized, setAuthorized] = useState(true);
@@ -30,7 +30,7 @@ function MemberItem({ member, members }) {
     // reset local state
     setAuthorized(true);
     setDuesPaid(null);
-    setMemberNumber('');
+    setMemberNumber("");
   };
 
   // access members to get the dependents.
