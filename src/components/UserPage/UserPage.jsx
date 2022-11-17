@@ -26,18 +26,23 @@ function UserPage() {
 
   return (
     <>
+      {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container">
+        {/* Render user's basic information */}
         <h2 className="fw-bolder">{user.first_name} {user.last_name}</h2>
         <div className="d-flex justify-content-between align-items-center">
         <p className="mb-1">Username: {user.username}<br />
           Email: {user.email}<br />
           Member Number: {user.membership_number}
         </p>
+        {/* Button to open personal infomation edit modal */}
         <button className="btn btn-info">{allIconComponents.editUser}</button>
         </div>
+        {/* Render list of dependents if any */}
           <div className="d-flex justify-content-between align-items-center">
           <h6 className="text-decoration-underline mb-0 fw-bold">Dependent Accounts</h6>
+          {/* Button to add a dependent */}
           <button className="btn btn-success">{allIconComponents.add}</button>
           </div>
         {accounts.accountDependents.length > 0 ? 
@@ -46,12 +51,15 @@ function UserPage() {
             <div key={dependent.id} className="d-flex justify-content-between align-items-center">
               <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
               <button onClick={()=>handleShow(dependent.id)} className="btn btn-outline-danger">{allIconComponents.delete}</button>
+              {/* Modal to confirm dependent delete */}
               <UserDependentConfirmation show={show} dependentId={dependent.id} handleShow={handleShow} handleClose={handleClose}/>
             </div>
             )}
           </>
           :
+          // Display message if there is no dependents for the account
           <p>No dependent accounts</p>}
+          {/* Render logout button */}
           <LogOutButton className="btn btn-outline-warning" />
       </div>
     </>
