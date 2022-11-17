@@ -68,26 +68,12 @@ function* removeDiscount(action) {
   }
 } // End remove a discount
 
-// GET to server to fetch all discount tracking info
-function* fetchDiscountTracker(action) {
-  try {
-    const results = yield axios.get(
-      "api/discounts/admindiscounttracker",
-      config
-    );
-    yield put({ type: "SET_DISCOUNT_TRACKER", payload: results.data });
-  } catch (error) {
-    console.log("error caught in fetchDiscountTracker :>> ", error);
-  }
-}
-
 function* discountSaga() {
   yield takeLatest("GET_MEMBER_DISCOUNTS", getMemberDiscounts);
   yield takeLatest("GET_ADMIN_DISCOUNTS", getAdminDiscounts);
   yield takeLatest("ADD_DISCOUNT", addDiscount);
   yield takeLatest("EDIT_DISCOUNT", editDiscount);
   yield takeLatest("REMOVE_DISCOUNT", removeDiscount);
-  yield takeLatest("FETCH_DISCOUNT_TRACKER", fetchDiscountTracker);
 }
 
 export default discountSaga;

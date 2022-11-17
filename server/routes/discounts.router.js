@@ -153,25 +153,5 @@ router.delete("/:discountid", rejectUnauthenticated, (req, res) => {
     });
 }); // End delete a discount
 
-router.get(
-  "/admindiscounttracker",
-  rejectUnauthenticated,
-  rejectUnauthorizedUser,
-  (req, res) => {
-    const queryText = `SELECT "discounts_tracked"."id", "discounts"."vendor_id" as "vendor_id", "discount_id", "date" FROM "discounts_tracked"
-    JOIN "discounts" ON "discounts_tracked"."discount_id"="discounts"."id";`;
-
-    pool
-      .query(queryText)
-      .then((result) => {
-        res.send(result.rows);
-      })
-      .catch((error) => {
-        console.log("error caught in GET discount tracker :>> ", error);
-        res.sendStatus(500);
-      });
-  }
-);
-
 // export the router
 module.exports = router;
