@@ -27,10 +27,11 @@ function AdminLandingPage() {
         Admin Landing Page
       </h2>{" "}
       <br />
-      <div class="card-body">
-        <div class="container text-center">
-          <h5 class="card-title text-primary">Manage Shriner Members</h5> <br />
-          <p class="card-text">
+      <div className="card-body">
+        <div className="container text-center">
+          <h5 className="card-title text-primary">Manage Shriner Members</h5>{" "}
+          <br />
+          <p className="card-text">
             Administrative access to member's portal information. Administrator
             can update, edit, remove or delete member and dependent portal
             access.
@@ -46,10 +47,10 @@ function AdminLandingPage() {
         </div>
       </div>
       <br />
-      <div class="container text-center">
-        <div class="card-body">
-          <h5 class="card-title text-primary">Discount Manager</h5> <br />
-          <p class="card-text">
+      <div className="container text-center">
+        <div className="card-body">
+          <h5 className="card-title text-primary">Discount Manager</h5> <br />
+          <p className="card-text">
             Administrative access to discount portal information. Administrator
             can update, edit, remove or delete company and discount information.
           </p>
@@ -64,10 +65,10 @@ function AdminLandingPage() {
         </div>
       </div>
       <br />
-      <div class="container text-center">
-        <div class="card-body">
-          <h5 class="card-title text-primary">Discount Tracker</h5> <br />
-          <p class="card-text">
+      <div className="container text-center">
+        <div className="card-body">
+          <h5 className="card-title text-primary">Discount Tracker</h5> <br />
+          <p className="card-text">
             Administrative access to discount tracker. Administrator can view,
             reset, and delete discount tracker.
           </p>
