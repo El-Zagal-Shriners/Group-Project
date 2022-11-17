@@ -2,6 +2,7 @@ import UpdatedNavBar from "../Nav/Nav";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -10,13 +11,13 @@ function AdminTrackingPage() {
   const dispatch = useDispatch();
   const allVendors = useSelector((store) => store.vendors);
   const allDiscountTracker = useSelector(
-    (store) => store.discounts.adminDiscountsTracker
+    (store) => store.discounts.adminDiscountsReducer
   );
   let filteredDiscountTracker = [];
   const [currentSelected, setCurrentSelected] = useState("default");
 
   if (currentSelected !== "default") {
-    filteredDiscountTracker = allDiscountTracker.filter(
+    filteredDiscountTracker = allDiscountTracker?.filter(
       (discount) => Number(discount.vendor_id) === Number(currentSelected)
     );
   }
@@ -24,8 +25,6 @@ function AdminTrackingPage() {
   function handleSelect(event) {
     setCurrentSelected(event);
   }
-
-  console.log("filter :>> ", filteredDiscountTracker);
 
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
@@ -65,8 +64,102 @@ function AdminTrackingPage() {
           })}
         </DropdownButton>
 
-        <section>
-          <p>Stuff</p>
+        <section className="w-100 d-flex flex-wrap">
+          {currentSelected !== "default"
+            ? filteredDiscountTracker.map((discount) => (
+                <div
+                  key={discount.id}
+                  className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                >
+                  <h3 className="text-center w-100">{discount.description}</h3>
+                  <Card className="col-6 me-1 mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        Past 7 Days
+                      </Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.seven_day_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        Past Month
+                      </Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.thirty_day_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col-6 me-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">Past Year</Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.one_year_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">All-Time</Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.discounts_all_time}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))
+            : allDiscountTracker.map((discount) => (
+                <div
+                  key={discount.id}
+                  className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                >
+                  <h3 className="text-center w-100">{discount.description}</h3>
+                  <Card className="col-6 me-1 mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        Past 7 Days
+                      </Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.seven_day_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        Past Month
+                      </Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.thirty_day_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col-6 me-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">Past Year</Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.one_year_count}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="col mb-1">
+                    <Card.Body>
+                      <Card.Title className="text-center">All-Time</Card.Title>
+                      <Card.Text className="text-center">
+                        {discount.discounts_all_time}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))}
         </section>
       </div>
     </>
