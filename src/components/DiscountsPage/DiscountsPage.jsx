@@ -29,39 +29,61 @@ function DiscountsPage() {
 
   const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
 
-  
+  function filterDiscounts() {
+    // push all search filter parameters into one array
+    const allSelected = selectedCities
+      .map((item) => item.city)
+      .concat(selectedCategories.map((item) => item.name));
 
+    // declare new array to hold filtered discount results
+    let filteredArray = [];
 
-  // function filterByCity() {
-  //   let discountList = [...allMemberDiscounts];
+    // ~~~ Create new array with filtered results
+    // if cities are selected, but no categories are selected
+    //    => push discounts with selected cities to new array
+    // else if categories are selecte, but not cities are selected
+    //    => push discounts with selected categories to new array
+    // else if both cities and categories are selected
+    //    => push discounts with both selected cities and categories to new array
+    // else both seleceted arrays are empty
+    //    => push all discounts to new array
+    if (selectedCities.length > 0 && selectedCategories.length <= 0) {
+      filteredArray = allMemberDiscounts.filter((discount) => {
+        return allSelected.includes(discount.city);
+      });
+    } else if (selectedCities.length <= 0 && selectedCategories.length > 0) {
+      filteredArray = allMemberDiscounts.filter((discount) => {
+        return allSelected.includes(discount.category_name);
+      });
+    } else if (selectedCities.length > 0 && selectedCities.length > 0) {
+      filteredArray = allMemberDiscounts.filter((discount, index) => {
+        return allSelected.includes(discount.city);
+      });
+      filteredArray = filteredArray.filter((discount, index) => {
+        return allSelected.includes(discount.category_name);
+      });
+    } else {
+      filteredArray = allMemberDiscounts;
+    }
 
-    
-  //   }
+    dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
+  }
 
-  //   function filterByCategory(){
-  //      // for each selected category, filter out discounts that don't match
-  //     for (let category of selectedCategories) {
-  //     discountList = discountList.filter((discount) => {
-  //       return discount.category_id === category.id;
-  //     });
-  //   }
+  // This filters of the above array with one filter and one includes
+  // let testFiltered = allMemberDiscounts.filter((discount) => {
+  //   return testSelected.includes(discount.city && discount.category_name);
+  // });
 
-        // dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: discountList });
-  //   }
+  // Below would be the search filter where searchInput is the state attached to the search
+  // testFiltered = testFiltered.filter((discount) =>
+  //   discount.vendor_name.contains(searchInput)
+  // );
 
-    
-  
-  
   useEffect(() => dispatch({ type: "GET_MEMBER_DISCOUNTS" }), []);
   useEffect(
-    () => console.log("memberDiscounts are", allMemberDiscounts),
-    [allMemberDiscounts]
+    () => filterDiscounts(),
+    [selectedCategories, selectedCities, allMemberDiscounts]
   );
-  // // updated filtered discount array when changes made to filter
-  // useEffect(
-  //   () => filterDiscounts(),
-  //   [selectedCities, selectedCategories, allMemberDiscounts]
-  // );
 
   return (
     <>
