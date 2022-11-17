@@ -8,7 +8,7 @@ import ReviewTable from "./AccountTables/ReviewTable/ReviewTable";
 
 function AdminMembershipPage() {
   // access the list of current accounts from the redux store.
-  const accounts = useSelector((store) => store.accounts);
+  const accounts = useSelector((store) => store.accounts.accountsReducer);
 
   // member accounts have member numbers and are verified.
   const members = [...accounts].filter(
