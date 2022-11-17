@@ -22,7 +22,17 @@ const selectedCategoriesReducer = (state = [], action) => {
   }
 };
 
+const filteredDiscountsReducer = (state = [], action) => {
+  if (action.type === "SET_FILTERED_DISCOUNTS") {
+    console.log("in filteredDiscounts reducer", action.payload);
+    return action.payload;
+  } else {
+    return state;
+  }
+};
+
 export default combineReducers({
   selectedCitiesReducer,
   selectedCategoriesReducer,
+  filteredDiscountsReducer,
 });
