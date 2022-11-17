@@ -158,7 +158,8 @@ router.get(
   rejectUnauthenticated,
   rejectUnauthorizedUser,
   (req, res) => {
-    const queryText = `SELECT * FROM "discounts_tracked";`;
+    const queryText = `SELECT "discounts_tracked"."id", "discounts"."vendor_id" as "vendor_id", "discount_id", "date" FROM "discounts_tracked"
+    JOIN "discounts" ON "discounts_tracked"."discount_id"="discounts"."id";`;
 
     pool
       .query(queryText)

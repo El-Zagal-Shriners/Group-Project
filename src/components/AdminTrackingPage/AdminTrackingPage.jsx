@@ -9,11 +9,23 @@ import { useSelector } from "react-redux";
 function AdminTrackingPage() {
   const dispatch = useDispatch();
   const allVendors = useSelector((store) => store.vendors);
-  const [currentSelected, setCurrentSelected] = useState(0);
+  const allDiscountTracker = useSelector(
+    (store) => store.discounts.adminDiscountsTracker
+  );
+  let filteredDiscountTracker = [];
+  const [currentSelected, setCurrentSelected] = useState("default");
+
+  if (currentSelected !== "default") {
+    filteredDiscountTracker = allDiscountTracker.filter(
+      (discount) => Number(discount.vendor_id) === Number(currentSelected)
+    );
+  }
 
   function handleSelect(event) {
     setCurrentSelected(event);
   }
+
+  console.log("filter :>> ", filteredDiscountTracker);
 
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
