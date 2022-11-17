@@ -30,6 +30,7 @@ function AdminTrackingPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "FETCH_DISCOUNT_TRACKER" });
+    dispatch({ type: "GET_ADMIN_DISCOUNTS" });
   }, []);
 
   return (
