@@ -46,7 +46,7 @@ function UserPage() {
             <div key={dependent.id} className="d-flex justify-content-between align-items-center">
               <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
               <button onClick={()=>handleShow(dependent.id)} className="btn btn-outline-danger">{allIconComponents.delete}</button>
-              {show && <UserDependentConfirmation show={show} dependentId={dependent.id} handleShow={handleShow} handleClose={handleClose}/>}
+              <UserDependentConfirmation show={show} dependentId={dependent.id} handleShow={handleShow} handleClose={handleClose}/>
             </div>
             )}
           </>
