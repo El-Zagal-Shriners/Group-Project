@@ -12,7 +12,7 @@ import Card from "react-bootstrap/Card";
   1. [x] Display all discounts that are relevant to this page (no filter)
   2. [x] Make the drop-down correctly set local state to the id of the vendor
   3. [x] Create a copy of the discounts into a new array that can be filtered
-  4. [ ] If there is a selection, filter the discounts to only show discounts whose vendor
+  4. [x] If there is a selection, filter the discounts to only show discounts whose vendor
          id matches the local state vendor id from the drop-down
          (this is currently commented out, will need modified)
 */
@@ -81,7 +81,7 @@ function AdminDiscountPage() {
 
         <div className="text-primary">
           Discounts{" "}
-          {discounts.map((discount) => (
+          {filteredDiscounts.map((discount) => (
             <div className="text-primary">{discount.description}</div>
           ))}
         </div>
