@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import EditUserForm from '../EditUserForm/EditUserForm';
 
 
 function UserPage() {
@@ -11,12 +12,18 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const accounts = useSelector((store) => store.accounts);
   const dispatch = useDispatch();
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     dispatch({
       type: 'GET_DEPENDENTS'
     });
   }, []);
+
+    // Toggle local 'show' state
+    const handleShowEdit = () => setShowEdit(true);
+    // Toggle local 'show' state
+    const handleCloseEdit = () => setShowEdit(false);
 
   return (
     <>
@@ -28,7 +35,8 @@ function UserPage() {
           Email: {user.email}<br />
           Member Number: {user.membership_number}
         </p>
-        <button className="btn btn-info">{allIconComponents.editUser}</button>
+        <button className="btn btn-info" onClick={handleShowEdit}>{allIconComponents.editUser}</button>
+        <EditUserForm showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
         </div>
           <div className="d-flex justify-content-between align-items-center">
           <h6 className="text-decoration-underline mb-0 fw-bold">Dependent Accounts</h6>
