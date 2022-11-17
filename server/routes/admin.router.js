@@ -4,7 +4,6 @@ const {
 } = require("../modules/authentication-middleware");
 const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
-const { response } = require("express");
 const router = express.Router();
 
 // route to update member's membership number and dues paid date
@@ -66,7 +65,7 @@ router.put(
     const memberId = req.params.memberId;
     const authorized = req.body.authorized;
     // setup SQL query text to update member's authorization status.
-    const queryText = `UPDATE "user" SET "is_authorized"=$1 WHERE "id"=$2;`;
+    const queryText = `UPDATE "user" SET "is_authorized"=$1, "review_pending"=NOT $1 WHERE "id"=$2;`;
     pool
       .query(queryText, [authorized, memberId])
       .then((response) => {

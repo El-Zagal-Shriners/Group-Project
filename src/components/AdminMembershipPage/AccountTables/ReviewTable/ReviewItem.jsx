@@ -1,12 +1,26 @@
 import Button from "react-bootstrap/Button";
 import { Col, Container, Form, ListGroup, Modal, Row } from "react-bootstrap";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function ReviewItem({ review }) {
+  const dispatch = useDispatch();
   const dues = review.dues_paid.split("-")[0];
   // setup local state
   const [show, setShow] = useState(false);
   const [authorized, setAuthorized] = useState(true);
+
+  // send a dispatch to make the user authorized or deauthorized.
+  const activate = () => {
+    dispatch({
+      type: 'AUTHORIZE_MEMBER',
+      payload: {
+        memberId: review.id,
+        authorized
+      }
+    });
+    setShow(false);
+  }
 
   return (
     <>
@@ -70,7 +84,7 @@ function ReviewItem({ review }) {
         <Modal.Footer>
           {/* make close modal a cleanup method */}
           <Button onClick={() => setShow(false)}>Close</Button>
-          <Button>Save</Button>
+          <Button onClick={() => activate()}>Save</Button>
         </Modal.Footer>
       </Modal>
     </>
