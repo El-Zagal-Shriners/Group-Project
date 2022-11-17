@@ -3,16 +3,16 @@ import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 
 function DependentItem({ dependent }) {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // add remove function.
-    const removeDependent = () => {
-        dispatch({
-            type: "ADMIN_DELETE_MEMBER",
-            payload: {
-              memberId: dependent.id
-            }
-        });
-    }
+  const removeDependent = () => {
+    dispatch({
+      type: "ADMIN_DELETE_MEMBER",
+      payload: {
+        memberId: dependent.id,
+      },
+    });
+  };
 
   return (
     <ListGroup.Item className="border-0 p-0 w-100">

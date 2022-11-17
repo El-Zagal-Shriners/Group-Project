@@ -13,14 +13,14 @@ function ReviewItem({ review }) {
   // send a dispatch to make the user authorized or deauthorized.
   const activate = () => {
     dispatch({
-      type: 'AUTHORIZE_MEMBER',
+      type: "AUTHORIZE_MEMBER",
       payload: {
         memberId: review.id,
-        authorized
-      }
+        authorized,
+      },
     });
     setShow(false);
-  }
+  };
 
   return (
     <>

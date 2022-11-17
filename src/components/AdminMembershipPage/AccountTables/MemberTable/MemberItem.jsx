@@ -30,18 +30,21 @@ function MemberItem({ member, members }) {
   // changes member's authorization status
   const activate = () => {
     dispatch({
-      type: 'AUTHORIZE_MEMBER',
+      type: "AUTHORIZE_MEMBER",
       payload: {
         memberId: member.id,
-        authorized
-      }
+        authorized,
+      },
     });
     setEdit(false);
-  }
+  };
 
   // updates member's paid date and or number
   const updateMember = () => {
-    if(memberNumber === member.membership_number && duesPaid === member.dues_paid) {
+    if (
+      memberNumber === member.membership_number &&
+      duesPaid === member.dues_paid
+    ) {
       activate();
     } else {
       dispatch({
@@ -49,13 +52,13 @@ function MemberItem({ member, members }) {
         payload: {
           memberId: member.id,
           memberNumber: memberNumber || member.membership_number,
-          duesPaid: duesPaid || member.dues_paid
-        }
+          duesPaid: duesPaid || member.dues_paid,
+        },
       });
       activate();
       closeModal();
     }
-  }
+  };
 
   // deletes member
   const removeMember = () => {
@@ -63,10 +66,10 @@ function MemberItem({ member, members }) {
     dispatch({
       type: "ADMIN_DELETE_MEMBER",
       payload: {
-        memberId: member.id
-      }
+        memberId: member.id,
+      },
     });
-  }
+  };
 
   // setup close modal function
   const closeModal = () => {
