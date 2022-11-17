@@ -1,29 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import UserDependentConfirmation from './UserDependentConfirmation';
 
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
+  const [show, setShow] = useState(false);
   const user = useSelector((store) => store.user);
   const accounts = useSelector((store) => store.accounts);
   const dispatch = useDispatch();
-
+  
+  // Get dependents for current user on load
   useEffect(() => {
     dispatch({
       type: 'GET_DEPENDENTS'
     });
   }, []);
-
-  const removeDependent = (id) => {
-    dispatch({
-      type: "REMOVE_DEPENDENT",
-      payload: id
-    })
-  }
+  // Toggle local 'show' state
+  const handleShow = () => setShow(true);
+  // Toggle local 'show' state
+  const handleClose = () => setShow(false);
 
   return (
     <>
@@ -46,7 +45,8 @@ function UserPage() {
             {accounts.accountDependents.map((dependent)=>
             <div key={dependent.id} className="d-flex justify-content-between align-items-center">
               <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
-              <button onClick={()=>removeDependent(dependent.id)} className="btn btn-outline-danger">{allIconComponents.delete}</button>
+              <button onClick={()=>handleShow(dependent.id)} className="btn btn-outline-danger">{allIconComponents.delete}</button>
+              {show && <UserDependentConfirmation show={show} dependentId={dependent.id} handleShow={handleShow} handleClose={handleClose}/>}
             </div>
             )}
           </>
