@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 function UserDependentConfirmation(props) {
     const dispatch = useDispatch();
-
+    // Dispatch to remove the selected dependent account then close the modal
     const removeDependent = (id) => {
         dispatch({
           type: "REMOVE_DEPENDENT",
@@ -12,7 +12,7 @@ function UserDependentConfirmation(props) {
         });
         props.handleClose();
       }
-    
+    // Renders a modal to confirm if the user wants to remove the selected dependent account
     return (
         <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
