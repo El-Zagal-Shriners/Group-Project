@@ -4,7 +4,6 @@ const {
 } = require("../modules/authentication-middleware");
 const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
-const { response } = require("express");
 const router = express.Router();
 
 // route to update member's membership number and dues paid date

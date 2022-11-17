@@ -4,8 +4,8 @@ const router = express.Router();
 
 // router to post to "user" table first_name, last_name, email, username, and password columns
 router.post("/", (req, res) => {
-  let dependent = req.body;
-  console.log("Adding dependent registration information server", dependent);
+  const dependent = req.body;
+  // console.log("Adding dependent registration information server", dependent);
 
   let queryText = `INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", "primary_member_id")
                     VALUES($1, $2, $3, $4, $5, $6);`;
