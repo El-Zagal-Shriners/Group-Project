@@ -8,9 +8,9 @@ import Form from 'react-bootstrap/Form';
 function EditUserForm(props) {
     const dispatch = useDispatch();
     const [username, setUsername] = useState(props.user.username);
-    const [email, setEmail] = useState(props.user.first_name);
-    const [firstName, setFirstName] = useState(props.user.last_name);
-    const [lastName, setLastName] = useState(props.user.email);
+    const [email, setEmail] = useState(props.user.email);
+    const [firstName, setFirstName] = useState(props.user.first_name);
+    const [lastName, setLastName] = useState(props.user.last_name);
     const [memberNumber, setMemberNumber] = useState(props.user.membership_number);
 
     // clears local state on submition of page
@@ -21,12 +21,20 @@ function EditUserForm(props) {
         setEmail('');
         setMemberNumber('');
     }
+
     // Send object to the database on confirmation
     // Clear local state
     // Close modal with inputs
     const sendEdit = () => {
         dispatch({
-          type: "EDIT_USER_INFO"
+          type: "EDIT_USER_INFO",
+          payload: {
+            username,
+            firstName,
+            lastName,
+            email,
+            memberNumber
+          }
         });
         clearLocalState();
         props.handleCloseEdit();

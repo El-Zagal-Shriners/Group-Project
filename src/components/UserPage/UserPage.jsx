@@ -22,6 +22,7 @@ function UserPage() {
       type: 'GET_DEPENDENTS'
     });
   }, []);
+
   // Toggle local 'show' state
   const handleShow = () => setShow(true);
   // Toggle local 'show' state
