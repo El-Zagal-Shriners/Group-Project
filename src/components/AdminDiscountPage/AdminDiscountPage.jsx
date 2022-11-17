@@ -33,7 +33,7 @@ function AdminDiscountPage() {
       <UpdatedNavBar />
       <h2>Admin Discount Page</h2>
       <div className="text-primary">Vendors {vendors.map(vendor => (
-                        <div className="text-primary">{vendor.name}, {vendor.city}</div>
+                        <div className="text-primary">{vendor.name}, {vendor.city}, {vendor.address}</div>
                     ))}</div>
       <div className="text-primary">Discounts {discounts.map(discount => (
                         <div className="text-primary">{discount.description}</div>
