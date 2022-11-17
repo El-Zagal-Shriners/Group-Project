@@ -27,7 +27,7 @@ function* getDependents() {
   } catch (err) {
       console.log('Error getting dependents', err);
   }
-}
+} // End GET all dependent accounts for current user
 
 // SAGA to delete a dependent account
 function* removeDependent(action) {
@@ -37,7 +37,7 @@ function* removeDependent(action) {
   } catch (err) {
       console.log('Error removing dependent: ', err);
   }
-}
+} // End DELETE dependent
 
 function* accountsSaga() {
   yield takeEvery("GET_ACCOUNTS", fetchAllAccounts);
