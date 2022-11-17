@@ -71,8 +71,11 @@ function* removeDiscount(action) {
 // GET to server to fetch all discount tracking info
 function* fetchDiscountTracker(action) {
   try {
-    const results = yield axios.get("/admindiscounttracker", config);
-    yield put({ type: "SET_DISCOUNT_TRACKER", payload: results });
+    const results = yield axios.get(
+      "api/discounts/admindiscounttracker",
+      config
+    );
+    yield put({ type: "SET_DISCOUNT_TRACKER", payload: results.data });
   } catch (error) {
     console.log("error caught in fetchDiscountTracker :>> ", error);
   }
