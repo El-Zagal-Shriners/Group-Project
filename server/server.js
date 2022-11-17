@@ -15,6 +15,7 @@ const discountsRouter = require("./routes/discounts.router");
 const vendorRouter = require("./routes/vendor.router");
 const categoriesRouter = require("./routes/categories.router");
 const dependentRegistration = require("./routes/dependentRegistration.router");
+const adminRouter = require("./routes/admin.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -35,6 +36,7 @@ app.use("/api/vendors", vendorRouter);
 app.use("/api/cities", citiesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/register/dependent", dependentRegistration);
+app.use('/api/admin', adminRouter);
 
 // Serve static files
 app.use(express.static("build"));

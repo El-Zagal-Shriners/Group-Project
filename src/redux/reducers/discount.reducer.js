@@ -16,16 +16,7 @@ const adminDiscountsReducer = (state = [], action) => {
   }
 };
 
-const adminDiscountsTracker = (state = [], action) => {
-  if (action.type === "SET_DISCOUNT_TRACKER") {
-    return action.payload;
-  } else {
-    return state;
-  }
-};
-
 export default combineReducers({
   adminDiscountsReducer,
   memberDiscountsReducer,
-  adminDiscountsTracker,
 });
