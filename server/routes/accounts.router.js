@@ -2,14 +2,12 @@ const express = require("express");
 const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
-const {
-  rejectUnauthorizedUser,
-} = require("../modules/authorization-middleware");
+const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-// GET all member accounts
-router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+// GET all member accounts without password
+router.get("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   const queryText = `SELECT
     id,
     username,
@@ -39,16 +37,16 @@ router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 router.get(
   "/dependents",
   rejectUnauthenticated,
-  rejectUnauthorizedUser,
+  rejectNonAdministrator,
   (req, res) => {
     // SQL query text
-    const queryText = `SELECT 
-        "first_name", 
-        "last_name", 
-        "email", 
-        "id", 
-        "username" 
-      FROM "user" 
+    const queryText = `SELECT
+        "first_name",
+        "last_name",
+        "email",
+        "id",
+        "username"
+      FROM "user"
       WHERE "id"!=$1 AND "primary_member_id"=$1;`;
     // Run query against the database
     pool
@@ -69,10 +67,10 @@ router.get(
 router.delete(
   "/dependent/:userid",
   rejectUnauthenticated,
-  rejectUnauthorizedUser,
+  rejectNonAdministrator,
   (req, res) => {
     const userId = req.params.userid;
-    const query = `DELETE FROM "user" 
+    const query = `DELETE FROM "user"
                  WHERE "id"=$1 AND "primary_member_id"=$2;`;
     pool
       .query(query, [userId, req.user.id])
