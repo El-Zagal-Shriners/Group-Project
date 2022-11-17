@@ -65,6 +65,21 @@ router.get(
   }
 ); // End GET dependents
 
+// DELETE a dependent account
+router.delete('/:userid', rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+  const userId = req.params.userid;
+  const query = `DELETE FROM "user" 
+                 WHERE "id"=$1;`;
+  pool.query(query, [userId])
+      .then(result => {
+          res.sendStatus(200);
+      })
+      .catch(err => {
+          console.log('Error deleting dependent ', err);
+          res.sendStatus(500);
+      });
+}); // End DELETE dependent
+
 
 
 module.exports = router;
