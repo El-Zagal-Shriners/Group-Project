@@ -1,4 +1,4 @@
-import { useEffect, useState, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
@@ -46,8 +46,6 @@ function UserPage() {
         </p>
         <button className="btn btn-info" onClick={handleShowEdit}>{allIconComponents.editUser}</button>
         <EditUserForm showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
-        {/* Button to open personal infomation edit modal */}
-        <button className="btn btn-info">{allIconComponents.editUser}</button>
         </div>
         {/* Render list of dependents if any */}
           <div className="d-flex justify-content-between align-items-center">
