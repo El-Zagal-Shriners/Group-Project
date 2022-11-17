@@ -1,12 +1,28 @@
 import { useState } from "react";
 import { Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { useDispatch } from "react-redux";
 
 function ApprovalItem({ approval }) {
+  const dispatch = useDispatch();
   const dues = approval.dues_paid.split("-")[0];
   // setup local state.
   const [show, setShow] = useState(false);
   const [verification, setVerification] = useState(false);
+
+  // used to set the approval status of a member.
+  const approveMember = () => {
+    console.log(verification);
+    console.log(approval.id);
+    dispatch({
+      type: "APPROVE_MEMBER",
+      payload: {
+        memberId: approval.id,
+        verification: verification,
+      },
+    });
+    setShow(false);
+  };
 
   return (
     <>
@@ -59,6 +75,7 @@ function ApprovalItem({ approval }) {
             <Row>
               <Col xs={4}>
                 <Button onClick={() => setVerification(true)}>Approve</Button>
+                {/* <Button onClick={() => approveMember()}>Approve</Button> */}
               </Col>
               <Col>
                 <Button onClick={() => setVerification(false)}>Deny</Button>
@@ -70,7 +87,7 @@ function ApprovalItem({ approval }) {
         <Modal.Footer>
           {/* make close a cleanup method */}
           <Button onClick={() => setShow(false)}>Close</Button>
-          <Button>Save</Button>
+          <Button onClick={() => approveMember()}>Save</Button>
         </Modal.Footer>
       </Modal>
     </>

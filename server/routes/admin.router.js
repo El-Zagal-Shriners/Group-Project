@@ -65,7 +65,7 @@ router.put(
     const memberId = req.params.memberId;
     const authorized = req.body.authorized;
     // setup SQL query text to update member's authorization status.
-    const queryText = `UPDATE "user" SET "is_authorized"=$1 WHERE "id"=$2;`;
+    const queryText = `UPDATE "user" SET "is_authorized"=$1, "review_pending"=NOT $1 WHERE "id"=$2;`;
     pool
       .query(queryText, [authorized, memberId])
       .then((response) => {

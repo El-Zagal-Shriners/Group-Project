@@ -12,7 +12,7 @@ import { Button } from "react-bootstrap";
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 
-function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
+function DiscountFilterOffCanvas({ setShowFilterOffCanvas }) {
   const dispatch = useDispatch();
 
   // selects array of objects from discounts reducer with all available discounts
@@ -31,24 +31,6 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   const selectedCategories = useSelector(
     (store) => store.filter.selectedCategoriesReducer
   );
-
-  const [companySearchIn, setCompanySearchIn] = useState([]);
-
-  function filterSearchResults() {
-    // console.log('in filterSearchResults', allDiscounts);
-    // filter discounts
-    //   // filter
-    //   let filteredDiscounts = array.filter((thisItem) => {
-    //     return thisItem !== objectToRemove;
-    //   });
-    //   return filteredArr;
-    // }
-  }
-
-  useEffect(() => {
-    filterSearchResults();
-    console.log("selectedcities are", selectedCities);
-  }, [selectedCategories, selectedCities]);
 
   function handleCitySelection(thisCity, cityIsSelected) {
     // if city is already selected, remove it from the selectedCities array
@@ -277,7 +259,7 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
         <Button
           size="lg"
           variant="outline-primary"
-          onClick={() => setShowFilter(false)}
+          onClick={() => setShowFilterOffCanvas(false)}
         >
           View Results
         </Button>
@@ -286,4 +268,4 @@ function DiscountFilter({ setFilteredDiscounts, setShowFilter }) {
   );
 }
 
-export default DiscountFilter;
+export default DiscountFilterOffCanvas;
