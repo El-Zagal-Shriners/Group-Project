@@ -29,9 +29,20 @@ function* getDependents() {
   }
 }
 
+// SAGA to delete a dependent account
+function* removeDependent(action) {
+  try {
+      yield axios.delete(`api/accounts/dependent/${action.payload}`);
+      yield put({ type: "GET_DEPENDENTS" });
+  } catch (err) {
+      console.log('Error removing dependent: ', err);
+  }
+}
+
 function* accountsSaga() {
   yield takeEvery("GET_ACCOUNTS", fetchAllAccounts);
-  yield takeEvery("GET_DEPENDENTS", getDependents)
+  yield takeEvery("GET_DEPENDENTS", getDependents);
+  yield takeEvery("REMOVE_DEPENDENT", removeDependent);
 }
 
 export default accountsSaga;

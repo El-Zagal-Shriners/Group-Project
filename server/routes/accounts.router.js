@@ -66,11 +66,11 @@ router.get(
 ); // End GET dependents
 
 // DELETE a dependent account
-router.delete('/:userid', rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+router.delete('/dependent/:userid', rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   const userId = req.params.userid;
   const query = `DELETE FROM "user" 
-                 WHERE "id"=$1;`;
-  pool.query(query, [userId])
+                 WHERE "id"=$1 AND "primary_member_id"=$2;`;
+  pool.query(query, [userId, req.user.id])
       .then(result => {
           res.sendStatus(200);
       })
