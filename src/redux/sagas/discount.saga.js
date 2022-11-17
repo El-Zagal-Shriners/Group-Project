@@ -1,6 +1,11 @@
 import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
+const config = {
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+};
+
 // GET all discounts for use in member discount page
 // Includes relevent vendor and category information as well
 function* getMemberDiscounts() {
@@ -63,12 +68,23 @@ function* removeDiscount(action) {
   }
 } // End remove a discount
 
+// GET to server to fetch all discount tracking info
+function* fetchDiscountTracker(action) {
+  try {
+    const results = yield axios.get("/admindiscounttracker", config);
+    yield put({ type: "SET_DISCOUNT_TRACKER", payload: results });
+  } catch (error) {
+    console.log("error caught in fetchDiscountTracker :>> ", error);
+  }
+}
+
 function* discountSaga() {
   yield takeLatest("GET_MEMBER_DISCOUNTS", getMemberDiscounts);
   yield takeLatest("GET_ADMIN_DISCOUNTS", getAdminDiscounts);
   yield takeLatest("ADD_DISCOUNT", addDiscount);
   yield takeLatest("EDIT_DISCOUNT", editDiscount);
   yield takeLatest("REMOVE_DISCOUNT", removeDiscount);
+  yield takeLatest("FETCH_DISCOUNT_TRACKER", fetchDiscountTracker);
 }
 
 export default discountSaga;

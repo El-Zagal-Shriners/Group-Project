@@ -3,6 +3,9 @@ const pool = require("../modules/pool");
 const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
+const {
+  rejectUnauthorizedUser,
+} = require("../modules/authorization-middleware");
 const router = express.Router();
 
 // This GET will return all discounts with their parent vendor info and category info
@@ -149,6 +152,25 @@ router.delete("/:discountid", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 }); // End delete a discount
+
+router.get(
+  "/admindiscounttracker",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    const queryText = `SELECT * FROM "discounts_tracked";`;
+
+    pool
+      .query(queryText)
+      .then((result) => {
+        res.send(result.rows);
+      })
+      .catch((error) => {
+        console.log("error caught in GET discount tracker :>> ", error);
+        res.sendStatus(500);
+      });
+  }
+);
 
 // export the router
 module.exports = router;
