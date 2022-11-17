@@ -10,29 +10,38 @@ const router = express.Router();
 
 // This GET will return all discounts with their parent vendor info and category info
 // All relevent info for the member discount page
-router.get("/member", rejectUnauthenticated, (req, res) => {
-  // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
-  const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "description", "start_date", "expiration_date", "discount_code", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
+router.get(
+  "/member",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
+    const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "description", "start_date", "expiration_date", "discount_code", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
   FROM "discounts"
   JOIN "vendors" ON "vendors"."id" = "vendor_id"
   JOIN "categories" ON "categories"."id" = "category_id"
   WHERE "is_shown"=true;`;
-  pool
-    .query(query)
-    .then((result) => {
-      // return results from query
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      // log the error if one occurs
-      console.log("Error in getting current discounts: ", err);
-    });
-}); // End GET discounts
+    pool
+      .query(query)
+      .then((result) => {
+        // return results from query
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        // log the error if one occurs
+        console.log("Error in getting current discounts: ", err);
+      });
+  }
+); // End GET discounts
 
 // This GET will return all discounts in the database (for admin page)
-router.get("/admin", rejectUnauthenticated, (req, res) => {
-  // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
-  const query = `SELECT "discounts".*,
+router.get(
+  "/admin",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
+    const query = `SELECT "discounts".*,
 	count("discounts_tracked"."id") AS "discounts_all_time",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '7 days') AND CURRENT_DATE) AS "seven_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "thirty_day_count",
@@ -41,20 +50,21 @@ router.get("/admin", rejectUnauthenticated, (req, res) => {
 	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
 	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";`;
-  pool
-    .query(query)
-    .then((result) => {
-      // return results from query
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      // log the error if one occurs
-      console.log("Error in getting current discounts: ", err);
-    });
-}); // End GET discounts
+    pool
+      .query(query)
+      .then((result) => {
+        // return results from query
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        // log the error if one occurs
+        console.log("Error in getting current discounts: ", err);
+      });
+  }
+); // End GET discounts
 
 // This POST will add a new discount to the discount table
-router.post("/", rejectUnauthenticated, (req, res) => {
+router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   const vendorId = req.body.vendorId;
   const description = req.body.description;
   const startDate = req.body.startDate ? req.body.startDate : null;
@@ -90,8 +100,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 }); // End POST new discount
 
 // This PUT will edit an existing discount by ID number
-router.put("/", rejectUnauthenticated, (req, res) => {
-  console.log("In discount PUT with: ", req.body);
+router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+  // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
   const vendorId = req.body.vendorId;
   const description = req.body.description;
@@ -135,23 +145,28 @@ router.put("/", rejectUnauthenticated, (req, res) => {
 }); // End edit discount PUT
 
 // Delete a discount by discount ID
-router.delete("/:discountid", rejectUnauthenticated, (req, res) => {
-  console.log("In delete a discount with: ", req.params.discountid);
-  const discountId = req.params.discountid;
-  const query = `DELETE FROM "discounts"
+router.delete(
+  "/:discountid",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    // console.log("In delete a discount with: ", req.params.discountid);
+    const discountId = req.params.discountid;
+    const query = `DELETE FROM "discounts"
                  WHERE "id"=$1;`;
-  pool
-    .query(query, [discountId])
-    .then((result) => {
-      // Send a success status
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      // Log error and send error status if error occurs
-      console.log("Error deleting a player");
-      res.sendStatus(500);
-    });
-}); // End delete a discount
+    pool
+      .query(query, [discountId])
+      .then((result) => {
+        // Send a success status
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        // Log error and send error status if error occurs
+        console.log("Error deleting a player");
+        res.sendStatus(500);
+      });
+  }
+); // End delete a discount
 
 // export the router
 module.exports = router;
