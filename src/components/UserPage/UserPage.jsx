@@ -45,7 +45,7 @@ function UserPage() {
           Member Number: {user.membership_number}
         </p>
         <button className="btn btn-info" onClick={handleShowEdit}>{allIconComponents.editUser}</button>
-        <EditUserForm showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
+        <EditUserForm user={user} showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
         </div>
         {/* Render list of dependents if any */}
           <div className="d-flex justify-content-between align-items-center">
