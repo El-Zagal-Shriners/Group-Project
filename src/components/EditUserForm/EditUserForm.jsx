@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch }  from "react-redux";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import UserDependentConfirmation from '../UserPage/UserDependentConfirmation';
 
 function EditUserForm(props) {
     const dispatch = useDispatch();
