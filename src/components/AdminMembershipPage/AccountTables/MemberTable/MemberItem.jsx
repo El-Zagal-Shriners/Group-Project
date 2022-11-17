@@ -9,9 +9,11 @@ import {
   Row,
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { useDispatch } from "react-redux";
 import DependentItem from "./DependentItem";
 
 function MemberItem({ member, members }) {
+  const dispatch = useDispatch();
   const dues = member.dues_paid.split("-")[0];
   const dueDate = member.dues_paid.split("T")[0];
   // setup local state for showing dependents.
@@ -24,6 +26,50 @@ function MemberItem({ member, members }) {
   const [duesPaid, setDuesPaid] = useState(null);
   // assume member is authorized.
   const [authorized, setAuthorized] = useState(true);
+
+  // changes member's authorization status
+  const activate = () => {
+    dispatch({
+      type: "AUTHORIZE_MEMBER",
+      payload: {
+        memberId: member.id,
+        authorized,
+      },
+    });
+    setEdit(false);
+  };
+
+  // updates member's paid date and or number
+  const updateMember = () => {
+    if (
+      memberNumber === member.membership_number &&
+      duesPaid === member.dues_paid
+    ) {
+      activate();
+    } else {
+      dispatch({
+        type: "UPDATE_MEMBER_INFO",
+        payload: {
+          memberId: member.id,
+          memberNumber: memberNumber || member.membership_number,
+          duesPaid: duesPaid || member.dues_paid,
+        },
+      });
+      activate();
+      closeModal();
+    }
+  };
+
+  // deletes member
+  const removeMember = () => {
+    console.log(member.id);
+    dispatch({
+      type: "ADMIN_DELETE_MEMBER",
+      payload: {
+        memberId: member.id,
+      },
+    });
+  };
 
   // setup close modal function
   const closeModal = () => {
@@ -61,6 +107,7 @@ function MemberItem({ member, members }) {
         onHide={() => {
           setShow(false);
           closeModal();
+          toggleList(false);
         }}
         animation={false}
         aria-labelledby="contained-modal-title-vcenter"
@@ -126,6 +173,7 @@ function MemberItem({ member, members }) {
             onClick={() => {
               setShow(false);
               closeModal();
+              toggleList(false);
             }}
           >
             Close
@@ -175,7 +223,7 @@ function MemberItem({ member, members }) {
             </Col>
             <Col>
               {/* add delete function */}
-              <Button>Remove</Button>
+              <Button onClick={() => removeMember()}>Remove</Button>
             </Col>
             <Col></Col>
           </Row>
@@ -194,11 +242,12 @@ function MemberItem({ member, members }) {
             onClick={() => {
               setEdit(false);
               closeModal();
+              toggleList(false);
             }}
           >
             Close
           </Button>
-          <Button>Save</Button>
+          <Button onClick={() => updateMember()}>Save</Button>
         </Modal.Footer>
       </Modal>
     </>
