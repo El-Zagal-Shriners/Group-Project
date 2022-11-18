@@ -1,3 +1,5 @@
+import { combineReducers } from "redux";
+
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_USER":
@@ -9,6 +11,18 @@ const userReducer = (state = {}, action) => {
   }
 };
 
+const tokenCheck = (state = 'false', action) => {
+  switch (action.type) {
+    case "SET_TOKEN_CHECK":
+      return String(action.payload);
+    default:
+      return state;
+  }
+};
+
 // user will be on the redux state at:
 // state.user
-export default userReducer;
+export default combineReducers({
+  userReducer,
+  tokenCheck
+})

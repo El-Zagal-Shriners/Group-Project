@@ -1,18 +1,28 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
+  const user = useSelector((store) => store.user);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [usernameIn, setUsernameIn] = useState("");
   const [passwordIn, setPasswordIn] = useState("");
+  const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
-  const params = useParams();
+  const history = useHistory();
+  const { token } = useParams();
+
+  useEffect(() => {
+    dispatch({
+          type: "TOKEN_CHECK",
+          payload: token
+        });
+  }, []);
 
   const createAccount = (event) => {
     event.preventDefault();
@@ -24,14 +34,15 @@ function DependentRegistrationPage() {
         email: email,
         username: usernameIn,
         password: passwordIn,
-        primary_member_id: params.memberid,
+        token: token
       },
     });
   };
 
   return (
-    <>
+      <>
       <UpdatedNavBar />
+      {user.tokenCheck === 'true'?
       <div className="container text-center">
         <h2 className="text-primary">Dependent Registration Form</h2>
         <form onSubmit={createAccount}>
@@ -104,6 +115,8 @@ function DependentRegistrationPage() {
           </button>
         </form>
       </div>
+      :
+      <p>Not authorized</p>}
     </>
   );
 }

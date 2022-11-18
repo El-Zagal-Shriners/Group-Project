@@ -92,7 +92,7 @@ function App() {
             <AdminTrackingPage />
           </ProtectedAdminRoute>
 
-          <Route exact path="/dependents">
+          <Route exact path="/dependents/:token">
             <DependentRegistrationPage />
           </Route>
 

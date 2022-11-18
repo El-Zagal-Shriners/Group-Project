@@ -9,9 +9,12 @@ const {
 const {
   rejectUnauthorizedUser,
 } = require("../modules/authorization-middleware");
+const { v4: uuidv4 } = require('uuid');
+const encryptLib = require("../modules/encryption");
 
 // This route will send an email to the depedent account trying to be created
 router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, next) => {
+  const token = uuidv4();
   const email = req.body.email;
   console.log('In email router');
   // Data for email to send to dependent
@@ -23,7 +26,7 @@ router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, 
     // html to display in the body of the email
     html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
             Please click the following link to register on the website.</p>
-            <a href="http://localhost:3000/#/dependents">Register Account!</a>`,
+            <a href="http://localhost:3000/#/dependents/${token}">Register Account!</a>`,
   }
   // sends email based on msg above
   sgMail
@@ -43,8 +46,6 @@ router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, 
 // router to post to "user" table first_name, last_name, email, username, and password columns
 router.post("/", (req, res) => {
   const dependent = req.body;
-  // console.log("Adding dependent registration information server", dependent);
-
   let queryText = `INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", "primary_member_id")
                     VALUES($1, $2, $3, $4, $5, $6);`;
   pool
@@ -63,5 +64,25 @@ router.post("/", (req, res) => {
       console.log("Error POST adding dependent ");
     });
 });
+
+// GET to check if the user's token exists in database
+router.get('/:token', (req, res) => {
+  // GET route code here
+  const token = req.params.token;
+  console.log('Here is token: ', token);
+  const query = `SELECT * FROM "dependent_tokens" 
+                 WHERE "dependent_tokens"."token"=$1;`;
+  pool.query(query, [token])
+      .then(result => {
+        if(result.rows.length > 0) {
+          res.send('true');
+        } else {
+          res.send('false');
+        }
+      })
+      .catch((err) => {
+        console.log('Error in getting player games: ', err);
+      })
+}); // End GET user games
 
 module.exports = router;
