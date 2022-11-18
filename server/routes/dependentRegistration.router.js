@@ -12,6 +12,7 @@ const {
 
 // This route will send an email to the depedent account trying to be created
 router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, next) => {
+  
   const msg = {
     to: 'ddvetter23@gmail.com', // Change to your recipient
     from: 'dvettertest@gmail.com', // Change to your verified sender
