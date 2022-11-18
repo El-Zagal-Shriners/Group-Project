@@ -103,34 +103,22 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
-  const vendorId = req.body.vendorId;
   const description = req.body.description;
-  const startDate = req.body.startDate ? req.body.startDate : null;
-  const expDate = req.body.expDate ? req.body.expDate : null;
-  const discountCode = req.body.discountCode ? req.body.discountCode : null;
-  const categoryId = req.body.categoryId;
-  const isShown = req.body.isShown;
-  const isRegional = req.body.isRegional;
+  const startDate = req.body.startDate;
+  const expDate = req.body.expDate;
+  const discountCode = req.body.discountCode;
   const query = `UPDATE "discounts"
-                 SET "vendor_id"=$1,
-                 "description"=$2,
-                 "start_date"=$3,
-                 "expiration_date"=$4,
-                 "discount_code"=$5,
-                 "category_id"=$6,
-                 "is_shown"=$7,
-                 "is_regional"=$8
-                 WHERE "id"=$9;`;
+                 SET "description"=$1,
+                 "start_date"=$2,
+                 "expiration_date"=$3,
+                 "discount_code"=$4
+                 WHERE "id"=$5;`;
   pool
     .query(query, [
-      vendorId,
       description,
       startDate,
       expDate,
       discountCode,
-      categoryId,
-      isShown,
-      isRegional,
       discountId,
     ])
     .then((result) => {

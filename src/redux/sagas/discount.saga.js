@@ -51,7 +51,7 @@ function* editDiscount(action) {
   try {
     console.log("In edit discount with: ", action.payload);
     yield axios.put(`api/discounts`, action.payload);
-    yield put({ type: "GET_DISCOUNTS" });
+    yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
     console.log("Error editing discount: ", err);
   }
@@ -62,7 +62,7 @@ function* removeDiscount(action) {
   try {
     console.log("In remove discount with: ", action.payload);
     yield axios.delete(`api/discounts/${action.payload}`);
-    yield put({ type: "GET_DISCOUNTS" });
+    yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
     console.log("Error removing discount: ", err);
   }
