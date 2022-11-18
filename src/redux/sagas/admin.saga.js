@@ -14,7 +14,8 @@ function* updateMemberInfo(action) {
       memberNumber: action.payload.memberNumber,
       duesPaid: action.payload.duesPaid,
     };
-    yield axios.put(`/admin/${memberId}`, memberInfo, config);
+    yield axios.put(`/api/admin/${memberId}`, memberInfo, config);
+    yield put({ type: "GET_ACCOUNTS" });
   } catch (err) {
     console.log("Error updating member info", err);
   }
@@ -25,10 +26,11 @@ function* approveMember(action) {
   try {
     const memberId = action.payload.memberId;
     yield axios.put(
-      `/admin/verify/${memberId}`,
-      action.payload.verification,
+      `/api/admin/verify/${memberId}`,
+      { verification: action.payload.verification },
       config
     );
+    yield put({ type: "GET_ACCOUNTS" });
   } catch (err) {
     console.log("Error approving member", err);
   }
@@ -39,10 +41,11 @@ function* authorizeMember(action) {
   try {
     const memberId = action.payload.memberId;
     yield axios.put(
-      `/admin/authorize/${memberId}`,
-      action.payload.authorized,
+      `/api/admin/authorize/${memberId}`,
+      { authorized: action.payload.authorized },
       config
     );
+    yield put({ type: "GET_ACCOUNTS" });
   } catch (err) {
     console.log("Error setting authorization status", err);
   }
@@ -52,17 +55,18 @@ function* authorizeMember(action) {
 function* deleteMember(action) {
   try {
     const memberId = action.payload.memberId;
-    yield axios.delete(`/admin/${memberId}`, config);
+    yield axios.delete(`/api/admin/${memberId}`, config);
+    yield put({ type: "GET_ACCOUNTS" });
   } catch (err) {
     console.log("Error deleting member account", err);
   }
 }
 
 function* adminSaga() {
-  takeEvery("UPDATE_MEMBER_INFO", updateMemberInfo);
-  takeEvery("APPROVE_MEMBER", approveMember);
-  takeEvery("AUTHORIZE_MEMBER", authorizeMember);
-  takeEvery("ADMIN_DELETE_MEMBER", deleteMember);
+  yield takeEvery("UPDATE_MEMBER_INFO", updateMemberInfo);
+  yield takeEvery("APPROVE_MEMBER", approveMember);
+  yield takeEvery("AUTHORIZE_MEMBER", authorizeMember);
+  yield takeEvery("ADMIN_DELETE_MEMBER", deleteMember);
 }
 
 export default adminSaga;
