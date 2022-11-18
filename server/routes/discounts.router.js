@@ -103,14 +103,24 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
-
   const description = req.body.description;
+  const startDate = req.body.startDate;
+  const expDate = req.body.expDate;
+  const discountCode = req.body.discountCode;
   const query = `UPDATE "discounts"
-                 SET 
-                 "description"=$1
-                 WHERE "id"=$2;`;
+                 SET "description"=$1,
+                 "start_date"=$2,
+                 "expiration_date"=$3,
+                 "discount_code"=$4
+                 WHERE "id"=$5;`;
   pool
-    .query(query, [description, discountId])
+    .query(query, [
+      description,
+      startDate,
+      expDate,
+      discountCode,
+      discountId,
+    ])
     .then((result) => {
       // Send success status
       res.sendStatus(200);

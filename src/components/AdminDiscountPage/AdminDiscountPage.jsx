@@ -72,10 +72,10 @@ function AdminDiscountPage() {
         <section className="w-100 d-flex flex-wrap">
           {currentSelected !== "default"
             ? filteredDiscounts.map((discount) => {
-                return <DiscountItem discount={discount} />;
+                return <DiscountItem key={discount.id} discount={discount} />;
               })
             : filteredDiscounts.map((discount) => {
-                return <DiscountItem discount={discount} />;
+                return <DiscountItem key={discount.id} discount={discount} />;
               })}
         </section>
       </div>
