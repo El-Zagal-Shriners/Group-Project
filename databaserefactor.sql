@@ -97,7 +97,7 @@ ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id
 
 -- DOUBLE CHECK THAT THE "DELETE ON CASCADE" IS WORKING AS INTENDED || Tested working in Postico
 ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id") ON DELETE CASCADE;
-ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
+ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE;
 
 -- SAMPLE USERS 15
 INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", "primary_member_id", "dues_paid", "membership_number", "admin_level", "is_authorized")
