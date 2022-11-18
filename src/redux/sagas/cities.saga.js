@@ -37,7 +37,7 @@ function* getCloseCities(action) {
       config
     );
     // store the closest cities in redux.
-    yield put({ type: "SET_CLOSE_CITIES", payload: response.data });
+    yield put({ type: "SET_ALL_CITIES", payload: response.data });
   } catch (err) {
     console.log("Error in getting cities closest to user", err);
   }
