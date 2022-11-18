@@ -6,7 +6,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
-import DiscountItem from "./DiscountItem";
+import DiscountModal from "./DiscountModal";
 
 /* To-Do
 
@@ -106,7 +106,7 @@ function AdminDiscountPage() {
                     </h3>
                   </div>
                 ))}
-                <DiscountItem />
+                <DiscountModal />
           </section>
             
         </div>
