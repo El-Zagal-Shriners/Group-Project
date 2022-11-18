@@ -3,12 +3,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 
-function DiscountItem() {
+function DiscountModal({ discount }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [description, setDescription] = useState();
   const [discountId, setDiscountId] = useState();
-  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,8 +20,8 @@ function DiscountItem() {
     dispatch({
       type: "REMOVE_DISCOUNT",
       payload: {
-        discountId: discount.id
-      }
+        discountId: discount.id,
+      },
     });
   };
 
@@ -36,7 +35,7 @@ function DiscountItem() {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{discount.description}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
@@ -53,4 +52,4 @@ function DiscountItem() {
   );
 }
 
-export default DiscountItem;
+export default DiscountModal;

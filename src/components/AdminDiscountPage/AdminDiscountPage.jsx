@@ -7,16 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import DiscountModal from "./DiscountModal";
-
-/* To-Do
-
-  1. [x] Display all discounts that are relevant to this page (no filter)
-  2. [x] Make the drop-down correctly set local state to the id of the vendor
-  3. [x] Create a copy of the discounts into a new array that can be filtered
-  4. [x] If there is a selection, filter the discounts to only show discounts whose vendor
-         id matches the local state vendor id from the drop-down
-         (this is currently commented out, will need modified)
-*/
+import DiscountItem from "./DiscountItem";
 
 function AdminDiscountPage() {
   const dispatch = useDispatch();
@@ -28,7 +19,6 @@ function AdminDiscountPage() {
 
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
-  // (STEP 2: activate the filter from local state)
   if (currentSelected !== "default") {
     filteredDiscounts = filteredDiscounts.filter(
       (discount) => Number(discount.vendor_id) === Number(currentSelected)
@@ -79,37 +69,16 @@ function AdminDiscountPage() {
             );
           })}
         </DropdownButton>
-        {/* <div className="text-primary">
-          Discounts{" "}
-          {filteredDiscounts.map((discount) => (
-            <div className="text-primary">{discount.description}</div>
-          ))} */}
-          <section className="w-100 d-flex flex-wrap">
-            {currentSelected !== "default"
-              ? filteredDiscounts.map((discount) => (
-                  <div
-                    key={discount.id}
-                    className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
-                  >
-                    <h3 className="text-center w-100 text-primary">
-                      {discount.description}
-                    </h3>
-                  </div>
-                ))
-              : filteredDiscounts.map((discount) => (
-                  <div
-                    key={discount.id}
-                    className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
-                  >
-                    <h3 className="text-center w-100 text-primary">
-                      {discount.description}
-                    </h3>
-                  </div>
-                ))}
-                <DiscountModal />
-          </section>
-            
-        </div>
+        <section className="w-100 d-flex flex-wrap">
+          {currentSelected !== "default"
+            ? filteredDiscounts.map((discount) => {
+                return <DiscountItem discount={discount} />;
+              })
+            : filteredDiscounts.map((discount) => {
+                return <DiscountItem discount={discount} />;
+              })}
+        </section>
+      </div>
     </>
   );
 }
