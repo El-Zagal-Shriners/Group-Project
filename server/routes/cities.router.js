@@ -45,8 +45,7 @@ router.get(
   COS(RADIANS("lng") - RADIANS($2)) + SIN(RADIANS($1)) *
   SIN(RADIANS("lat")))) AS "distance"
   FROM "location"
-  ORDER BY "distance"
-  LIMIT 4;`;
+  ORDER BY "distance"`;
     pool
       .query(queryText, [coords.lat, coords.lng])
       .then((response) => {
