@@ -45,8 +45,9 @@ function UserPage() {
       <div className="container">
         {/* Render user's basic information */}
         <h2 className="fw-bolder">
-          {user.first_name} {user.last_name}
+          Hi, {user.first_name} {user.last_name}!
         </h2>
+        <h4>Current Information:</h4>
         <div className="d-flex justify-content-between align-items-center">
           <p className="mb-1">
             First Name: {user.first_name}
