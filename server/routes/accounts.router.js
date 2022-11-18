@@ -34,13 +34,9 @@ router.get("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
 }); // End GET for all members
 
 // GET any dependents for the current user
-router.get(
-  "/dependents",
-  rejectUnauthenticated,
-  rejectNonAdministrator,
-  (req, res) => {
-    // SQL query text
-    const queryText = `SELECT
+router.get("/dependents", rejectUnauthenticated, (req, res) => {
+  // SQL query text
+  const queryText = `SELECT
         "first_name",
         "last_name",
         "email",
@@ -48,20 +44,19 @@ router.get(
         "username"
       FROM "user"
       WHERE "id"!=$1 AND "primary_member_id"=$1;`;
-    // Run query against the database
-    pool
-      .query(queryText, [req.user.id])
-      .then((result) => {
-        // Return results on success
-        res.send(result.rows);
-      })
-      .catch((error) => {
-        // Log and send back error status if error occurs
-        console.log("Error in getting dependents", error);
-        res.sendStatus(500);
-      });
-  }
-); // End GET dependents
+  // Run query against the database
+  pool
+    .query(queryText, [req.user.id])
+    .then((result) => {
+      // Return results on success
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      // Log and send back error status if error occurs
+      console.log("Error in getting dependents", error);
+      res.sendStatus(500);
+    });
+}); // End GET dependents
 
 // DELETE a dependent account
 router.delete(

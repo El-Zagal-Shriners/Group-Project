@@ -72,8 +72,18 @@ function AdminTrackingPage() {
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
                   <h3 className="text-center w-100 text-primary">
-                    {discount.description}
+                    {
+                      allVendors[
+                        allVendors.findIndex(
+                          (item) =>
+                            Number(item.id) === Number(discount.vendor_id)
+                        )
+                      ].name
+                    }
                   </h3>
+                  <h5 className="text-center w-100 text-primary">
+                    {discount.description}
+                  </h5>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
                       <Card.Title className="text-center">
@@ -121,8 +131,18 @@ function AdminTrackingPage() {
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
                   <h3 className="text-center w-100 text-primary">
-                    {discount.description}
+                    {
+                      allVendors[
+                        allVendors.findIndex(
+                          (item) =>
+                            Number(item.id) === Number(discount.vendor_id)
+                        )
+                      ].name
+                    }
                   </h3>
+                  <h5 className="text-center w-100 text-primary">
+                    {discount.description}
+                  </h5>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
                       <Card.Title className="text-center">

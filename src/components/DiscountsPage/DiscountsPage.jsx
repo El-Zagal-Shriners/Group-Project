@@ -7,9 +7,55 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 // components
 import DiscountCard from "./DiscountCard";
 import DiscountFilterOffCanvas from "./DiscountFilterOffCanvas";
+import { Spinner } from "react-bootstrap";
 
 function DiscountsPage() {
   const dispatch = useDispatch();
+  // Location services:
+  // local state to see if services are loading.
+  const [loading, setLoading] = useState(true);
+  // create a promise to get the user's current location.
+  const getPosition = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  };
+
+  // async function to await the retrieval of the user's location
+  // then get the closest cities.
+  const getLocation = async () => {
+    await getPosition()
+      .then((response) => {
+        // bundle the latitude and longitude into a coordinates object
+        const coordinates = {
+          lat: response.coords.latitude,
+          lng: response.coords.longitude,
+        };
+        // dispatch to check if the user's city exists in the DB.
+        dispatch({
+          type: "CHECK_CITY",
+          payload: coordinates,
+        });
+        // dispatch to get the closest ciities.
+        dispatch({
+          type: "GET_CLOSE_CITIES",
+          payload: coordinates,
+        });
+      })
+      .catch((err) => {
+        if (err.code === 1) {
+          dispatch({ type: "GET_ALL_CITIES" });
+        } else {
+          console.log("Error resolving getPosition", err);
+        }
+      });
+    // after getPosition resolves, set loading to false.
+    setLoading(false);
+  };
+  // call get Location on load.
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   // redux stores for managing search parameters
   const selectedCities = useSelector(
@@ -85,42 +131,55 @@ function DiscountsPage() {
     [selectedCategories, selectedCities, allMemberDiscounts]
   );
 
-  return (
-    <>
-      <UpdatedNavBar />
-      <div className="d-flex justify-content-center">
-        <Button
-          size="lg"
-          variant="outline-primary"
-          onClick={() => setShowFilterOffCanvas(true)}
-          className="me-2 d-flex justify-content-center"
+  if (loading) {
+    return (
+      <>
+        <UpdatedNavBar />
+        <div className="text-center py-5">
+          <Spinner animation="border" role="status" variant="primary">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <UpdatedNavBar />
+        <div className="d-flex justify-content-center">
+          <Button
+            size="lg"
+            variant="outline-primary"
+            onClick={() => setShowFilterOffCanvas(true)}
+            className="me-2 d-flex justify-content-center"
+          >
+            {selectedCities.length > 0 || selectedCategories.length > 0
+              ? "Edit"
+              : "Refine"}{" "}
+            My Search
+          </Button>
+        </div>
+
+        <Offcanvas
+          show={showFilterOffCanvas}
+          onHide={() => setShowFilterOffCanvas(false)}
         >
-          {selectedCities.length > 0 || selectedCategories.length > 0
-            ? "Edit"
-            : "Refine"}{" "}
-          My Search
-        </Button>
-      </div>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Narrow Your Search</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <DiscountFilterOffCanvas
+              setShowFilterOffCanvas={setShowFilterOffCanvas}
+            />
+          </Offcanvas.Body>
+        </Offcanvas>
 
-      <Offcanvas
-        show={showFilterOffCanvas}
-        onHide={() => setShowFilterOffCanvas(false)}
-      >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Narrow Your Search</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <DiscountFilterOffCanvas
-            setShowFilterOffCanvas={setShowFilterOffCanvas}
-          />
-        </Offcanvas.Body>
-      </Offcanvas>
-
-      {filteredDiscounts.map((thisDiscount, index) => {
-        return <DiscountCard key={index} thisDiscount={thisDiscount} />;
-      })}
-    </>
-  );
+        {filteredDiscounts.map((thisDiscount, index) => {
+          return <DiscountCard key={index} thisDiscount={thisDiscount} />;
+        })}
+      </>
+    );
+  }
 }
 
 export default DiscountsPage;

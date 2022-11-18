@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
-import EditUserForm from '../EditUserForm/EditUserForm';
-import UserDependentConfirmation from './UserDependentConfirmation';
-import AddDependentForm from '../AddDependentForm/AddDependentForm';
-
+import EditUserForm from "../EditUserForm/EditUserForm";
+import UserDependentConfirmation from "./UserDependentConfirmation";
+import AddDependentForm from "../AddDependentForm/AddDependentForm";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -46,10 +45,15 @@ function UserPage() {
       <div className="container">
         {/* Render user's basic information */}
         <h2 className="fw-bolder">
-          {user.first_name} {user.last_name}
+          Hi, {user.first_name} {user.last_name}!
         </h2>
+        <h4>Current Information:</h4>
         <div className="d-flex justify-content-between align-items-center">
           <p className="mb-1">
+            First Name: {user.first_name}
+            <br />
+            Last Name: {user.last_name}
+            <br />
             Username: {user.username}
             <br />
             Email: {user.email}
@@ -75,7 +79,10 @@ function UserPage() {
           <button className="btn btn-success" onClick={handleShowDependent}>
             {allIconComponents.add}
           </button>
-          <AddDependentForm showAddDependent={showAddDependent} handleCloseDependent={handleCloseDependent}/>
+          <AddDependentForm
+            showAddDependent={showAddDependent}
+            handleCloseDependent={handleCloseDependent}
+          />
         </div>
         {accounts.accountDependents.length > 0 ? (
           <>

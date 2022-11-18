@@ -2,7 +2,10 @@ import { takeEvery, put } from "redux-saga/effects";
 const axios = require("axios");
 
 // route: /api/cities
-
+const config = {
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+};
 // saga to direct actions to the correct sagas.
 function* citiesSaga() {
   yield takeEvery("GET_ALL_CITIES", getAllCities);
@@ -13,10 +16,6 @@ function* citiesSaga() {
 // saga to get all cities and store them in redux.
 function* getAllCities() {
   try {
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
     // fetch all cities from the database.
     const response = yield axios.get("/api/cities", config);
     // store the cities into redux.
@@ -29,10 +28,6 @@ function* getAllCities() {
 // saga to get cities closest to user.
 function* getCloseCities(action) {
   try {
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
     // shorten the action.payload by assigning it to coords.
     const coords = action.payload;
     // console.log(coords);
@@ -42,7 +37,7 @@ function* getCloseCities(action) {
       config
     );
     // store the closest cities in redux.
-    yield put({ type: "SET_CLOSE_CITIES", payload: response.data });
+    yield put({ type: "SET_ALL_CITIES", payload: response.data });
   } catch (err) {
     console.log("Error in getting cities closest to user", err);
   }
@@ -51,10 +46,6 @@ function* getCloseCities(action) {
 // saga to check if the user's location is not in the DB and add it if it is not.
 function* checkCity(action) {
   try {
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
     // shorten the action.payload by assigning it to coords.
     const coords = action.payload;
     // console.log(coords);
