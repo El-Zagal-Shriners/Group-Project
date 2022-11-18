@@ -1,13 +1,13 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
+const config = {
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+};
 // worker Saga: will be fired on "FETCH_USER" actions
 function* fetchUser() {
   try {
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
 
     // the config includes credentials which
     // allow the server session to recognize the user
@@ -23,9 +23,21 @@ function* fetchUser() {
     console.log("User get request failed", error);
   }
 }
+// Saga to edit current user
+function* editUser(action) {
+  try {
+      yield axios.put(`api/user/`, action.payload, config);
+      yield put({
+          type: "FETCH_USER"
+      })
+  } catch (err) {
+      console.log('Error updating user information', err);
+  }
+}
 
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
+  yield takeLatest("EDIT_USER_INFO", editUser);
 }
 
 export default userSaga;

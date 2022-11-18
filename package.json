@@ -7,6 +7,7 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.2",
