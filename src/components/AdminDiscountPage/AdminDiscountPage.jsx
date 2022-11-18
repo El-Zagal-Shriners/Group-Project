@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 
+
 /* To-Do
 
   1. [x] Display all discounts that are relevant to this page (no filter)
@@ -90,6 +91,7 @@ function AdminDiscountPage() {
         {/* use filteredDiscounts for the map here */}
       </div>
     </>
+   
   );
 }
 {
