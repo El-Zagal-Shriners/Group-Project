@@ -39,9 +39,10 @@ function* unsetAll(action) {
   try {
     yield put({ type: "UNSET_ACCOUNTS" });
     yield put({ type: "UNSET_ADMIN" });
-    yield put({ type: "UNSET_CATAGORIES" });
+    yield put({ type: "UNSET_CATEGORIES" });
     yield put({ type: "UNSET_DISCOUNTS" });
     yield put({ type: "UNSET_CITIES" });
+    yield put({ type: "UNSET_VENDORS" });
   } catch (err) {
     console.log("Error unsetting all", err);
   }

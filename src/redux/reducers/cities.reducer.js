@@ -5,6 +5,8 @@ const allCitiesReducer = (state = [], action) => {
   switch (action.type) {
     case "SET_ALL_CITIES":
       return action.payload;
+    case "UNSET_CITIES":
+      return [];
     default:
       return state;
   }
@@ -15,6 +17,8 @@ const closeCitiesReducer = (state = [], action) => {
   switch (action.type) {
     case "SET_CLOSE_CITIES":
       return action.payload;
+    case "UNSET_CITIES":
+      return [];
     default:
       return state;
   }

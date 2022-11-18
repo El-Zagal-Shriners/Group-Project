@@ -3,6 +3,8 @@ import { combineReducers } from "redux";
 const memberDiscountsReducer = (state = [], action) => {
   if (action.type === "SET_MEMBER_DISCOUNTS") {
     return action.payload;
+  } else if (action.type === "UNSET_DISCOUNTS") {
+    return [];
   } else {
     return state;
   }
@@ -11,6 +13,8 @@ const memberDiscountsReducer = (state = [], action) => {
 const adminDiscountsReducer = (state = [], action) => {
   if (action.type === "SET_ADMIN_DISCOUNTS") {
     return action.payload;
+  } else if (action.type === "UNSET_DISCOUNTS") {
+    return [];
   } else {
     return state;
   }
