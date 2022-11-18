@@ -116,7 +116,7 @@ function DependentRegistrationPage() {
         </form>
       </div>
       :
-      <p>Not authorized</p>}
+      <h2>Not authorized</h2>}
     </>
   );
 }
