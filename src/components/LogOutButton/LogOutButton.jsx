@@ -7,6 +7,7 @@ function LogOutButton(props) {
   const history = useHistory();
 
   function handleLogOut() {
+    dispatch({ type: "UNSET_ALL" });
     dispatch({ type: "LOGOUT", payload: { history } });
   }
 
