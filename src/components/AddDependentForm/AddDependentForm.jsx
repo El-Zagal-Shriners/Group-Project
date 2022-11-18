@@ -6,9 +6,10 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 
 function AddDependentForm(props) {
+    // local state to hold the dependent email address
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
-
+    // performs POST for sending email to the email the user supplies
     const sendDependentEmail = () => {
         dispatch({
             type: "SEND_DEPENDENT_EMAIL",
@@ -16,10 +17,12 @@ function AddDependentForm(props) {
               email
             }
         });
+        // clear local state
         setEmail('');
+        // close the add dependent modal
         props.handleCloseDependent();
     }
-
+    // clears local state and closes modal
     const cancelDependentAdd = () => {
         setEmail('');
         props.handleCloseDependent();
