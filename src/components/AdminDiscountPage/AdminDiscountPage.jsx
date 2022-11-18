@@ -7,7 +7,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 
-
 /* To-Do
 
   1. [x] Display all discounts that are relevant to this page (no filter)
@@ -79,66 +78,46 @@ function AdminDiscountPage() {
             );
           })}
         </DropdownButton>
-
-        {/* <section className="w-100 d-flex flex-wrap">
-          {currentSelected !== "default"
-          ? filteredDiscounts.map((discount) => (
-            <div
-            key={discount.id}
-            className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
-            >
-            <h3 className="text-center w-100 text-primary">
-              {discount.description}
-            </h3>
-            </div>
-          ))
-)}
-        </section> */}
-
         <div className="text-primary">
           Discounts{" "}
           {filteredDiscounts.map((discount) => (
             <div className="text-primary">{discount.description}</div>
           ))}
+          <section className="w-100 d-flex flex-wrap">
+            {currentSelected !== "default"
+              ? filteredDiscounts.map((discount) => (
+                  <div
+                    key={discount.id}
+                    className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                  >
+                    <h3 className="text-center w-100 text-primary">
+                      {discount.description}
+                    </h3>
+                  </div>
+                ))
+              : filteredDiscounts.map((discount) => (
+                  <div
+                    key={discount.id}
+                    className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                  >
+                    <h3 className="text-center w-100 text-primary">
+                      {discount.description}
+                    </h3>
+                  </div>
+                ))}
+          </section>
+          <button
+              className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+              onClick={() =>
+                history.push(`discount/edit/${filteredDiscounts.id}`)
+              }
+            >
+              <h5 className="text-center">Edit</h5>
+            </button>
         </div>
-
-        {/* This is where discounts should go, map over and show them (STEP 1) */}
-        {/* use filteredDiscounts for the map here */}
       </div>
     </>
-   
   );
-}
-{
-  /* // <>
-    //   <UpdatedNavBar />
-    //   <h2>Admin Discount Page</h2>
-    //   <div className="text-primary">
-    //     Vendors{" "}
-    //     {vendors.map((vendor) => ( */
-}
-{
-  /* //       <div className="text-primary">
-    //         {vendor.name}, {vendor.city}, {vendor.address}
-    //       </div>
-    //     ))}
-    //   </div> */
-}
-{
-  /* //   <div className="text-primary">
-    //     Discounts{" "}
-    //     {discounts.map((discount) => ( */
-}
-{
-  /* //       <div className="text-primary">{discount.description}</div>
-    //     ))}
-    //   </div> */
-}
-{
-  /* // </> */
-}
-{
-  /* ); */
 }
 
 export default AdminDiscountPage;
