@@ -12,21 +12,29 @@ const {
 
 // This route will send an email to the depedent account trying to be created
 router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, next) => {
-  
+  const email = req.body.email;
+  console.log('In email router');
+  // Data for email to send to dependent
   const msg = {
-    to: 'ddvetter23@gmail.com', // Change to your recipient
+    to: email, // Change to your recipient
     from: 'dvettertest@gmail.com', // Change to your verified sender
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    subject: 'Shrine App Testing Emails',
+    text: 'localhost:3000/#/dependents', // alternative text
+    // html to display in the body of the email
+    html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
+            Please click the following link to register on the website.</p>
+            <a href="http://localhost:3000/#/dependents">Register Account!</a>`,
   }
+  // sends email based on msg above
   sgMail
     .send(msg)
     .then(() => {
+      // send success status
       console.log('Email sent')
       res.sendStatus(201);
     })
     .catch((error) => {
+      // log error and send error status if error occurs
       console.error('Error sending email', error);
       res.sendStatus(500);
     })
