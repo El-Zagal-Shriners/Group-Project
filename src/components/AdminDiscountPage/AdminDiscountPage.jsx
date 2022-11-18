@@ -6,6 +6,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
+import DiscountItem from "./DiscountItem";
 
 /* To-Do
 
@@ -78,11 +79,11 @@ function AdminDiscountPage() {
             );
           })}
         </DropdownButton>
-        <div className="text-primary">
+        {/* <div className="text-primary">
           Discounts{" "}
           {filteredDiscounts.map((discount) => (
             <div className="text-primary">{discount.description}</div>
-          ))}
+          ))} */}
           <section className="w-100 d-flex flex-wrap">
             {currentSelected !== "default"
               ? filteredDiscounts.map((discount) => (
@@ -105,17 +106,10 @@ function AdminDiscountPage() {
                     </h3>
                   </div>
                 ))}
+                <DiscountItem />
           </section>
-          <button
-              className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
-              onClick={() =>
-                history.push(`discount/edit/${filteredDiscounts.id}`)
-              }
-            >
-              <h5 className="text-center">Edit</h5>
-            </button>
+            
         </div>
-      </div>
     </>
   );
 }
