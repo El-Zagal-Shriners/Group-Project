@@ -3,6 +3,7 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import EditUserForm from '../EditUserForm/EditUserForm';
 import UserDependentConfirmation from './UserDependentConfirmation';
 
 
@@ -12,6 +13,8 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const accounts = useSelector((store) => store.accounts);
   const dispatch = useDispatch();
+  const [showEdit, setShowEdit] = useState(false);
+
   
   // Get dependents for current user on load
   useEffect(() => {
@@ -19,10 +22,16 @@ function UserPage() {
       type: 'GET_DEPENDENTS'
     });
   }, []);
+
   // Toggle local 'show' state
   const handleShow = () => setShow(true);
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
+
+    // Toggle local 'show' state
+    const handleShowEdit = () => setShowEdit(true);
+    // Toggle local 'show' state
+    const handleCloseEdit = () => setShowEdit(false);
 
   return (
     <>
@@ -36,8 +45,8 @@ function UserPage() {
           Email: {user.email}<br />
           Member Number: {user.membership_number}
         </p>
-        {/* Button to open personal infomation edit modal */}
-        <button className="btn btn-info">{allIconComponents.editUser}</button>
+        <button className="btn btn-info" onClick={handleShowEdit}>{allIconComponents.editUser}</button>
+        <EditUserForm user={user} showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
         </div>
         {/* Render list of dependents if any */}
           <div className="d-flex justify-content-between align-items-center">

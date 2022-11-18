@@ -71,4 +71,44 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
+// setUsername('');
+// setFirstName('');
+// setLastName('');
+// setEmail('');
+// setMemberNumber('');
+
+// PUT to edit the current user
+router.put('/', rejectUnauthenticated, (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const username = req.body.username;
+  const email = req.body.email;
+  const memberNumber = req.body.memberNumber;
+  // SQL query
+  const query = `UPDATE "user" 
+                 SET 
+                 "username"=$1,
+                 "first_name"=$2, 
+                 "last_name"=$3, 
+                 "email"=$4, 
+                 "membership_number"=$5
+                 WHERE "id"=$6;`;
+  pool.query(query, 
+    [
+      username,
+      firstName, 
+      lastName, 
+      email,
+      memberNumber,
+      req.user.id
+    ])
+      .then(result => {
+          res.sendStatus(200);
+      })
+      .catch(err => {
+          console.log('Error editing user: ', err);
+          res.sendStatus(500);
+      });
+});
+
 module.exports = router;
