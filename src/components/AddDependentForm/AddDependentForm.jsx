@@ -5,14 +5,28 @@ import { useDispatch }  from "react-redux";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 
-function AddDependentForm() {
+function AddDependentForm(props) {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
-    
+
+    const sendDependentEmail = () => {
+        dispatch({
+            type: "SEND_DEPENDENT_EMAIL",
+            payload: {
+              email
+            }
+        });
+    }
+
+    const cancelDependentAdd = () => {
+        setEmail('');
+        props.handleCloseDependent();
+    }
+
     return (
-        <Modal show={props.showEdit} onHide={props.handleClose}>
+        <Modal show={props.showAddDependent} onHide={props.handleCloseDependent}>
         <Modal.Header>
-          <Modal.Title>Please</Modal.Title>
+          <Modal.Title>Dependent Email Entry</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <>
@@ -27,11 +41,11 @@ function AddDependentForm() {
         </>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={cancelEdit}>
+          <Button variant="danger" onClick={cancelDependentAdd}>
             Cancel
           </Button>
-          <Button variant="success" onClick={sendEdit}>
-            Confirm Changes
+          <Button variant="success" onClick={sendDependentEmail}>
+            Add Dependent
           </Button>
         </Modal.Footer>
       </Modal>

@@ -5,6 +5,7 @@ import UpdatedNavBar from "../Nav/Nav";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditUserForm from '../EditUserForm/EditUserForm';
 import UserDependentConfirmation from './UserDependentConfirmation';
+import AddDependentForm from '../AddDependentForm/AddDependentForm';
 
 
 function UserPage() {
@@ -14,12 +15,12 @@ function UserPage() {
   const accounts = useSelector((store) => store.accounts);
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(false);
+  const [showAddDependent, setShowAddDependent] = useState(false);
 
-  
   // Get dependents for current user on load
   useEffect(() => {
     dispatch({
-      type: 'GET_DEPENDENTS'
+      type: "GET_DEPENDENTS",
     });
   }, []);
 
@@ -28,10 +29,15 @@ function UserPage() {
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
 
-    // Toggle local 'show' state
-    const handleShowEdit = () => setShowEdit(true);
-    // Toggle local 'show' state
-    const handleCloseEdit = () => setShowEdit(false);
+  // Toggle local 'show' state
+  const handleShowEdit = () => setShowEdit(true);
+  // Toggle local 'show' state
+  const handleCloseEdit = () => setShowEdit(false);
+
+  // Toggle local 'show' state
+  const handleShowDependent = () => setShowAddDependent(true);
+  // Toggle local 'show' state
+  const handleCloseDependent = () => setShowAddDependent(false);
 
   return (
     <>
@@ -39,37 +45,72 @@ function UserPage() {
       <UpdatedNavBar />
       <div className="container">
         {/* Render user's basic information */}
-        <h2 className="fw-bolder">{user.first_name} {user.last_name}</h2>
+        <h2 className="fw-bolder">
+          {user.first_name} {user.last_name}
+        </h2>
         <div className="d-flex justify-content-between align-items-center">
-        <p className="mb-1">Username: {user.username}<br />
-          Email: {user.email}<br />
-          Member Number: {user.membership_number}
-        </p>
-        <button className="btn btn-info" onClick={handleShowEdit}>{allIconComponents.editUser}</button>
-        <EditUserForm user={user} showEdit={showEdit} handleCloseEdit={handleCloseEdit} handleShowEdit={handleShowEdit} />
+          <p className="mb-1">
+            Username: {user.username}
+            <br />
+            Email: {user.email}
+            <br />
+            Member Number: {user.membership_number}
+          </p>
+          <button className="btn btn-info" onClick={handleShowEdit}>
+            {allIconComponents.editUser}
+          </button>
+          <EditUserForm
+            user={user}
+            showEdit={showEdit}
+            handleCloseEdit={handleCloseEdit}
+            handleShowEdit={handleShowEdit}
+          />
         </div>
         {/* Render list of dependents if any */}
-          <div className="d-flex justify-content-between align-items-center">
-          <h6 className="text-decoration-underline mb-0 fw-bold">Dependent Accounts</h6>
+        <div className="d-flex justify-content-between align-items-center">
+          <h6 className="text-decoration-underline mb-0 fw-bold">
+            Dependent Accounts
+          </h6>
           {/* Button to add a dependent */}
-          <button className="btn btn-success">{allIconComponents.add}</button>
-          </div>
-        {accounts.accountDependents.length > 0 ? 
+          <button className="btn btn-success" onClick={handleShowDependent}>
+            {allIconComponents.add}
+          </button>
+          <AddDependentForm showAddDependent={showAddDependent} handleCloseDependent={handleCloseDependent}/>
+        </div>
+        {accounts.accountDependents.length > 0 ? (
           <>
-            {accounts.accountDependents.map((dependent)=>
-            <div key={dependent.id} className="d-flex justify-content-between align-items-center">
-              <p className="mb-1">Name: {dependent.first_name} {dependent.last_name} <br />Username: {dependent.username}<br /> Email: {dependent.email}</p>
-              <button onClick={()=>handleShow(dependent.id)} className="btn btn-outline-danger">{allIconComponents.delete}</button>
-              {/* Modal to confirm dependent delete */}
-              <UserDependentConfirmation show={show} dependentId={dependent.id} handleShow={handleShow} handleClose={handleClose}/>
-            </div>
-            )}
+            {accounts.accountDependents.map((dependent) => (
+              <div
+                key={dependent.id}
+                className="d-flex justify-content-between align-items-center"
+              >
+                <p className="mb-1">
+                  Name: {dependent.first_name} {dependent.last_name} <br />
+                  Username: {dependent.username}
+                  <br /> Email: {dependent.email}
+                </p>
+                <button
+                  onClick={() => handleShow(dependent.id)}
+                  className="btn btn-outline-danger"
+                >
+                  {allIconComponents.delete}
+                </button>
+                {/* Modal to confirm dependent delete */}
+                <UserDependentConfirmation
+                  show={show}
+                  dependentId={dependent.id}
+                  handleShow={handleShow}
+                  handleClose={handleClose}
+                />
+              </div>
+            ))}
           </>
-          :
+        ) : (
           // Display message if there is no dependents for the account
-          <p>No dependent accounts</p>}
-          {/* Render logout button */}
-          <LogOutButton className="btn btn-outline-warning" />
+          <p>No dependent accounts</p>
+        )}
+        {/* Render logout button */}
+        <LogOutButton className="btn btn-outline-warning" />
       </div>
     </>
   );
