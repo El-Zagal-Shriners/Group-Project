@@ -97,7 +97,7 @@ function DiscountFilterOffCanvas({ setShowFilterOffCanvas }) {
   useEffect(() => {
     dispatch({ type: "GET_CATEGORIES" });
     dispatch({ type: "GET_ALL_CITIES" });
-    dispatch({ type: "GET_CLOSE_CITIES" });
+    // dispatch({ type: "GET_CLOSE_CITIES" });
     dispatch({ type: "GET_DISCOUNTS" });
   }, []);
 

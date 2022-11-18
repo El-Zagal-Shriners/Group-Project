@@ -10,6 +10,47 @@ import DiscountFilterOffCanvas from "./DiscountFilterOffCanvas";
 
 function DiscountsPage() {
   const dispatch = useDispatch();
+  // Location services:
+  // local state to see if services are loading.
+  const [loading, setLoading] = useState(true);
+  // create a promise to get the user's current location.
+  const getPosition = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  };
+
+  // async function to await the retrieval of the user's location
+  // then get the closest cities.
+  const getLocation = async () => {
+    await getPosition()
+      .then((response) => {
+        // bundle the latitude and longitude into a coordinates object
+        const coordinates = {
+          lat: response.coords.latitude,
+          lng: response.coords.longitude,
+        };
+        // dispatch to check if the user's city exists in the DB.
+        dispatch({
+          type: "CHECK_CITY",
+          payload: coordinates,
+        });
+        // dispatch to get the closest ciities.
+        dispatch({
+          type: "GET_CLOSE_CITIES",
+          payload: coordinates,
+        });
+      })
+      .catch((err) => {
+        console.log("Error resolving getPosition", err);
+      });
+    // after getPosition resolves, set loading to false.
+    setLoading(false);
+  };
+  // call get Location on load.
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   // redux stores for managing search parameters
   const selectedCities = useSelector(

@@ -27,7 +27,7 @@ router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
     });
 });
 
-// route to get the four closest cities to the user.
+// route to get the closest cities to the user.
 router.get(
   "/close",
   rejectUnauthenticated,
