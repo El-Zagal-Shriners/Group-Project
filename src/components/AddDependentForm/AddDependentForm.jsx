@@ -16,6 +16,8 @@ function AddDependentForm(props) {
               email
             }
         });
+        setEmail('');
+        props.handleCloseDependent();
     }
 
     const cancelDependentAdd = () => {
