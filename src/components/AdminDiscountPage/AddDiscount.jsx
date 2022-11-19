@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
-import UpdatedNavBar from "../Nav/Nav";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function AddDiscount() {
   const dispatch = useDispatch();
@@ -30,78 +30,96 @@ function AddDiscount() {
       },
     });
   };
-  return(
-    <div className="container text-center"> 
-    <h2 className="text-primary"> Add Discount</h2> 
-    <form onSubmit={addDiscount}>
+
+  const getCategories = (event) => {
+    event.preventDefault();
+
+    dispatch({
+      type: "SET_CATEGORIES",
+    });
+  };
+
+  
+
+  return (
+    <div className="container text-center">
+      <h2 className="text-primary"> Add Discount</h2>
+      <form onSubmit={addDiscount}>
+      <Dropdown>
+      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+       Vendor
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item value={getCategories}>Action</Dropdown.Item>
+
+      </Dropdown.Menu>
+    </Dropdown>
         <FloatingLabel
-        className="mb-1 text-primary"
-        controlId="floatingFirstName"
-        label="Description"
-      >
-        <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-                autoFocus
-              />
-            </FloatingLabel>
-            <FloatingLabel
-        className="mb-1 text-primary"
-        controlId="floatingFirstName"
-        label="Start Date"
-      >
-        <Form.Control
-                type="date" 
-                placeholder="name@example.com"
-                value={startDate}
-                onChange={(event) => setStartDate(event.target.value)}
-                autoFocus
-              />
-            </FloatingLabel>
-            <FloatingLabel
-        className="mb-1 text-primary"
-        controlId="floatingFirstName"
-        label="Expiration Date"
-      >
-        <Form.Control
-                type="date"
-                placeholder="name@example.com"
-                value={expDate}
-                onChange={(event) => setExpDate(event.target.value)}
-                autoFocus
-              />
-            </FloatingLabel>
-            <FloatingLabel
-        className="mb-1 text-primary"
-        controlId="floatingFirstName"
-        label="Discount Code (If Applicable)"
-      >
-        <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                value={discountCode}
-                onChange={(event) => setDiscountCode(event.target.value)}
-                autoFocus
-              />
-            </FloatingLabel>
-            <FloatingLabel
-        className="mb-1 text-primary"
-        controlId="floatingFirstName"
-        label="Category"
-      >
-        <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                value={category}
-                onChange={(event) => setCategory(event.target.value)}
-                autoFocus
-              />
-            </FloatingLabel>
-    </form>
+          className="mb-1 text-primary"
+          controlId="floatingFirstName"
+          label="Description"
+        >
+          <Form.Control
+            type="text"
+            placeholder="name@example.com"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            autoFocus
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          className="mb-1 text-primary"
+          controlId="floatingFirstName"
+          label="Start Date"
+        >
+          <Form.Control
+            type="date"
+            placeholder="name@example.com"
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
+            autoFocus
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          className="mb-1 text-primary"
+          controlId="floatingFirstName"
+          label="Expiration Date"
+        >
+          <Form.Control
+            type="date"
+            placeholder="name@example.com"
+            value={expDate}
+            onChange={(event) => setExpDate(event.target.value)}
+            autoFocus
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          className="mb-1 text-primary"
+          controlId="floatingFirstName"
+          label="Discount Code (If Applicable)"
+        >
+          <Form.Control
+            type="text"
+            placeholder="name@example.com"
+            value={discountCode}
+            onChange={(event) => setDiscountCode(event.target.value)}
+            autoFocus
+          />
+        </FloatingLabel>
+        <Dropdown>
+      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+       Category
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item value={getCategories}>Action</Dropdown.Item>
+
+      </Dropdown.Menu>
+    </Dropdown>
+      </form>
     </div>
-  )
+  );
 }
 
 export default AddDiscount;
