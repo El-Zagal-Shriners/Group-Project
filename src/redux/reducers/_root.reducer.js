@@ -7,6 +7,7 @@ import vendors from "./vendor.reducer";
 import cities from "./cities.reducer";
 import categories from "./categories.reducer";
 import filter from "./filter.reducer";
+import tokenCheck from "./token.reducer";
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   cities, // contains the allCitiesReducer and closeCitiesReducer
   categories,
   filter,
+  tokenCheck
 });
 
 export default rootReducer;

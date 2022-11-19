@@ -87,7 +87,19 @@ CREATE TABLE "location" (
   OIDS=FALSE
 );
 
+CREATE TABLE "dependent_tokens" (
+	"id" serial NOT NULL,
+	"primary_member_id" bigint NOT NULL,
+	"token" varchar(75) NOT NULL,
+	"email" varchar(50) NOT NULL,
+	CONSTRAINT "dependent_tokens_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
 
+
+-- Use this after adding dependent tokens table
+ALTER TABLE "dependent_tokens" ADD CONSTRAINT "dependent_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
 
 ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
 

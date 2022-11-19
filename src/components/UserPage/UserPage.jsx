@@ -15,6 +15,7 @@ function UserPage() {
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(false);
   const [showAddDependent, setShowAddDependent] = useState(false);
+  const [deleteDependent, setDeleteDependent] =useState('');
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -22,21 +23,31 @@ function UserPage() {
       type: "GET_DEPENDENTS",
     });
   }, []);
-
   // Toggle local 'show' state
-  const handleShow = () => setShow(true);
+  const handleShow = (id) => {
+    console.log('This is id in handleShow: ', id);
+    setDeleteDependent(id);
+    setShow(true);
+  }
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
-
   // Toggle local 'show' state
   const handleShowEdit = () => setShowEdit(true);
   // Toggle local 'show' state
   const handleCloseEdit = () => setShowEdit(false);
-
   // Toggle local 'show' state
   const handleShowDependent = () => setShowAddDependent(true);
   // Toggle local 'show' state
   const handleCloseDependent = () => setShowAddDependent(false);
+  // function sends dependent id to delete to removal saga
+  // then close the modal
+  const removeDependent = (id) => {
+    dispatch({
+      type: "REMOVE_DEPENDENT",
+      payload: id
+    });
+    handleClose();
+  }
 
   return (
     <>
@@ -76,9 +87,11 @@ function UserPage() {
             Dependent Accounts
           </h6>
           {/* Button to add a dependent */}
+          {/* Hide add button for dependent accounts */}
+          {user.membership_number &&
           <button className="btn btn-success" onClick={handleShowDependent}>
             {allIconComponents.add}
-          </button>
+          </button>}
           <AddDependentForm
             showAddDependent={showAddDependent}
             handleCloseDependent={handleCloseDependent}
@@ -105,8 +118,8 @@ function UserPage() {
                 {/* Modal to confirm dependent delete */}
                 <UserDependentConfirmation
                   show={show}
-                  dependentId={dependent.id}
-                  handleShow={handleShow}
+                  removeDependent={removeDependent}
+                  dependentId={deleteDependent}
                   handleClose={handleClose}
                 />
               </div>
