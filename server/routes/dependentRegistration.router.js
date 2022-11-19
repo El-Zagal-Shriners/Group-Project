@@ -21,6 +21,11 @@ router.post(
   rejectUnauthenticated,
   rejectUnauthorizedUser,
   (req, res, next) => {
+    // stops dependent accounts from creating other dependent accounts
+    if(req.user.membership_number===null){
+      res.sendStatus(500);
+      return;
+    }
     // generate a secure uuid token
     const token = uuidv4();
     const email = req.body.email;
@@ -101,9 +106,15 @@ router.post("/", (req, res) => {
       first_name,
       last_name,
       email,
-      primary_member_id)
-      VALUES ($1, $2, $3, $4, $5, $6);`;
-      pool.query(insertQuery, [username, password, firstName, lastName, email, primaryMemberId])
+      primary_member_id,
+      is_verified,
+      is_authorized,
+      dues_paid)
+      VALUES ($1, $2, $3, $4, $5, $6, 
+                (SELECT "is_verified" FROM "user" WHERE "id"=$7),
+                (SELECT "is_authorized" FROM "user" WHERE "id"=$7),
+                (SELECT "dues_paid" FROM "user" WHERE "id"=$7));`;
+      pool.query(insertQuery, [username, password, firstName, lastName, email, primaryMemberId, primaryMemberId])
           .then((result)=> {
             // SQL to DELETE the entry for the token used to create the dependent account
             const deleteQuery = `DELETE FROM "dependent_tokens" WHERE "id"=$1;`;

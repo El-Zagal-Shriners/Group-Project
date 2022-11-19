@@ -26,6 +26,8 @@ function DependentRegistrationPage() {
   // POST that sends information from the form to the database
   const createAccount = (event) => {
     event.preventDefault();
+    // Send the user entered info and token to server for
+    // validation and entry if valid
     dispatch({
       type: "ADD_DEPENDENT",
       payload: {
@@ -37,6 +39,8 @@ function DependentRegistrationPage() {
         token: token,
       },
     });
+    // move user back to home page for login
+    history.push('/');
   };
 
   return (
