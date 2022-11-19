@@ -8,6 +8,7 @@ const config = {
 //ADD_DEPENDENT to fire with /api/registration/dependent route
 function* addDependent(action) {
   try {
+    console.log('This is action.payload in addDependent: ', action.payload);
     yield axios.post("/api/register/dependent", action.payload, config);
     yield put({ type: "GET_DEPENDENTS" });
   } catch (error) {

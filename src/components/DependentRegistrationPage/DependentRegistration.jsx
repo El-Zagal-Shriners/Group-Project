@@ -10,8 +10,8 @@ function DependentRegistrationPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [usernameIn, setUsernameIn] = useState("");
-  const [passwordIn, setPasswordIn] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useParams();
@@ -28,11 +28,11 @@ function DependentRegistrationPage() {
     dispatch({
       type: "ADD_DEPENDENT",
       payload: {
-        first_name: firstName,
-        last_name: lastName,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
-        username: usernameIn,
-        password: passwordIn,
+        username: username,
+        password: password,
         token: token,
       },
     });
@@ -93,8 +93,8 @@ function DependentRegistrationPage() {
               <Form.Control
                 type="name"
                 placeholder="name@example.com"
-                value={usernameIn}
-                onChange={(event) => setUsernameIn(event.target.value)}
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
               />
             </FloatingLabel>
 
@@ -106,8 +106,8 @@ function DependentRegistrationPage() {
               <Form.Control
                 type="name"
                 placeholder="name@example.com"
-                value={passwordIn}
-                onChange={(event) => setPasswordIn(event.target.value)}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
               />
             </FloatingLabel>
             <button type="submit" className="btn btn-primary">
