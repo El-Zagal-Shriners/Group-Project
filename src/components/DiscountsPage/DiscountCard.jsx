@@ -25,9 +25,9 @@ function DiscountCard({ thisDiscount }) {
             <div className="col-10">
               <div className="row">
                 <div className="col-8">
-                  <div className="bg-light rounded d-flex justify-content-start align-items-center">
-                    <div className="ms-1">
-                      <div className="text-start fw-bold">{thisDiscount.vendor_name}</div>
+                  <div className="p-2 bg-light rounded d-flex justify-content-start align-items-center">
+                    <div className="mx-1">
+                      <div className="text-start"><h5>{thisDiscount.vendor_name}</h5></div>
                       <div className="text-start text-muted fw-light">{thisDiscount.address}, {thisDiscount.city}</div>
                     </div>
                   </div>
