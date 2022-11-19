@@ -53,10 +53,11 @@ function DependentRegistrationPage() {
               label="First Name"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
+                autoFocus
               />
             </FloatingLabel>
 
@@ -66,7 +67,7 @@ function DependentRegistrationPage() {
               label="Last Name"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={lastName}
                 onChange={(event) => setLastName(event.target.value)}
@@ -92,7 +93,7 @@ function DependentRegistrationPage() {
               label="Username"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={usernameIn}
                 onChange={(event) => setUsernameIn(event.target.value)}
@@ -105,7 +106,7 @@ function DependentRegistrationPage() {
               label="Password"
             >
               <Form.Control
-                type="name"
+                type="password"
                 placeholder="name@example.com"
                 value={passwordIn}
                 onChange={(event) => setPasswordIn(event.target.value)}
@@ -117,7 +118,7 @@ function DependentRegistrationPage() {
           </form>
         </div>
       ) : (
-        <h2>Link appears invalid! Please make to use the link in the email.</h2>
+        <h3>Link appears invalid! Please make to use the link in the email.</h3>
       )}
       {/* End ternary */}
     </>
