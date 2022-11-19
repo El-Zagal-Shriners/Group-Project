@@ -7,6 +7,7 @@ import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
   const user = useSelector((store) => store.user);
+  const tokenCheck = useSelector((store) => store.tokenCheck);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +43,7 @@ function DependentRegistrationPage() {
     <>
       <UpdatedNavBar />
       {/* Start Ternary */}
-      {user.tokenCheck === "true" ? (
+      {tokenCheck === "true" ? (
         <div className="container text-center">
           <h2 className="text-primary">Dependent Registration Form</h2>
           <form onSubmit={createAccount}>
