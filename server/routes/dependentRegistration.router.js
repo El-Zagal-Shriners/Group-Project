@@ -32,19 +32,32 @@ router.post(
             Please click the following link to register on the website.</p>
             <a href="http://localhost:3000/#/dependents/${token}">Register Account!</a>`,
     };
-    // sends email based on msg above
-    sgMail
-      .send(msg)
-      .then(() => {
-        // send success status
-        console.log("Email sent");
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        // log error and send error status if error occurs
-        console.error("Error sending email", error);
-        res.sendStatus(500);
-      });
+    // SQL for INSERT of token, email and members db id to dependent token table
+    // security for creating a dependent account
+    const insertQuery = `INSERT INTO "dependent_tokens" 
+                              (
+                                "primary_member_id", 
+                                "token", 
+                                "email"
+                              ) VALUES ($1, $2, $3);`;
+    pool.query(insertQuery, [req.user.id, token, email]).then((result) => {
+      // sends email based on msg above
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Email sent and db entry created");
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          // log error and send error status if error occurs
+          console.error("Error sending email", error);
+          res.sendStatus(500);
+        })
+        .catch((err) => {
+          console.log("Error in INSERT to token table: ", err);
+          res.sendStatus(500);
+        });
+    });
   }
 );
 
