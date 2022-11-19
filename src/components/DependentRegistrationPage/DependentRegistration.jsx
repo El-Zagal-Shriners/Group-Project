@@ -12,18 +12,17 @@ function DependentRegistrationPage() {
   const [email, setEmail] = useState("");
   const [usernameIn, setUsernameIn] = useState("");
   const [passwordIn, setPasswordIn] = useState("");
-  const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useParams();
-
+  // Checks if the token in url is valid
   useEffect(() => {
     dispatch({
-          type: "TOKEN_CHECK",
-          payload: token
-        });
+      type: "TOKEN_CHECK",
+      payload: token,
+    });
   }, []);
-
+  // POST that sends information from the form to the database
   const createAccount = (event) => {
     event.preventDefault();
     dispatch({
@@ -34,89 +33,92 @@ function DependentRegistrationPage() {
         email: email,
         username: usernameIn,
         password: passwordIn,
-        token: token
+        token: token,
       },
     });
   };
 
   return (
-      <>
+    <>
       <UpdatedNavBar />
-      {user.tokenCheck === 'true'?
-      <div className="container text-center">
-        <h2 className="text-primary">Dependent Registration Form</h2>
-        <form onSubmit={createAccount}>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            controlId="floatingFirstName"
-            label="First Name"
-          >
-            <Form.Control
-              type="name"
-              placeholder="name@example.com"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
-            />
-          </FloatingLabel>
+      {/* Start Ternary */}
+      {user.tokenCheck === "true" ? (
+        <div className="container text-center">
+          <h2 className="text-primary">Dependent Registration Form</h2>
+          <form onSubmit={createAccount}>
+            <FloatingLabel
+              className="mb-1 text-primary"
+              controlId="floatingFirstName"
+              label="First Name"
+            >
+              <Form.Control
+                type="name"
+                placeholder="name@example.com"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+              />
+            </FloatingLabel>
 
-          <FloatingLabel
-            className="mb-1 text-primary"
-            controlId="floatingLastName"
-            label="Last Name"
-          >
-            <Form.Control
-              type="name"
-              placeholder="name@example.com"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
-            />
-          </FloatingLabel>
+            <FloatingLabel
+              className="mb-1 text-primary"
+              controlId="floatingLastName"
+              label="Last Name"
+            >
+              <Form.Control
+                type="name"
+                placeholder="name@example.com"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+              />
+            </FloatingLabel>
 
-          <FloatingLabel
-            className="mb-1 text-primary"
-            controlId="floatingEmail"
-            label="Email"
-          >
-            <Form.Control
-              type="email"
-              placeholder="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </FloatingLabel>
+            <FloatingLabel
+              className="mb-1 text-primary"
+              controlId="floatingEmail"
+              label="Email"
+            >
+              <Form.Control
+                type="email"
+                placeholder="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </FloatingLabel>
 
-          <FloatingLabel
-            className="mb-1 text-primary"
-            controlId="floatingUsername"
-            label="Username"
-          >
-            <Form.Control
-              type="name"
-              placeholder="name@example.com"
-              value={usernameIn}
-              onChange={(event) => setUsernameIn(event.target.value)}
-            />
-          </FloatingLabel>
+            <FloatingLabel
+              className="mb-1 text-primary"
+              controlId="floatingUsername"
+              label="Username"
+            >
+              <Form.Control
+                type="name"
+                placeholder="name@example.com"
+                value={usernameIn}
+                onChange={(event) => setUsernameIn(event.target.value)}
+              />
+            </FloatingLabel>
 
-          <FloatingLabel
-            className="mb-1 text-primary"
-            controlId="floatingPassword"
-            label="Password"
-          >
-            <Form.Control
-              type="name"
-              placeholder="name@example.com"
-              value={passwordIn}
-              onChange={(event) => setPasswordIn(event.target.value)}
-            />
-          </FloatingLabel>
-          <button type="submit" className="btn btn-primary">
-            Create Account
-          </button>
-        </form>
-      </div>
-      :
-      <h2>Not authorized</h2>}
+            <FloatingLabel
+              className="mb-1 text-primary"
+              controlId="floatingPassword"
+              label="Password"
+            >
+              <Form.Control
+                type="name"
+                placeholder="name@example.com"
+                value={passwordIn}
+                onChange={(event) => setPasswordIn(event.target.value)}
+              />
+            </FloatingLabel>
+            <button type="submit" className="btn btn-primary">
+              Create Account
+            </button>
+          </form>
+        </div>
+      ) : (
+        <h2>Link appears invalid! Please make to use the link in the email.</h2>
+      )}
+      {/* End ternary */}
     </>
   );
 }

@@ -1,7 +1,7 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
-const sgMail = require('@sendgrid/mail');
+const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {
   rejectUnauthenticated,
@@ -9,39 +9,44 @@ const {
 const {
   rejectUnauthorizedUser,
 } = require("../modules/authorization-middleware");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const encryptLib = require("../modules/encryption");
 
 // This route will send an email to the depedent account trying to be created
-router.post('/email', rejectUnauthenticated, rejectUnauthorizedUser, (req, res, next) => {
-  const token = uuidv4();
-  const email = req.body.email;
-  console.log('In email router');
-  // Data for email to send to dependent
-  const msg = {
-    to: email, // Change to your recipient
-    from: 'dvettertest@gmail.com', // Change to your verified sender
-    subject: 'Shrine App Testing Emails',
-    text: 'localhost:3000/#/dependents', // alternative text
-    // html to display in the body of the email
-    html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
+router.post(
+  "/email",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res, next) => {
+    const token = uuidv4();
+    const email = req.body.email;
+    console.log("In email router");
+    // Data for email to send to dependent
+    const msg = {
+      to: email, // Change to your recipient
+      from: "dvettertest@gmail.com", // Change to your verified sender
+      subject: "Shrine App Testing Emails",
+      text: "localhost:3000/#/dependents", // alternative text
+      // html to display in the body of the email
+      html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
             Please click the following link to register on the website.</p>
             <a href="http://localhost:3000/#/dependents/${token}">Register Account!</a>`,
+    };
+    // sends email based on msg above
+    sgMail
+      .send(msg)
+      .then(() => {
+        // send success status
+        console.log("Email sent");
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        // log error and send error status if error occurs
+        console.error("Error sending email", error);
+        res.sendStatus(500);
+      });
   }
-  // sends email based on msg above
-  sgMail
-    .send(msg)
-    .then(() => {
-      // send success status
-      console.log('Email sent')
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      // log error and send error status if error occurs
-      console.error('Error sending email', error);
-      res.sendStatus(500);
-    })
-})
+);
 
 // router to post to "user" table first_name, last_name, email, username, and password columns
 router.post("/", (req, res) => {
@@ -66,23 +71,24 @@ router.post("/", (req, res) => {
 });
 
 // GET to check if the user's token exists in database
-router.get('/:token', (req, res) => {
+router.get("/:token", (req, res) => {
   // GET route code here
   const token = req.params.token;
-  console.log('Here is token: ', token);
+  console.log("Here is token: ", token);
   const query = `SELECT * FROM "dependent_tokens" 
                  WHERE "dependent_tokens"."token"=$1;`;
-  pool.query(query, [token])
-      .then(result => {
-        if(result.rows.length > 0) {
-          res.send('true');
-        } else {
-          res.send('false');
-        }
-      })
-      .catch((err) => {
-        console.log('Error in getting player games: ', err);
-      })
+  pool
+    .query(query, [token])
+    .then((result) => {
+      if (result.rows.length > 0) {
+        res.send("true");
+      } else {
+        res.send("false");
+      }
+    })
+    .catch((err) => {
+      console.log("Error in getting player games: ", err);
+    });
 }); // End GET user games
 
 module.exports = router;
