@@ -1,11 +1,18 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import { DropdownButton } from "react-bootstrap";
 
 function AddDiscount() {
+  //grab all categories
+  const allCategories = useSelector((store) => store.categories);
+  // grab all vendors
+  const allVendors = useSelector((store) => store.vendors);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [description, setDescription] = useState("");
@@ -31,30 +38,31 @@ function AddDiscount() {
     });
   };
 
-  const getCategories = (event) => {
-    event.preventDefault();
+  //   const getCategories = (event) => {
+  //     event.preventDefault();
 
-    dispatch({
-      type: "SET_CATEGORIES",
-    });
-  };
+  //     dispatch({
+  //       type: "SET_CATEGORIES",
+  //     });
+  //   };
 
-  
+  console.log('categories', allCategories)
+  console.log('vendors', allVendors)
 
   return (
     <div className="container text-center">
       <h2 className="text-primary"> Add Discount</h2>
       <form onSubmit={addDiscount}>
-      <Dropdown>
-      <Dropdown.Toggle variant="primary" id="dropdown-basic">
-       Vendor
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item value={getCategories}>Action</Dropdown.Item>
-
-      </Dropdown.Menu>
-    </Dropdown>
+        <DropdownButton id="category-select-dropdown" title="Vendor">
+          <Dropdown.ItemText>Select</Dropdown.ItemText>
+          {allVendors.map((vendors, index) => {
+            return (
+              <Dropdown.Item as="button" key={index}>
+                {vendors.name}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
         <FloatingLabel
           className="mb-1 text-primary"
           controlId="floatingFirstName"
@@ -107,16 +115,16 @@ function AddDiscount() {
             autoFocus
           />
         </FloatingLabel>
-        <Dropdown>
-      <Dropdown.Toggle variant="primary" id="dropdown-basic">
-       Category
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item value={getCategories}>Action</Dropdown.Item>
-
-      </Dropdown.Menu>
-    </Dropdown>
+        <DropdownButton id="category-select-dropdown" title="Category">
+          <Dropdown.ItemText>Select</Dropdown.ItemText>
+          {allCategories.map((categories, index) => {
+            return (
+              <Dropdown.Item as="button" key={index}>
+                {categories.name}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
       </form>
     </div>
   );

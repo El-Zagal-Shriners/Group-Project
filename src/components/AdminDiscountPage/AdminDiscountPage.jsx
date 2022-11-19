@@ -37,6 +37,7 @@ function AdminDiscountPage() {
   useEffect(() => {
     dispatch({ type: "GET_ADMIN_DISCOUNTS" });
     dispatch({ type: "FETCH_VENDORS" });
+    dispatch({ type: "GET_CATEGORIES" });
   }, []);
 
   return (
