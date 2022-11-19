@@ -7,6 +7,7 @@ import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
   const user = useSelector((store) => store.user);
+  const tokenCheck = useSelector((store) => store.tokenCheck);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +43,7 @@ function DependentRegistrationPage() {
     <>
       <UpdatedNavBar />
       {/* Start Ternary */}
-      {user.tokenCheck === "true" ? (
+      {tokenCheck === "true" ? (
         <div className="container text-center">
           <h2 className="text-primary">Dependent Registration Form</h2>
           <form onSubmit={createAccount}>
@@ -52,10 +53,11 @@ function DependentRegistrationPage() {
               label="First Name"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
+                autoFocus
               />
             </FloatingLabel>
 
@@ -65,7 +67,7 @@ function DependentRegistrationPage() {
               label="Last Name"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={lastName}
                 onChange={(event) => setLastName(event.target.value)}
@@ -91,7 +93,7 @@ function DependentRegistrationPage() {
               label="Username"
             >
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="name@example.com"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
@@ -104,7 +106,7 @@ function DependentRegistrationPage() {
               label="Password"
             >
               <Form.Control
-                type="name"
+                type="password"
                 placeholder="name@example.com"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
@@ -116,7 +118,7 @@ function DependentRegistrationPage() {
           </form>
         </div>
       ) : (
-        <h2>Link appears invalid! Please make to use the link in the email.</h2>
+        <h3>Link appears invalid! Please make to use the link in the email.</h3>
       )}
       {/* End ternary */}
     </>

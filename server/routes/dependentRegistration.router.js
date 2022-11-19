@@ -12,39 +12,55 @@ const {
 const { v4: uuidv4 } = require("uuid");
 const encryptLib = require("../modules/encryption");
 
-// This route will send an email to the depedent account trying to be created
+// This route will INSERT an entry to "dependent_token" table
+// with the secure token, email and member id associated with the
+// dependent account being created
+// then sends an email to the depedent account
 router.post(
   "/email",
   rejectUnauthenticated,
   rejectUnauthorizedUser,
   (req, res, next) => {
+    // generate a secure uuid token
     const token = uuidv4();
     const email = req.body.email;
-    console.log("In email router");
     // Data for email to send to dependent
     const msg = {
-      to: email, // Change to your recipient
-      from: "dvettertest@gmail.com", // Change to your verified sender
+      to: email, // address email is being sent
+      from: "dvettertest@gmail.com", // account registered with sendGrid
       subject: "Shrine App Testing Emails",
-      text: "localhost:3000/#/dependents", // alternative text
+      text: `Please follow this link to register. http://localhost:3000/#/dependents/${token}`, // alternative text
       // html to display in the body of the email
       html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
             Please click the following link to register on the website.</p>
             <a href="http://localhost:3000/#/dependents/${token}">Register Account!</a>`,
     };
-    // sends email based on msg above
-    sgMail
-      .send(msg)
-      .then(() => {
-        // send success status
-        console.log("Email sent");
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        // log error and send error status if error occurs
-        console.error("Error sending email", error);
-        res.sendStatus(500);
-      });
+    // SQL for INSERT of token, email and members db id to dependent token table
+    // security for creating a dependent account
+    const insertQuery = `INSERT INTO "dependent_tokens" 
+                              (
+                                "primary_member_id", 
+                                "token", 
+                                "email"
+                              ) VALUES ($1, $2, $3);`;
+    pool.query(insertQuery, [req.user.id, token, email]).then((result) => {
+      // sends email based on msg above
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Email sent and db entry created");
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          // log error and send error status if error occurs
+          console.error("Error sending email", error);
+          res.sendStatus(500);
+        })
+        .catch((err) => {
+          console.log("Error in INSERT to token table: ", err);
+          res.sendStatus(500);
+        });
+    });
   }
 );
 
