@@ -134,15 +134,15 @@ VALUES ('Fargo', 'ND', '-96.789803', '46.877186'),
 
 -- SAMPLE CATEGORIES 9 items
 INSERT INTO "categories" ("name", "icon_class")
-VALUES ('Restaurants', 'MdFastfood'),
-		('Bars/Drinks', 'BiBeer'),
-		('Sports', 'MdSportsBaseball'),
-		('Entertainment', 'FaTicketAlt'),
-		('Lodging', 'MdHotel'),
-		('Shopping', 'FaShoppingCart'),
-		('Rentals', 'MdCarRental'),
-		('Misc.', 'RiCheckboxBlankCircleLine'),
-		('Health/Beauty', 'CgPill');
+VALUES ('Restaurants', 'food'),
+		('Bars/Drinks', 'drinks'),
+		('Sports', 'sports'),
+		('Entertainment', 'entertainment'),
+		('Lodging', 'lodging'),
+		('Shopping', 'shopping'),
+		('Rentals', 'rental'),
+		('Misc.', 'misc'),
+		('Health/Beauty', 'health');
 
 --Sample Vendors 20 items
 INSERT INTO "vendors"("name","address","city","state_code","zip")

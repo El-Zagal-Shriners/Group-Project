@@ -1,0 +1,13 @@
+.hover-shadow:hover{
+    box-shadow: 1px 1px 10px -1px;
+}
+
+.fill-container{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.bg-muted-primary{
+    background-color: #820a1e32;
+}
