@@ -23,7 +23,7 @@ export const allIconComponents = {
   entertainment: <FaTicketAlt />,
   lodging: <MdHotel />,
   shopping: <FaShoppingCart />,
-  rental: <FaCar />,
+  rentals: <FaCar />,
   home: <FaHome/>,
   services: <FaWrench/>,
   other: <GiPlainCircle />,

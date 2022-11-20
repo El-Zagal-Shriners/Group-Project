@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Offcanvas from "react-bootstrap/Offcanvas";
+
+import FilterFeedback from "./FilterFeedback";
 
 // react boostrap components
 import Container from "react-bootstrap/Container";
@@ -12,7 +15,10 @@ import { Button } from "react-bootstrap";
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 
-function DiscountFilterOffCanvas({ setShowFilterOffCanvas }) {
+function DiscountFilterOffCanvas({
+  showFilterOffCanvas,
+  setShowFilterOffCanvas,
+}) {
   const dispatch = useDispatch();
 
   // selects array of objects from discounts reducer with all available discounts
@@ -116,158 +122,117 @@ function DiscountFilterOffCanvas({ setShowFilterOffCanvas }) {
   }, [selectedCities, selectedCategories]);
 
   return (
-    <Container>
-      {/* Select a Discount Category  */}
-      <div className="bg-light m-1 p-1">
-        <div className="d-flex flex-row justify-content-center align-items-center">
-          <label htmlFor="category-select-dropdown" className="mx-1">
-            I'm Looking For <br />
-            (Select Multiple)
-          </label>
-          <DropdownButton id="category-select-dropdown" title="Select">
-            <Dropdown.ItemText>Select</Dropdown.ItemText>
-            {allCategories.map((thisCat, index) => {
-              return (
-                <Dropdown.Item
-                  as="button"
-                  key={index}
-                  onClick={() => handleCategorySelection(thisCat, false)}
-                >
-                  {thisCat.name}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
-        </div>
-      </div>
-
-      <div className="d-flex justify-content-center m-1">IN</div>
-
-      {/* Choose City From Dropdown  */}
-      <div className="bg-light m-1 p-1">
-        <div className="d-flex flex-row justify-content-center align-items-center">
-          <label htmlFor="city-select-dropdown" className="mx-1">
-            Select a city:
-          </label>
-
-          <DropdownButton id="city-select-dropdown" title="Select">
-            <Dropdown.ItemText>Select A City</Dropdown.ItemText>
-            {allCities.map((thisCity, index) => {
-              return (
-                <Dropdown.Item
-                  as="button"
-                  key={index}
-                  onClick={() => handleCitySelection(thisCity, false)}
-                >
-                  {thisCity.city}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
-        </div>
-
-        {/* Select Nearest Cities  */}
-        <div className="d-flex justify-content-between flex-column m-1 p-1">
-          <div>
-            <div className="text-center">Or Select A City Nearby</div>
-            <div className="text-center">(select multiple)</div>
+    <Offcanvas
+      show={showFilterOffCanvas}
+      onHide={() => setShowFilterOffCanvas(false)}
+      placement="start" name="start"
+    >
+      <Container className="bg-light fill-container">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Refine Your Search</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {/* Select a Discount Category  */}
+          <div className="m-1 p-1">
+            <div className="d-flex flex-row justify-content-center align-items-center">
+              <label htmlFor="category-select-dropdown" className="mx-1">
+                I'm Looking For <br />
+                (Select Multiple)
+              </label>
+              <DropdownButton id="category-select-dropdown" title="Select">
+                <Dropdown.ItemText>Select</Dropdown.ItemText>
+                {allCategories.map((thisCat, index) => {
+                  return (
+                    <Dropdown.Item
+                      as="button"
+                      key={index}
+                      onClick={() => handleCategorySelection(thisCat, false)}
+                    >
+                      {thisCat.name}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
+            </div>
           </div>
-          <div className="d-flex justify-content-between flex-row m-1 p-1">
-            {closestThreeCities().map((thisCity, index) => {
-              return (
-                <ToggleButton
-                  key={index}
-                  className="mb-2"
-                  type="checkbox"
-                  variant="outline-primary"
-                  checked={selectedCities.some(
-                    (selectedCity) => selectedCity.id === thisCity.id
-                  )}
-                  onClick={() => {
-                    handleCitySelection(
-                      thisCity,
-                      selectedCities.some(
+
+          <div className="m-2 d-flex justify-content-center m-1">IN</div>
+
+          {/* Choose City From Dropdown  */}
+          <div className="m-3">
+            <div className="m-3 d-flex flex-row justify-content-center align-items-center">
+              <label htmlFor="city-select-dropdown" className="mx-1">
+                Select a city:
+              </label>
+
+              <DropdownButton id="city-select-dropdown" title="Select">
+                <Dropdown.ItemText>Select A City</Dropdown.ItemText>
+                {allCities.map((thisCity, index) => {
+                  return (
+                    <Dropdown.Item
+                      as="button"
+                      key={index}
+                      onClick={() => handleCitySelection(thisCity, false)}
+                    >
+                      {thisCity.city}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
+            </div>
+
+            {/* Select Nearest Cities  */}
+            <div className="d-flex justify-content-between flex-column m-1 p-1">
+              <div>
+                <div className="text-center">Or Select A City Nearby</div>
+                <div className="text-center">(select multiple)</div>
+              </div>
+              <div className="d-flex justify-content-between flex-row m-1 p-1">
+                {closestThreeCities().map((thisCity, index) => {
+                  return (
+                    <ToggleButton
+                      key={index}
+                      className="mb-2"
+                      type="checkbox"
+                      variant="outline-primary"
+                      checked={selectedCities.some(
                         (selectedCity) => selectedCity.id === thisCity.id
-                      )
-                    );
-                  }}
-                >
-                  {allCities.length > 0 && thisCity.city}
-                  {selectedCities.some(
-                    (selectedCity) => selectedCity.id === thisCity.id
-                  ) && allIconComponents.checkmark}
-                </ToggleButton>
-              );
-            })}
+                      )}
+                      onClick={() => {
+                        handleCitySelection(
+                          thisCity,
+                          selectedCities.some(
+                            (selectedCity) => selectedCity.id === thisCity.id
+                          )
+                        );
+                      }}
+                    >
+                      {allCities.length > 0 && thisCity.city}
+                      {selectedCities.some(
+                        (selectedCity) => selectedCity.id === thisCity.id
+                      ) && allIconComponents.checkmark}
+                    </ToggleButton>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
+          {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
+          <FilterFeedback />
 
-      <div className="d-flex flex-column bg-light align-items-center">
-        {(selectedCities.length > 0 || selectedCategories.length > 0) && (
-          <div>Searching:</div>
-        )}
-        <div className="d-flex justify-content-center align-items-center m-1">
-          <div>
-            {selectedCategories.map((thisCat, index) => {
-              return (
-                <Button
-                  size="sm"
-                  key={index}
-                  className="d-flex justify-content-center align-items-center m-1"
-                  onClick={() =>
-                    dispatch({
-                      type: "SET_SELECTED_CATEGORIES",
-                      payload: removeObjectFromArray(
-                        thisCat,
-                        selectedCategories
-                      ),
-                    })
-                  }
-                >
-                  {thisCat.name} {allIconComponents.exit}
-                </Button>
-              );
-            })}
+          <div className="m-4 d-flex flex-row justify-content-center align-items-center">
+            <Button
+              size="lg"
+              variant="outline-primary"
+              onClick={() => setShowFilterOffCanvas(false)}
+            >
+              View Results
+            </Button>
           </div>
-          {selectedCities.length > 0 && selectedCategories.length > 0 && (
-            <div>IN</div>
-          )}
-          <div>
-            {selectedCities.map((thisCity, index) => {
-              return (
-                <Button
-                  key={index}
-                  size="sm"
-                  className="d-flex justify-content-center align-items-center m-1"
-                  onClick={() =>
-                    dispatch({
-                      type: "SET_SELECTED_CITIES",
-                      payload: removeObjectFromArray(thisCity, selectedCities),
-                    })
-                  }
-                >
-                  {thisCity.city}
-                  {allIconComponents.exit}
-                </Button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <div className="d-flex flex-row justify-content-center align-items-center">
-        <Button
-          size="lg"
-          variant="outline-primary"
-          onClick={() => setShowFilterOffCanvas(false)}
-        >
-          View Results
-        </Button>
-      </div>
-    </Container>
+        </Offcanvas.Body>
+      </Container>
+    </Offcanvas>
   );
 }
 

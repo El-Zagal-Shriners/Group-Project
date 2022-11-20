@@ -8,6 +8,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import DiscountCard from "./DiscountCard";
 import DiscountFilterOffCanvas from "./DiscountFilterOffCanvas";
 import { Spinner } from "react-bootstrap";
+import FilterFeedback from "./FilterFeedback";
 
 function DiscountsPage() {
   const dispatch = useDispatch();
@@ -146,37 +147,36 @@ function DiscountsPage() {
     return (
       <>
         <UpdatedNavBar />
-        <div className="d-flex justify-content-center">
-          <Button
-            size="lg"
-            variant="outline-primary"
-            onClick={() => setShowFilterOffCanvas(true)}
-            className="me-2 d-flex justify-content-center"
-          >
-            {selectedCities.length > 0 || selectedCategories.length > 0
-              ? "Edit"
-              : "Refine"}{" "}
-            My Search
-          </Button>
+        <div className="bg-light p-1 d-flex justify-content-center">
+            <h1 className="display-5">Your Shriner Discounts</h1>
         </div>
-
-        <Offcanvas
-          show={showFilterOffCanvas}
-          onHide={() => setShowFilterOffCanvas(false)}
-        >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Narrow Your Search</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <DiscountFilterOffCanvas
-              setShowFilterOffCanvas={setShowFilterOffCanvas}
-            />
-          </Offcanvas.Body>
-        </Offcanvas>
+        <div className="bg-light p-2 rounded-bottom sticky-top d-flex justify-content-around">
+          
+          <div className="d-flex justify-content-center align-items-center">
+            
+            <Button
+              variant="outline-primary"
+              onClick={() => setShowFilterOffCanvas(true)}
+              className="me-2 d-flex justify-content-center"
+            >
+              {selectedCities.length > 0 || selectedCategories.length > 0
+                ? "Edit"
+                : "Refine"}{" "}
+              Search
+            </Button>
+          </div>
+          {(selectedCategories.legth > 0 || selectedCities.length) > 0 && (
+            <FilterFeedback />
+          )}
+        </div>
 
         {filteredDiscounts.map((thisDiscount, index) => {
           return <DiscountCard key={index} thisDiscount={thisDiscount} />;
         })}
+        <DiscountFilterOffCanvas
+              showFilterOffCanvas ={showFilterOffCanvas}
+              setShowFilterOffCanvas={setShowFilterOffCanvas}
+            />
       </>
     );
   }
