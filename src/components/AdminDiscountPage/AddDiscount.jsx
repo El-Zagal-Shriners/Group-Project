@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
@@ -39,89 +39,94 @@ function AddDiscount() {
     });
   };
 
-  console.log('categories', allCategories)
-  console.log('vendors', allVendors)
+  console.log("categories", allCategories);
+  console.log("vendors", allVendors);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_VENDORS" });
+    dispatch({ type: "GET_CATEGORIES" });
+  }, []);
 
   return (
     <>
-    <UpdatedNavBar />
-    <div className="container text-center">
-      <h2 className="text-primary"> Add Discount</h2>
-      <form onSubmit={addDiscount}>
-        <DropdownButton id="category-select-dropdown" title="Vendor">
-          <Dropdown.ItemText>Select</Dropdown.ItemText>
-          {allVendors.map((vendors, index) => {
-            return (
-              <Dropdown.Item as="button" key={index}>
-                {vendors.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
-        <FloatingLabel
-          className="mb-1 text-primary"
-          controlId="floatingFirstName"
-          label="Description"
-        >
-          <Form.Control
-            type="text"
-            placeholder="name@example.com"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-            autoFocus
-          />
-        </FloatingLabel>
-        <FloatingLabel
-          className="mb-1 text-primary"
-          controlId="floatingFirstName"
-          label="Start Date"
-        >
-          <Form.Control
-            type="date"
-            placeholder="name@example.com"
-            value={startDate}
-            onChange={(event) => setStartDate(event.target.value)}
-            autoFocus
-          />
-        </FloatingLabel>
-        <FloatingLabel
-          className="mb-1 text-primary"
-          controlId="floatingFirstName"
-          label="Expiration Date"
-        >
-          <Form.Control
-            type="date"
-            placeholder="name@example.com"
-            value={expDate}
-            onChange={(event) => setExpDate(event.target.value)}
-            autoFocus
-          />
-        </FloatingLabel>
-        <FloatingLabel
-          className="mb-1 text-primary"
-          controlId="floatingFirstName"
-          label="Discount Code (If Applicable)"
-        >
-          <Form.Control
-            type="text"
-            placeholder="name@example.com"
-            value={discountCode}
-            onChange={(event) => setDiscountCode(event.target.value)}
-            autoFocus
-          />
-        </FloatingLabel>
-        <DropdownButton id="category-select-dropdown" title="Category">
-          <Dropdown.ItemText>Select</Dropdown.ItemText>
-          {allCategories.map((categories, index) => {
-            return (
-              <Dropdown.Item as="button" key={index}>
-                {categories.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
-      </form>
-    </div>
+      <UpdatedNavBar />
+      <div className="container text-center">
+        <h2 className="text-primary"> Add Discount</h2>
+        <form onSubmit={addDiscount}>
+          <DropdownButton id="category-select-dropdown" title="Vendor">
+            <Dropdown.ItemText>Select</Dropdown.ItemText>
+            {allVendors.map((vendors, index) => {
+              return (
+                <Dropdown.Item as="button" key={index}>
+                  {vendors.name}
+                </Dropdown.Item>
+              );
+            })}
+          </DropdownButton>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="Description"
+          >
+            <Form.Control
+              type="text"
+              placeholder="name@example.com"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              autoFocus
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="Start Date"
+          >
+            <Form.Control
+              type="date"
+              placeholder="name@example.com"
+              value={startDate}
+              onChange={(event) => setStartDate(event.target.value)}
+              autoFocus
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="Expiration Date"
+          >
+            <Form.Control
+              type="date"
+              placeholder="name@example.com"
+              value={expDate}
+              onChange={(event) => setExpDate(event.target.value)}
+              autoFocus
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="Discount Code (If Applicable)"
+          >
+            <Form.Control
+              type="text"
+              placeholder="name@example.com"
+              value={discountCode}
+              onChange={(event) => setDiscountCode(event.target.value)}
+              autoFocus
+            />
+          </FloatingLabel>
+          <DropdownButton id="category-select-dropdown" title="Category">
+            <Dropdown.ItemText>Select</Dropdown.ItemText>
+            {allCategories.map((categories, index) => {
+              return (
+                <Dropdown.Item as="button" key={index}>
+                  {categories.name}
+                </Dropdown.Item>
+              );
+            })}
+          </DropdownButton>
+        </form>
+      </div>
     </>
   );
 }

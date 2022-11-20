@@ -8,7 +8,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
-import AddDiscount from "./AddDiscount";
 
 function AdminDiscountPage() {
   const dispatch = useDispatch();
@@ -81,7 +80,6 @@ function AdminDiscountPage() {
               })}
         </section>
       </div>
-      <AddDiscount />
     </>
   );
 }

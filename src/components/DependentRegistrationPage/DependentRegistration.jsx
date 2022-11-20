@@ -40,7 +40,7 @@ function DependentRegistrationPage() {
       },
     });
     // move user back to home page for login
-    history.push('/');
+    history.push("/");
   };
 
   return (

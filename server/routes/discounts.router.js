@@ -114,13 +114,7 @@ router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
                  "discount_code"=$4
                  WHERE "id"=$5;`;
   pool
-    .query(query, [
-      description,
-      startDate,
-      expDate,
-      discountCode,
-      discountId,
-    ])
+    .query(query, [description, startDate, expDate, discountCode, discountId])
     .then((result) => {
       // Send success status
       res.sendStatus(200);

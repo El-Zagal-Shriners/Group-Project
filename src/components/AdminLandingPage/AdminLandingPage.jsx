@@ -18,14 +18,13 @@ function AdminLandingPage() {
     history.push("/admintracking");
   }
 
-  function addVendor(){
-    history.push("/adminaddvendor")
+  function addVendor() {
+    history.push("/adminaddvendor");
   }
 
-  function addDiscount(){
-    history.push("/adminadddiscount")
+  function addDiscount() {
+    history.push("/adminadddiscount");
   }
-
 
   // three bootstrap cards that direct the adminstrator to make changes
   //to membership information, discounts, and track discounts
@@ -108,8 +107,6 @@ function AdminLandingPage() {
         </div>
       </div>
       <br />
-
-      
       <div className="container text-center">
         <div className="card-body">
           <h5 className="card-title text-primary">Discount Tracker</h5> <br />
