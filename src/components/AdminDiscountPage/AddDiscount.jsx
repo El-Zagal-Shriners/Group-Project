@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { DropdownButton } from "react-bootstrap";
+import UpdatedNavBar from "../Nav/Nav";
 
 function AddDiscount() {
   //grab all categories
@@ -38,18 +39,12 @@ function AddDiscount() {
     });
   };
 
-  //   const getCategories = (event) => {
-  //     event.preventDefault();
-
-  //     dispatch({
-  //       type: "SET_CATEGORIES",
-  //     });
-  //   };
-
   console.log('categories', allCategories)
   console.log('vendors', allVendors)
 
   return (
+    <>
+    <UpdatedNavBar />
     <div className="container text-center">
       <h2 className="text-primary"> Add Discount</h2>
       <form onSubmit={addDiscount}>
@@ -127,6 +122,7 @@ function AddDiscount() {
         </DropdownButton>
       </form>
     </div>
+    </>
   );
 }
 

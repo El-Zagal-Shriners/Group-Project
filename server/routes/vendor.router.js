@@ -35,12 +35,13 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   const city = req.body.city;
   const stateCode = req.body.stateCode;
   const zip = req.body.zip;
+  const website = req.body.website;
   // SQL for POST
-  const query = `INSERT INTO "vendors" ("name", "address", "city", "state_code", "zip")
-                 VALUES ($1, $2, $3, $4, $5);`;
+  const query = `INSERT INTO "vendors" ("name", "address", "city", "state_code", "zip", "website_url")
+                 VALUES ($1, $2, $3, $4, $5, $6);`;
   // Run SQL against the database
   pool
-    .query(query, [name, address, city, stateCode, zip])
+    .query(query, [name, address, city, stateCode, zip, website])
     .then((result) => {
       // send success status
       res.sendStatus(201);
