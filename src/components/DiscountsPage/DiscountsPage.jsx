@@ -150,22 +150,24 @@ function DiscountsPage() {
         <div className="bg-light p-1 d-flex justify-content-center">
           <h1 className="display-5">Your Shriner Discounts</h1>
         </div>
-        <div className="bg-light p-2 rounded-bottom sticky-top d-flex justify-content-around">
-          <div className="d-flex justify-content-center align-items-center">
-            <Button
-              variant="outline-primary"
-              onClick={() => setShowFilterOffCanvas(true)}
-              className="me-2 d-flex justify-content-center"
-            >
-              {selectedCities.length > 0 || selectedCategories.length > 0
-                ? "Edit"
-                : "Refine"}{" "}
-              Search
-            </Button>
+        <div className="d-flex justify-content-center bg-light sticky-top">
+          <div className="bg-light col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-around">
+            <div className="d-flex justify-content-center align-items-center">
+              <Button
+                variant="outline-primary"
+                onClick={() => setShowFilterOffCanvas(true)}
+                className="me-2 d-flex justify-content-center"
+              >
+                {selectedCities.length > 0 || selectedCategories.length > 0
+                  ? "Edit"
+                  : "Refine"}{" "}
+                Search
+              </Button>
+            </div>
+            {(selectedCategories.legth > 0 || selectedCities.length) > 0 && (
+              <FilterFeedback />
+            )}
           </div>
-          {(selectedCategories.legth > 0 || selectedCities.length) > 0 && (
-            <FilterFeedback />
-          )}
         </div>
 
         {filteredDiscounts.map((thisDiscount, index) => {
