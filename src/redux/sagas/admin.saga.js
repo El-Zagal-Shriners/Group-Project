@@ -62,11 +62,25 @@ function* deleteMember(action) {
   }
 }
 
+function* addToDiscountTracker(action) {
+  // console.log("in add to tracker", action);
+  try {
+    yield axios({
+      method: "POST",
+      url: `api/admin/tracker/${action.payload.discountId}`,
+      data: { discountDate: action.payload.discountDate },
+    });
+  } catch (err) {
+    console.log("Error deleting member account", err);
+  }
+}
+
 function* adminSaga() {
   yield takeEvery("UPDATE_MEMBER_INFO", updateMemberInfo);
   yield takeEvery("APPROVE_MEMBER", approveMember);
   yield takeEvery("AUTHORIZE_MEMBER", authorizeMember);
   yield takeEvery("ADMIN_DELETE_MEMBER", deleteMember);
+  yield takeEvery("ADD_TO_DISCOUNT_TRACKER", addToDiscountTracker);
 }
 
 export default adminSaga;
