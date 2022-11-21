@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Button, DropdownButton } from "react-bootstrap";
+import { DropdownButton, ButtonGroup } from "react-bootstrap";
 import UpdatedNavBar from "../Nav/Nav";
 
 function AddDiscount() {
@@ -26,6 +26,7 @@ function AddDiscount() {
   const [isRegional, setIsRegional] = useState("False");
 
   const addDiscount = (event) => {
+    // console.log("In addDiscount() vendorId;", vendorId, "categoryId:", categoryId);
     event.preventDefault();
 
     dispatch({
@@ -41,14 +42,20 @@ function AddDiscount() {
         isRegional: isRegional,
       },
     });
+    // Reset the form values.
+    setVendorId(1);
+    setCategoryId(1);
+    setDescription("");
+    setStartDate("");
+    setExpDate("");
+    setDiscountCode("N/A");
   };
-
-  console.log("categories", allCategories);
-  console.log("vendors", allVendors);
 
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "GET_CATEGORIES" });
+    // console.log("categories", allCategories);
+    // console.log("vendors", allVendors);
   }, []);
 
   return (
@@ -56,19 +63,21 @@ function AddDiscount() {
       <UpdatedNavBar />
       <div className="container text-center">
         <h2 className="text-primary"> Add Discount</h2>
-        <DropdownButton id="category-select-dropdown" title="Vendor">
-          {allVendors.map((vendor) => {
-            return (
-              <Dropdown.Item
-                as="button"
-                value={vendor.id}
-                onClick={(event) => setVendorId(event.target.value)}
-              >
-                {vendor.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
+        <Dropdown onSelect={(eventKey) => setVendorId(eventKey)}>
+          <DropdownButton
+            id="category-select-dropdown"
+            title="Vendor"
+            as={ButtonGroup}
+          >
+            {allVendors.map((vendor) => {
+              return (
+                <Dropdown.Item eventKey={vendor.id}>
+                  {vendor.name}
+                </Dropdown.Item>
+              );
+            })}
+          </DropdownButton>
+        </Dropdown>
         <form onSubmit={addDiscount}>
           <FloatingLabel
             className="mb-1 text-primary"
@@ -122,20 +131,21 @@ function AddDiscount() {
               autoFocus
             />
           </FloatingLabel>
-          <DropdownButton id="category-select-dropdown" title="Category">
-            <Dropdown.ItemText>Select</Dropdown.ItemText>
-            {allCategories.map((category) => {
-              return (
-                <Dropdown.Item
-                  as="button"
-                  value={categoryId}
-                  onClick={(event) => setCategoryId(event.target.value)}
-                >
-                  {category.name}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
+          <Dropdown onSelect={(eventKey) => setCategoryId(eventKey)}>
+            <DropdownButton
+              id="category-select-dropdown"
+              title="Category"
+              as={ButtonGroup}
+            >
+              {allCategories.map((category) => {
+                return (
+                  <Dropdown.Item eventKey={category.id}>
+                    {category.name}
+                  </Dropdown.Item>
+                );
+              })}
+            </DropdownButton>
+          </Dropdown>
           <br />
           <button type="submit" className="btn btn-primary">
             Add Discount
