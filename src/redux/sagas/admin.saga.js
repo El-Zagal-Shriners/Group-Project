@@ -63,7 +63,7 @@ function* deleteMember(action) {
 }
 
 function* addToDiscountTracker(action) {
-  console.log("in add to tracker", action);
+  // console.log("in add to tracker", action);
   try {
     yield axios({
       method: "POST",
