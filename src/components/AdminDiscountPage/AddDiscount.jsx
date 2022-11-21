@@ -58,7 +58,11 @@ function AddDiscount() {
           <Dropdown.ItemText>Select</Dropdown.ItemText>
           {allVendors.map((vendors) => {
             return (
-              <Dropdown.Item as="button">
+              <Dropdown.Item
+                as="button"
+                value={vendorId}
+                onChange={(event) => setVendorId(event.target.value)}
+              >
                 {vendors.name}
               </Dropdown.Item>
             );
@@ -121,9 +125,7 @@ function AddDiscount() {
             <Dropdown.ItemText>Select</Dropdown.ItemText>
             {allCategories.map((categories) => {
               return (
-                <Dropdown.Item as="button">
-                  {categories.name}
-                </Dropdown.Item>
+                <Dropdown.Item as="button">{categories.name}</Dropdown.Item>
               );
             })}
           </DropdownButton>
