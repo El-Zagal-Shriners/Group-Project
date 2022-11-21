@@ -16,10 +16,11 @@ function DiscountCard({ thisDiscount }) {
       >
         <div className="row fill-container">
             <div className="col-2">
-              <div className="d-flex justify-content-center align-items-center fill-container">
+              <div className="d-flex flex-column justify-content-center align-items-center fill-container">
                 <IconContext.Provider value={{ size: "2em" }}>
                   {allIconComponents[thisDiscount.icon_class]}
                 </IconContext.Provider>
+                <div>{thisDiscount.category_name}</div>
               </div>
             </div>
             <div className="col-10">
