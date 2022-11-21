@@ -2,17 +2,25 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
+import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import { IconContext } from "react-icons";
+import Container from "react-bootstrap/Container";
+import { useDispatch } from "react-redux";
 
 function DiscountModal({
   thisDiscount,
   showDiscountModal,
   setShowDiscountModal,
 }) {
+  const dispatch = useDispatch();
+
+  // if the user has already clicked on "show discount code" button while
+  // in the discount page => set to true,
+  // this prevents a second click from being sent to the discount tracker
   const [alreadyTracked, setAlreadyTracked] = useState(false);
 
   function handleShowCode() {
     if (alreadyTracked === false) {
-      setCounter(counter + 1);
     }
     setAlreadyTracked(true);
   }
@@ -23,29 +31,59 @@ function DiscountModal({
         onHide={() => setShowDiscountModal(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{thisDiscount.vendor_name}</Modal.Title>
+          <Modal.Title>
+            <h3>This Discount</h3>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {thisDiscount.address}
-          {thisDiscount.city}
-          {thisDiscount.state_code}
-          {thisDiscount.zip}
+          <Container className="bg-muted-primary rounded">
+            <div className="mb-3 text-center">
+              <h1>{thisDiscount.vendor_name}</h1>
+            </div>
 
-          <hr />
-          {thisDiscount.description}
-          <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header onClick={() => handleShowCode()}>
-                Show Discount Code
-              </Accordion.Header>
-              <Accordion.Body>
-                !Make This Non-Nullable! <br />
-                {thisDiscount.discount_code}
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
+            <div className="row">
+              <div className="col-5">
+                <div className="d-flex justify-content-center align-items-center">
+                  <div className="text-center">
+                    <IconContext.Provider value={{ size: "2em" }}>
+                      {allIconComponents[thisDiscount.icon_class]}
+                    </IconContext.Provider>
+                    <div>{thisDiscount.category_name}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-7">
+                <div className="d-flex justify-content-center flex-column">
+                  {thisDiscount.address}
+                  <br />
+                  <div>
+                    {thisDiscount.city},<span> </span>
+                    {thisDiscount.state_code}
+                    <span> </span>
+                    {thisDiscount.zip}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+            <div className="m-3 text-center">
+              <h3>{thisDiscount.description}</h3>
+            </div>
+
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header onClick={() => handleShowCode()}>
+                  <span className="text-center">
+                    Click To Show Discount Code
+                  </span>
+                </Accordion.Header>
+                <Accordion.Body>{thisDiscount.discount_code}</Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Container>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="d-flex justify-content-center">
           <Button
             variant="secondary"
             onClick={() => setShowDiscountModal(false)}

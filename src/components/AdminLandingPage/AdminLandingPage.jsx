@@ -26,23 +26,18 @@ function AdminLandingPage() {
     history.push("/adminadddiscount");
   }
 
-  // three bootstrap cards that direct the adminstrator to make changes
+  // three bootstrap cards that direct the administrator to make changes
   //to membership information, discounts, and track discounts
   return (
     <>
       <UpdatedNavBar />
-      <h2 className="text-primary container text-center">
-        Admin Landing Page
-      </h2>{" "}
-      <br />
-      <div className="card-body">
-        <div className="container text-center">
-          <h5 className="card-title text-primary">Manage Shriner Members</h5>{" "}
-          <br />
-          <p className="card-text">
-            Administrative access to member's portal information. Administrator
-            can update, edit, remove or delete member and dependent portal
-            access.
+      <div className="d-flex flex-column justify-content-center align-items-center">
+        <h2 className="text-primary text-center">Admin Landing Page</h2>
+        <div className="container text-center col col-lg-6">
+          <h5 className="text-primary">Manage Shriner Members</h5>
+          <p>
+            Activate, deactivate, approve, and remove members and their
+            dependents.
           </p>
           <Button
             size="lg"
@@ -105,15 +100,9 @@ function AdminLandingPage() {
             Manage Discounts
           </Button>
         </div>
-      </div>
-      <br />
-      <div className="container text-center">
-        <div className="card-body">
-          <h5 className="card-title text-primary">Discount Tracker</h5> <br />
-          <p className="card-text">
-            Administrative access to discount tracker. Administrator can view,
-            reset, and delete discount tracker.
-          </p>
+        <div className="container text-center col col-lg-6">
+          <h5 className="text-primary">Discount Tracker</h5>
+          <p>View information on discount usage.</p>
           <Button
             size="lg"
             variant="outline-primary"
@@ -129,5 +118,3 @@ function AdminLandingPage() {
 }
 
 export default AdminLandingPage;
-
-//onClick={manageDiscounts
