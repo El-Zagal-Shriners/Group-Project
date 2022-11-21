@@ -7,7 +7,6 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
 
-
 function AddVendorModal() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -40,55 +39,40 @@ function AddVendorModal() {
   };
   return (
     <>
-    <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={handleShow}>
         Add Vendor
       </Button>
 
-    <Modal show={show} onHide={handleClose}>
-    <Modal.Header closeButton>
-    <Modal.Title className="text-primary">Add Vendor</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Business Name"
-          >
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-primary">Add Vendor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FloatingLabel className="mb-1 text-primary" label="Business Name">
             <Form.Control
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Address"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="Address">
             <Form.Control
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="City"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="City">
             <Form.Control
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="State Code"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="State Code">
             <Form.Control
               value={stateCode}
               onChange={(e) => setStateCode(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Zip"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="Zip">
             <Form.Control
               value={zip}
               onChange={(e) => setZip(e.target.value)}
@@ -103,12 +87,12 @@ function AddVendorModal() {
               onChange={(e) => setWebsite(e.target.value)}
             />
           </FloatingLabel>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={addVendor}>
-                Add Vendor
-            </Button>
-          </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={addVendor}>
+            Add Vendor
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );
