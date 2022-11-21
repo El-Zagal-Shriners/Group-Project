@@ -125,7 +125,8 @@ function DiscountFilterOffCanvas({
     <Offcanvas
       show={showFilterOffCanvas}
       onHide={() => setShowFilterOffCanvas(false)}
-      placement="start" name="start"
+      placement="start"
+      name="start"
     >
       <Container className="bg-light fill-container">
         <Offcanvas.Header closeButton>

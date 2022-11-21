@@ -46,7 +46,7 @@ function FilterFeedback() {
                   })
                 }
               >
-                <span className="me-1">{thisCat.name}</span> 
+                <span className="me-1">{thisCat.name}</span>
                 <span>{allIconComponents.exit}</span>
               </Button>
             );

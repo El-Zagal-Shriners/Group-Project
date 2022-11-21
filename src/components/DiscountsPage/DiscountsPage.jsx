@@ -148,12 +148,10 @@ function DiscountsPage() {
       <>
         <UpdatedNavBar />
         <div className="bg-light p-1 d-flex justify-content-center">
-            <h1 className="display-5">Your Shriner Discounts</h1>
+          <h1 className="display-5">Your Shriner Discounts</h1>
         </div>
         <div className="bg-light p-2 rounded-bottom sticky-top d-flex justify-content-around">
-          
           <div className="d-flex justify-content-center align-items-center">
-            
             <Button
               variant="outline-primary"
               onClick={() => setShowFilterOffCanvas(true)}
@@ -174,9 +172,9 @@ function DiscountsPage() {
           return <DiscountCard key={index} thisDiscount={thisDiscount} />;
         })}
         <DiscountFilterOffCanvas
-              showFilterOffCanvas ={showFilterOffCanvas}
-              setShowFilterOffCanvas={setShowFilterOffCanvas}
-            />
+          showFilterOffCanvas={showFilterOffCanvas}
+          setShowFilterOffCanvas={setShowFilterOffCanvas}
+        />
       </>
     );
   }

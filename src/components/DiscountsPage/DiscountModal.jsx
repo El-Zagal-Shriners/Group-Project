@@ -5,7 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import { IconContext } from "react-icons";
 import Container from "react-bootstrap/Container";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 
 function DiscountModal({
   thisDiscount,
@@ -15,7 +15,7 @@ function DiscountModal({
   const dispatch = useDispatch();
 
   // if the user has already clicked on "show discount code" button while
-  // in the discount page => set to true, 
+  // in the discount page => set to true,
   // this prevents a second click from being sent to the discount tracker
   const [alreadyTracked, setAlreadyTracked] = useState(false);
 
@@ -31,7 +31,9 @@ function DiscountModal({
         onHide={() => setShowDiscountModal(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h3>This Discount</h3></Modal.Title>
+          <Modal.Title>
+            <h3>This Discount</h3>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container className="bg-muted-primary rounded">
