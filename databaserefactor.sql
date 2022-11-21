@@ -114,23 +114,23 @@ ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN K
 
 -- SAMPLE USERS 15
 INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", "primary_member_id", "dues_paid", "membership_number", "admin_level", "is_authorized")
-VALUES ('johnsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Smith', 'johnsmith@gmail.com', 1, '2022/1/1', '4325346', 0, 'true'),
-('janesmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Smith', 'janesmith@gmail.com', 1, '2022/1/1', '4325346', 4, 'true'),
-('bobsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 3, '2022/1/1', '4325346', 0, 'true'),
-('maryjane', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 4, '2022/1/1', '4325346', 4, 'true'),
-('susansmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Smith', 'susansmith@gmail.com', 5, '2022/1/1', '4325346', 0, 'true'),
-('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Doe', 'johndoe@gmail.com', 1, '2022/1/1', '4325346', 0, 'true'),
-('janedoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Doe', 'janedoe@gmail.com', 7, '2022/1/1', '4325346', 4, 'true'),
-('bobdoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Doe', 'bobdoe@gmail.com', 1, '2022/1/1', '4325346', 0, 'true'),
-('maryjaney', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 9, '2022/1/1', '4325346', 0, 'true'),
-('susandoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Doe', 'susandoe@gmail.com', 3, '2022/1/1', '4325346', 4, 'true'),
-('johnsmithy', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Smith', 'johnsmith@gmail.com', 4, '2022/1/1', '4325346', 0, 'true'),
-('janesmither', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Smith', 'janesmith@gmail.com', 5, '2022/1/1', '4325346', 4, 'true'),
-('bobsmit', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 1, '2022/1/1', '4325346', 0, 'true'),
-('maryjan', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 7, '2022/1/1', '4325346', 4, 'true'),
-('susansmi', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Smith', 'susansmith@gmail.com', 9, '2022/1/1', '4325346', 0, 'true'),
-('admin', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Admin', 'Admin', 'Admin@gmail.com', 16, '2022/1/1', '4325346', 4, 'true'),
-('member', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Member', 'Member', 'Admin@gmail.com', 17, '2022/1/1', '4325346', 0, 'true');
+VALUES ('johnsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Smith', 'johnsmith@gmail.com', 1, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('janesmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Smith', 'janesmith@gmail.com', 1, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('bobsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 3, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('maryjane', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 4, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('susansmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Smith', 'susansmith@gmail.com', 5, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Doe', 'johndoe@gmail.com', 1, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('janedoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Doe', 'janedoe@gmail.com', 7, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('bobdoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Doe', 'bobdoe@gmail.com', 1, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('maryjaney', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 9, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('susandoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Doe', 'susandoe@gmail.com', 3, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('johnsmithy', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Smith', 'johnsmith@gmail.com', 4, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('janesmither', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Smith', 'janesmith@gmail.com', 5, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('bobsmit', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 1, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('maryjan', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Mary', 'Jane', 'maryjane@gmail.com', 7, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('susansmi', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Smith', 'susansmith@gmail.com', 9, '2022/1/1', random() * 50000 + 1, 0, 'true'),
+('admin', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Admin', 'Admin', 'Admin@gmail.com', 16, '2022/1/1', random() * 50000 + 1, 4, 'true'),
+('member', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Member', 'Member', 'Admin@gmail.com', 17, '2022/1/1', random() * 50000 + 1, 0, 'true');
 
 
 -- SAMPLE CITIES
