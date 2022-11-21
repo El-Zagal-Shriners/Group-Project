@@ -22,7 +22,7 @@ router.post(
   rejectUnauthorizedUser,
   (req, res, next) => {
     // stops dependent accounts from creating other dependent accounts
-    if(req.user.membership_number===null){
+    if (req.user.membership_number === null) {
       res.sendStatus(500);
       return;
     }
@@ -36,36 +36,38 @@ router.post(
       subject: "Shrine App Testing Emails",
       text: `Please follow this link to register. http://localhost:3000/#/dependents/${token}`, // alternative text
       // html to display in the body of the email
-      html: `<p>You have been invited to join the El Zagal Member Benefits Application! 
+      html: `<p>You have been invited to join the El Zagal Member Benefits Application!
             Please click the following link to register on the website.</p>
             <a href="http://localhost:3000/#/dependents/${token}">Register Account!</a>`,
     };
     // SQL for INSERT of token, email and members db id to dependent token table
     // security for creating a dependent account
-    const insertQuery = `INSERT INTO "dependent_tokens" 
+    const insertQuery = `INSERT INTO "dependent_tokens"
                               (
-                                "primary_member_id", 
-                                "token", 
+                                "primary_member_id",
+                                "token",
                                 "email"
                               ) VALUES ($1, $2, $3);`;
-    pool.query(insertQuery, [req.user.id, token, email]).then((result) => {
-      // sends email based on msg above
-      sgMail
-        .send(msg)
-        .then(() => {
-          console.log("Email sent and db entry created");
-          res.sendStatus(201);
-        })
-        .catch((error) => {
-          // log error and send error status if error occurs
-          console.error("Error sending email", error);
-          res.sendStatus(500);
-        })
-        .catch((err) => {
-          console.log("Error in INSERT to token table: ", err);
-          res.sendStatus(500);
-        });
-    });
+    pool
+      .query(insertQuery, [req.user.id, token, email])
+      .then((result) => {
+        // sends email based on msg above
+        sgMail
+          .send(msg)
+          .then(() => {
+            console.log("Email sent and db entry created");
+            res.sendStatus(201);
+          })
+          .catch((error) => {
+            // log error and send error status if error occurs
+            console.error("Error sending email", error);
+            res.sendStatus(500);
+          });
+      })
+      .catch((err) => {
+        console.log("Error in INSERT to token table: ", err);
+        res.sendStatus(500);
+      });
   }
 );
 
@@ -78,13 +80,10 @@ router.post("/", (req, res) => {
   let primaryMemberId;
   let tokenRowId;
   // SQL to check if the the token and email are matches
-  const queryText = `SELECT * FROM "dependent_tokens" 
+  const queryText = `SELECT * FROM "dependent_tokens"
                      WHERE "token"=$1 AND "email"=$2;`;
   pool
-    .query(queryText, [
-      token,
-      email
-    ])
+    .query(queryText, [token, email])
     .then((result) => {
       // Check to send error status if no results returned (bad token)
       // cancels rest of the POST
@@ -110,27 +109,37 @@ router.post("/", (req, res) => {
       is_verified,
       is_authorized,
       dues_paid)
-      VALUES ($1, $2, $3, $4, $5, $6, 
+      VALUES ($1, $2, $3, $4, $5, $6,
                 (SELECT "is_verified" FROM "user" WHERE "id"=$7),
                 (SELECT "is_authorized" FROM "user" WHERE "id"=$7),
                 (SELECT "dues_paid" FROM "user" WHERE "id"=$7));`;
-      pool.query(insertQuery, [username, password, firstName, lastName, email, primaryMemberId, primaryMemberId])
-          .then((result)=> {
-            // SQL to DELETE the entry for the token used to create the dependent account
-            const deleteQuery = `DELETE FROM "dependent_tokens" WHERE "id"=$1;`;
-            pool.query(deleteQuery, [tokenRowId])
-                .then((result)=>{
-                  res.sendStatus(201);
-                })
-                .catch((err)=>{
-                  console.log('Error in DELETE token row: ', err);
-                  res.sendStatus(500);
-                })
-          })
-          .catch((err) => {
-            console.log('Error in INSERT dependent: ', err);
-            res.sendStatus(500);
-          })
+      pool
+        .query(insertQuery, [
+          username,
+          password,
+          firstName,
+          lastName,
+          email,
+          primaryMemberId,
+          primaryMemberId,
+        ])
+        .then((result) => {
+          // SQL to DELETE the entry for the token used to create the dependent account
+          const deleteQuery = `DELETE FROM "dependent_tokens" WHERE "id"=$1;`;
+          pool
+            .query(deleteQuery, [tokenRowId])
+            .then((result) => {
+              res.sendStatus(201);
+            })
+            .catch((err) => {
+              console.log("Error in DELETE token row: ", err);
+              res.sendStatus(500);
+            });
+        })
+        .catch((err) => {
+          console.log("Error in INSERT dependent: ", err);
+          res.sendStatus(500);
+        });
     })
     .catch((error) => {
       console.log("Error checking token ", error);
@@ -142,7 +151,7 @@ router.post("/", (req, res) => {
 router.get("/:token", (req, res) => {
   // GET route code here
   const token = req.params.token;
-  const query = `SELECT * FROM "dependent_tokens" 
+  const query = `SELECT * FROM "dependent_tokens"
                  WHERE "dependent_tokens"."token"=$1;`;
   pool
     .query(query, [token])
