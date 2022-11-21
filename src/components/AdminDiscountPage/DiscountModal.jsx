@@ -8,20 +8,26 @@ import { FloatingLabel } from "react-bootstrap";
 function DiscountModal({ discount }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const [description, setDescription] = useState(discount.description);
+  const [discountDescription, setDiscountDescription] = useState(
+    discount.discountDescription
+  );
+  const [discountSummary, setDiscountSummary] = useState(
+    discount.discountSummary
+  );
   const [startDate, setStartDate] = useState(discount.start_date);
   const [expDate, setExpDate] = useState(discount.expiration_date);
-  const [discountCode, setDiscountCode] = useState(discount.discount_code);
+  const [discountUsage, setDiscountUsage] = useState(discount.discountUsage);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   // create edit discount object
   const discountObj = {
     discountId: discount.id,
-    description,
+    discountDescription,
+    discountSummary,
     startDate,
     expDate,
-    discountCode,
+    discountUsage,
   };
   // edit discount
   const editDiscount = () => {
@@ -51,8 +57,14 @@ function DiscountModal({ discount }) {
         <Modal.Body>
           <FloatingLabel label="Description">
             <Form.Control
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={discountDescription}
+              onChange={(e) => setDiscountDescription(e.target.value)}
+            />
+          </FloatingLabel>
+          <FloatingLabel label="Summary">
+            <Form.Control
+              value={discountSummary}
+              onChange={(e) => setDiscountSummary(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel label="Start Date">
@@ -71,8 +83,8 @@ function DiscountModal({ discount }) {
           </FloatingLabel>
           <FloatingLabel label="Discount Code">
             <Form.Control
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value)}
+              value={discountUsage}
+              onChange={(e) => setDiscountUsage(e.target.value)}
             />
           </FloatingLabel>
         </Modal.Body>
