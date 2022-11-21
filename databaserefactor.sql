@@ -39,10 +39,11 @@ CREATE TABLE "vendors" (
 CREATE TABLE "discounts" (
 	"id" serial NOT NULL,
 	"vendor_id" bigint NOT NULL,
-	"description" varchar(1000) NOT NULL,
+	"discount_description" varchar(1000) NOT NULL,
+	"discount_summary" varchar(15) NOT NULL,
 	"start_date" DATE,
 	"expiration_date" DATE,
-	"discount_code" varchar(255) NOT NULL,
+	"discount_usage" varchar(255) NOT NULL,
 	"category_id" int NOT NULL,
 	"is_shown" BOOLEAN NOT NULL DEFAULT 'true',
 	"is_regional" BOOLEAN NOT NULL DEFAULT 'false',
