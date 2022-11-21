@@ -1,22 +1,41 @@
 import MemberItem from "./MemberItem";
-import { Form, ListGroup } from "react-bootstrap";
+import { Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
 import "../AccountTables.css";
 import { useState } from "react";
 
 function MemberTable({ members }) {
   // seperate the members that have membership numbers from the members array.
-  const shriners = [...members].filter((acc) => acc.membership_number !== null);
-  // const [filterShriners, setFilterShriners] = useState([...shriners]);
+  const primaries = [...members].filter((acc) => acc.membership_number !== null);
+  const newMembers = [...members].filter(acc => acc.is_verified === false);
+  const reviewPending = [...members].filter(acc => acc.review_pending === true);
+  // let currentMembers = primaries;
+  const [currentMembers, setCurrentMembers] = useState(primaries);
+  // const [filterShriners, setFilterShriners] = useState([...primaries]);
   const [search, setSearch] = useState("");
+
+
 
   return (
     <div className="vw-100">
-      <div>
+      <div 
+        style={{
+          display: "flex",
+          flexFlow: "row",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
         <Form.Control
-          className="w-50"
+          className="text-center"
+          style={{width: "36%"}}
           placeholder="Search Member"
           onChange={(e) => setSearch(e.target.value)}
         />
+        <ButtonGroup>
+          <Button size="sm" onClick={() => setCurrentMembers(primaries)}>All ({primaries.length})</Button>
+          <Button size="sm" onClick={() => setCurrentMembers(reviewPending)}>Review ({reviewPending.length})</Button>
+          <Button size="sm" onClick={() => setCurrentMembers(newMembers)}>New ({newMembers.length})</Button>
+        </ButtonGroup>
       </div>
       <ListGroup>
         <ListGroup.Item className="p-1">
@@ -37,10 +56,10 @@ function MemberTable({ members }) {
           // height: "23vh"
           style={{
             overflowY: "scroll",
-            height: "23vh",
+            height: "72vh",
           }}
         >
-          {shriners
+          {currentMembers
             .filter((member) => {
               if (search === "") {
                 return member;
