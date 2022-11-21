@@ -6,7 +6,6 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditUserForm from "../EditUserForm/EditUserForm";
 import UserDependentConfirmation from "./UserDependentConfirmation";
 import AddDependentForm from "../AddDependentForm/AddDependentForm";
-import './UserPage.css';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
