@@ -5,14 +5,14 @@ function UserDependentConfirmation(props) {
   // Renders a modal to confirm if the user wants to remove the selected dependent account
   return (
     <Modal show={props.show} onHide={props.handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Confirm Delete</Modal.Title>
+      <Modal.Header className="bg-primary text-light" closeButton>
+        <Modal.Title className="fw-bold">Confirm Delete</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         Are you sure you would like to remove this dependent account?
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleClose}>
+        <Button variant="outline-primary" onClick={props.handleClose}>
           Cancel
         </Button>
         <Button
