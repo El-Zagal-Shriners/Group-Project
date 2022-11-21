@@ -31,11 +31,11 @@ function EditUserForm(props) {
     dispatch({
       type: "EDIT_USER_INFO",
       payload: {
-        username: username.toLowercase(),
+        username: username.toLowerCase(),
         firstName,
         lastName,
         email,
-        memberNumber,
+        memberNumber: memberNumber?memberNumber:null,
       },
     });
     clearLocalState();
@@ -53,8 +53,8 @@ function EditUserForm(props) {
   // Render a modal with the users current information pre-filled
   return (
     <Modal show={props.showEdit} onHide={props.handleClose}>
-      <Modal.Header>
-        <Modal.Title>Edit User Information</Modal.Title>
+      <Modal.Header className='bg-primary'>
+        <Modal.Title className="text-light fw-bold">Edit User Information</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
@@ -102,6 +102,7 @@ function EditUserForm(props) {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FloatingLabel>
+          {props.user.membership_number &&
           <FloatingLabel
             controlId="membershipNumberEditLabel"
             label="Membership Number"
@@ -113,14 +114,14 @@ function EditUserForm(props) {
               value={memberNumber}
               onChange={(e) => setMemberNumber(e.target.value)}
             />
-          </FloatingLabel>
+          </FloatingLabel>}
         </>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={cancelEdit}>
+        <Button variant="outline-primary" onClick={cancelEdit}>
           Cancel
         </Button>
-        <Button variant="success" onClick={sendEdit}>
+        <Button variant="primary" onClick={sendEdit}>
           Confirm Changes
         </Button>
       </Modal.Footer>
