@@ -18,7 +18,7 @@ function MemberTable({ members }) {
   const primaries = [...accounts].filter(
     (acc) => acc.membership_number !== null
   );
-  const newMembers = [...accounts].filter((acc) => acc.is_verified === false);
+  const newMembers = [...accounts].filter((acc) => acc.is_verified === false && acc.membership_number !== null);
   const reviewPending = [...accounts].filter(
     (acc) => acc.review_pending === true
   );
@@ -104,7 +104,7 @@ function MemberTable({ members }) {
             className="member-table px-1 bg-primary"
             style={{
               overflowY: "scroll",
-              height: "72vh",
+              maxHeight: "72vh",
             }}
           >
             {filterArrays(members, search).map((member) => (

@@ -94,12 +94,10 @@ function MemberItem({ member, members }) {
   // access members to get the dependents.
   const dependents = [...members].filter(
     (acc) =>
-      acc.membership_number === null ||
-      // this OR exists due to test data having all the same member numbers.
-      (acc.membership_number === member.membership_number &&
-        acc.id !== member.id &&
-        Number(acc.primary_member_id) === member.id)
+      acc.membership_number === null && Number(acc.primary_member_id) === member.id
   );
+
+  console.log(dependents);
 
   return (
     <>
