@@ -2,6 +2,9 @@ const express = require("express");
 const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
+const {
+  rejectUnauthorizedUser,
+} = require("../modules/authorization-middleware");
 const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
@@ -98,5 +101,29 @@ router.delete(
       });
   }
 );
+
+// route will add a new row to discounts_tracked
+router.post(
+  "/tracker/:discountId",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    const discountId = req.params.discountId;
+    const userId = req.user.id;
+    const discountDate = req.body.discountDate;
+    // console.log(discountId, userId, discountDate);
+
+    const query = `INSERT INTO "discounts_tracked" ("discount_id", "user_id", "date")
+    VALUES ($1, $2, $3);`;
+
+    pool
+      .query(query, [discountId, userId, discountDate])
+      .then(() => res.sendStatus(201))
+      .catch((err) => {
+        console.log("Error adding to discounts_tracked", err);
+        res.sendStatus(500);
+      });
+  }
+); // End POST to discount_tracker
 
 module.exports = router;

@@ -24,8 +24,8 @@ function UserPage() {
     });
   }, []);
   // Toggle local 'show' state
+  // and store dependent id of account to delete
   const handleShow = (id) => {
-    console.log("This is id in handleShow: ", id);
     setDeleteDependent(id);
     setShow(true);
   };
@@ -53,27 +53,33 @@ function UserPage() {
     <>
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
-      <div className="container">
+      <div className="container col col-lg-6">
         {/* Render user's basic information */}
-        <h2 className="fw-bolder">
+        <h2 className="fw-bolder text-primary">
           Hi, {user.first_name} {user.last_name}!
         </h2>
-        <h4>Current Information:</h4>
-        <div className="d-flex justify-content-between align-items-center">
-          <p className="mb-1">
-            First Name: {user.first_name}
+        <h4 className="fw-bold text-decoration-underline text-primary">Current Information:</h4>
+        <div className="d-flex-column align-items-center">
+          <p className="mb-1 ">
+            <strong>First Name:</strong> {user.first_name}
             <br />
-            Last Name: {user.last_name}
+            <strong>Last Name:</strong> {user.last_name}
             <br />
-            Username: {user.username}
+            <strong>Username:</strong> {user.username}
             <br />
-            Email: {user.email}
+            <strong>Email:</strong> {user.email}
             <br />
-            Member Number: {user.membership_number}
+            {user.membership_number && <span><strong>Member Number:</strong> {user.membership_number}</span>}
           </p>
-          <button className="btn btn-info" onClick={handleShowEdit}>
-            {allIconComponents.editUser}
+          {/* Button to show edit modal */}
+          <button className="btn btn-primary mb-2" onClick={handleShowEdit}>
+            {allIconComponents.editUser} Edit Info
           </button>
+          <div className="w-100 d-flex justify-content-center">
+          <LogOutButton className="btn btn-primary mt-2 col col-lg-6" />
+        </div>
+          <hr />
+          {/* Edit user information modal */}
           <EditUserForm
             user={user}
             showEdit={showEdit}
@@ -82,37 +88,37 @@ function UserPage() {
           />
         </div>
         {/* Render list of dependents if any */}
-        <div className="d-flex justify-content-between align-items-center">
-          <h6 className="text-decoration-underline mb-0 fw-bold">
-            Dependent Accounts
-          </h6>
-          {/* Button to add a dependent */}
-          {/* Hide add button for dependent accounts */}
-          {user.membership_number && (
-            <button className="btn btn-success" onClick={handleShowDependent}>
-              {allIconComponents.add}
-            </button>
-          )}
+        <div className="d-flex align-items-center justify-content-center">
+          {/* Hide dependent accounts list if dependent account */}
+          {user.membership_number &&
+          <>
+          <h5 className=" p-0 text-primary text-center mb-0 mt-2 text-decoration-underline fw-bold d-flex justify-content-between align-items-center">
+           Dependent Accounts
+          </h5>
+          <div onClick={handleShowDependent} className="bg-primary px-3 py-1 mt-2 text-white rounded d-flex align-items-center mb-0 mt-0 ms-3">+ Add</div>
+          </>}
           <AddDependentForm
             showAddDependent={showAddDependent}
             handleCloseDependent={handleCloseDependent}
           />
         </div>
-        {accounts.accountDependents.length > 0 ? (
+        {accounts.accountDependents.length > 0 && user.membership_number &&
           <>
             {accounts.accountDependents.map((dependent) => (
               <div
                 key={dependent.id}
-                className="d-flex justify-content-between align-items-center"
+                className="d-flex justify-content-between align-items-center border border-2 border-secondary p-3 m-1 rounded-3"
               >
+                {/* List of dependents and their info */}
                 <p className="mb-1">
-                  Name: {dependent.first_name} {dependent.last_name} <br />
-                  Username: {dependent.username}
-                  <br /> Email: {dependent.email}
+                  <strong>Name:</strong> {dependent.first_name} {dependent.last_name} <br />
+                  <strong>Username:</strong> {dependent.username}
+                  <br /> <strong>Email:</strong> {dependent.email}
                 </p>
+                {/* Delete a dependent button */}
                 <button
                   onClick={() => handleShow(dependent.id)}
-                  className="btn btn-outline-danger"
+                  className="text-danger border-0 bg-white fs-2"
                 >
                   {allIconComponents.delete}
                 </button>
@@ -126,14 +132,7 @@ function UserPage() {
               </div>
             ))}
           </>
-        ) : (
-          // Display message if there is no dependents for the account
-          <p>No dependent accounts</p>
-        )}
-        {/* Render logout button */}
-        <div className="w-100 d-flex justify-content-center">
-          <LogOutButton className="btn btn-primary col col-lg-6" />
-        </div>
+        }
       </div>
     </>
   );

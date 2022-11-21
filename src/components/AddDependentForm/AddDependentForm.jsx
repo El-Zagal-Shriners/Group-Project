@@ -30,8 +30,8 @@ function AddDependentForm(props) {
 
     return (
         <Modal show={props.showAddDependent} onHide={props.handleCloseDependent}>
-        <Modal.Header>
-          <Modal.Title>Dependent Email Entry</Modal.Title>
+        <Modal.Header className="bg-primary">
+          <Modal.Title className="fw-bold text-light">Dependent Email Entry</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <>
@@ -46,10 +46,10 @@ function AddDependentForm(props) {
         </>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={cancelDependentAdd}>
+          <Button variant="outline-primary" onClick={cancelDependentAdd}>
             Cancel
           </Button>
-          <Button variant="success" onClick={sendDependentEmail}>
+          <Button variant="primary" onClick={sendDependentEmail}>
             Add Dependent
           </Button>
         </Modal.Footer>

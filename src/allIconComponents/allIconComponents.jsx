@@ -12,6 +12,8 @@ import { FaUserEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { GrAdd } from "react-icons/gr";
+import { IoAdd } from "react-icons/io5";
 
 // this object holds all jsx icon components in the app
 export const allIconComponents = {
@@ -34,5 +36,6 @@ export const allIconComponents = {
   editUser: <FaUserEdit />,
   delete: <MdDelete />,
   logout: <GrLogout />,
-  add: <AiFillPlusCircle />
+  add: <AiFillPlusCircle />,
+  plusSign: <IoAdd />
 };
