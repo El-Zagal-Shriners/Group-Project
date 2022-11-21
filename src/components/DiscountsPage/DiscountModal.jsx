@@ -6,6 +6,7 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import { IconContext } from "react-icons";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 function DiscountModal({
   thisDiscount,
@@ -16,22 +17,15 @@ function DiscountModal({
   // in the discount page => set to true,
   // this prevents a second click from being sent to the discount tracker
   const [alreadyTracked, setAlreadyTracked] = useState(false);
+  const dispatch = useDispatch();
 
   function handleShowCode() {
     if (alreadyTracked === false) {
+      console.log('inHandleShowCode', thisDiscount);
       const discountDate = new Date().toUTCString();
-
-      axios({
-          method: "POST",
-          url: `api/discounts/tracker/${thisDiscount.discount_id}`,
-          data: {discountDate}
-        })
-        .then(() => {
-          console.log("POST to tracker successful");
-        })
-        .catch((err) => console.log("Error with posting to tracker", err));
+      dispatch({ type: "ADD_TO_DISCOUNT_TRACKER", payload: {discountDate, discountId: thisDiscount.discount_id }});
+      setAlreadyTracked(true);
     }
-    setAlreadyTracked(true);
   }
   return (
     <>

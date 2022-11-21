@@ -151,28 +151,7 @@ router.delete(
   }
 ); // End delete a discount
 
-router.post(
-  "/tracker/:discountId",
-  rejectUnauthenticated,
-  rejectUnauthorizedUser,
-  (req, res) => {
-    const discountId = req.params.discountId;
-    const userId = req.user.id;
-    const discountDate = req.body.discountDate;
-    console.log(discountId, userId, discountDate);
 
-    const query = `INSERT INTO "discounts_tracked" ("discount_id", "user_id", "date")
-    VALUES ($1, $2, $3);`
-
-    pool
-      .query(query, [discountId, userId, discountDate])
-      .then(() => res.sendStatus(201))
-      .catch((err) => {
-        console.log("Error adding to discounts_tracked", err);
-        res.sendStatus(500);
-      });
-  }
-); // End POST to discount_tracker
 
 // export the router
 module.exports = router;
