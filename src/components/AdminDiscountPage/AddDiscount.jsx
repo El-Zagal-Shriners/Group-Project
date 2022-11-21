@@ -16,6 +16,7 @@ function AddDiscount() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const [vendorId, setVendorId] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [expDate, setExpDate] = useState("");
@@ -30,11 +31,12 @@ function AddDiscount() {
     dispatch({
       type: "ADD_DISCOUNT",
       payload: {
+        vendorId: vendorId,
         description: description,
-        start_date: startDate,
-        expiration_date: expDate,
-        discount_code: discountCode,
-        category: category,
+        startDate: startDate,
+        expDate: expDate,
+        discountCode: discountCode,
+        categoryId: category,
       },
     });
   };
@@ -52,17 +54,17 @@ function AddDiscount() {
       <UpdatedNavBar />
       <div className="container text-center">
         <h2 className="text-primary"> Add Discount</h2>
+        <DropdownButton id="category-select-dropdown" title="Vendor">
+          <Dropdown.ItemText>Select</Dropdown.ItemText>
+          {allVendors.map((vendors) => {
+            return (
+              <Dropdown.Item as="button">
+                {vendors.name}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
         <form onSubmit={addDiscount}>
-          <DropdownButton id="category-select-dropdown" title="Vendor">
-            <Dropdown.ItemText>Select</Dropdown.ItemText>
-            {allVendors.map((vendors, index) => {
-              return (
-                <Dropdown.Item as="button" key={index}>
-                  {vendors.name}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
           <FloatingLabel
             className="mb-1 text-primary"
             controlId="floatingFirstName"
@@ -117,14 +119,18 @@ function AddDiscount() {
           </FloatingLabel>
           <DropdownButton id="category-select-dropdown" title="Category">
             <Dropdown.ItemText>Select</Dropdown.ItemText>
-            {allCategories.map((categories, index) => {
+            {allCategories.map((categories) => {
               return (
-                <Dropdown.Item as="button" key={index}>
+                <Dropdown.Item as="button">
                   {categories.name}
                 </Dropdown.Item>
               );
             })}
           </DropdownButton>
+          <br />
+          <button type="submit" className="btn btn-primary">
+            Add Discount
+          </button>
         </form>
       </div>
     </>

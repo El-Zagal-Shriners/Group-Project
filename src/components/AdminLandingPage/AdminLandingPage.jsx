@@ -94,7 +94,7 @@ function AdminLandingPage() {
           <h5 className="card-title text-primary">Discount Manager</h5> <br />
           <p className="card-text">
             Administrative access to discount portal information. Administrator
-            can update, edit, remove or delete company and discount information.
+            can update, edit, and delete discount.
           </p>
           <Button
             size="lg"

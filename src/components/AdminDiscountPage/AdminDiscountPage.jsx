@@ -12,7 +12,7 @@ import DiscountItem from "./DiscountItem";
 function AdminDiscountPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const vendors = useSelector((store) => store.vendors);
+  const allVendors = useSelector((store) => store.vendors);
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
@@ -27,11 +27,11 @@ function AdminDiscountPage() {
 
   function handleSelect(selectedValue) {
     setCurrentSelected(selectedValue);
-    console.log(selectedValue);
+    console.log("selected value", selectedValue);
   }
 
   console.log("discounts", discounts);
-  console.log("vendors", vendors);
+  console.log("vendors", allVendors);
 
   useEffect(() => {
     dispatch({ type: "GET_ADMIN_DISCOUNTS" });
@@ -58,10 +58,10 @@ function AdminDiscountPage() {
           >
             All
           </Dropdown.Item>
-          {vendors.map((vendor) => {
+          {allVendors.map((vendor) => {
             return (
               <Dropdown.Item
-                key={vendor.name}
+                key={vendor.id}
                 eventKey={vendor.id}
                 active={Number(currentSelected) === Number(vendor.id) && true}
               >
@@ -73,9 +73,9 @@ function AdminDiscountPage() {
         <section className="w-100 d-flex flex-wrap">
           {currentSelected !== "default"
             ? filteredDiscounts.map((discount) => {
-                return <DiscountItem key={discount.id} discount={discount} />;
+                return <DiscountItem key={discount.id} discount={discount}/>;
               })
-            : filteredDiscounts.map((discount) => {
+            : filteredDiscounts.map((discount, vendors) => {
                 return <DiscountItem key={discount.id} discount={discount} />;
               })}
         </section>
