@@ -130,15 +130,16 @@ function DiscountFilterOffCanvas({
     >
       <Container className="bg-light fill-container">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Refine Your Search</Offcanvas.Title>
+          <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
+          <h2 className="fw-bold">Refine Search</h2>
+          <hr />
           {/* Select a Discount Category  */}
           <div className="m-1 p-1">
             <div className="d-flex flex-row justify-content-center align-items-center">
               <label htmlFor="category-select-dropdown" className="mx-1">
-                I'm Looking For <br />
-                (Select Multiple)
+                Select categories:
               </label>
               <DropdownButton id="category-select-dropdown" title="Select">
                 <Dropdown.ItemText>Select</Dropdown.ItemText>
@@ -157,17 +158,54 @@ function DiscountFilterOffCanvas({
             </div>
           </div>
 
-          <div className="m-2 d-flex justify-content-center m-1">IN</div>
+          {/* <div className="m-2 d-flex justify-content-center m-1">IN</div> */}
+          <hr />
 
+          {/* Select Nearest Cities  */}
+          <div className="d-flex justify-content-between flex-column m-1 p-1">
+            <div>
+              <div className="text-center">Select from nearby cities:</div>
+              {/* <div className="text-center">(select multiple)</div> */}
+            </div>
+            <div className="d-flex justify-content-between flex-row p-1">
+              {closestThreeCities().map((thisCity, index) => {
+                return (
+                  <ToggleButton
+                    key={index}
+                    className="mb-2"
+                    type="checkbox"
+                    variant="outline-primary"
+                    checked={selectedCities.some(
+                      (selectedCity) => selectedCity.id === thisCity.id
+                    )}
+                    onClick={() => {
+                      handleCitySelection(
+                        thisCity,
+                        selectedCities.some(
+                          (selectedCity) => selectedCity.id === thisCity.id
+                        )
+                      );
+                    }}
+                  >
+                    {allCities.length > 0 && thisCity.city}
+                    <span> </span>
+                    {selectedCities.some(
+                      (selectedCity) => selectedCity.id === thisCity.id
+                    ) && allIconComponents.checkmark}
+                  </ToggleButton>
+                );
+              })}
+            </div>
+          </div>
           {/* Choose City From Dropdown  */}
-          <div className="m-3">
+          <div>
             <div className="m-3 d-flex flex-row justify-content-center align-items-center">
               <label htmlFor="city-select-dropdown" className="mx-1">
-                Select a city:
+                Or select any city:
               </label>
 
               <DropdownButton id="city-select-dropdown" title="Select">
-                <Dropdown.ItemText>Select A City</Dropdown.ItemText>
+                <Dropdown.ItemText>Select cities</Dropdown.ItemText>
                 {allCities.map((thisCity, index) => {
                   return (
                     <Dropdown.Item
@@ -181,55 +219,23 @@ function DiscountFilterOffCanvas({
                 })}
               </DropdownButton>
             </div>
-
-            {/* Select Nearest Cities  */}
-            <div className="d-flex justify-content-between flex-column m-1 p-1">
-              <div>
-                <div className="text-center">Or Select A City Nearby</div>
-                <div className="text-center">(select multiple)</div>
-              </div>
-              <div className="d-flex justify-content-between flex-row m-1 p-1">
-                {closestThreeCities().map((thisCity, index) => {
-                  return (
-                    <ToggleButton
-                      key={index}
-                      className="mb-2"
-                      type="checkbox"
-                      variant="outline-primary"
-                      checked={selectedCities.some(
-                        (selectedCity) => selectedCity.id === thisCity.id
-                      )}
-                      onClick={() => {
-                        handleCitySelection(
-                          thisCity,
-                          selectedCities.some(
-                            (selectedCity) => selectedCity.id === thisCity.id
-                          )
-                        );
-                      }}
-                    >
-                      {allCities.length > 0 && thisCity.city}
-                      {selectedCities.some(
-                        (selectedCity) => selectedCity.id === thisCity.id
-                      ) && allIconComponents.checkmark}
-                    </ToggleButton>
-                  );
-                })}
-              </div>
-            </div>
           </div>
-
+          <hr />
           {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
           <FilterFeedback />
 
-          <div className="m-4 d-flex flex-row justify-content-center align-items-center">
+          <div className="mb-3 d-flex flex-row justify-content-center align-items-center">
             <Button
               size="lg"
-              variant="outline-primary"
+              variant="primary"
               onClick={() => setShowFilterOffCanvas(false)}
             >
               View Results
             </Button>
+          </div>
+          <div className="text-center text-black fst-italic mx-3">
+            * If no categories or cities are selected, all discounts will be
+            displayed.
           </div>
         </Offcanvas.Body>
       </Container>

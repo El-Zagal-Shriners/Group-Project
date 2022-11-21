@@ -154,7 +154,7 @@ function DiscountsPage() {
           <div className="bg-light col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-around">
             <div className="d-flex justify-content-center align-items-center">
               <Button
-                variant="outline-primary"
+                variant="primary"
                 onClick={() => setShowFilterOffCanvas(true)}
                 className="me-2 d-flex justify-content-center"
               >
