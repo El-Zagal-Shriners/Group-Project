@@ -18,6 +18,10 @@ function RegisterForm() {
   const registerUser = (event) => {
     event.preventDefault();
 
+    //Temporary validation, need to decide on error alerts
+    if (Number(duesPaid.slice(0, 4)) < 2000)
+      return alert("Please check your due paid, and enter a recent year");
+
     dispatch({
       type: "REGISTER",
       payload: {
