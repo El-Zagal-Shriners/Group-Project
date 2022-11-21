@@ -15,14 +15,14 @@ function DiscountModal({ discount }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  // create edit discount object 
+  // create edit discount object
   const discountObj = {
     discountId: discount.id,
     description,
     startDate,
     expDate,
     discountCode,
-  }
+  };
   // edit discount
   const editDiscount = () => {
     dispatch({
@@ -49,39 +49,31 @@ function DiscountModal({ discount }) {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FloatingLabel
-            label='Description'
-          >
-          <Form.Control
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <FloatingLabel label="Description">
+            <Form.Control
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </FloatingLabel>
-          <FloatingLabel
-            label="Start Date"
-          >
-          <Form.Control
-            value={startDate}
-            type="date"
-            onChange={(e) => setStartDate(e.target.value)}
-          />
+          <FloatingLabel label="Start Date">
+            <Form.Control
+              value={startDate}
+              type="date"
+              onChange={(e) => setStartDate(e.target.value)}
+            />
           </FloatingLabel>
-          <FloatingLabel
-            label="Expiration Date"
-          >
-          <Form.Control
-            value={expDate}
-            type="date"
-            onChange={(e) => setExpDate(e.target.value)}
-          />
+          <FloatingLabel label="Expiration Date">
+            <Form.Control
+              value={expDate}
+              type="date"
+              onChange={(e) => setExpDate(e.target.value)}
+            />
           </FloatingLabel>
-          <FloatingLabel
-            label="Discount Code"
-          >
-          <Form.Control
-            value={discountCode}
-            onChange={(e) => setDiscountCode(e.target.value)}
-          />
+          <FloatingLabel label="Discount Code">
+            <Form.Control
+              value={discountCode}
+              onChange={(e) => setDiscountCode(e.target.value)}
+            />
           </FloatingLabel>
         </Modal.Body>
         <Modal.Footer>

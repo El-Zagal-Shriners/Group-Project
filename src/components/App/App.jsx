@@ -23,6 +23,8 @@ import AdminDiscountPage from "../AdminDiscountPage/AdminDiscountPage";
 import AdminTrackingPage from "../AdminTrackingPage/AdminTrackingPage";
 import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 import ProtectedAdminRoute from "../ProtectedAdminRoute/ProtectedAdminRoute";
+import AddVendor from "../AddVendor/AddVendor";
+import AddDiscount from "../AdminDiscountPage/AddDiscount";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +92,21 @@ function App() {
             path="/admintracking"
           >
             <AdminTrackingPage />
+          </ProtectedAdminRoute>
+
+          <ProtectedAdminRoute
+            // logged in brings users to Admin Tracker else shows LoginPage
+            exact
+            path="/adminaddvendor"
+          >
+            <AddVendor />
+          </ProtectedAdminRoute>
+          <ProtectedAdminRoute
+            // logged in brings users to Admin Tracker else shows LoginPage
+            exact
+            path="/adminadddiscount"
+          >
+            <AddDiscount />
           </ProtectedAdminRoute>
 
           <Route exact path="/dependents/:token">

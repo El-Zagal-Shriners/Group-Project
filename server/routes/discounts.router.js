@@ -65,6 +65,7 @@ router.get(
 
 // This POST will add a new discount to the discount table
 router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+  // console.log("Adding discount:" ,req.body);
   const vendorId = req.body.vendorId;
   const description = req.body.description;
   const startDate = req.body.startDate ? req.body.startDate : null;
@@ -114,13 +115,7 @@ router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
                  "discount_code"=$4
                  WHERE "id"=$5;`;
   pool
-    .query(query, [
-      description,
-      startDate,
-      expDate,
-      discountCode,
-      discountId,
-    ])
+    .query(query, [description, startDate, expDate, discountCode, discountId])
     .then((result) => {
       // Send success status
       res.sendStatus(200);
