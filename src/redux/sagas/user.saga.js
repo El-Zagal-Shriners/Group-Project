@@ -43,6 +43,7 @@ function* unsetAll(action) {
     yield put({ type: "UNSET_DISCOUNTS" });
     yield put({ type: "UNSET_CITIES" });
     yield put({ type: "UNSET_VENDORS" });
+    yield put({ type: "UNSET_TOKEN_CHECK"});
   } catch (err) {
     console.log("Error unsetting all", err);
   }
