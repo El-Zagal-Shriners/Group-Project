@@ -10,7 +10,6 @@ import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
 
-
 function AdminDiscountPage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -52,39 +51,24 @@ function AdminDiscountPage() {
   return (
     <>
       <UpdatedNavBar />
-      <div className="container d-flex flex-column justify-content-center align-items-center">
-      <div className="container text-center">
-        <div className="card-body">
-          <h5 className="card-title text-primary">Add Vendor</h5> <br />
-          <p className="card-text">
-            Administrative access to add vendor information.
-          </p>
-          <Button
-            size="lg"
-            variant="outline-primary"
-            onClick={addVendor}
-            className="me-2 d-flex justify-content-center container text-center"
-          >
-            Add Vendor
-          </Button>
-        </div>
-      </div>
-      <div className="container text-center">
-        <div className="card-body">
-          <h5 className="card-title text-primary">Add Discount</h5> <br />
-          <p className="card-text">
-            Administrative access to add discount information.
-          </p>
-          <Button
-            size="lg"
-            variant="outline-primary"
-            onClick={addDiscount}
-            className="me-2 d-flex justify-content-center container text-center"
-          >
-            Add Discount
-          </Button>
-        </div>
-      </div>
+            <Button
+              size="lg"
+              variant="primary"
+              onClick={addVendor}
+              className="me-2 d-flex justify-content-center container text-center"
+            >
+              Add Vendor
+            </Button>
+            <br/>
+            <Button
+              size="lg"
+              variant="primary"
+              onClick={addDiscount}
+              className="me-2 d-flex justify-content-center container text-center"
+            >
+              Add Discount
+            </Button>
+            <br/>
         <DropdownButton
           as={ButtonGroup}
           key="primary"
@@ -121,7 +105,6 @@ function AdminDiscountPage() {
                 return <DiscountItem key={discount.id} discount={discount} />;
               })}
         </section>
-      </div>
     </>
   );
 }

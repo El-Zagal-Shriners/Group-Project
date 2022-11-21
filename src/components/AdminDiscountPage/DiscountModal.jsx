@@ -35,6 +35,7 @@ function DiscountModal({ discount }) {
       type: "EDIT_DISCOUNT",
       payload: discountObj,
     });
+    setShow(false);
   };
   // remove discount
   const removeDiscount = () => {
@@ -92,7 +93,7 @@ function DiscountModal({ discount }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={editDiscount}>
+          <Button variant="primary" onClick={editDiscount} >
             Save Changes
           </Button>
           <Button variant="warning" onClick={removeDiscount}>
