@@ -46,7 +46,7 @@ function DiscountModal({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Container className="bg-muted-primary rounded">
+          <Container className="bg-primary text-light rounded">
             <div className="mb-3 text-center">
               <h1>{thisDiscount.vendor_name}</h1>
             </div>

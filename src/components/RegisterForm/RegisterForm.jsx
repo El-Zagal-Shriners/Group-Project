@@ -25,7 +25,7 @@ function RegisterForm() {
     dispatch({
       type: "REGISTER",
       payload: {
-        username: usernameIn,
+        username: usernameIn.toLowerCase(),
         password: passwordIn,
         first_name: firstNameIn,
         last_name: lastNameIn,
