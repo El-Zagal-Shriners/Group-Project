@@ -28,10 +28,11 @@ function AdminMembershipPage() {
   return (
     <div className="vw-100">
       <UpdatedNavBar />
+      <h3>Manage Members</h3>
       {/* Spot for new Members awaiting approval */}
-      <ApprovalTable approvals={approvals} />
+      {/* <ApprovalTable approvals={approvals} /> */}
       {/* spot for current members needing review */}
-      <ReviewTable reviews={reviews} />
+      {/* <ReviewTable reviews={reviews} /> */}
       {/* spot for filtering members */}
       {/* spot for all members
         drop down for dependents */}

@@ -34,7 +34,11 @@ function MemberTable({ members }) {
         </ListGroup.Item>
         <div
           className="member-table"
-          style={{ height: "23vh", overflowY: "scroll" }}
+          // height: "23vh"
+          style={{
+            overflowY: "scroll",
+            height: "23vh",
+          }}
         >
           {shriners
             .filter((member) => {

@@ -23,7 +23,10 @@ function ReviewTable({ reviews }) {
           </ListGroup.Item>
           <div
             className="member-table"
-            style={{ overflowY: "scroll", maxHeight: "15vh" }}
+            style={{
+              overflowY: "scroll",
+              maxHeight: "15vh",
+            }}
           >
             {reviews.map((review) => (
               <ReviewItem key={review.id} review={review} />
