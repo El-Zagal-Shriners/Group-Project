@@ -16,7 +16,7 @@ router.get(
   rejectUnauthorizedUser,
   (req, res) => {
     // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
-    const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "discount_description", "discount_summary", "discount_usage" "start_date", "expiration_date", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
+    const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "discount_description", "discount_summary", "start_date", "expiration_date", "discount_usage", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
   FROM "discounts"
   JOIN "vendors" ON "vendors"."id" = "vendor_id"
   JOIN "categories" ON "categories"."id" = "category_id"
@@ -47,7 +47,7 @@ router.get(
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '30 days') AND CURRENT_DATE) AS "thirty_day_count",
 	count(*) FILTER (WHERE "discounts_tracked"."date" BETWEEN (CURRENT_DATE - INTERVAL '1 year') AND CURRENT_DATE) AS "one_year_count"
 	FROM "discounts"
-	JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
+	LEFT JOIN "discounts_tracked" ON "discounts_tracked"."discount_id"="discounts"."id"
 	GROUP BY "discounts_tracked"."discount_id", "discounts"."id"
 	ORDER BY "discounts"."id";`;
     pool
@@ -67,24 +67,26 @@ router.get(
 router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   // console.log("Adding discount:" ,req.body);
   const vendorId = req.body.vendorId;
-  const description = req.body.description;
+  const discountDescription = req.body.discountDescription;
+  const discountSummary = req.body.discountSummary;
   const startDate = req.body.startDate ? req.body.startDate : null;
   const expDate = req.body.expDate ? req.body.expDate : null;
-  const discountCode = req.body.discountCode ? req.body.discountCode : null;
+  const discountUsage = req.body.discountUsage ? req.body.discountUsage : null;
   const categoryId = req.body.categoryId;
   const isShown = req.body.isShown;
   const isRegional = req.body.isRegional;
   // POST sql query
   const query = `INSERT INTO "discounts"
-                ("vendor_id", "description", "start_date", "expiration_date", discount_code, category_id, is_shown, is_regional)
-                 VALUES ($1, $2, $3, $4, $5, $6 ,$7, $8);`;
+                ("vendor_id", "discount_description", "discount_summary", "start_date", "expiration_date", "discount_usage", "category_id", "is_shown", "is_regional")
+                 VALUES ($1, $2, $3, $4, $5, $6 ,$7, $8, $9);`;
   pool
     .query(query, [
       vendorId,
-      description,
+      discountDescription,
+      discountSummary,
       startDate,
       expDate,
-      discountCode,
+      discountUsage,
       categoryId,
       isShown,
       isRegional,
@@ -104,18 +106,27 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
-  const description = req.body.description;
+  const discountDescription = req.body.discountDescription;
+  const discountSummary = req.body.discountSummary;
   const startDate = req.body.startDate;
   const expDate = req.body.expDate;
-  const discountCode = req.body.discountCode;
+  const discountUsage = req.body.discountUsage;
   const query = `UPDATE "discounts"
-                 SET "description"=$1,
-                 "start_date"=$2,
-                 "expiration_date"=$3,
-                 "discount_code"=$4
-                 WHERE "id"=$5;`;
+                 SET "discount_description"=$1,
+                 "discount_summary"=$2,
+                 "start_date"=$3,
+                 "expiration_date"=$4,
+                 "discount_usage"=$5
+                 WHERE "id"=$6;`;
   pool
-    .query(query, [description, startDate, expDate, discountCode, discountId])
+    .query(query, [
+      discountDescription,
+      discountSummary,
+      startDate,
+      expDate,
+      discountUsage,
+      discountId,
+    ])
     .then((result) => {
       // Send success status
       res.sendStatus(200);

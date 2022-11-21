@@ -17,10 +17,11 @@ function AddDiscount() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [vendorId, setVendorId] = useState(1);
-  const [description, setDescription] = useState("");
+  const [discountDescription, setDiscountDescription] = useState("");
+  const [discountSummary, setDiscountSummary] = useState("");
   const [startDate, setStartDate] = useState("");
   const [expDate, setExpDate] = useState("");
-  const [discountCode, setDiscountCode] = useState("N/A");
+  const [discountUsage, setDiscountUsage] = useState("N/A");
   const [categoryId, setCategoryId] = useState(1);
   const [isShown, setIsShown] = useState("True");
   const [isRegional, setIsRegional] = useState("False");
@@ -33,10 +34,11 @@ function AddDiscount() {
       type: "ADD_DISCOUNT",
       payload: {
         vendorId: vendorId,
-        description: description,
+        discountDescription: discountDescription,
+        discountSummary: discountSummary,
         startDate: startDate,
         expDate: expDate,
-        discountCode: discountCode,
+        discountUsage: discountUsage,
         categoryId: categoryId,
         isShown: isShown,
         isRegional: isRegional,
@@ -45,10 +47,11 @@ function AddDiscount() {
     // Reset the form values.
     setVendorId(1);
     setCategoryId(1);
-    setDescription("");
+    setDiscountDescription("");
+    setDiscountSummary("");
     setStartDate("");
     setExpDate("");
-    setDiscountCode("N/A");
+    setDiscountUsage("N/A");
   };
 
   useEffect(() => {
@@ -82,13 +85,26 @@ function AddDiscount() {
           <FloatingLabel
             className="mb-1 text-primary"
             controlId="floatingFirstName"
-            label="Description"
+            label="Discount Description"
           >
             <Form.Control
               type="text"
               placeholder="name@example.com"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
+              value={discountDescription}
+              onChange={(event) => setDiscountDescription(event.target.value)}
+              autoFocus
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            className="mb-1 text-primary"
+            controlId="floatingFirstName"
+            label="Discount Type"
+          >
+            <Form.Control
+              type="text"
+              placeholder="name@example.com"
+              value={discountSummary}
+              onChange={(event) => setDiscountSummary(event.target.value)}
               autoFocus
             />
           </FloatingLabel>
@@ -121,13 +137,13 @@ function AddDiscount() {
           <FloatingLabel
             className="mb-1 text-primary"
             controlId="floatingFirstName"
-            label="Discount Code (If Applicable)"
+            label="Discount Usage (If Applicable)"
           >
             <Form.Control
               type="text"
               placeholder="name@example.com"
-              value={discountCode}
-              onChange={(event) => setDiscountCode(event.target.value)}
+              value={discountUsage}
+              onChange={(event) => setDiscountUsage(event.target.value)}
               autoFocus
             />
           </FloatingLabel>
