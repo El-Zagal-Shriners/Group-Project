@@ -1,13 +1,11 @@
 import { CgPill } from "react-icons/cg";
 import {
   MdFastfood,
-  MdCarRental,
   MdSportsBaseball,
   MdHotel,
 } from "react-icons/md";
-import { BiBeer } from "react-icons/bi";
-import { FaTicketAlt, FaShoppingCart } from "react-icons/fa";
-import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+import { GiPlainCircle } from "react-icons/gi";
+import { FaTicketAlt, FaShoppingCart, FaBeer, FaCar, FaWrench, FaHome } from "react-icons/fa";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FaUserEdit } from "react-icons/fa";
@@ -20,13 +18,15 @@ export const allIconComponents = {
   // category icons
   health: <CgPill />,
   food: <MdFastfood />,
-  drinks: <BiBeer />,
+  drinks: <FaBeer />,
   sports: <MdSportsBaseball />,
   entertainment: <FaTicketAlt />,
   lodging: <MdHotel />,
   shopping: <FaShoppingCart />,
-  rental: <MdCarRental />,
-  misc: <RiCheckboxBlankCircleLine />,
+  rentals: <FaCar />,
+  home: <FaHome/>,
+  services: <FaWrench/>,
+  other: <GiPlainCircle />,
 
   // other
   checkmark: <BsFillCheckCircleFill />,
