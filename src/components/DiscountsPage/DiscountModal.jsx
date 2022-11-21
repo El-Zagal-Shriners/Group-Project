@@ -20,7 +20,6 @@ function DiscountModal({
   function handleShowCode() {
     if (alreadyTracked === false) {
       const discountDate = new Date().toUTCString();
-      console.log("in handleShowCode", discountDate);
 
       axios({
           method: "POST",
