@@ -1,9 +1,11 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import ApprovalItem from "./ApprovalItem";
+import "../AccountTables.css";
 
 function ApprovalTable({ approvals }) {
   return (
     <div className="w-100">
+      <p>New Members</p>
       <ListGroup>
         <ListGroup.Item className="p-1">
           <ListGroup horizontal>
@@ -18,9 +20,14 @@ function ApprovalTable({ approvals }) {
             </ListGroup.Item>
           </ListGroup>
         </ListGroup.Item>
-        {approvals.map((approval) => (
-          <ApprovalItem key={approval.id} approval={approval} />
-        ))}
+        <div
+          className="member-table"
+          style={{ overflowY: "scroll", height: "15vh" }}
+        >
+          {approvals.map((approval) => (
+            <ApprovalItem key={approval.id} approval={approval} />
+          ))}
+        </div>
       </ListGroup>
     </div>
   );
