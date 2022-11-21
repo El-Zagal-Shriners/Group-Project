@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
-import UpdatedNavBar from "../Nav/Nav";
 
 
 function AddVendorModal() {
@@ -41,7 +40,6 @@ function AddVendorModal() {
   };
   return (
     <>
-    <UpdatedNavBar />
     <Button variant="primary" onClick={handleShow}>
         Add Vendor
       </Button>
