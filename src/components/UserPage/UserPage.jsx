@@ -16,7 +16,7 @@ function UserPage() {
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(false);
   const [showAddDependent, setShowAddDependent] = useState(false);
-  const [deleteDependent, setDeleteDependent] =useState('');
+  const [deleteDependent, setDeleteDependent] = useState("");
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -26,10 +26,10 @@ function UserPage() {
   }, []);
   // Toggle local 'show' state
   const handleShow = (id) => {
-    console.log('This is id in handleShow: ', id);
+    console.log("This is id in handleShow: ", id);
     setDeleteDependent(id);
     setShow(true);
-  }
+  };
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
   // Toggle local 'show' state
@@ -45,10 +45,10 @@ function UserPage() {
   const removeDependent = (id) => {
     dispatch({
       type: "REMOVE_DEPENDENT",
-      payload: id
+      payload: id,
     });
     handleClose();
-  }
+  };
 
   return (
     <>
@@ -131,7 +131,9 @@ function UserPage() {
           <p>No dependent accounts</p>
         )}
         {/* Render logout button */}
-        <LogOutButton className="btn btn-outline-warning" />
+        <div className="w-100 d-flex justify-content-center">
+          <LogOutButton className="btn btn-primary col col-lg-6" />
+        </div>
       </div>
     </>
   );

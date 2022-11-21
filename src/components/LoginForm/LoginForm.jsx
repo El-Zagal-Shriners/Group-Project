@@ -15,7 +15,7 @@ function LoginForm() {
       dispatch({
         type: "LOGIN",
         payload: {
-          username: username,
+          username: username.toLowerCase(),
           password: password,
         },
       });

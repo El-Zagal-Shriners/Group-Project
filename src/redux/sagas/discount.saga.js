@@ -38,7 +38,7 @@ function* getAdminDiscounts() {
 // POST a new discount to the discount table in database
 function* addDiscount(action) {
   try {
-    console.log("In add discount");
+    console.log("In add discount", action.payload);
     yield axios.post(`api/discounts/`, action.payload);
     yield put({ type: "GET_DISCOUNTS" });
   } catch (err) {
