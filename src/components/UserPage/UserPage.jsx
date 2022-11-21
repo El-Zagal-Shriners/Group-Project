@@ -24,8 +24,8 @@ function UserPage() {
     });
   }, []);
   // Toggle local 'show' state
+  // and store dependent id of account to delete
   const handleShow = (id) => {
-    console.log("This is id in handleShow: ", id);
     setDeleteDependent(id);
     setShow(true);
   };
@@ -71,6 +71,7 @@ function UserPage() {
             <br />
             {user.membership_number && <span><strong>Member Number:</strong> {user.membership_number}</span>}
           </p>
+          {/* Button to show edit modal */}
           <button className="btn btn-primary mb-2" onClick={handleShowEdit}>
             {allIconComponents.editUser} Edit Info
           </button>
@@ -78,6 +79,7 @@ function UserPage() {
           <LogOutButton className="btn btn-primary mt-2 col col-lg-6" />
         </div>
           <hr />
+          {/* Edit user information modal */}
           <EditUserForm
             user={user}
             showEdit={showEdit}
@@ -87,8 +89,7 @@ function UserPage() {
         </div>
         {/* Render list of dependents if any */}
         <div className="d-flex align-items-center justify-content-center">
-          {/* Button to add a dependent */}
-          {/* Hide add button for dependent accounts */}
+          {/* Hide dependent accounts list if dependent account */}
           {user.membership_number &&
           <>
           <h5 className=" p-0 text-primary text-center mb-0 mt-2 text-decoration-underline fw-bold d-flex justify-content-between align-items-center">
@@ -108,11 +109,13 @@ function UserPage() {
                 key={dependent.id}
                 className="d-flex justify-content-between align-items-center border border-2 border-secondary p-3 m-1 rounded-3"
               >
+                {/* List of dependents and their info */}
                 <p className="mb-1">
                   <strong>Name:</strong> {dependent.first_name} {dependent.last_name} <br />
                   <strong>Username:</strong> {dependent.username}
                   <br /> <strong>Email:</strong> {dependent.email}
                 </p>
+                {/* Delete a dependent button */}
                 <button
                   onClick={() => handleShow(dependent.id)}
                   className="text-danger border-0 bg-white fs-2"
@@ -130,10 +133,6 @@ function UserPage() {
             ))}
           </>
         }
-        {/* Render logout button */}
-        {/* <div className="w-100 d-flex justify-content-center">
-          <LogOutButton className="btn btn-primary mt-2 col col-lg-6" />
-        </div> */}
       </div>
     </>
   );
