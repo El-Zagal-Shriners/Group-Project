@@ -6,6 +6,7 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditUserForm from "../EditUserForm/EditUserForm";
 import UserDependentConfirmation from "./UserDependentConfirmation";
 import AddDependentForm from "../AddDependentForm/AddDependentForm";
+import './UserPage.css';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -89,8 +90,8 @@ function UserPage() {
           {/* Button to add a dependent */}
           {/* Hide add button for dependent accounts */}
           {user.membership_number &&
-          <button className="btn btn-primary mb-0 fw-bold d-flex justify-content-between align-items-center" onClick={handleShowDependent}>
-           Dependent Accounts&nbsp;{allIconComponents.plusSign}
+          <button className="btn btn-primary mb-0 fw-bold text-secondary d-flex justify-content-between align-items-center" onClick={handleShowDependent}>
+           Dependent Accounts&nbsp;&nbsp;{allIconComponents.plusSign}
           </button>}
           <AddDependentForm
             showAddDependent={showAddDependent}
