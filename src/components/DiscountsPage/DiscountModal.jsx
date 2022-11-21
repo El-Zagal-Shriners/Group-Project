@@ -74,7 +74,7 @@ function DiscountModal({
 
             <hr />
             <div className="m-3 text-center">
-              <h3>{thisDiscount.description}</h3>
+              <h3>{thisDiscount.discount_description}</h3>
             </div>
 
             <Accordion>
@@ -84,7 +84,7 @@ function DiscountModal({
                     Click To Show Discount Code
                   </span>
                 </Accordion.Header>
-                <Accordion.Body>{thisDiscount.discount_code}</Accordion.Body>
+                <Accordion.Body>{thisDiscount.discount_usage}</Accordion.Body>
               </Accordion.Item>
             </Accordion>
           </Container>
