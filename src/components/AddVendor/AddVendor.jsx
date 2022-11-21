@@ -8,9 +8,10 @@ import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
-function AddVendor() {
+function AddVendorModal() {
   const dispatch = useDispatch();
   const history = useHistory();
+  
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -127,4 +128,4 @@ function AddVendor() {
   );
 }
 
-export default AddVendor;
+export default AddVendorModal;
