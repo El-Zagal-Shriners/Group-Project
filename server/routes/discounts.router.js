@@ -159,7 +159,7 @@ router.post(
     const discountId = req.params.discountId;
     const userId = req.user.id;
     const discountDate = req.body.discountDate;
-    console.log(discountId, userId, discountDate);
+    // console.log(discountId, userId, discountDate);
 
     const query = `INSERT INTO "discounts_tracked" ("discount_id", "user_id", "date")
     VALUES ($1, $2, $3);`
