@@ -65,7 +65,7 @@ router.get(
 
 // This POST will add a new discount to the discount table
 router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
-  console.log("Adding discount:" ,req.body);
+  // console.log("Adding discount:" ,req.body);
   const vendorId = req.body.vendorId;
   const description = req.body.description;
   const startDate = req.body.startDate ? req.body.startDate : null;

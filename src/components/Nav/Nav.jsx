@@ -9,7 +9,7 @@ function UpdatedNavBar() {
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
-      <Container>
+      <Container className="pb-0">
         <Navbar.Brand className="w-75" href="#home">
           <img
             className="shriner_logo"

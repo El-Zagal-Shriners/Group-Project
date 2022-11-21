@@ -34,7 +34,7 @@ function DependentRegistrationPage() {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        username: username,
+        username: username.toLowerCase(),
         password: password,
         token: token,
       },

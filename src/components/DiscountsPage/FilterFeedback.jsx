@@ -37,6 +37,7 @@ function FilterFeedback() {
             return (
               <Button
                 size="sm"
+                variant="outline-primary"
                 key={index}
                 className="d-flex justify-content-center align-items-center m-1"
                 onClick={() =>
@@ -61,6 +62,7 @@ function FilterFeedback() {
               <Button
                 key={index}
                 size="sm"
+                variant="outline-primary"
                 className="d-flex justify-content-between align-items-center m-1"
                 onClick={() =>
                   dispatch({
