@@ -151,7 +151,5 @@ router.delete(
   }
 ); // End delete a discount
 
-
-
 // export the router
 module.exports = router;

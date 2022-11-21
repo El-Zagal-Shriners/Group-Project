@@ -21,9 +21,12 @@ function DiscountModal({
 
   function handleShowCode() {
     if (alreadyTracked === false) {
-      console.log('inHandleShowCode', thisDiscount);
+      console.log("inHandleShowCode", thisDiscount);
       const discountDate = new Date().toUTCString();
-      dispatch({ type: "ADD_TO_DISCOUNT_TRACKER", payload: {discountDate, discountId: thisDiscount.discount_id }});
+      dispatch({
+        type: "ADD_TO_DISCOUNT_TRACKER",
+        payload: { discountDate, discountId: thisDiscount.discount_id },
+      });
       setAlreadyTracked(true);
     }
   }

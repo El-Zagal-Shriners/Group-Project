@@ -102,6 +102,7 @@ router.delete(
   }
 );
 
+// route will add a new row to discounts_tracked
 router.post(
   "/tracker/:discountId",
   rejectUnauthenticated,
@@ -113,7 +114,7 @@ router.post(
     console.log(discountId, userId, discountDate);
 
     const query = `INSERT INTO "discounts_tracked" ("discount_id", "user_id", "date")
-    VALUES ($1, $2, $3);`
+    VALUES ($1, $2, $3);`;
 
     pool
       .query(query, [discountId, userId, discountDate])

@@ -62,14 +62,14 @@ function* deleteMember(action) {
   }
 }
 
-function* addToDiscountTracker(action){
+function* addToDiscountTracker(action) {
   console.log("in add to tracker", action);
   try {
     yield axios({
       method: "POST",
       url: `api/admin/tracker/${action.payload.discountId}`,
-      data: {discountDate: action.payload.discountDate}
-    })
+      data: { discountDate: action.payload.discountDate },
+    });
   } catch (err) {
     console.log("Error deleting member account", err);
   }
