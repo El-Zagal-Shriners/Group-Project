@@ -27,6 +27,18 @@ function MemberItem({ member, members }) {
   // assume member is authorized.
   const [authorized, setAuthorized] = useState(true);
 
+  // used to set the approval status of a member.
+  const approveMember = () => {
+    dispatch({
+      type: "APPROVE_MEMBER",
+      payload: {
+        memberId: member.id,
+        verification: true,
+      },
+    });
+    setShow(false);
+  };
+
   // changes member's authorization status
   const activate = () => {
     dispatch({
@@ -62,7 +74,7 @@ function MemberItem({ member, members }) {
 
   // deletes member
   const removeMember = () => {
-    console.log(member.id);
+    // console.log(member.id);
     dispatch({
       type: "ADMIN_DELETE_MEMBER",
       payload: {
@@ -82,174 +94,231 @@ function MemberItem({ member, members }) {
   // access members to get the dependents.
   const dependents = [...members].filter(
     (acc) =>
-      acc.membership_number === null &&
-      Number(acc.primary_member_id) === member.id
+      acc.membership_number === null 
+      // this OR exists due to test data having all the same member numbers.
+      || acc.membership_number === member.membership_number && acc.id !== member.id
+      && Number(acc.primary_member_id) === member.id 
   );
 
   return (
     <>
-      <ListGroup.Item onClick={() => setShow(true)} className="p-1">
+      <ListGroup.Item onClick={() => setShow(true)} className="p-0">
         <ListGroup horizontal>
-          <ListGroup.Item className="col-4 text-center">
+          <ListGroup.Item className="col-4 text-center m-0">
             {member.first_name}
           </ListGroup.Item>
-          <ListGroup.Item className="col-4 text-center">
+          <ListGroup.Item className="col-4 text-center m-0">
             {member.last_name}
           </ListGroup.Item>
-          <ListGroup.Item className="col text-center">
+          <ListGroup.Item className="col text-center m-0">
             {member.membership_number}
           </ListGroup.Item>
         </ListGroup>
       </ListGroup.Item>
-      {/* info modal */}
-      <Modal
-        show={show}
-        onHide={() => {
-          setShow(false);
-          closeModal();
-          toggleList(false);
-        }}
-        animation={false}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Member Info</Modal.Title>
-        </Modal.Header>
+      {member.is_verified ? (
+        <>
+          <Modal
+            // info modal
+            show={show}
+            onHide={() => {
+              setShow(false);
+              closeModal();
+              toggleList(false);
+            }}
+            animation={false}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Member Info</Modal.Title>
+            </Modal.Header>
 
-        <Modal.Body>
-          <Container>
-            <Row>
-              <Col xs={6}>
-                <p>First Name</p>
-                <p>{member.first_name}</p>
-              </Col>
-              <Col>
-                <p>Last Name</p>
-                <p>{member.last_name}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <p>Member #</p>
-                <p>{member.membership_number}</p>
-              </Col>
-              <Col>
-                <p>Dues Paid</p>
-                <p>{dues}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <p>Dependents: {dependents.length}</p>
-              </Col>
-              <Col>
-                {dependents.length > 0 && (
-                  <Button onClick={() => toggleList(!listDependents)}>
-                    List
+            <Modal.Body>
+              <Container>
+                <Row>
+                  <Col xs={6}>
+                    <p>First Name</p>
+                    <p>{member.first_name}</p>
+                  </Col>
+                  <Col>
+                    <p>Last Name</p>
+                    <p>{member.last_name}</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={6}>
+                    <p>Member #</p>
+                    <p>{member.membership_number}</p>
+                  </Col>
+                  <Col>
+                    <p>Dues Paid</p>
+                    <p>{dues}</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <p>Dependents: {dependents.length}</p>
+                  </Col>
+                  <Col>
+                    {dependents.length > 0 && (
+                      <Button onClick={() => toggleList(!listDependents)}>
+                        List
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              </Container>
+              <ListGroup>
+                {listDependents &&
+                  dependents.map((dependent) => (
+                    <DependentItem key={dependent.id} dependent={dependent} />
+                  ))}
+              </ListGroup>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  setEdit(true);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  closeModal();
+                  toggleList(false);
+                }}
+              >
+                Close
+              </Button>
+              <Button>Save</Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal
+            // edit modal
+            show={edit}
+            onHide={() => {
+              setEdit(false);
+              closeModal();
+            }}
+            animation={false}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Member</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <Form>
+                <FloatingLabel label={member.membership_number}>
+                  <Form.Control
+                    type="number"
+                    onChange={(evt) => setMemberNumber(evt.target.value)}
+                  ></Form.Control>
+                </FloatingLabel>
+                <FloatingLabel
+                  label={dueDate} // maybe format this to mm/dd/yyyy
+                >
+                  <Form.Control
+                    type="date"
+                    onChange={(evt) => setDuesPaid(evt.target.value)}
+                  ></Form.Control>
+                </FloatingLabel>
+              </Form>
+              <Row>
+                <Col></Col>
+                <Col>
+                  <Button onClick={() => setAuthorized(true)}>Activate</Button>
+                </Col>
+                <Col>
+                  <Button onClick={() => setAuthorized(false)}>
+                    Deactivate
                   </Button>
-                )}
-              </Col>
-            </Row>
-          </Container>
-          <ListGroup horizontal>
-            {listDependents &&
-              dependents.map((dependent) => (
-                <DependentItem key={dependent.id} dependent={dependent} />
-              ))}
-          </ListGroup>
-        </Modal.Body>
+                </Col>
+                <Col>
+                  {/* add delete function */}
+                  <Button onClick={() => removeMember()}>Remove</Button>
+                </Col>
+                <Col></Col>
+              </Row>
+            </Modal.Body>
 
-        <Modal.Footer>
-          <Button
-            onClick={() => {
-              setShow(false);
-              setEdit(true);
-            }}
-          >
-            Edit
-          </Button>
-          <Button
-            onClick={() => {
-              setShow(false);
-              closeModal();
-              toggleList(false);
-            }}
-          >
-            Close
-          </Button>
-          <Button>Save</Button>
-        </Modal.Footer>
-      </Modal>
-      {/* edit modal */}
-      <Modal
-        show={edit}
-        onHide={() => {
-          setEdit(false);
-          closeModal();
-        }}
-        animation={false}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Member</Modal.Title>
-        </Modal.Header>
+            <Modal.Footer>
+              <Button
+                onClick={() => {
+                  setEdit(false);
+                  setShow(true);
+                }}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={() => {
+                  setEdit(false);
+                  closeModal();
+                  toggleList(false);
+                }}
+              >
+                Close
+              </Button>
+              <Button onClick={() => updateMember()}>Save</Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      ) : (
+        <Modal
+          // verify modal
+          show={show}
+          onHide={() => setShow(false)}
+          animation={false}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>New Member Info</Modal.Title>
+          </Modal.Header>
 
-        <Modal.Body>
-          <Form>
-            <FloatingLabel label={member.membership_number}>
-              <Form.Control
-                type="number"
-                onChange={(evt) => setMemberNumber(evt.target.value)}
-              ></Form.Control>
-            </FloatingLabel>
-            <FloatingLabel
-              label={dueDate} // maybe format this to mm/dd/yyyy
-            >
-              <Form.Control
-                type="date"
-                onChange={(evt) => setDuesPaid(evt.target.value)}
-              ></Form.Control>
-            </FloatingLabel>
-          </Form>
-          <Row>
-            <Col></Col>
-            <Col>
-              <Button onClick={() => setAuthorized(true)}>Activate</Button>
-            </Col>
-            <Col>
-              <Button onClick={() => setAuthorized(false)}>Deactivate</Button>
-            </Col>
-            <Col>
-              {/* add delete function */}
-              <Button onClick={() => removeMember()}>Remove</Button>
-            </Col>
-            <Col></Col>
-          </Row>
-        </Modal.Body>
+          <Modal.Body className="show-grid">
+            <Container>
+              <Row>
+                <Col xs={6}>
+                  <p>First Name</p>
+                  <p>{member.first_name}</p>
+                </Col>
+                <Col>
+                  <p>Last Name</p>
+                  <p>{member.last_name}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <p>Member #</p>
+                  <p>{member.membership_number}</p>
+                </Col>
+                <Col>
+                  <p>Dues Paid</p>
+                  <p>{dues}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Button onClick={() => removeMember()}>Remove</Button>
+                </Col>
+              </Row>
+            </Container>
+          </Modal.Body>
 
-        <Modal.Footer>
-          <Button
-            onClick={() => {
-              setEdit(false);
-              setShow(true);
-            }}
-          >
-            Back
-          </Button>
-          <Button
-            onClick={() => {
-              setEdit(false);
-              closeModal();
-              toggleList(false);
-            }}
-          >
-            Close
-          </Button>
-          <Button onClick={() => updateMember()}>Save</Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Footer>
+            <Button onClick={() => approveMember()}>Approve</Button>
+            <Button onClick={() => setShow(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </>
   );
 }

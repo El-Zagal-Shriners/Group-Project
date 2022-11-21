@@ -2,22 +2,16 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
-import ApprovalTable from "./AccountTables/ApprovalTable/ApprovalTable";
 import MemberTable from "./AccountTables/MemberTable/MemberTable";
-import ReviewTable from "./AccountTables/ReviewTable/ReviewTable";
 
 function AdminMembershipPage() {
   // access the list of current accounts from the redux store.
   const accounts = useSelector((store) => store.accounts.accountsReducer);
 
-  // member accounts have member numbers and are verified.
-  // const members = [...accounts].filter((acc) => acc.is_verified == true);
-  const members = [...accounts];
-  // reviews are accounts with review pending.
-  const reviews = [...accounts].filter((acc) => acc.review_pending === true);
-  // approvals are accounts waiting to be authorized.
-  const approvals = [...accounts].filter((acc) => acc.is_verified === false);
-
+  const primaries = [...accounts].filter(
+    (acc) => acc.membership_number !== null
+  );
+  
   // access to useDispatch
   const dispatch = useDispatch();
 
@@ -30,14 +24,9 @@ function AdminMembershipPage() {
     <div className="vw-100">
       <UpdatedNavBar />
       <h5 className="text-primary fw-bold text-center">Manage Members</h5>
-      {/* Spot for new Members awaiting approval */}
-      {/* <ApprovalTable approvals={approvals} /> */}
-      {/* spot for current members needing review */}
-      {/* <ReviewTable reviews={reviews} /> */}
-      {/* spot for filtering members */}
       {/* spot for all members
         drop down for dependents */}
-      <MemberTable members={members} />
+      <MemberTable members={primaries} />
     </div>
   );
 }

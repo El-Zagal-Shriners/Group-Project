@@ -2,39 +2,88 @@ import MemberItem from "./MemberItem";
 import { Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
 import "../AccountTables.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function MemberTable({ members }) {
+  const accounts = useSelector((store) => store.accounts.accountsReducer);
+
   // seperate the members that have membership numbers from the members array.
-  const primaries = [...members].filter((acc) => acc.membership_number !== null);
-  const newMembers = [...members].filter(acc => acc.is_verified === false);
-  const reviewPending = [...members].filter(acc => acc.review_pending === true);
-  // let currentMembers = primaries;
-  const [currentMembers, setCurrentMembers] = useState(primaries);
-  // const [filterShriners, setFilterShriners] = useState([...primaries]);
+  const primaries = [...accounts].filter(
+    (acc) => acc.membership_number !== null
+  );
+  const newMembers = [...accounts].filter((acc) => acc.is_verified === false);
+  const reviewPending = [...accounts].filter(
+    (acc) => acc.review_pending === true
+  );
+
+  const [filterType, setFilterType] = useState(0);
   const [search, setSearch] = useState("");
 
-
+  // stops the filter race 🏎️
+  const filterArrays = (current, search) => {
+    // make copy of the current array.
+    let arrCopy = [...current];
+    // if filter type is a specific number, filter it accordingly
+    switch (filterType) {
+      case 0:
+        break;
+      case 1:
+        arrCopy = arrCopy.filter((acc) => acc.review_pending === true);
+        break;
+      case 2:
+        arrCopy = arrCopy.filter((acc) => acc.is_verified === false);
+        break;
+      default:
+        console.log("Error filtering array");
+        return;
+    }
+    // after filtering the array and making a new arrCopy we use this 
+    // if statement to filter arrCopy another time base on search.
+    if (search === "") {
+      return arrCopy;
+    } else {
+      return arrCopy.filter((member) => {
+        if (
+          member.last_name.toLowerCase().includes(search.toLowerCase()) ||
+          member.first_name
+            .toLowerCase()
+            .includes(search.toLocaleLowerCase()) ||
+          member.membership_number.toString().includes(search)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+  };
 
   return (
     <div className="vw-100">
-      <div 
+      <div
         style={{
           display: "flex",
           flexFlow: "row",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Form.Control
           className="text-center"
-          style={{width: "36%"}}
+          style={{ width: "36%" }}
           placeholder="Search Member"
           onChange={(e) => setSearch(e.target.value)}
         />
         <ButtonGroup>
-          <Button size="sm" onClick={() => setCurrentMembers(primaries)}>All ({primaries.length})</Button>
-          <Button size="sm" onClick={() => setCurrentMembers(reviewPending)}>Review ({reviewPending.length})</Button>
-          <Button size="sm" onClick={() => setCurrentMembers(newMembers)}>New ({newMembers.length})</Button>
+          <Button size="sm" onClick={() => setFilterType(0)}>
+            All ({primaries.length})
+          </Button>
+          <Button size="sm" onClick={() => setFilterType(1)}>
+            Review ({reviewPending.length})
+          </Button>
+          <Button size="sm" onClick={() => setFilterType(2)}>
+            New ({newMembers.length})
+          </Button>
         </ButtonGroup>
       </div>
       <ListGroup>
@@ -53,29 +102,14 @@ function MemberTable({ members }) {
         </ListGroup.Item>
         <div
           className="member-table"
-          // height: "23vh"
           style={{
             overflowY: "scroll",
             height: "72vh",
           }}
         >
-          {currentMembers
-            .filter((member) => {
-              if (search === "") {
-                return member;
-              } else if (
-                member.last_name.toLowerCase().includes(search.toLowerCase()) ||
-                member.first_name
-                  .toLowerCase()
-                  .includes(search.toLocaleLowerCase()) ||
-                member.membership_number.toString().includes(search)
-              ) {
-                return member;
-              }
-            })
-            .map((member) => (
-              <MemberItem key={member.id} member={member} members={members} />
-            ))}
+          {filterArrays(members, search).map((member) => (
+            <MemberItem key={member.id} member={member} members={accounts} />
+          ))}
         </div>
       </ListGroup>
     </div>
