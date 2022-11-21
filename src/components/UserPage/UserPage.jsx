@@ -105,7 +105,6 @@ function UserPage() {
         {accounts.accountDependents.length > 0 && user.membership_number &&
           <>
             {accounts.accountDependents.map((dependent) => (
-              <>
               <div
                 key={dependent.id}
                 className="d-flex justify-content-between align-items-center border border-2 border-secondary p-3 m-1 rounded-3"
@@ -129,7 +128,6 @@ function UserPage() {
                   handleClose={handleClose}
                 />
               </div>
-              </>
             ))}
           </>
         }
