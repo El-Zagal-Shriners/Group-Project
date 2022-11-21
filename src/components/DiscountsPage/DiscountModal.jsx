@@ -5,13 +5,13 @@ import Accordion from "react-bootstrap/Accordion";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import { IconContext } from "react-icons";
 import Container from "react-bootstrap/Container";
+import axios from "axios";
 
 function DiscountModal({
   thisDiscount,
   showDiscountModal,
   setShowDiscountModal,
 }) {
-
   // if the user has already clicked on "show discount code" button while
   // in the discount page => set to true,
   // this prevents a second click from being sent to the discount tracker
@@ -20,12 +20,17 @@ function DiscountModal({
   function handleShowCode() {
     if (alreadyTracked === false) {
       const discountDate = new Date().toUTCString();
-      console.log('in handleShowCode', discountDate);
+      console.log("in handleShowCode", discountDate);
 
-      // axios.post({
-      //   method: "POST",
-      //   url: `api/discounts/tracker/${thisDiscount.discount_id}`
-      // }).then()
+      axios({
+          method: "POST",
+          url: `api/discounts/tracker/${thisDiscount.discount_id}`,
+          data: {discountDate}
+        })
+        .then(() => {
+          console.log("POST to tracker successful");
+        })
+        .catch((err) => console.log("Error with posting to tracker", err));
     }
     setAlreadyTracked(true);
   }
