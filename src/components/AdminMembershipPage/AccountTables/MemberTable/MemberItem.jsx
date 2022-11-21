@@ -97,8 +97,6 @@ function MemberItem({ member, members }) {
       acc.membership_number === null && Number(acc.primary_member_id) === member.id
   );
 
-  console.log(dependents);
-
   return (
     <>
       <ListGroup.Item onClick={() => setShow(true)} className="px-1 mb-1 d-flex">
