@@ -5,14 +5,12 @@ import Accordion from "react-bootstrap/Accordion";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import { IconContext } from "react-icons";
 import Container from "react-bootstrap/Container";
-import { useDispatch } from "react-redux";
 
 function DiscountModal({
   thisDiscount,
   showDiscountModal,
   setShowDiscountModal,
 }) {
-  const dispatch = useDispatch();
 
   // if the user has already clicked on "show discount code" button while
   // in the discount page => set to true,
@@ -21,6 +19,13 @@ function DiscountModal({
 
   function handleShowCode() {
     if (alreadyTracked === false) {
+      const discountDate = new Date().toUTCString();
+      console.log('in handleShowCode', discountDate);
+
+      // axios.post({
+      //   method: "POST",
+      //   url: `api/discounts/tracker/${thisDiscount.discount_id}`
+      // }).then()
     }
     setAlreadyTracked(true);
   }
