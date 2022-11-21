@@ -1,5 +1,12 @@
 import MemberItem from "./MemberItem";
-import { Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Form,
+  ListGroup,
+  Row,
+} from "react-bootstrap";
 import "../AccountTables.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -37,7 +44,7 @@ function MemberTable({ members }) {
         console.log("Error filtering array");
         return;
     }
-    // after filtering the array and making a new arrCopy we use this 
+    // after filtering the array and making a new arrCopy we use this
     // if statement to filter arrCopy another time base on search.
     if (search === "") {
       return arrCopy;
@@ -59,59 +66,54 @@ function MemberTable({ members }) {
   };
 
   return (
-    <div className="vw-100">
-      <div
-        style={{
-          display: "flex",
-          flexFlow: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Form.Control
-          className="text-center"
-          style={{ width: "36%" }}
-          placeholder="Search Member"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <ButtonGroup>
-          <Button size="sm" onClick={() => setFilterType(0)}>
-            All ({primaries.length})
-          </Button>
-          <Button size="sm" onClick={() => setFilterType(1)}>
-            Review ({reviewPending.length})
-          </Button>
-          <Button size="sm" onClick={() => setFilterType(2)}>
-            New ({newMembers.length})
-          </Button>
-        </ButtonGroup>
-      </div>
-      <ListGroup>
-        <ListGroup.Item className="p-1">
-          <ListGroup horizontal>
-            <ListGroup.Item className="col-4 p-0 text-center">
-              First Name
-            </ListGroup.Item>
-            <ListGroup.Item className="col-4 p-0 text-center">
-              Last Name
-            </ListGroup.Item>
-            <ListGroup.Item className="col p-0 text-center">
-              Member Number
-            </ListGroup.Item>
-          </ListGroup>
-        </ListGroup.Item>
-        <div
-          className="member-table"
-          style={{
-            overflowY: "scroll",
-            height: "72vh",
-          }}
-        >
-          {filterArrays(members, search).map((member) => (
-            <MemberItem key={member.id} member={member} members={accounts} />
-          ))}
+    <div className="d-flex justify-content-center">
+      <div className="col col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <div className="w-100 d-flex align-items-center justify-content-between">
+          <Form.Control
+            className="text-center"
+            style={{ width: "36%" }}
+            placeholder="Search Member"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <ButtonGroup className="me-1">
+            <Button size="sm" onClick={() => setFilterType(0)}>
+              All ({primaries.length})
+            </Button>
+            <Button size="sm" onClick={() => setFilterType(1)}>
+              Review ({reviewPending.length})
+            </Button>
+            <Button size="sm" onClick={() => setFilterType(2)}>
+              New ({newMembers.length})
+            </Button>
+          </ButtonGroup>
         </div>
-      </ListGroup>
+        {/* <div className="w-100 d-flex flex-column align-items-center justify-content-center"> */}
+        <ListGroup className="w-100 px-1 col col-lg-6">
+          <ListGroup.Item className="p-1 bg-primary d-flex">
+            <div className="col-4 p-0 text-center bg-primary text-light fw-bold">
+              First Name
+            </div>
+            <div className="col-4 p-0 text-center bg-primary text-light fw-bold">
+              Last Name
+            </div>
+            <div className="col p-0 text-center bg-primary text-light fw-bold">
+              Member ID
+            </div>
+          </ListGroup.Item>
+          <div
+            className="member-table px-1 bg-primary"
+            style={{
+              overflowY: "scroll",
+              height: "72vh",
+            }}
+          >
+            {filterArrays(members, search).map((member) => (
+              <MemberItem key={member.id} member={member} members={accounts} />
+            ))}
+          </div>
+        </ListGroup>
+        {/* </div> */}
+      </div>
     </div>
   );
 }

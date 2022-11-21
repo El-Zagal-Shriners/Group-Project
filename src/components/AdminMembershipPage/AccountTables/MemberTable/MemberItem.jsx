@@ -94,26 +94,27 @@ function MemberItem({ member, members }) {
   // access members to get the dependents.
   const dependents = [...members].filter(
     (acc) =>
-      acc.membership_number === null 
+      acc.membership_number === null ||
       // this OR exists due to test data having all the same member numbers.
-      || acc.membership_number === member.membership_number && acc.id !== member.id
-      && Number(acc.primary_member_id) === member.id 
+      (acc.membership_number === member.membership_number &&
+        acc.id !== member.id &&
+        Number(acc.primary_member_id) === member.id)
   );
 
   return (
     <>
-      <ListGroup.Item onClick={() => setShow(true)} className="p-0">
-        <ListGroup horizontal>
-          <ListGroup.Item className="col-4 text-center m-0">
+      <ListGroup.Item onClick={() => setShow(true)} className="px-1 mb-1 d-flex">
+        {/* <ListGroup horizontal> */}
+          <div className="col-4 text-center m-0">
             {member.first_name}
-          </ListGroup.Item>
-          <ListGroup.Item className="col-4 text-center m-0">
+          </div>
+          <div className="col-4 text-center m-0">
             {member.last_name}
-          </ListGroup.Item>
-          <ListGroup.Item className="col text-center m-0">
+          </div>
+          <div className="col text-center m-0">
             {member.membership_number}
-          </ListGroup.Item>
-        </ListGroup>
+          </div>
+        {/* </ListGroup> */}
       </ListGroup.Item>
       {member.is_verified ? (
         <>
