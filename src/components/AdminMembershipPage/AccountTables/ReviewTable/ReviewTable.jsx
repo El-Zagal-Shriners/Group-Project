@@ -1,9 +1,11 @@
 import { ListGroup } from "react-bootstrap";
 import ReviewItem from "./ReviewItem";
+import "../AccountTables.css";
 
 function ReviewTable({ reviews }) {
   return (
     <div className="vw-100">
+      <p>Pending Review</p>
       <ListGroup>
         <ListGroup.Item className="p-1">
           <ListGroup horizontal>
@@ -18,9 +20,14 @@ function ReviewTable({ reviews }) {
             </ListGroup.Item>
           </ListGroup>
         </ListGroup.Item>
-        {reviews.map((review) => (
-          <ReviewItem key={review.id} review={review} />
-        ))}
+        <div
+          className="member-table"
+          style={{ overflowY: "scroll", height: "15vh" }}
+        >
+          {reviews.map((review) => (
+            <ReviewItem key={review.id} review={review} />
+          ))}
+        </div>
       </ListGroup>
     </div>
   );

@@ -71,12 +71,6 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
-// setUsername('');
-// setFirstName('');
-// setLastName('');
-// setEmail('');
-// setMemberNumber('');
-
 // PUT to edit the current user
 router.put('/', rejectUnauthenticated, (req, res) => {
   const firstName = req.body.firstName;
