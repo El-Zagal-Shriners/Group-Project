@@ -41,7 +41,7 @@ function DiscountCard({ thisDiscount }) {
                 <div className="col-4 p-1">
                   <div className="p-1 bg-warning rounded d-flex justify-content-center align-items-center fill-container">
                     <div className="discount-text fw-bold">
-                      {thisDiscount.description}
+                      {thisDiscount.discount_summary}
                     </div>
                   </div>
                 </div>
