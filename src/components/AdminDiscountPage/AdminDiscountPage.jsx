@@ -9,6 +9,7 @@ import Card from "react-bootstrap/Card";
 import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
+import AddVendorModal from "../AddVendor/AddVendor";
 
 function AdminDiscountPage() {
   const dispatch = useDispatch();
@@ -51,7 +52,8 @@ function AdminDiscountPage() {
   return (
     <>
       <UpdatedNavBar />
-            <Button
+      <AddVendorModal />
+            {/* <Button
               size="lg"
               variant="primary"
               onClick={addVendor}
@@ -68,7 +70,7 @@ function AdminDiscountPage() {
             >
               Add Discount
             </Button>
-            <br/>
+            <br/> */}
         <DropdownButton
           as={ButtonGroup}
           key="primary"

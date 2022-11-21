@@ -8,16 +8,20 @@ import Form from "react-bootstrap/Form";
 import { useHistory, useParams } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
 
+
 function AddVendorModal() {
   const dispatch = useDispatch();
   const history = useHistory();
-  
+  const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [stateCode, setStateCode] = useState("");
   const [zip, setZip] = useState("");
   const [website, setWebsite] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const addVendor = (event) => {
     event.preventDefault();
@@ -37,93 +41,77 @@ function AddVendorModal() {
   };
   return (
     <>
-      <UpdatedNavBar />
-      <div className="container text-center">
-        <h2 className="text-primary">Add Vendor Form</h2>
-        <form onSubmit={addVendor}>
+    <UpdatedNavBar />
+    <Button variant="primary" onClick={handleShow}>
+        Add Vendor
+      </Button>
+
+    <Modal show={show} onHide={handleClose}>
+    <Modal.Header closeButton>
+    <Modal.Title className="text-primary">Add Vendor</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Business Name"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={name}
-              onChange={(event) => setName(event.target.value)}
-              autoFocus
+              onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Address"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={address}
-              onChange={(event) => setAddress(event.target.value)}
-              autoFocus
+              onChange={(e) => setAddress(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="City"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={city}
-              onChange={(event) => setCity(event.target.value)}
-              autoFocus
+              onChange={(e) => setCity(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="State Code"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={stateCode}
-              onChange={(event) => setStateCode(event.target.value)}
-              autoFocus
+              onChange={(e) => setStateCode(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Zip"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={zip}
-              onChange={(event) => setZip(event.target.value)}
-              autoFocus
+              onChange={(e) => setZip(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Website (If Applicable)"
           >
             <Form.Control
-              type="text"
-              placeholder="name@example.com"
               value={website}
-              onChange={(event) => setWebsite(event.target.value)}
-              autoFocus
+              onChange={(e) => setWebsite(e.target.value)}
             />
           </FloatingLabel>
-          <button type="submit" className="btn btn-primary">
-            Add Vendor
-          </button>
-        </form>
-      </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={addVendor}>
+                Add Vendor
+            </Button>
+          </Modal.Footer>
+      </Modal>
     </>
   );
 }
