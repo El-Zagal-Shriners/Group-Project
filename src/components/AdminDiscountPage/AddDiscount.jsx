@@ -1,3 +1,5 @@
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -8,7 +10,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { DropdownButton, ButtonGroup } from "react-bootstrap";
 import UpdatedNavBar from "../Nav/Nav";
 
-function AddDiscount() {
+function AddDiscountModal() {
   //grab all categories
   const allCategories = useSelector((store) => store.categories);
   // grab all vendors
@@ -16,6 +18,7 @@ function AddDiscount() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const [show, setShow] = useState(false);
   const [vendorId, setVendorId] = useState(1);
   const [discountDescription, setDiscountDescription] = useState("");
   const [discountSummary, setDiscountSummary] = useState("");
@@ -25,6 +28,9 @@ function AddDiscount() {
   const [categoryId, setCategoryId] = useState(1);
   const [isShown, setIsShown] = useState("True");
   const [isRegional, setIsRegional] = useState("False");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const addDiscount = (event) => {
     // console.log("In addDiscount() vendorId;", vendorId, "categoryId:", categoryId);
@@ -52,6 +58,7 @@ function AddDiscount() {
     setStartDate("");
     setExpDate("");
     setDiscountUsage("N/A");
+    setShow(false);
   };
 
   useEffect(() => {
@@ -62,10 +69,16 @@ function AddDiscount() {
   }, []);
 
   return (
-    <>
-      <UpdatedNavBar />
-      <div className="container text-center">
-        <h2 className="text-primary"> Add Discount</h2>
+<>
+      <Button variant="primary" onClick={handleShow}>
+        Add Discount
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title className="text-primary">Add Discount</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
         <Dropdown onSelect={(eventKey) => setVendorId(eventKey)}>
           <DropdownButton
             id="category-select-dropdown"
@@ -81,70 +94,59 @@ function AddDiscount() {
             })}
           </DropdownButton>
         </Dropdown>
-        <form onSubmit={addDiscount}>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Discount Description"
           >
             <Form.Control
               type="text"
-              placeholder="name@example.com"
+              placeholder="Discount Description"
               value={discountDescription}
-              onChange={(event) => setDiscountDescription(event.target.value)}
-              autoFocus
+              onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
-            label="Discount Type"
+            label="Discount Summary"
           >
             <Form.Control
               type="text"
-              placeholder="name@example.com"
+              placeholder="Discount Summary"
               value={discountSummary}
-              onChange={(event) => setDiscountSummary(event.target.value)}
-              autoFocus
+              onChange={(e) => setDiscountSummary(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Start Date"
           >
             <Form.Control
               type="date"
-              placeholder="name@example.com"
+              "Start Date"
               value={startDate}
-              onChange={(event) => setStartDate(event.target.value)}
-              autoFocus
+              onChange={(e) => setStartDate(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Expiration Date"
           >
             <Form.Control
               type="date"
-              placeholder="name@example.com"
+              placeholder="Expiration Date"
               value={expDate}
-              onChange={(event) => setExpDate(event.target.value)}
-              autoFocus
+              onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            controlId="floatingFirstName"
             label="Discount Usage (If Applicable)"
           >
             <Form.Control
               type="text"
-              placeholder="name@example.com"
+              placeholder="Discount Usage (If Applicable)"
               value={discountUsage}
-              onChange={(event) => setDiscountUsage(event.target.value)}
-              autoFocus
+              onChange={(e) => setDiscountUsage(e.target.value)}
             />
           </FloatingLabel>
           <Dropdown onSelect={(eventKey) => setCategoryId(eventKey)}>
@@ -162,14 +164,15 @@ function AddDiscount() {
               })}
             </DropdownButton>
           </Dropdown>
-          <br />
-          <button type="submit" className="btn btn-primary">
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={addDiscount}>
             Add Discount
-          </button>
-        </form>
-      </div>
-    </>
+          </Button>
+        </Modal.Footer>
+        </Modal>
+        </>
   );
 }
 
-export default AddDiscount;
+export default AddDiscountModal;

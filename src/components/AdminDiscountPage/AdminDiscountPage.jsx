@@ -10,6 +10,7 @@ import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
+import AddDiscountModal from "./AddDiscount";
 
 function AdminDiscountPage() {
   const dispatch = useDispatch();
@@ -52,7 +53,13 @@ function AdminDiscountPage() {
   return (
     <>
       <UpdatedNavBar />
-      <AddVendorModal />
+      <div className="justify-content-center container text-center col col-lg-6">
+        <AddVendorModal />
+      </div>
+      <div className="container text-center col col-lg-6">
+        <AddDiscountModal />
+      </div>
+      <div className="container text-center col col-lg-6">
       <DropdownButton
         as={ButtonGroup}
         key="primary"
@@ -80,7 +87,8 @@ function AdminDiscountPage() {
           );
         })}
       </DropdownButton>
-      <section className="w-100 d-flex flex-wrap">
+      </div>
+      <section className="w-100 flex-wrap">
         {currentSelected !== "default"
           ? filteredDiscounts.map((discount) => {
               return <DiscountItem key={discount.id} discount={discount} />;
