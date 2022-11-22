@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 
 function SuccessModal({ showSuccess, setShowSuccess }) {
