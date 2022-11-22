@@ -52,7 +52,7 @@ function AdminDiscountPage(vendor) {
       type: "REMOVE_VENDOR",
       payload: vendorId,
     });
-    history.push('/admindiscounts')
+    history.push("/admindiscounts");
   };
 
   useEffect(() => {
@@ -64,10 +64,10 @@ function AdminDiscountPage(vendor) {
   return (
     <>
       <UpdatedNavBar />
-      <div className="justify-content-center container text-center col col-lg-6">
+      <div className="container text-center border border-primary">
         <AddVendorModal />
-      </div>
-      <div className="container text-center col col-lg-6">
+        <br />
+        <br />
         <AddDiscountModal />
       </div>
       <div className="container text-center col col-lg-6">
