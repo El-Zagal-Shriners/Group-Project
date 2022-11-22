@@ -56,13 +56,13 @@ function DiscountModal({ discount }) {
           <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FloatingLabel className="text-primary" label="Description">
+          <FloatingLabel className="text-primary" label="Description (Required)">
             <Form.Control
               value={discountDescription}
               onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Summary">
+          <FloatingLabel className="text-primary" label="Summary (Required)">
             <Form.Control
               value={discountSummary}
               onChange={(e) => setDiscountSummary(e.target.value)}
@@ -82,7 +82,7 @@ function DiscountModal({ discount }) {
               onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Discount Code">
+          <FloatingLabel className="text-primary" label="Discount Usage (Required)">
             <Form.Control
               value={discountUsage}
               onChange={(e) => setDiscountUsage(e.target.value)}

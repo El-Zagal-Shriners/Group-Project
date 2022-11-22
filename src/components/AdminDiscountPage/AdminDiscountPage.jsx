@@ -52,6 +52,7 @@ function AdminDiscountPage(vendor) {
       type: "REMOVE_VENDOR",
       payload: vendorId,
     });
+    history.push('/admindiscounts')
   };
 
   useEffect(() => {
