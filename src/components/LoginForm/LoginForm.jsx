@@ -30,16 +30,16 @@ function LoginForm() {
   const handleShowResetPassword = (event) => {
     event.preventDefault();
     setShowResetPassword(true);
-  }
+  };
   // Toggle local 'showResetPassword' state
   const handleCloseResetPassword = (event) => {
     event.preventDefault();
     setShowResetPassword(false);
-  }
+  };
 
   return (
     <form
-      className="d-flex flex-column align-items-center bg-light p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
+      className="d-flex flex-column align-items-center bg-light px-5 py-3 rounded-3 border border-2 border-primary shadow-lg mb-3"
       onSubmit={login}
     >
       <h2 className="text-primary">Login</h2>
@@ -52,7 +52,7 @@ function LoginForm() {
         <label className="text-primary" htmlFor="username">
           Username:
           <input
-            className="border-primary me-auto"
+            className="border-primary me-auto rounded-2"
             type="text"
             name="username"
             required
@@ -65,7 +65,7 @@ function LoginForm() {
         <label className="text-primary" htmlFor="password">
           Password:
           <input
-            className="border-primary w-auto me-auto"
+            className="border-primary w-auto me-auto rounded-2"
             type="password"
             name="password"
             required
@@ -74,16 +74,23 @@ function LoginForm() {
           />
         </label>
       </div>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex flex-column justify-content-between">
         {/* Button to toggle modal for password reset */}
-        <button type='button' className="btn btn-outline-primary mx-1" onClick={(e)=>handleShowResetPassword(e)}>Forgot Password?</button>
-        {/* Modal for password reset */}
-        <RequestPasswordReset handleCloseResetPassword={handleCloseResetPassword} showResetPassword={showResetPassword}/>
-        <button
-          className="btn btn-primary mx-1"
-          type="submit"
-        >Log In
+        <button className="btn btn-primary mx-1 mt-3" type="submit">
+          Log In
         </button>
+        <button
+          type="button"
+          className="btn-link btn mx-1"
+          onClick={(e) => handleShowResetPassword(e)}
+        >
+          Forgot Password?
+        </button>
+        {/* Modal for password reset */}
+        <RequestPasswordReset
+          handleCloseResetPassword={handleCloseResetPassword}
+          showResetPassword={showResetPassword}
+        />
       </div>
     </form>
   );
