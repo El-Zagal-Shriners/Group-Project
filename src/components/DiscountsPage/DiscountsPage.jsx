@@ -110,22 +110,37 @@ function DiscountsPage() {
       filteredArray = allMemberDiscounts.filter((discount, index) => {
         return allSelected.includes(discount.city);
       });
-      filteredArray = filteredArray.filter((discount, index) => {
+      filteredArray = allMemberDiscounts.filter((discount) => {
         return allSelected.includes(discount.category_name);
       });
     } else {
       filteredArray = allMemberDiscounts;
     }
 
+    // run filteredArray through search by company search bar
+    if(searchBarIn.length > 0){
+      filteredArray = filteredArray.filter((discount, index) => {
+        let thisVendorName = discount.vendor_name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+        let searchedVendor = searchBarIn.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+        console.log('in searchBarFilter', thisVendorName, searchedVendor)
+
+        if(thisVendorName.search(searchedVendor) !== -1 ){
+          return true;
+        } else{
+          return false;
+        }
+      })
+    }
+
     dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
   }
 
-  function filterByCompanyName() {}
+
 
   useEffect(() => dispatch({ type: "GET_MEMBER_DISCOUNTS" }), []);
   useEffect(
     () => filterDiscounts(),
-    [selectedCategories, selectedCities, allMemberDiscounts]
+    [selectedCategories, selectedCities, allMemberDiscounts, searchBarIn]
   );
 
   if (loading) {
@@ -169,7 +184,7 @@ function DiscountsPage() {
               controlId="floatingInput"
               label="Search By Company"
             >
-              <Form.Control className="company-search" type="text" placeholder="Type A Company" onChange={()=>set}/>
+              <Form.Control className="company-search" value={searchBarIn} type="text" placeholder="Type A Company" onChange={(e)=>setSearchBarIn(e.target.value)}/>
             </FloatingLabel>
           </div>
         </div>
