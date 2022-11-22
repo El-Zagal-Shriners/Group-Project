@@ -9,10 +9,10 @@ const config = {
 function* fetchAllAccounts() {
   try {
     const accounts = yield axios.get("/api/accounts", config);
-    console.log("GET accounts", accounts.data);
+    // console.log("GET accounts", accounts.data);
     yield put({ type: "FETCH_ACCOUNTS", payload: accounts.data });
   } catch (err) {
-    console.log("GET accounts error", err);
+    // console.log("GET accounts error", err);
   }
 }
 

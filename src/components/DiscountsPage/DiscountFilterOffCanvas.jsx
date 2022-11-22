@@ -45,17 +45,17 @@ function DiscountFilterOffCanvas({
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
-      console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
+      // console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
       const updatedCitiesArr = removeObjectFromArray(thisCity, selectedCities);
       dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
       if (selectedCities.includes(thisCity)) {
-        console.log("city is already in array, dont add again");
+        // console.log("city is already in array, dont add again");
         return;
       } else {
-        console.log("adding this city to array");
+        // console.log("adding this city to array");
         const updatedCitiesArr = [...selectedCities];
         updatedCitiesArr.push(thisCity);
         dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
@@ -68,10 +68,10 @@ function DiscountFilterOffCanvas({
     // if thisCat is already in selectedCategories arrray, don't add it again (return)
     // else add thisC to selectedCategories array
     if (selectedCategories.some((catObj) => thisCat.id === catObj.id)) {
-      console.log("cat is already in array, dont add again");
+      // console.log("cat is already in array, dont add again");
       return;
     } else {
-      console.log("adding this cat to array");
+      // console.log("adding this cat to array");
       const updatedCategoriesArr = [...selectedCategories];
       updatedCategoriesArr.push(thisCat);
       dispatch({
@@ -84,11 +84,11 @@ function DiscountFilterOffCanvas({
   // this function removes an object from an array that has the
   // same id as the objectToRemove parameter
   function removeObjectFromArray(objectToRemove, array) {
-    console.log("inRemoveItemFromArray", array, objectToRemove);
+    // console.log("inRemoveItemFromArray", array, objectToRemove);
     let filteredArr = array.filter((thisItem) => {
       return thisItem.id !== objectToRemove.id;
     });
-    console.log("inRemoveItemFromArray, filtered array is", filteredArr);
+    // console.log("inRemoveItemFromArray, filtered array is", filteredArr);
 
     return filteredArr;
   }

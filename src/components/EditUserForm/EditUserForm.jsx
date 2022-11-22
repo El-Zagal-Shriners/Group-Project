@@ -14,6 +14,7 @@ function EditUserForm(props) {
   const [memberNumber, setMemberNumber] = useState(
     props.user.membership_number
   );
+  const [showInvalid, setShowInvalid] = useState(false);
 
   // clears local state on submition of page
   const clearLocalState = () => {
@@ -28,7 +29,10 @@ function EditUserForm(props) {
   // Clear local state
   // Close modal with inputs
   const sendEdit = () => {
-    dispatch({
+    // Checks if the username is valid and more than 4 characters
+    if (validateUsername(username) && username.length > 4) {
+      // Send updated user info
+      dispatch({
       type: "EDIT_USER_INFO",
       payload: {
         username: username.toLowerCase(),
@@ -38,9 +42,30 @@ function EditUserForm(props) {
         memberNumber: memberNumber?memberNumber:null,
       },
     });
+    // clear all local states
     clearLocalState();
+    // close modal
     props.handleCloseEdit();
+    } else {
+      setShowInvalid(true);
+    }
   };
+  // This function will check that the username is only characters or numbers
+  // using regex
+  const validateUsername = (username) => {
+    return /^[A-Za-z0-9]*$/.test(username);
+  };
+
+  useEffect(() => {
+    // Sets invalid to false if valid username
+    // or true if username contains invalid characters
+    // (anything other than characters or numbers)
+    if (validateUsername(username)) {
+      setShowInvalid(false);
+    } else {
+      setShowInvalid(true);
+    }
+  }, [username]);
   // Reset input values to the user current information from database
   const cancelEdit = () => {
     setUsername(props.user.username);
@@ -48,6 +73,7 @@ function EditUserForm(props) {
     setLastName(props.user.last_name);
     setEmail(props.user.email);
     setMemberNumber(props.user.membership_number);
+    setShowInvalid(false);
     props.handleCloseEdit();
   };
   // Render a modal with the users current information pre-filled
@@ -67,9 +93,12 @@ function EditUserForm(props) {
               type="text"
               placeholder="Username"
               value={username}
+              required
+              isInvalid={showInvalid?true:false}
               onChange={(e) => setUsername(e.target.value)}
             />
           </FloatingLabel>
+          {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
           <FloatingLabel
             controlId="firstNameEditLabel"
             label="First Name"
