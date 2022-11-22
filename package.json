@@ -36,11 +36,26 @@
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest --coverage --coverageReporters='text-summary'",
+    "testServer": "jest server/test/*.test.js --coverage --coverageReporters='text-summary' --forceExit",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^6.3.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
   },
   "browserslist": [
     ">0.2%",
