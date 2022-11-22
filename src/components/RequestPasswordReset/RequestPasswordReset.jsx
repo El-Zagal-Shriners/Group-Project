@@ -33,7 +33,7 @@ function RequestPasswordReset(props) {
     setUsername("");
     props.handleCloseResetPassword(e);
   };
-    // This function will check that the username is only characters or numbers
+  // This function will check that the username is only characters or numbers
   // using regex
   const validateUsername = (username) => {
     return /^[A-Za-z0-9]*$/.test(username);
@@ -57,7 +57,14 @@ function RequestPasswordReset(props) {
       </Modal.Header>
       <Modal.Body>
         <>
-          <h4>Please enter your <strong>username</strong></h4><hr/> <em>Password reset instructions will be sent to the email address on the account.</em>
+          <h4>
+            Please enter your <strong>username</strong>
+          </h4>
+          <hr />{" "}
+          <em>
+            Password reset instructions will be sent to the email address on the
+            account.
+          </em>
           <FloatingLabel
             controlId="dependentEmailLabel"
             label="Username"
@@ -68,11 +75,16 @@ function RequestPasswordReset(props) {
               type="text"
               placeholder="Username"
               value={username}
-              isInvalid={showInvalid?true:false}
+              isInvalid={showInvalid ? true : false}
               onChange={(e) => setUsername(e.target.value)}
             />
           </FloatingLabel>
-          {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+          {showInvalid && (
+            <p className="text-center text-muted">
+              Username must be longer than 4 characters and CANNOT contain any
+              special characters ie. !, $, %, #, @, etc...
+            </p>
+          )}
         </>
       </Modal.Body>
       <Modal.Footer>
