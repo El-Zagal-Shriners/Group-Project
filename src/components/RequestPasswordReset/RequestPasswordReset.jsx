@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
@@ -8,25 +8,47 @@ import Form from "react-bootstrap/Form";
 function RequestPasswordReset(props) {
   // local state to hold the dependent email address
   const [username, setUsername] = useState("");
+  const [showInvalid, setShowInvalid] = useState(false);
   const dispatch = useDispatch();
   // performs POST for sending email to the email the user supplies
   const sendResetEmail = (e) => {
-    dispatch({
-      type: "SEND_RESET_PASSWORD_EMAIL",
-      payload: {
-        username,
-      },
-    });
-    // clear local state
-    setUsername("");
-    // close the add reset password email modal
-    props.handleCloseResetPassword(e);
+    if (validateUsername(username) && username.length > 4) {
+      dispatch({
+        type: "SEND_RESET_PASSWORD_EMAIL",
+        payload: {
+          username,
+        },
+      });
+      // clear local state
+      setUsername("");
+      setShowInvalid(false);
+      // close the add reset password email modal
+      props.handleCloseResetPassword(e);
+    } else {
+      setShowInvalid(true);
+    }
   };
   // clears local state and closes modal
   const cancelRequestPassword = (e) => {
     setUsername("");
     props.handleCloseResetPassword(e);
   };
+    // This function will check that the username is only characters or numbers
+  // using regex
+  const validateUsername = (username) => {
+    return /^[A-Za-z0-9]*$/.test(username);
+  };
+
+  useEffect(() => {
+    // Sets invalid to false if valid username
+    // or true if username contains invalid characters
+    // (anything other than characters or numbers)
+    if (validateUsername(username)) {
+      setShowInvalid(false);
+    } else {
+      setShowInvalid(true);
+    }
+  }, [username]);
 
   return (
     <Modal show={props.showResetPassword} onHide={cancelRequestPassword}>
@@ -46,9 +68,11 @@ function RequestPasswordReset(props) {
               type="text"
               placeholder="Username"
               value={username}
+              isInvalid={showInvalid?true:false}
               onChange={(e) => setUsername(e.target.value)}
             />
           </FloatingLabel>
+          {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
         </>
       </Modal.Body>
       <Modal.Footer>
