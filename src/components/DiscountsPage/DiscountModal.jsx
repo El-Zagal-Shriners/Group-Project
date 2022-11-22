@@ -76,7 +76,9 @@ function DiscountModal({
             <div className="m-3 text-center">
               <h3>{thisDiscount.discount_description}</h3>
               {thisDiscount.expiration_date && (
-                <h5 className=""><em>Expires: {thisDiscount.expiration_date}</em></h5>
+                <h5 className="">
+                  <em>Expires: {thisDiscount.expiration_date}</em>
+                </h5>
               )}
             </div>
 

@@ -76,7 +76,7 @@ function DiscountsPage() {
   );
 
   // manage input for search bar
-  const [searchBarIn, setSearchBarIn] = useState('');
+  const [searchBarIn, setSearchBarIn] = useState("");
 
   const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
 
@@ -118,24 +118,25 @@ function DiscountsPage() {
     }
 
     // run filteredArray through search by company search bar
-    if(searchBarIn.length > 0){
+    if (searchBarIn.length > 0) {
       filteredArray = filteredArray.filter((discount, index) => {
-        let thisVendorName = discount.vendor_name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-        let searchedVendor = searchBarIn.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-        console.log('in searchBarFilter', thisVendorName, searchedVendor)
+        let thisVendorName = discount.vendor_name
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]/g, "");
+        let searchedVendor = searchBarIn
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]/g, "");
 
-        if(thisVendorName.search(searchedVendor) !== -1 ){
+        if (thisVendorName.search(searchedVendor) !== -1) {
           return true;
-        } else{
+        } else {
           return false;
         }
-      })
+      });
     }
 
     dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
   }
-
-
 
   useEffect(() => dispatch({ type: "GET_MEMBER_DISCOUNTS" }), []);
   useEffect(
@@ -180,11 +181,14 @@ function DiscountsPage() {
             )}
           </div>
           <div className="col-11 col-md-9 col-lg-6">
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Search By Company"
-            >
-              <Form.Control className="company-search" value={searchBarIn} type="text" placeholder="Type A Company" onChange={(e)=>setSearchBarIn(e.target.value)}/>
+            <FloatingLabel controlId="floatingInput" label="Search By Company">
+              <Form.Control
+                className="company-search"
+                value={searchBarIn}
+                type="text"
+                placeholder="Type A Company"
+                onChange={(e) => setSearchBarIn(e.target.value)}
+              />
             </FloatingLabel>
           </div>
         </div>
