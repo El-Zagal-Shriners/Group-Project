@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 function PasswordResetPage(){
+    const tokenCheck = useSelector((store) => store.tokenCheck.passwordResetTokenCheck);
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [showInvalid, setShowInvalid] = useState(false);
@@ -18,6 +19,7 @@ function PasswordResetPage(){
           type: "RESET_PASSWORD_TOKEN_CHECK",
           payload: token,
         });
+        console.log('this is tokenCheck: ', tokenCheck);
       }, []);
     // function to submit the new password
     const submitReset = (e) => {
@@ -52,6 +54,7 @@ function PasswordResetPage(){
         onSubmit={submitReset}
       >
         <h2 className="text-primary">Reset Password</h2>
+        {tokenCheck==='true' && <h3>VALID</h3>}
         <div>
           <FloatingLabel
             controlId="newPasswordInput"
