@@ -16,7 +16,7 @@ function LandingPage() {
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center landing_page_size">
-      <h2 className="mb-5 vw-100 mx-3 text-center text-primary fw-bold p-4 bg_link_opacity border-top border-bottom border-1 border-primary">
+      <h2 className="mb-5 vw-100 mx-3 text-center text-primary fw-bold p-4 bg-light bg-opacity-75 border-top border-bottom border-1 border-primary">
         El Zagal Shriners
         <br /> Membership Portal
       </h2>
