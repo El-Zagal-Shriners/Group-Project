@@ -21,31 +21,31 @@ function* fetchVendors() {
 
 // POST new vendor on ADD_VENDOR
 function* addVendor(action) {
-  try{
-      yield axios.post(`/api/vendors`, action.payload, config);
-      yield put({ type: "FETCH_VENDORS" });
-  } catch (error){
-      console.log('Error in adding new vendor', error);
+  try {
+    yield axios.post(`/api/vendors`, action.payload, config);
+    yield put({ type: "FETCH_VENDORS" });
+  } catch (error) {
+    console.log("Error in adding new vendor", error);
   }
 } // End POST new vendor
 
 // PUT to edit an existing vendor
 function* editVendor(action) {
   try {
-      yield axios.put(`/api/vendors`, action.payload, config);
-      yield put({ type: "FETCH_VENDORS" });
+    yield axios.put(`/api/vendors`, action.payload, config);
+    yield put({ type: "FETCH_VENDORS" });
   } catch (err) {
-      console.log('Error editing existing vendor: ', err);
+    console.log("Error editing existing vendor: ", err);
   }
 } // End PUT edit vendor
 
 // DELETE to remove an existing vendor by id
 function* removeVendor(action) {
   try {
-      yield axios.delete(`api/vendors/${action.payload}`);
-      yield put({ type: "FETCH_VENDORS" });
+    yield axios.delete(`api/vendors/${action.payload}`);
+    yield put({ type: "FETCH_VENDORS" });
   } catch (err) {
-      console.log('Error removing vendor: ', err);
+    console.log("Error removing vendor: ", err);
   }
 } // End DELETE vendor
 

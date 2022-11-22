@@ -28,7 +28,7 @@ function ProtectedAdminRoute({ component, children, ...props }) {
         <ProtectedComponent />
       ) : (
         // Otherwise, redirect to the Discounts page
-        history.replace("/discounts")
+        <h2>Loading..</h2>
       )}
     </Route>
   );
