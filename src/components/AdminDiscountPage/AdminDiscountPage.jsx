@@ -38,11 +38,11 @@ function AdminDiscountPage() {
 
   function handleSelect(selectedValue) {
     setCurrentSelected(selectedValue);
-    console.log("selected value", selectedValue);
+    // console.log("selected value", selectedValue);
   }
 
-  console.log("discounts", discounts);
-  console.log("vendors", allVendors);
+  // console.log("discounts", discounts);
+  // console.log("vendors", allVendors);
 
   useEffect(() => {
     dispatch({ type: "GET_ADMIN_DISCOUNTS" });
