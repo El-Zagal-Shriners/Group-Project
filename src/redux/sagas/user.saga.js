@@ -44,6 +44,15 @@ function* resetTokenCheck(action) {
   }
 }
 
+// Send password reset email
+function* sendPasswordResetEmail(action) {
+  try {
+    yield axios.post("/api/reset/email", action.payload);
+  } catch (error) {
+    console.log("Error in saga POST for password reset email:", error);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -62,7 +71,8 @@ function* unsetAll(action) {
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
   yield takeLatest("EDIT_USER_INFO", editUser);
-  yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck)
+  yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck);
+  yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 
