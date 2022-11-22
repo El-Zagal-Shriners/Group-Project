@@ -8,6 +8,9 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
+import Button from "react-bootstrap/Button";
+import AddVendorModal from "../AddVendor/AddVendor";
+import AddDiscountModal from "./AddDiscount";
 
 function AdminDiscountPage() {
   const dispatch = useDispatch();
@@ -16,6 +19,14 @@ function AdminDiscountPage() {
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
+
+  function addVendor() {
+    history.push("/adminaddvendor");
+  }
+
+  function addDiscount() {
+    history.push("/adminadddiscount");
+  }
 
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
@@ -42,44 +53,50 @@ function AdminDiscountPage() {
   return (
     <>
       <UpdatedNavBar />
-      <div className="container d-flex flex-column justify-content-center align-items-center">
-        <DropdownButton
-          as={ButtonGroup}
-          key="primary"
-          id={`discountDropdown`}
-          variant="primary"
-          title="Select Vendor"
-          className="w-75"
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item
-            eventKey="default"
-            active={currentSelected === "default" && true}
-          >
-            All
-          </Dropdown.Item>
-          {allVendors.map((vendor) => {
-            return (
-              <Dropdown.Item
-                key={vendor.id}
-                eventKey={vendor.id}
-                active={Number(currentSelected) === Number(vendor.id) && true}
-              >
-                {vendor.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
-        <section className="w-100 d-flex flex-wrap">
-          {currentSelected !== "default"
-            ? filteredDiscounts.map((discount) => {
-                return <DiscountItem key={discount.id} discount={discount} />;
-              })
-            : filteredDiscounts.map((discount, vendors) => {
-                return <DiscountItem key={discount.id} discount={discount} />;
-              })}
-        </section>
+      <div className="justify-content-center container text-center col col-lg-6">
+        <AddVendorModal />
       </div>
+      <div className="container text-center col col-lg-6">
+        <AddDiscountModal />
+      </div>
+      <div className="container text-center col col-lg-6">
+      <DropdownButton
+        as={ButtonGroup}
+        key="primary"
+        id={`discountDropdown`}
+        variant="primary"
+        title="Select Vendor"
+        className="w-75"
+        onSelect={handleSelect}
+      >
+        <Dropdown.Item
+          eventKey="default"
+          active={currentSelected === "default" && true}
+        >
+          All
+        </Dropdown.Item>
+        {allVendors.map((vendor) => {
+          return (
+            <Dropdown.Item
+              key={vendor.id}
+              eventKey={vendor.id}
+              active={Number(currentSelected) === Number(vendor.id) && true}
+            >
+              {vendor.name}
+            </Dropdown.Item>
+          );
+        })}
+      </DropdownButton>
+      </div>
+      <section className="w-100 flex-wrap">
+        {currentSelected !== "default"
+          ? filteredDiscounts.map((discount) => {
+              return <DiscountItem key={discount.id} discount={discount} />;
+            })
+          : filteredDiscounts.map((discount, vendors) => {
+              return <DiscountItem key={discount.id} discount={discount} />;
+            })}
+      </section>
     </>
   );
 }

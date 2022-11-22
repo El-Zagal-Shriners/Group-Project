@@ -25,6 +25,8 @@ import DependentRegistrationPage from "../DependentRegistrationPage/DependentReg
 import ProtectedAdminRoute from "../ProtectedAdminRoute/ProtectedAdminRoute";
 import AddVendor from "../AddVendor/AddVendor";
 import AddDiscount from "../AdminDiscountPage/AddDiscount";
+import AddVendorModal from "../AddVendor/AddVendor";
+import PasswordResetPage from "../PasswordResetPage/PasswordResetPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,7 +101,7 @@ function App() {
             exact
             path="/adminaddvendor"
           >
-            <AddVendor />
+            <AddVendorModal />
           </ProtectedAdminRoute>
           <ProtectedAdminRoute
             // logged in brings users to Admin Tracker else shows LoginPage
@@ -111,6 +113,10 @@ function App() {
 
           <Route exact path="/dependents/:token">
             <DependentRegistrationPage />
+          </Route>
+
+          <Route exact path="/reset/:token">
+            <PasswordResetPage />
           </Route>
 
           <Route exact path="/login">

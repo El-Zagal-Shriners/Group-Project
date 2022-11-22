@@ -16,6 +16,7 @@ const vendorRouter = require("./routes/vendor.router");
 const categoriesRouter = require("./routes/categories.router");
 const dependentRegistration = require("./routes/dependentRegistration.router");
 const adminRouter = require("./routes/admin.router");
+const passwordReset = require("./routes/passwordReset.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -37,6 +38,7 @@ app.use("/api/cities", citiesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/register/dependent", dependentRegistration);
 app.use('/api/admin', adminRouter);
+app.use('/api/reset', passwordReset);
 
 // Serve static files
 app.use(express.static("build"));

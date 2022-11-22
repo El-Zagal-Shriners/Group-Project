@@ -34,6 +34,34 @@ function* editUser(action) {
   }
 }
 
+// Check if user's token is valid
+function* resetTokenCheck(action) {
+  try {
+    const check = yield axios.get(`/api/reset/${action.payload}`);
+    yield put({ type: "SET_RESET_TOKEN_CHECK", payload: check.data });
+  } catch (error) {
+    console.log("Error in checking password reset token:", error);
+  }
+}
+
+// Send password reset email
+function* sendPasswordResetEmail(action) {
+  try {
+    yield axios.post("/api/reset/email", action.payload);
+  } catch (error) {
+    console.log("Error in saga POST for password reset email:", error);
+  }
+}
+
+// POST to send new password to db
+function* resetPassword(action) {
+  try {
+    yield axios.post("/api/reset", action.payload);
+  } catch (error) {
+    console.log("Error in saga POST for password reset:", error);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -52,6 +80,9 @@ function* unsetAll(action) {
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
   yield takeLatest("EDIT_USER_INFO", editUser);
+  yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck);
+  yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
+  yield takeLatest("RESET_PASSWORD", resetPassword);
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 

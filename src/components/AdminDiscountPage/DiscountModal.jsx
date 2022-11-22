@@ -8,20 +8,26 @@ import { FloatingLabel } from "react-bootstrap";
 function DiscountModal({ discount }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const [description, setDescription] = useState(discount.description);
+  const [discountDescription, setDiscountDescription] = useState(
+    discount.discountDescription
+  );
+  const [discountSummary, setDiscountSummary] = useState(
+    discount.discountSummary
+  );
   const [startDate, setStartDate] = useState(discount.start_date);
   const [expDate, setExpDate] = useState(discount.expiration_date);
-  const [discountCode, setDiscountCode] = useState(discount.discount_code);
+  const [discountUsage, setDiscountUsage] = useState(discount.discountUsage);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   // create edit discount object
   const discountObj = {
     discountId: discount.id,
-    description,
+    discountDescription,
+    discountSummary,
     startDate,
     expDate,
-    discountCode,
+    discountUsage,
   };
   // edit discount
   const editDiscount = () => {
@@ -29,6 +35,7 @@ function DiscountModal({ discount }) {
       type: "EDIT_DISCOUNT",
       payload: discountObj,
     });
+    setShow(false);
   };
   // remove discount
   const removeDiscount = () => {
@@ -46,33 +53,39 @@ function DiscountModal({ discount }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FloatingLabel label="Description">
+          <FloatingLabel className="text-primary" label="Description">
             <Form.Control
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={discountDescription}
+              onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel label="Start Date">
+          <FloatingLabel className="text-primary" label="Summary">
+            <Form.Control
+              value={discountSummary}
+              onChange={(e) => setDiscountSummary(e.target.value)}
+            />
+          </FloatingLabel>
+          <FloatingLabel className="text-primary" label="Start Date">
             <Form.Control
               value={startDate}
               type="date"
               onChange={(e) => setStartDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel label="Expiration Date">
+          <FloatingLabel className="text-primary" label="Expiration Date">
             <Form.Control
               value={expDate}
               type="date"
               onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel label="Discount Code">
+          <FloatingLabel className="text-primary" label="Discount Code">
             <Form.Control
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value)}
+              value={discountUsage}
+              onChange={(e) => setDiscountUsage(e.target.value)}
             />
           </FloatingLabel>
         </Modal.Body>
@@ -80,7 +93,7 @@ function DiscountModal({ discount }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={editDiscount}>
+          <Button variant="primary" onClick={editDiscount} >
             Save Changes
           </Button>
           <Button variant="warning" onClick={removeDiscount}>
