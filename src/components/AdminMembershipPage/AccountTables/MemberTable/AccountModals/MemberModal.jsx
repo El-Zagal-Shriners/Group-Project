@@ -11,6 +11,7 @@ import {
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import DependentItem from "../DependentItem";
+import ConfirmationModal from "./ConfirmationModal";
 import SuccessModal from "./SuccessModal";
 
 function MemberModal({ member, members, show, setShow }) {
@@ -29,6 +30,7 @@ function MemberModal({ member, members, show, setShow }) {
   const [authorized, setAuthorized] = useState(member.is_authorized);
   // setup state for showing success modals.
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // access use dispatch
   const dispatch = useDispatch();
@@ -87,17 +89,6 @@ function MemberModal({ member, members, show, setShow }) {
       // for success modal
       setShowSuccess(true);
     }
-  };
-
-  // deletes member
-  const removeMember = () => {
-    // console.log(member.id);
-    dispatch({
-      type: "ADMIN_DELETE_MEMBER",
-      payload: {
-        memberId: member.id,
-      },
-    });
   };
 
   // setup close modal function
@@ -236,7 +227,13 @@ function MemberModal({ member, members, show, setShow }) {
                 )}
               </Col>
               <Col>
-                <Button onClick={() => removeMember()}>Remove</Button>
+                <Button
+                  onClick={() => {
+                    setShowConfirmation(true);
+                  }}
+                >
+                  Remove
+                </Button>
               </Col>
               <Col></Col>
             </Row>
@@ -266,7 +263,12 @@ function MemberModal({ member, members, show, setShow }) {
         <SuccessModal
           showSuccess={showSuccess}
           setShowSuccess={setShowSuccess}
-        ></SuccessModal>
+        />
+        <ConfirmationModal
+          show={showConfirmation}
+          setShow={setShowConfirmation}
+          memberId={member.id}
+        />
       </>
     );
   } else {
@@ -322,7 +324,7 @@ function MemberModal({ member, members, show, setShow }) {
         <SuccessModal
           showSuccess={showSuccess}
           setShowSuccess={setShowSuccess}
-        ></SuccessModal>
+        />
       </>
     );
   }
