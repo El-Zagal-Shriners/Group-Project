@@ -12,13 +12,15 @@ import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
 
-function AdminDiscountPage() {
+function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
   const history = useHistory();
   const allVendors = useSelector((store) => store.vendors);
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
+
+  // const[vendorId, setVendorId] = useState(vendors.id);
 
   function addVendor() {
     history.push("/adminaddvendor");
@@ -36,13 +38,21 @@ function AdminDiscountPage() {
     );
   }
 
-  function handleSelect(selectedValue) {
-    setCurrentSelected(selectedValue);
+  function handleSelect(selectedValue, event) {
+    // only filter if event is not a button. done to prevent
+    // the render of vendor discount information when "remove" button was clicked
+    if (event.target.type !== "button") {
+      setCurrentSelected(selectedValue);
+    }
     // console.log("selected value", selectedValue);
   }
 
-  // console.log("discounts", discounts);
-  // console.log("vendors", allVendors);
+  const removeVendor = (vendorId) => {
+    dispatch({
+      type: "REMOVE_VENDOR",
+      payload: vendorId,
+    });
+  };
 
   useEffect(() => {
     dispatch({ type: "GET_ADMIN_DISCOUNTS" });
@@ -60,33 +70,39 @@ function AdminDiscountPage() {
         <AddDiscountModal />
       </div>
       <div className="container text-center col col-lg-6">
-      <DropdownButton
-        as={ButtonGroup}
-        key="primary"
-        id={`discountDropdown`}
-        variant="primary"
-        title="Select Vendor"
-        className="w-75"
-        onSelect={handleSelect}
-      >
-        <Dropdown.Item
-          eventKey="default"
-          active={currentSelected === "default" && true}
+        <DropdownButton
+          as={ButtonGroup}
+          key="primary"
+          id={`discountDropdown`}
+          variant="primary"
+          title="Select Vendor"
+          className="w-75"
+          onSelect={handleSelect}
         >
-          All
-        </Dropdown.Item>
-        {allVendors.map((vendor) => {
-          return (
-            <Dropdown.Item
-              key={vendor.id}
-              eventKey={vendor.id}
-              active={Number(currentSelected) === Number(vendor.id) && true}
-            >
-              {vendor.name}
-            </Dropdown.Item>
-          );
-        })}
-      </DropdownButton>
+          <Dropdown.Item
+            eventKey="default"
+            active={currentSelected === "default" && true}
+          >
+            All
+          </Dropdown.Item>
+          {allVendors.map((vendor) => {
+            return (
+              <Dropdown.Item
+                key={vendor.id}
+                eventKey={vendor.id}
+                active={Number(currentSelected) === Number(vendor.id) && true}
+              >
+                {vendor.name}
+                <Button
+                  variant="warning"
+                  onClick={(event) => removeVendor(vendor.id)}
+                >
+                  Remove
+                </Button>
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
       </div>
       <section className="w-100 flex-wrap">
         {currentSelected !== "default"
