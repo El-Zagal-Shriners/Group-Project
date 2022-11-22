@@ -62,6 +62,7 @@ router.post("/email", (req, res, next) => {
       }
       const memberId = result.rows[0].id;
       const savedEmail = result.rows[0].email;
+      // SQL for INSERT new password token entry
       const insertQuery = `INSERT INTO "password_tokens"
                                 (
                                   "primary_member_id",
@@ -82,17 +83,17 @@ router.post("/email", (req, res, next) => {
               // log error and send error status if error occurs
               console.error("Error sending email", error);
               res.sendStatus(500);
-            });
+            }); // end SEND email
         })
         .catch((err) => {
           console.log("Error in INSERT to token table: ", err);
           res.sendStatus(500);
-        });
+        }); // end INSERT password_token statement
     })
     .catch((err) => {
       console.log("Error in validating password reset email: ", err);
       sendStatus(500);
-    });
+    }); // end SELECT to check for valid email
 });
 
 // this will check if the user's token exists in the database password_tokens table
@@ -133,17 +134,17 @@ router.post("/", (req, res) => {
             .catch((err) => {
               console.log("Error in DELETE token row: ", err);
               res.sendStatus(500);
-            });
+            }); // end DELETE query
         })
         .catch((err) => {
           console.log("Error in update user password: ", err);
           res.sendStatus(500);
-        });
+        }); // end UPDATE password query
     })
     .catch((error) => {
       console.log("Error checking valid password reset token: ", error);
       res.sendStatus(500);
-    });
+    }); // end SELECT to check token
 });
 
 // export the router
