@@ -61,21 +61,23 @@ function DiscountsPage() {
       // then get the closest cities.
       const wait = await getPosition()
         .then((response) => {
-          // bundle the latitude and longitude into a coordinates object
-          const coordinates = {
-            lat: response.coords.latitude,
-            lng: response.coords.longitude,
-          };
-          // dispatch to check if the user's city exists in the DB.
-          dispatch({
-            type: "CHECK_CITY",
-            payload: coordinates,
-          });
-          // dispatch to get the closest ciities.
-          dispatch({
-            type: "GET_CLOSE_CITIES",
-            payload: coordinates,
-          });
+          if (subscribed) {
+            // bundle the latitude and longitude into a coordinates object
+            const coordinates = {
+              lat: response.coords.latitude,
+              lng: response.coords.longitude,
+            };
+            // dispatch to check if the user's city exists in the DB.
+            dispatch({
+              type: "CHECK_CITY",
+              payload: coordinates,
+            });
+            // dispatch to get the closest ciities.
+            dispatch({
+              type: "GET_CLOSE_CITIES",
+              payload: coordinates,
+            });
+          }
         })
         .catch((err) => {
           if (err.code === 1) {
