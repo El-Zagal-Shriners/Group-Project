@@ -37,8 +37,8 @@ app.use("/api/vendors", vendorRouter);
 app.use("/api/cities", citiesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/register/dependent", dependentRegistration);
-app.use('/api/admin', adminRouter);
-app.use('/api/reset', passwordReset);
+app.use("/api/admin", adminRouter);
+app.use("/api/reset", passwordReset);
 
 // Serve static files
 app.use(express.static("build"));
@@ -50,3 +50,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+// Export for testing with supertest
+module.exports = app;
