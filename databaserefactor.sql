@@ -98,6 +98,18 @@ CREATE TABLE "dependent_tokens" (
   OIDS=FALSE
 );
 
+CREATE TABLE "password_tokens" (
+	"id" serial NOT NULL,
+	"token" varchar(75) NOT NULL,
+	"email" varchar(50) NOT NULL,
+	"primary_member_id" bigint NOT NULL,
+	CONSTRAINT "password_tokens_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+-- Password token alter statement
+ALTER TABLE "password_tokens" ADD CONSTRAINT "password_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
 
 -- Use this after adding dependent tokens table
 ALTER TABLE "dependent_tokens" ADD CONSTRAINT "dependent_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
