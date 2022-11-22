@@ -36,8 +36,8 @@
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
-    "test": "jest",
-    "testServer": "jest server/test/*.test.js --forceExit",
+    "test": "jest --coverage --coverageReporters='text-summary'",
+    "testServer": "jest server/test/*.test.js --coverage --coverageReporters='text-summary' --forceExit",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
