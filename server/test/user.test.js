@@ -16,7 +16,10 @@ describe("Test the root path", () => {
     let agent = testServer.agent(app);
     const response = await agent
       .post("/api/user/login")
-      .send({ username: "admin", password: "1234" });
+      .send({
+        username: process.env.TESTING_USERNAME,
+        password: process.env.TESTING_PASSWORD,
+      });
     expect(response.statusCode).toBe(200);
 
     const userResponse = await agent.get("/api/user");
