@@ -7,7 +7,7 @@ import UpdatedNavBar from "../Nav/Nav";
 
 function DependentRegistrationPage() {
   const user = useSelector((store) => store.user);
-  const tokenCheck = useSelector((store) => store.tokenCheck);
+  const tokenCheck = useSelector((store) => store.tokenCheck.tokenCheck);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

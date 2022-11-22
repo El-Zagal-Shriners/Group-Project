@@ -25,9 +25,7 @@ function* sendDependentEmail(action) {
 // Check if user's token is valid
 function* tokenCheck(action) {
   try {
-    console.log('this is action.payload: ', action.payload);
     const check = yield axios.get(`/api/register/dependent/${action.payload}`);
-    console.log('After axios get: ', check);
     yield put({ type: "SET_TOKEN_CHECK", payload: check.data });
   } catch (error) {
     console.log("Error in checking token:", error);
