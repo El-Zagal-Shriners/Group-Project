@@ -34,6 +34,16 @@ function* editUser(action) {
   }
 }
 
+// Check if user's token is valid
+function* resetTokenCheck(action) {
+  try {
+    const check = yield axios.get(`/api/reset/${action.payload}`);
+    yield put({ type: "SET_RESET_TOKEN_CHECK", payload: check.data });
+  } catch (error) {
+    console.log("Error in checking password reset token:", error);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -52,6 +62,7 @@ function* unsetAll(action) {
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
   yield takeLatest("EDIT_USER_INFO", editUser);
+  yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck)
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 

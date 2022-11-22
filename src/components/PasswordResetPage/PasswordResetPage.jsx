@@ -1,25 +1,49 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 
 function PasswordResetPage(){
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [showInvalid, setShowInvalid] = useState(false);
     const [showValid, setShowValid] = useState(false);
+    const dispatch = useDispatch();
+    const { token } = useParams();
+    const history = useHistory();
+    // Checks if the token in the url is valid
+    useEffect(() => {
+        dispatch({
+          type: "RESET_PASSWORD_TOKEN_CHECK",
+          payload: token,
+        });
+      }, []);
     // function to submit the new password
     const submitReset = (e) => {
         e.preventDefault();
+        dispatch({
+            type: "RESET_PASSWORD",
+            payload: {
+              password: newPassword,
+              token: token
+            }
+          });
+        history.pushState('/');
     }
     // toggle if password box should invalid or valid
     // based on the two passwords entered
     useEffect(() => {
+        // Sets both valid and invalid to false if only newPassword
+        // has entry or both or empty
         if ((!newPassword && !confirmNewPassword) || (newPassword && !confirmNewPassword)){
             setShowInvalid(false);
             setShowValid(false);
             return;
         }
+        // show invalid when both passwords don't match
         newPassword===confirmNewPassword?setShowInvalid(false):setShowInvalid(true);
+        // show valid when both passwords match
         newPassword===confirmNewPassword?setShowValid(true):setShowValid(false);
     }, [confirmNewPassword, newPassword]);
     return (
@@ -61,14 +85,11 @@ function PasswordResetPage(){
             />
           </FloatingLabel>
         </div>
-        <div>
-          <input
+          <button
             className="btn btn-primary"
-            type="submit"
-            name="submitBtn"
-            value="Submit"
-          />
-        </div>
+            type="submit">
+                Submit
+          </button>
       </form>
     )
 }
