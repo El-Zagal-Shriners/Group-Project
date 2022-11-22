@@ -96,10 +96,7 @@ function RegisterForm() {
             placeholder="Username"
             required
             isInvalid={showInvalid?true:false}
-            onChange={(event) => {
-              setUsernameIn(event.target.value);
-
-            }}
+            onChange={(event) => setUsernameIn(event.target.value)}
           />
         </FloatingLabel>
         {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
