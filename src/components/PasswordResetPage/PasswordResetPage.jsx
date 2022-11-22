@@ -21,7 +21,7 @@ function PasswordResetPage() {
       type: "RESET_PASSWORD_TOKEN_CHECK",
       payload: token,
     });
-    console.log("this is tokenCheck: ", tokenCheck);
+    // console.log("this is tokenCheck: ", tokenCheck);
   }, []);
   // function to submit the new password
   const submitReset = (e) => {

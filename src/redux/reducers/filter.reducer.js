@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 // in the discounts filter
 const selectedCitiesReducer = (state = [], action) => {
   if (action.type === "SET_SELECTED_CITIES") {
-    console.log("in selectedcities reducer", action.payload);
+    // console.log("in selectedcities reducer", action.payload);
     return action.payload;
   } else if (action.type === "UNSET_DISCOUNTS") {
     return [];
@@ -17,7 +17,7 @@ const selectedCitiesReducer = (state = [], action) => {
 // in the discounts filter
 const selectedCategoriesReducer = (state = [], action) => {
   if (action.type === "SET_SELECTED_CATEGORIES") {
-    console.log("in selectedCat reducer", action.payload);
+    // console.log("in selectedCat reducer", action.payload);
     return action.payload;
   } else if (action.type === "UNSET_DISCOUNTS") {
     return [];
@@ -28,7 +28,7 @@ const selectedCategoriesReducer = (state = [], action) => {
 
 const filteredDiscountsReducer = (state = [], action) => {
   if (action.type === "SET_FILTERED_DISCOUNTS") {
-    console.log("in filteredDiscounts reducer", action.payload);
+    // console.log("in filteredDiscounts reducer", action.payload);
     return action.payload;
   } else if (action.type === "UNSET_DISCOUNTS") {
     return [];

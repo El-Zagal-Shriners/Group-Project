@@ -40,28 +40,29 @@ router.get("/:token", (req, res) => {
 router.post("/email", (req, res, next) => {
   // generate a secure uuid token
   const token = uuidv4();
-  const email = req.body.email;
-  // Data for email to send to dependent
-  const msg = {
-    to: email, // address email is being sent
-    from: "dvettertest@gmail.com", // account registered with sendGrid
-    subject: "Shrine App Testing Emails - Password Reset",
-    text: `Please follow this link to register. http://localhost:3000/#/reset/${token}`, // alternative text
-    // html to display in the body of the email
-    html: `<p>You have requested to reset your password on the El Zagal Shrine Member Discounts Portal.
+  const username = req.body.username;
+  // SQL for checking if username is valid
+  const checkValidEmailQuery = `SELECT "id", "email" from "user" WHERE "username"=$1;`;
+  pool
+    .query(checkValidEmailQuery, [username])
+    .then((result) => {
+        if (result.rows <= 0) {
+          res.sendStatus(500);
+          return;
+        }
+        const memberId = result.rows[0].id;
+        const savedEmail = result.rows[0].email;
+        // Data for email to send to dependent
+        const msg = {
+          to: savedEmail, // address email is being sent
+          from: "dvettertest@gmail.com", // account registered with sendGrid
+          subject: "Shrine App Testing Emails - Password Reset",
+          text: `Please follow this link to register. http://localhost:3000/#/reset/${token}`, // alternative text
+          // html to display in the body of the email
+          html: `<p>You have requested to reset your password on the El Zagal Shrine Member Discounts Portal.
               Please click the following link to complete your request.</p>
               <a href="http://localhost:3000/#/reset/${token}">Reset Password</a>`,
-  };
-  const checkValidEmailQuery = `SELECT "id", "email" from "user" WHERE "email"=$1;`;
-  pool
-    .query(checkValidEmailQuery, [email])
-    .then((result) => {
-      if (result.rows <= 0) {
-        res.sendStatus(500);
-        return;
-      }
-      const memberId = result.rows[0].id;
-      const savedEmail = result.rows[0].email;
+        };
       // SQL for INSERT new password token entry
       const insertQuery = `INSERT INTO "password_tokens"
                                 (
@@ -76,7 +77,7 @@ router.post("/email", (req, res, next) => {
           sgMail
             .send(msg)
             .then(() => {
-              console.log("Password reset email sent and db entry created");
+              // console.log("Password reset email sent and db entry created");
               res.sendStatus(201);
             })
             .catch((error) => {
