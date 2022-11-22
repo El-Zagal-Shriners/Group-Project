@@ -1,8 +1,27 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function PasswordResetPage(){
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmNewPassword, setConfirmNewPassword] = useState("");
+    const [showInvalid, setShowInvalid] = useState(false);
+    const [showValid, setShowValid] = useState(false);
+    // function to submit the new password
+    const submitReset = (e) => {
+        e.preventDefault();
+    }
+    // toggle if password box should invalid or valid
+    // based on the two passwords entered
+    useEffect(() => {
+        if ((!newPassword && !confirmNewPassword) || (newPassword && !confirmNewPassword)){
+            setShowInvalid(false);
+            setShowValid(false);
+            return;
+        }
+        newPassword===confirmNewPassword?setShowInvalid(false):setShowInvalid(true);
+        newPassword===confirmNewPassword?setShowValid(true):setShowValid(false);
+    }, [confirmNewPassword, newPassword]);
     return (
         <form
         className="d-flex flex-column align-items-center p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
@@ -13,7 +32,7 @@ function PasswordResetPage(){
           <FloatingLabel
             controlId="newPasswordInput"
             label="New Password"
-            className="mb-1 text-primary"
+            className={`mb-1 text-primary`}
           >
             <Form.Control
               type="password"
@@ -36,6 +55,8 @@ function PasswordResetPage(){
               value={confirmNewPassword}
               placeholder="Confirm New Password"
               required
+              isInvalid={showInvalid?true:false}
+              isValid={showValid?true:false}
               onChange={(event) => setConfirmNewPassword(event.target.value)}
             />
           </FloatingLabel>
