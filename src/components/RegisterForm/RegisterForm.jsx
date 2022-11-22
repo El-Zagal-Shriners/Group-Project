@@ -50,10 +50,6 @@ function RegisterForm() {
   };
 
   useEffect(() => {
-    // if (usernameIn.length === 0){
-    //   setShowInvalid(false);
-    //   return;
-    // }
     // Sets both valid and invalid to false if only newPassword
     // has entry or both or empty
     if (validateUsername(usernameIn)) {

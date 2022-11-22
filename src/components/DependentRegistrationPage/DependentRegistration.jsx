@@ -13,6 +13,7 @@ function DependentRegistrationPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showInvalid, setShowInvalid] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useParams();
@@ -26,22 +27,57 @@ function DependentRegistrationPage() {
   // POST that sends information from the form to the database
   const createAccount = (event) => {
     event.preventDefault();
-    // Send the user entered info and token to server for
-    // validation and entry if valid
-    dispatch({
-      type: "ADD_DEPENDENT",
-      payload: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        username: username.toLowerCase(),
-        password: password,
-        token: token,
-      },
-    });
-    // move user back to home page for login
-    history.push("/");
+    // makes sure the username is valid and long enough
+    // then dispatch new dependent infomation to saga
+    if (validateUsername(username) && username.length > 4) {
+      // Send the user entered info and token to server for
+      // validation and entry if valid
+      dispatch({
+        type: "ADD_DEPENDENT",
+        payload: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          username: username.toLowerCase(),
+          password: password,
+          token: token,
+        },
+      });
+      // clear out local states after dispatching new info
+      clearLocalState();
+      // move user back to home page for login
+      history.push("/");
+    } else {
+      setShowInvalid(true);
+    }
   };
+
+  useEffect(() => {
+    // Sets both valid and invalid to false if only newPassword
+    // has entry or both or empty
+    if (validateUsername(username)) {
+      setShowInvalid(false);
+      return;
+    } else {
+      setShowInvalid(true);
+    }
+  }, [username]);
+
+   // This function will check that the username is only characters or numbers
+  // using regex
+  const validateUsername = (username) => {
+    return /^[A-Za-z0-9]*$/.test(username);
+  };
+
+    // This function will reset all local states to default(empty)
+    const clearLocalState = () => {
+      setUsername('');
+      setPassword('');
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setShowInvalid(false);
+    }
 
   return (
     <>
@@ -100,9 +136,11 @@ function DependentRegistrationPage() {
                 type="text"
                 placeholder="name@example.com"
                 value={username}
+                isInvalid={showInvalid?true:false}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </FloatingLabel>
+            {showInvalid && <p className="text-center text-muted">Username be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
 
             <FloatingLabel
               className="mb-1 text-primary"
