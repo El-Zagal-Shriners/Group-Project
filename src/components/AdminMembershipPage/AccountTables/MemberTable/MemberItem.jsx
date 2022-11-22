@@ -10,95 +10,97 @@ import {
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
+import MemberModal from "./AccountModals/MemberModal";
 import DependentItem from "./DependentItem";
 
 function MemberItem({ member, members }) {
   const dispatch = useDispatch();
-  const dues = member.dues_paid.split("-")[0];
-  const dueDate = member.dues_paid.split("T")[0];
+  // MOVED TO MODAL:
+  // const dues = member.dues_paid.split("-")[0];
+  // const dueDate = member.dues_paid.split("T")[0];
   // setup local state for showing dependents.
-  const [listDependents, toggleList] = useState(false);
+  // const [listDependents, toggleList] = useState(false);
+  // const [edit, setEdit] = useState(false);
+  // PROPS
   const [show, setShow] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+
 
   // local state for form.
-  const [memberNumber, setMemberNumber] = useState("");
-  const [duesPaid, setDuesPaid] = useState(null);
-  // assume member is authorized.
-  const [authorized, setAuthorized] = useState(member.is_authorized);
-  // const [authorized, setAuthorized] = useState(true);
+  // const [memberNumber, setMemberNumber] = useState("");
+  // const [duesPaid, setDuesPaid] = useState(null);
+  // const [authorized, setAuthorized] = useState(member.is_authorized);
 
   // used to set the approval status of a member.
-  const approveMember = () => {
-    dispatch({
-      type: "APPROVE_MEMBER",
-      payload: {
-        memberId: member.id,
-        verification: true,
-      },
-    });
-    setShow(false);
-  };
+  // const approveMember = () => {
+  //   dispatch({
+  //     type: "APPROVE_MEMBER",
+  //     payload: {
+  //       memberId: member.id,
+  //       verification: true,
+  //     },
+  //   });
+  //   setShow(false);
+  // };
 
   // changes member's authorization status
-  const activate = () => {
-    dispatch({
-      type: "AUTHORIZE_MEMBER",
-      payload: {
-        memberId: member.id,
-        authorized,
-      },
-    });
-    setEdit(false);
-  };
+  // const activate = () => {
+  //   dispatch({
+  //     type: "AUTHORIZE_MEMBER",
+  //     payload: {
+  //       memberId: member.id,
+  //       authorized,
+  //     },
+  //   });
+  //   setEdit(false);
+  // };
 
   // updates member's paid date and or number
-  const updateMember = () => {
-    if (
-      memberNumber === member.membership_number &&
-      duesPaid === member.dues_paid
-    ) {
-      activate();
-    } else {
-      dispatch({
-        type: "UPDATE_MEMBER_INFO",
-        payload: {
-          memberId: member.id,
-          memberNumber: memberNumber || member.membership_number,
-          duesPaid: duesPaid || member.dues_paid,
-        },
-      });
-      activate();
-      closeModal();
-    }
-  };
+  // const updateMember = () => {
+  //   if (
+  //     memberNumber === member.membership_number &&
+  //     duesPaid === member.dues_paid
+  //   ) {
+  //     activate();
+  //   } else {
+  //     dispatch({
+  //       type: "UPDATE_MEMBER_INFO",
+  //       payload: {
+  //         memberId: member.id,
+  //         memberNumber: memberNumber || member.membership_number,
+  //         duesPaid: duesPaid || member.dues_paid,
+  //       },
+  //     });
+  //     activate();
+  //     closeModal();
+  //   }
+  // };
 
   // deletes member
-  const removeMember = () => {
-    // console.log(member.id);
-    dispatch({
-      type: "ADMIN_DELETE_MEMBER",
-      payload: {
-        memberId: member.id,
-      },
-    });
-  };
+  // const removeMember = () => {
+  //   // console.log(member.id);
+  //   dispatch({
+  //     type: "ADMIN_DELETE_MEMBER",
+  //     payload: {
+  //       memberId: member.id,
+  //     },
+  //   });
+  // };
 
   // setup close modal function
-  const closeModal = () => {
-    // reset local state
-    setAuthorized(member.is_authorized);
-    setDuesPaid(null);
-    setMemberNumber("");
-  };
+  // const closeModal = () => {
+  //   // reset local state
+  //   setAuthorized(member.is_authorized);
+  //   setDuesPaid(null);
+  //   setMemberNumber("");
+  // };
 
+  // MOVED TO MODAL:
   // access members to get the dependents.
-  const dependents = [...members].filter(
-    (acc) =>
-      acc.membership_number === null &&
-      Number(acc.primary_member_id) === member.id
-  );
+  // const dependents = [...members].filter(
+  //   (acc) =>
+  //     acc.membership_number === null &&
+  //     Number(acc.primary_member_id) === member.id
+  // );
 
   return (
     <>
@@ -110,7 +112,8 @@ function MemberItem({ member, members }) {
         <div className="col-4 text-center m-0">{member.last_name}</div>
         <div className="col text-center m-0">{member.membership_number}</div>
       </ListGroup.Item>
-      {member.is_verified ? (
+      <MemberModal member={member} members={members} show={show} setShow={setShow}/>
+      {/* {member.is_verified ? (
         <>
           <Modal
             // info modal
@@ -238,9 +241,6 @@ function MemberItem({ member, members }) {
                   )}
                 </Col>
                 <Col>
-                  {/* <Button onClick={() => setAuthorized(false)}>
-                    Deactivate
-                  </Button> */}
                 </Col>
                 <Col>
                   <Button onClick={() => removeMember()}>Remove</Button>
@@ -319,7 +319,7 @@ function MemberItem({ member, members }) {
             <Button onClick={() => setShow(false)}>Close</Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )} */}
     </>
   );
 }
