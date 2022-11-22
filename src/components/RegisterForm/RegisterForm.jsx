@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -12,6 +12,7 @@ function RegisterForm() {
   const [emailIn, setEmailIn] = useState("");
   const [duesPaid, setDuesPaid] = useState("");
   const [memberNumber, setMemberNumber] = useState("");
+  const [showInvalid, setShowInvalid] = useState(false);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -21,7 +22,8 @@ function RegisterForm() {
     //Temporary validation, need to decide on error alerts
     if (Number(duesPaid.slice(0, 4)) < 2000)
       return alert("Please check your due paid, and enter a recent year");
-
+    
+    if (validateUsername(usernameIn)){
     dispatch({
       type: "REGISTER",
       payload: {
@@ -34,7 +36,40 @@ function RegisterForm() {
         membership_number: memberNumber,
       },
     });
+    clearLocalState();
+    } else {
+      setShowInvalid(true);
+    }
   }; // end registerUser
+
+  // This function will check that the username is only characters or numbers
+  // using regex
+  const validateUsername = (username) => {
+    return /^[A-Za-z0-9]*$/.test(username);
+  };
+
+  useEffect(() => {
+    // Sets both valid and invalid to false if only newPassword
+    // has entry or both or empty
+    if (validateUsername(usernameIn)) {
+      setShowInvalid(false);
+      return;
+    } else {
+      setShowInvalid(true);
+    }
+  }, [usernameIn]);
+
+  // This function will reset all local states to default(empty)
+  const clearLocalState = () => {
+    setUsernameIn('');
+    setPasswordIn('');
+    setFirstNameIn('');
+    setLastNameIn('');
+    setEmailIn('');
+    setDuesPaid('');
+    setMemberNumber('');
+    setShowInvalid(false);
+  }
 
   return (
     <form
@@ -59,9 +94,14 @@ function RegisterForm() {
             value={usernameIn}
             placeholder="Username"
             required
-            onChange={(event) => setUsernameIn(event.target.value)}
+            isInvalid={showInvalid?true:false}
+            onChange={(event) => {
+              setUsernameIn(event.target.value);
+
+            }}
           />
         </FloatingLabel>
+        {showInvalid && <p className="text-center text-muted">Username CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
 
         <FloatingLabel
           controlId="floatingFirstName"
