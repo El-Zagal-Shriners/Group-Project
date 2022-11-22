@@ -99,6 +99,8 @@ function AddDiscountModal() {
             label="Discount Description"
           >
             <Form.Control
+              type="text"
+              placeholder="Discount Description"
               value={discountDescription}
               onChange={(e) => setDiscountDescription(e.target.value)}
             />
@@ -108,6 +110,8 @@ function AddDiscountModal() {
             label="Discount Summary"
           >
             <Form.Control
+              type="text"
+              placeholder="Discount Summary"
               value={discountSummary}
               onChange={(e) => setDiscountSummary(e.target.value)}
             />
@@ -117,6 +121,8 @@ function AddDiscountModal() {
             label="Start Date"
           >
             <Form.Control
+              type="date"
+              "Start Date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
@@ -126,6 +132,8 @@ function AddDiscountModal() {
             label="Expiration Date"
           >
             <Form.Control
+              type="date"
+              placeholder="Expiration Date"
               value={expDate}
               onChange={(e) => setExpDate(e.target.value)}
             />
@@ -135,6 +143,8 @@ function AddDiscountModal() {
             label="Discount Usage (If Applicable)"
           >
             <Form.Control
+              type="text"
+              placeholder="Discount Usage (If Applicable)"
               value={discountUsage}
               onChange={(e) => setDiscountUsage(e.target.value)}
             />
