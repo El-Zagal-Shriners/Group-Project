@@ -20,12 +20,14 @@ function MemberItem({ member, members }) {
   const [listDependents, toggleList] = useState(false);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   // local state for form.
   const [memberNumber, setMemberNumber] = useState("");
   const [duesPaid, setDuesPaid] = useState(null);
   // assume member is authorized.
-  const [authorized, setAuthorized] = useState(true);
+  const [authorized, setAuthorized] = useState(member.is_authorized);
+  // const [authorized, setAuthorized] = useState(true);
 
   // used to set the approval status of a member.
   const approveMember = () => {
@@ -86,7 +88,7 @@ function MemberItem({ member, members }) {
   // setup close modal function
   const closeModal = () => {
     // reset local state
-    setAuthorized(true);
+    setAuthorized(member.is_authorized);
     setDuesPaid(null);
     setMemberNumber("");
   };
@@ -94,23 +96,19 @@ function MemberItem({ member, members }) {
   // access members to get the dependents.
   const dependents = [...members].filter(
     (acc) =>
-      acc.membership_number === null && Number(acc.primary_member_id) === member.id
+      acc.membership_number === null &&
+      Number(acc.primary_member_id) === member.id
   );
 
   return (
     <>
-      <ListGroup.Item onClick={() => setShow(true)} className="px-1 mb-1 d-flex">
-        {/* <ListGroup horizontal> */}
-          <div className="col-4 text-center m-0">
-            {member.first_name}
-          </div>
-          <div className="col-4 text-center m-0">
-            {member.last_name}
-          </div>
-          <div className="col text-center m-0">
-            {member.membership_number}
-          </div>
-        {/* </ListGroup> */}
+      <ListGroup.Item
+        onClick={() => setShow(true)}
+        className="px-1 mb-1 d-flex"
+      >
+        <div className="col-4 text-center m-0">{member.first_name}</div>
+        <div className="col-4 text-center m-0">{member.last_name}</div>
+        <div className="col text-center m-0">{member.membership_number}</div>
       </ListGroup.Item>
       {member.is_verified ? (
         <>
@@ -191,7 +189,6 @@ function MemberItem({ member, members }) {
               >
                 Close
               </Button>
-              <Button>Save</Button>
             </Modal.Footer>
           </Modal>
 
@@ -230,15 +227,22 @@ function MemberItem({ member, members }) {
               <Row>
                 <Col></Col>
                 <Col>
-                  <Button onClick={() => setAuthorized(true)}>Activate</Button>
+                  {authorized ? (
+                    <Button onClick={() => setAuthorized(false)}>
+                      Deactivate
+                    </Button>
+                  ) : (
+                    <Button onClick={() => setAuthorized(true)}>
+                      Activate
+                    </Button>
+                  )}
                 </Col>
                 <Col>
-                  <Button onClick={() => setAuthorized(false)}>
+                  {/* <Button onClick={() => setAuthorized(false)}>
                     Deactivate
-                  </Button>
+                  </Button> */}
                 </Col>
                 <Col>
-                  {/* add delete function */}
                   <Button onClick={() => removeMember()}>Remove</Button>
                 </Col>
                 <Col></Col>

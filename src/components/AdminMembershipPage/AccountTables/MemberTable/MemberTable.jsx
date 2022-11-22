@@ -7,7 +7,6 @@ import {
   ListGroup,
   Row,
 } from "react-bootstrap";
-import "../AccountTables.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -90,7 +89,6 @@ function MemberTable({ members }) {
             </Button>
           </ButtonGroup>
         </div>
-        {/* <div className="w-100 d-flex flex-column align-items-center justify-content-center"> */}
         <ListGroup className="w-100 px-1 col col-lg-6">
           <ListGroup.Item className="p-1 bg-primary d-flex">
             <div className="col-4 p-0 text-center bg-primary text-light fw-bold">
@@ -115,7 +113,6 @@ function MemberTable({ members }) {
             ))}
           </div>
         </ListGroup>
-        {/* </div> */}
       </div>
     </div>
   );
