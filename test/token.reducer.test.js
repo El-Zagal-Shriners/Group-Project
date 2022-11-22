@@ -25,16 +25,27 @@ describe("Testing tokenReducer", () => {
     expect(returnedState.passwordResetTokenCheck).toEqual("stringtesttwo123");
   });
 
-  test("Should clear citiesReducer", () => {
-    let action = { type: "UNSET_DISCOUNTS" };
+  test("Should clear tokenReducer", () => {
+    let action = { type: "UNSET_TOKEN_CHECK" };
     let returnedState = tokenReducer(
       {
-        selectedCitiesReducer: "stringtestone123",
-        selectedCategoriesReducer: "stringesttwo123",
+        tokenCheck: "stringtestone123",
+        passwordResetTokenCheck: "false",
       },
       action
     );
     expect(returnedState.tokenCheck).toEqual("false");
+  });
+
+  test("Should clear tokenReducer", () => {
+    let action = { type: "UNSET_RESET_TOKEN_CHECK" };
+    let returnedState = tokenReducer(
+      {
+        tokenCheck: "false",
+        passwordResetTokenCheck: "stringesttwo123",
+      },
+      action
+    );
     expect(returnedState.passwordResetTokenCheck).toEqual("false");
   });
 });
