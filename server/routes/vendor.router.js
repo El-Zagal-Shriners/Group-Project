@@ -87,7 +87,7 @@ router.delete(
   rejectUnauthorizedUser,
   (req, res) => {
     const vendorId = req.params.vendorid;
-    console.log(req.params.vendorid);
+    // console.log(req.params.vendorid);
     // SQL for DELETE
     const query = `DELETE FROM "vendors"
                  WHERE "id"=$1;`;
