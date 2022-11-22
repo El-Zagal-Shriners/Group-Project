@@ -59,6 +59,7 @@ function AddDiscountModal() {
     setExpDate("");
     setDiscountUsage("N/A");
     setShow(false);
+    history.push("/admin");
   };
 
   useEffect(() => {
@@ -69,31 +70,31 @@ function AddDiscountModal() {
   }, []);
 
   return (
-<>
+    <>
       <Button variant="primary" onClick={handleShow}>
         Add Discount
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-        <Modal.Title className="text-primary">Add Discount</Modal.Title>
+          <Modal.Title className="text-primary">Add Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Dropdown onSelect={(eventKey) => setVendorId(eventKey)}>
-          <DropdownButton
-            id="category-select-dropdown"
-            title="Vendor"
-            as={ButtonGroup}
-          >
-            {allVendors.map((vendor) => {
-              return (
-                <Dropdown.Item eventKey={vendor.id}>
-                  {vendor.name}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
-        </Dropdown>
+          <Dropdown onSelect={(eventKey) => setVendorId(eventKey)}>
+            <DropdownButton
+              id="category-select-dropdown"
+              title="Vendor"
+              as={ButtonGroup}
+            >
+              {allVendors.map((vendor) => {
+                return (
+                  <Dropdown.Item eventKey={vendor.id}>
+                    {vendor.name}
+                  </Dropdown.Item>
+                );
+              })}
+            </DropdownButton>
+          </Dropdown>
           <FloatingLabel
             className="mb-1 text-primary"
             label="Discount Description"
@@ -105,10 +106,7 @@ function AddDiscountModal() {
               onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Discount Summary"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="Discount Summary">
             <Form.Control
               type="text"
               placeholder="Discount Summary"
@@ -116,10 +114,7 @@ function AddDiscountModal() {
               onChange={(e) => setDiscountSummary(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Start Date"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="Start Date">
             <Form.Control
               type="date"
               placeholder="Start Date"
@@ -127,10 +122,7 @@ function AddDiscountModal() {
               onChange={(e) => setStartDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel
-            className="mb-1 text-primary"
-            label="Expiration Date"
-          >
+          <FloatingLabel className="mb-1 text-primary" label="Expiration Date">
             <Form.Control
               type="date"
               placeholder="Expiration Date"
@@ -170,8 +162,8 @@ function AddDiscountModal() {
             Add Discount
           </Button>
         </Modal.Footer>
-        </Modal>
-        </>
+      </Modal>
+    </>
   );
 }
 

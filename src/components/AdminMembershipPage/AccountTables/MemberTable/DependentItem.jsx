@@ -1,33 +1,32 @@
+import { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { useDispatch } from "react-redux";
+import ConfirmationModal from "./AccountModals/ConfirmationModal";
 
 function DependentItem({ dependent }) {
-  const dispatch = useDispatch();
-  // add remove function.
-  const removeDependent = () => {
-    dispatch({
-      type: "ADMIN_DELETE_MEMBER",
-      payload: {
-        memberId: dependent.id,
-      },
-    });
-  };
+  const [show, setShow] = useState(false);
 
   return (
-    <ListGroup.Item className="border-0 p-0 w-100">
-      <ListGroup horizontal>
-        <ListGroup.Item className="col-4 text-center">
-          {dependent.first_name}
-        </ListGroup.Item>
-        <ListGroup.Item className="col-4 text-center">
-          {dependent.last_name}
-        </ListGroup.Item>
-        <ListGroup.Item className="col text-center">
-          <Button onClick={() => removeDependent()}>Remove</Button>
-        </ListGroup.Item>
-      </ListGroup>
-    </ListGroup.Item>
+    <>
+      <ListGroup.Item className="border-0 p-0 w-100">
+        <ListGroup horizontal>
+          <ListGroup.Item className="col-4 text-center">
+            {dependent.first_name}
+          </ListGroup.Item>
+          <ListGroup.Item className="col-4 text-center">
+            {dependent.last_name}
+          </ListGroup.Item>
+          <ListGroup.Item className="col text-center">
+            <Button onClick={() => setShow(true)}>Remove</Button>
+          </ListGroup.Item>
+        </ListGroup>
+      </ListGroup.Item>
+      <ConfirmationModal
+        show={show}
+        setShow={setShow}
+        memberId={dependent.id}
+      />
+    </>
   );
 }
 
