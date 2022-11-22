@@ -140,7 +140,7 @@ function DependentRegistrationPage() {
                 onChange={(event) => setUsername(event.target.value)}
               />
             </FloatingLabel>
-            {showInvalid && <p className="text-center text-muted">Username be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+            {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
 
             <FloatingLabel
               className="mb-1 text-primary"

@@ -102,7 +102,7 @@ function RegisterForm() {
             }}
           />
         </FloatingLabel>
-        {showInvalid && <p className="text-center text-muted">Username be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+        {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
 
         <FloatingLabel
           controlId="floatingFirstName"
