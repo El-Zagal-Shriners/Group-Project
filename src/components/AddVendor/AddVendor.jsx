@@ -50,30 +50,35 @@ function AddVendorModal() {
         <Modal.Body>
           <FloatingLabel className="mb-1 text-primary" label="Business Name">
             <Form.Control
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="mb-1 text-primary" label="Address">
             <Form.Control
+              type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="mb-1 text-primary" label="City">
             <Form.Control
+              type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="mb-1 text-primary" label="State Code">
             <Form.Control
+              type="text"
               value={stateCode}
               onChange={(e) => setStateCode(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="mb-1 text-primary" label="Zip">
             <Form.Control
+              type="text"
               value={zip}
               onChange={(e) => setZip(e.target.value)}
             />
@@ -83,6 +88,7 @@ function AddVendorModal() {
             label="Website (If Applicable)"
           >
             <Form.Control
+              type="text"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
             />

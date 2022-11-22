@@ -122,7 +122,7 @@ function AddDiscountModal() {
           >
             <Form.Control
               type="date"
-              "Start Date"
+              placeholder="Start Date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
