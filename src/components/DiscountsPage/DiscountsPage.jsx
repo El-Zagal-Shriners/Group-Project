@@ -24,38 +24,72 @@ function DiscountsPage() {
 
   // async function to await the retrieval of the user's location
   // then get the closest cities.
-  const getLocation = async () => {
-    await getPosition()
-      .then((response) => {
-        // bundle the latitude and longitude into a coordinates object
-        const coordinates = {
-          lat: response.coords.latitude,
-          lng: response.coords.longitude,
-        };
-        // dispatch to check if the user's city exists in the DB.
-        dispatch({
-          type: "CHECK_CITY",
-          payload: coordinates,
-        });
-        // dispatch to get the closest ciities.
-        dispatch({
-          type: "GET_CLOSE_CITIES",
-          payload: coordinates,
-        });
-      })
-      .catch((err) => {
-        if (err.code === 1) {
-          dispatch({ type: "GET_ALL_CITIES" });
-        } else {
-          console.log("Error resolving getPosition", err);
-        }
-      });
-    // after getPosition resolves, set loading to false.
-    setLoading(false);
-  };
-  // call get Location on load.
+  // const getLocation = async () => {
+  //   await getPosition()
+  //     .then((response) => {
+  //       // bundle the latitude and longitude into a coordinates object
+  //       const coordinates = {
+  //         lat: response.coords.latitude,
+  //         lng: response.coords.longitude,
+  //       };
+  //       // dispatch to check if the user's city exists in the DB.
+  //       dispatch({
+  //         type: "CHECK_CITY",
+  //         payload: coordinates,
+  //       });
+  //       // dispatch to get the closest ciities.
+  //       dispatch({
+  //         type: "GET_CLOSE_CITIES",
+  //         payload: coordinates,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       if (err.code === 1) {
+  //         dispatch({ type: "GET_ALL_CITIES" });
+  //       } else {
+  //         console.log("Error resolving getPosition", err);
+  //       }
+  //     });
+  //   // after getPosition resolves, set loading to false.
+  //   setLoading(false);
+  // };
+
   useEffect(() => {
-    getLocation();
+    let subscribed = true;
+    (async () => {
+      // async function to await the retrieval of the user's location
+      // then get the closest cities.
+      const wait = await getPosition()
+        .then((response) => {
+          // bundle the latitude and longitude into a coordinates object
+          const coordinates = {
+            lat: response.coords.latitude,
+            lng: response.coords.longitude,
+          };
+          // dispatch to check if the user's city exists in the DB.
+          dispatch({
+            type: "CHECK_CITY",
+            payload: coordinates,
+          });
+          // dispatch to get the closest ciities.
+          dispatch({
+            type: "GET_CLOSE_CITIES",
+            payload: coordinates,
+          });
+        })
+        .catch((err) => {
+          if (err.code === 1) {
+            dispatch({ type: "GET_ALL_CITIES" });
+          } else {
+            console.log("Error resolving getPosition", err);
+          }
+        });
+      if (subscribed) {
+        setLoading(false);
+      }
+    })();
+
+    return () => (subscribed = false);
   }, []);
 
   // redux stores for managing search parameters
