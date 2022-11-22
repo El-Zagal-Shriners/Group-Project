@@ -1,13 +1,23 @@
 .landing_page_size {
   height: 100vh;
-  background: url("../../../public/images/Theshrine.png");
+  background: url("../../../public/images/Theshriner.png");
   background-size: contain;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
+@media (min-width: 1025px) {
+  .landing_page_size {
+    height: 100vh;
+    background: url("../../../public/images/Theshriner.png");
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 .landing_buttons {
-  height: 15%;
+  height: 10%;
 }
 
 .bg_link_opacity {
