@@ -11,7 +11,7 @@ function LoginForm() {
   const dispatch = useDispatch();
 
   const login = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     if (username && password) {
       dispatch({
