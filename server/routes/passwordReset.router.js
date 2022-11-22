@@ -76,7 +76,7 @@ router.post("/email", (req, res, next) => {
           sgMail
             .send(msg)
             .then(() => {
-              console.log("Password reset email sent and db entry created");
+              // console.log("Password reset email sent and db entry created");
               res.sendStatus(201);
             })
             .catch((error) => {

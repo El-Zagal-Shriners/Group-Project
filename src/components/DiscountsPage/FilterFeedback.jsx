@@ -17,11 +17,11 @@ function FilterFeedback() {
   // this function removes an object from an array that has the
   // same id as the objectToRemove parameter
   function removeObjectFromArray(objectToRemove, array) {
-    console.log("inRemoveItemFromArray", array, objectToRemove);
+    // console.log("inRemoveItemFromArray", array, objectToRemove);
     let filteredArr = array.filter((thisItem) => {
       return thisItem.id !== objectToRemove.id;
     });
-    console.log("inRemoveItemFromArray, filtered array is", filteredArr);
+    // console.log("inRemoveItemFromArray, filtered array is", filteredArr);
 
     return filteredArr;
   }

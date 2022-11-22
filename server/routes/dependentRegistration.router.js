@@ -55,7 +55,7 @@ router.post(
         sgMail
           .send(msg)
           .then(() => {
-            console.log("Email sent and db entry created");
+            // console.log("Email sent and db entry created");
             res.sendStatus(201);
           })
           .catch((error) => {
