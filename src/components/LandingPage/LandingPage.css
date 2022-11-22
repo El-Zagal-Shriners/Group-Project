@@ -2,12 +2,12 @@
   height: 100vh;
   background: url("../../../public/images/Theshrine.png");
   background-size: contain;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
 .landing_buttons {
-  height: 15%;
+  height: 10%;
 }
 
 .bg_link_opacity {
