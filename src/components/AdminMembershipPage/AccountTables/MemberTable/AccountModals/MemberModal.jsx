@@ -11,6 +11,7 @@ import {
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import DependentItem from "../DependentItem";
+import SuccessModal from "./SuccessModal";
 
 function MemberModal({ member, members, show, setShow }) {
   // access members to get the dependents.
@@ -26,6 +27,9 @@ function MemberModal({ member, members, show, setShow }) {
   const [listDependents, toggleList] = useState(false);
   const [edit, setEdit] = useState(false);
   const [authorized, setAuthorized] = useState(member.is_authorized);
+  // setup state for showing success modals.
+  const [showSuccess, setShowSuccess] = useState(false);
+
   // access use dispatch
   const dispatch = useDispatch();
 
@@ -43,6 +47,8 @@ function MemberModal({ member, members, show, setShow }) {
       },
     });
     setShow(false);
+    // for success modal
+    setShowSuccess(true);
   };
 
   // changes member's authorization status
@@ -54,7 +60,10 @@ function MemberModal({ member, members, show, setShow }) {
         authorized,
       },
     });
+    setAuthorized(member.is_authorized);
     setEdit(false);
+    // for success modal
+    setShowSuccess(true);
   };
 
   // updates member's paid date and or number
@@ -75,6 +84,8 @@ function MemberModal({ member, members, show, setShow }) {
       });
       activate();
       closeModal();
+      // for success modal
+      setShowSuccess(true);
     }
   };
 
@@ -92,13 +103,12 @@ function MemberModal({ member, members, show, setShow }) {
   // setup close modal function
   const closeModal = () => {
     // reset local state
-    setAuthorized(member.is_authorized);
     setDuesPaid(null);
     setMemberNumber("");
   };
 
-// conditionally render the modal displayed depending on if the 
-// user is verified or not.
+  // conditionally render the modal displayed depending on if the
+  // user is verified or not.
   if (member.is_verified) {
     return (
       <>
@@ -253,57 +263,67 @@ function MemberModal({ member, members, show, setShow }) {
             <Button onClick={() => updateMember()}>Save</Button>
           </Modal.Footer>
         </Modal>
+        <SuccessModal
+          showSuccess={showSuccess}
+          setShowSuccess={setShowSuccess}
+        ></SuccessModal>
       </>
     );
   } else {
     return (
-      <Modal
-        // verify modal
-        show={show}
-        onHide={() => setShow(false)}
-        animation={false}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>New Member Info</Modal.Title>
-        </Modal.Header>
+      <>
+        <Modal
+          // verify modal
+          show={show}
+          onHide={() => setShow(false)}
+          animation={false}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>New Member Info</Modal.Title>
+          </Modal.Header>
 
-        <Modal.Body className="show-grid">
-          <Container>
-            <Row>
-              <Col xs={6}>
-                <p>First Name</p>
-                <p>{member.first_name}</p>
-              </Col>
-              <Col>
-                <p>Last Name</p>
-                <p>{member.last_name}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <p>Member #</p>
-                <p>{member.membership_number}</p>
-              </Col>
-              <Col>
-                <p>Dues Paid</p>
-                <p>{dues}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Button onClick={() => removeMember()}>Remove</Button>
-              </Col>
-            </Row>
-          </Container>
-        </Modal.Body>
+          <Modal.Body className="show-grid">
+            <Container>
+              <Row>
+                <Col xs={6}>
+                  <p>First Name</p>
+                  <p>{member.first_name}</p>
+                </Col>
+                <Col>
+                  <p>Last Name</p>
+                  <p>{member.last_name}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <p>Member #</p>
+                  <p>{member.membership_number}</p>
+                </Col>
+                <Col>
+                  <p>Dues Paid</p>
+                  <p>{dues}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Button onClick={() => removeMember()}>Remove</Button>
+                </Col>
+              </Row>
+            </Container>
+          </Modal.Body>
 
-        <Modal.Footer>
-          <Button onClick={() => approveMember()}>Approve</Button>
-          <Button onClick={() => setShow(false)}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Footer>
+            <Button onClick={() => approveMember()}>Approve</Button>
+            <Button onClick={() => setShow(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+        <SuccessModal
+          showSuccess={showSuccess}
+          setShowSuccess={setShowSuccess}
+        ></SuccessModal>
+      </>
     );
   }
 }
