@@ -22,8 +22,9 @@ function RegisterForm() {
     //Temporary validation, need to decide on error alerts
     if (Number(duesPaid.slice(0, 4)) < 2000)
       return alert("Please check your due paid, and enter a recent year");
-    
-    if (validateUsername(usernameIn)){
+    // Check for valid username before performing dispatch
+    // toggles username inValid if username doesn't pass regex
+    if (validateUsername(usernameIn) && usernameIn.length > 4){
     dispatch({
       type: "REGISTER",
       payload: {
@@ -49,6 +50,10 @@ function RegisterForm() {
   };
 
   useEffect(() => {
+    // if (usernameIn.length === 0){
+    //   setShowInvalid(false);
+    //   return;
+    // }
     // Sets both valid and invalid to false if only newPassword
     // has entry or both or empty
     if (validateUsername(usernameIn)) {
@@ -101,7 +106,7 @@ function RegisterForm() {
             }}
           />
         </FloatingLabel>
-        {showInvalid && <p className="text-center text-muted">Username CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+        {showInvalid && <p className="text-center text-muted">Username be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
 
         <FloatingLabel
           controlId="floatingFirstName"

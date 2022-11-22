@@ -69,7 +69,7 @@ function UserPage() {
             <br />
             <strong>Email:</strong> {user.email}
             <br />
-            {user.membership_number && <span><strong>Member Number:</strong> {user.membership_number}</span>}
+            {user.membership_number > 0 && <span><strong>Member Number:</strong> {user.membership_number}</span>}
           </p>
           {/* Button to show edit modal */}
           <button className="btn btn-primary mb-2" onClick={handleShowEdit}>
@@ -90,7 +90,7 @@ function UserPage() {
         {/* Render list of dependents if any */}
         <div className="d-flex align-items-center justify-content-center">
           {/* Hide dependent accounts list if dependent account */}
-          {user.membership_number &&
+          {user.membership_number > 0 &&
           <>
           <h5 className=" p-0 text-primary text-center mb-0 mt-2 text-decoration-underline fw-bold d-flex justify-content-between align-items-center">
            Dependent Accounts
