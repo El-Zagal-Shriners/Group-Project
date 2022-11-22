@@ -14,16 +14,30 @@ describe("Test the root path", () => {
 
   test("Test if returning info when authenticated", async () => {
     let agent = testServer.agent(app);
-    const response = await agent
-      .post("/api/user/login")
-      .send({
-        username: process.env.TESTING_USERNAME,
-        password: process.env.TESTING_PASSWORD,
-      });
+    const response = await agent.post("/api/user/login").send({
+      username: process.env.TESTING_USERNAME,
+      password: process.env.TESTING_PASSWORD,
+    });
     expect(response.statusCode).toBe(200);
 
     const userResponse = await agent.get("/api/user");
     expect(userResponse.statusCode).toBe(200);
     userResponse && console.log("received userResponse");
   });
+
+  // test("Test register with correct object", async () => {
+  //   const newUser = {
+  //     username: "testing",
+  //     first_name: "John",
+  //     last_name: "Doe",
+  //     email: "John.Doe@test.com",
+  //     dues_paid: "01/01/2022",
+  //     membership_number: "1234",
+  //     password: "testpassword",
+  //   };
+  //   const response = await testServer(app)
+  //     .post("/api/user/register")
+  //     .send(newUser);
+  //   expect(response.statusCode).toBe(201);
+  // });
 });
