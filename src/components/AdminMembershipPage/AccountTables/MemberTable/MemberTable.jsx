@@ -16,9 +16,11 @@ function MemberTable({ members }) {
 
   // seperate the members that have membership numbers from the members array.
   const primaries = [...accounts].filter(
-    (acc) => acc.membership_number !== null
+    (acc) => acc.membership_number !== null && acc.is_verified === true
   );
-  const newMembers = [...accounts].filter((acc) => acc.is_verified === false && acc.membership_number !== null);
+  const newMembers = [...accounts].filter(
+    (acc) => acc.is_verified === false && acc.membership_number !== null
+  );
   const reviewPending = [...accounts].filter(
     (acc) => acc.review_pending === true
   );
@@ -33,6 +35,7 @@ function MemberTable({ members }) {
     // if filter type is a specific number, filter it accordingly
     switch (filterType) {
       case 0:
+        arrCopy = arrCopy.filter((acc) => acc.is_verified === true);
         break;
       case 1:
         arrCopy = arrCopy.filter((acc) => acc.review_pending === true);

@@ -8,10 +8,11 @@ function AdminMembershipPage() {
   // access the list of current accounts from the redux store.
   const accounts = useSelector((store) => store.accounts.accountsReducer);
 
+  // filter out the primary accounts, which have a membership number.
   const primaries = [...accounts].filter(
     (acc) => acc.membership_number !== null
   );
-  
+
   // access to useDispatch
   const dispatch = useDispatch();
 
