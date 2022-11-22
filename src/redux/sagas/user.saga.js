@@ -53,6 +53,15 @@ function* sendPasswordResetEmail(action) {
   }
 }
 
+// POST to send new password to db
+function* resetPassword(action) {
+  try {
+    yield axios.post("/api/reset", action.payload);
+  } catch (error) {
+    console.log("Error in saga POST for password reset:", error);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -73,6 +82,7 @@ function* userSaga() {
   yield takeLatest("EDIT_USER_INFO", editUser);
   yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck);
   yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
+  yield takeLatest("RESET_PASSWORD", resetPassword);
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 

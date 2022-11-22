@@ -24,6 +24,7 @@ function PasswordResetPage(){
     // function to submit the new password
     const submitReset = (e) => {
         e.preventDefault();
+        if(passwordCompare()){
         dispatch({
             type: "RESET_PASSWORD",
             payload: {
@@ -31,8 +32,13 @@ function PasswordResetPage(){
               token: token
             }
           });
-        history.pushState('/');
+          history.push('/');
+        }
     }
+    // compare the two passwords
+    const passwordCompare = () => {
+        return newPassword===confirmNewPassword?true:false;
+    };
     // toggle if password box should invalid or valid
     // based on the two passwords entered
     useEffect(() => {

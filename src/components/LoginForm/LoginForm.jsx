@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import RequestPasswordReset from "../RequestPasswordReset/RequestPasswordReset";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showResetPassword, setShowResetPassword] = useState(false);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const login = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     if (username && password) {
       dispatch({
@@ -23,6 +25,17 @@ function LoginForm() {
       dispatch({ type: "LOGIN_INPUT_ERROR" });
     }
   }; // end login
+
+  // Toggle local 'showResetPassword' state
+  const handleShowResetPassword = (event) => {
+    event.preventDefault();
+    setShowResetPassword(true);
+  }
+  // Toggle local 'showResetPassword' state
+  const handleCloseResetPassword = (event) => {
+    event.preventDefault();
+    setShowResetPassword(false);
+  }
 
   return (
     <form
@@ -61,13 +74,16 @@ function LoginForm() {
           />
         </label>
       </div>
-      <div>
-        <input
-          className="btn btn-primary"
+      <div className="d-flex justify-content-between">
+        {/* Button to toggle modal for password reset */}
+        <button type='button' className="btn btn-outline-primary mx-1" onClick={(e)=>handleShowResetPassword(e)}>Forgot Password?</button>
+        {/* Modal for password reset */}
+        <RequestPasswordReset handleCloseResetPassword={handleCloseResetPassword} showResetPassword={showResetPassword}/>
+        <button
+          className="btn btn-primary mx-1"
           type="submit"
-          name="submit"
-          value="Log In"
-        />
+        >Log In
+        </button>
       </div>
     </form>
   );
