@@ -16,15 +16,19 @@ function LandingPage() {
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center landing_page_size">
+      <h2 className="mb-5 vw-100 mx-3 text-center text-primary fw-bold p-4 bg-light bg-opacity-75 border-top border-bottom border-1 border-primary">
+        El Zagal Shriners
+        <br /> Membership Portal
+      </h2>
       <Button
-        className="w-75 mb-3 landing_buttons"
+        className="col-9 col-lg-6 mb-3 landing_buttons"
         variant="primary"
         onClick={onLogin}
       >
         Login
       </Button>
       <Button
-        className="w-75 mb-3 landing_buttons"
+        className="col-9 col-lg-6 mb-3 landing_buttons"
         variant="primary"
         onClick={onEvents}
       >

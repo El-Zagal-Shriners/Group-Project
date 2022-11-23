@@ -71,7 +71,7 @@ function AdminTrackingPage() {
                   key={discount.id}
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary fw-bold">
+                  <h3 className="text-center w-100 text-primary">
                     {
                       allVendors[
                         allVendors.findIndex(
@@ -130,14 +130,14 @@ function AdminTrackingPage() {
                   key={discount.id}
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary fw-bold">
+                  <h3 className="text-center w-100 text-primary">
                     {
                       allVendors[
                         allVendors.findIndex(
                           (item) =>
                             Number(item.id) === Number(discount.vendor_id)
                         )
-                      ].name
+                      ]?.name
                     }
                   </h3>
                   <h5 className="text-center w-100 text-primary">

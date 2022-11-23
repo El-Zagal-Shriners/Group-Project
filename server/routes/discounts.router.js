@@ -16,7 +16,7 @@ router.get(
   rejectUnauthorizedUser,
   (req, res) => {
     // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
-    const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "discount_description", "discount_summary", "start_date", "expiration_date", "discount_usage", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
+    const query = `SELECT "discounts"."id" as "discount_id", "vendor_id", "discount_description", "discount_summary", "discount_usage", "start_date", "expiration_date", "category_id", "is_regional", "vendors"."name" as "vendor_name", "address", "city", "state_code", "zip", "categories"."name" as "category_name", "icon_class"
   FROM "discounts"
   JOIN "vendors" ON "vendors"."id" = "vendor_id"
   JOIN "categories" ON "categories"."id" = "category_id"
