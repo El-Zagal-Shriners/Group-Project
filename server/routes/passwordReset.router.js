@@ -36,6 +36,7 @@ router.post("/email", (req, res, next) => {
   const token = uuidv4();
   const username = req.body.username;
   // SQL for checking if username is valid
+  // returns the member id and email address
   const checkValidUsernameQuery = `SELECT "id", "email" from "user" WHERE "username"=$1;`;
   pool
     .query(checkValidUsernameQuery, [username])
@@ -46,7 +47,7 @@ router.post("/email", (req, res, next) => {
         }
         const memberId = result.rows[0].id;
         const savedEmail = result.rows[0].email;
-        // Data for email to send to dependent
+        // Data for email to send to user with password reset token
         const msg = {
           to: savedEmail, // address email is being sent
           from: "dvettertest@gmail.com", // account registered with sendGrid
@@ -96,6 +97,8 @@ router.post("/email", (req, res, next) => {
 router.post("/username", (req, res, next) => {
   const email = req.body.email;
   // SQL for checking if username is valid
+  // returns an array of all the email's associated with
+  // usernames and the email address from the database
   const checkValidEmailQuery = `SELECT ARRAY_AGG("username") AS "usernames", "email" FROM "user" WHERE "email"=$1 GROUP BY "email";`;
   pool
     .query(checkValidEmailQuery, [email])
@@ -106,7 +109,7 @@ router.post("/username", (req, res, next) => {
       }
       const usernames = result.rows[0].usernames;
       const savedEmail = result.rows[0].email;
-      // Data for email to send to dependent
+      // Data for email to send list of usernames
       const msg = {
         to: savedEmail, // address email is being sent
         from: "dvettertest@gmail.com", // account registered with sendGrid

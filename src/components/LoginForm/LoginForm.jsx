@@ -108,6 +108,7 @@ function LoginForm() {
             Forgot Password?
           </button>
         </div>
+        {/* Modal for 'Forgot Username' */}
         <RequestUsername
           handleCloseForgotUsername={handleCloseForgotUsername}
           showForgotUsername={showForgotUsername}
