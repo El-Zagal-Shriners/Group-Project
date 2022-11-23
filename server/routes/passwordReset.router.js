@@ -118,12 +118,12 @@ router.post("/username", (req, res, next) => {
             : usernames[0]
         }`, // alternative text
         // html to display in the body of the email
-        html: `<p>Your username(s) for this email address are: <strong>${
-          usernames.length > 1
-            ? usernames.map((u) => String(u)).join(", ")
-            : usernames[0]
-        }</strong>
-                If you did not make this request please disregard.</p>`,
+        html: `<p>The ${
+          usernames.length > 1 ? "usernames" : "username"
+        } for this email address ${
+          usernames.length > 1 ? "are" : "is"
+        } <strong>${usernames.map((u) => String(u)).join(", ")}</strong>.<br />
+                If you did not make this request please disregard this email.</p>`,
       };
       // sends email based on msg above
       sgMail
