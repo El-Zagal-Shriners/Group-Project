@@ -6,7 +6,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
 function RequestUsername(props) {
-  // local state to hold the dependent email address
+  // local state to hold the users email
   const [email, setEmail] = useState("");
   const [showInvalid, setShowInvalid] = useState(false);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function RequestUsername(props) {
       // clear local state
       setEmail("");
       setShowInvalid(false);
-      // close the add reset password email modal
+      // close the forgot username modal
       props.handleCloseForgotUsername(e);
     } else {
         setShowInvalid(true);
@@ -32,12 +32,13 @@ function RequestUsername(props) {
   const cancelRequestUsername = (e) => {
     setEmail("");
     props.handleCloseForgotUsername(e);
+    setShowInvalid(false);
   };
 
   return (
     <Modal show={props.showForgotUsername} onHide={cancelRequestUsername}>
       <Modal.Header className="bg-primary">
-        <Modal.Title className="fw-bold text-light">Username Request</Modal.Title>
+        <Modal.Title className="fw-bold text-light">Forgot Username</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
