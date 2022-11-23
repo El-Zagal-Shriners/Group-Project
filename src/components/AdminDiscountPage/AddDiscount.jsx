@@ -88,7 +88,7 @@ function AddDiscountModal() {
             >
               {allVendors.map((vendor) => {
                 return (
-                  <Dropdown.Item eventKey={vendor.id}>
+                  <Dropdown.Item key={vendor.id} eventKey={vendor.id}>
                     {vendor.name}
                   </Dropdown.Item>
                 );
@@ -149,7 +149,7 @@ function AddDiscountModal() {
             >
               {allCategories.map((category) => {
                 return (
-                  <Dropdown.Item eventKey={category.id}>
+                  <Dropdown.Item key={category.id} eventKey={category.id}>
                     {category.name}
                   </Dropdown.Item>
                 );
