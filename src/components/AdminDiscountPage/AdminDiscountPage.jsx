@@ -66,6 +66,9 @@ function AdminDiscountPage(vendor) {
   return (
     <>
       <UpdatedNavBar />
+      <h1 className="text-primary text-center">
+        Discount Manager
+      </h1>
       <br/>
       <Row xs={1} md={2} className="g-4 d-flex justify-content-center">
         <Col>
