@@ -16,8 +16,8 @@ function RequestUsername(props) {
     dispatch({
         type: "SEND_USERNAME",
         payload: {
-          email,
-        },
+          email
+        }
       });
       // clear local state
       setEmail("");
