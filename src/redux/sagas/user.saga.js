@@ -45,6 +45,15 @@ function* resetTokenCheck(action) {
 }
 
 // Send password reset email
+function* sendForgotUsernameEmail(action) {
+  try {
+    yield axios.post("/api/reset/username", action.payload);
+  } catch (error) {
+    console.log("Error in saga POST for forgot username email:", error);
+  }
+}
+
+// Send password reset email
 function* sendPasswordResetEmail(action) {
   try {
     yield axios.post("/api/reset/email", action.payload);
@@ -81,6 +90,7 @@ function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);
   yield takeLatest("EDIT_USER_INFO", editUser);
   yield takeLatest("RESET_PASSWORD_TOKEN_CHECK", resetTokenCheck);
+  yield takeLatest("SEND_USERNAME", sendForgotUsernameEmail)
   yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
   yield takeLatest("RESET_PASSWORD", resetPassword);
   yield takeEvery("UNSET_ALL", unsetAll);

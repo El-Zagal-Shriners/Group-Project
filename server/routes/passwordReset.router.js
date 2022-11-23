@@ -1,11 +1,5 @@
 const express = require("express");
 const pool = require("../modules/pool");
-const {
-  rejectUnauthenticated,
-} = require("../modules/authentication-middleware");
-const {
-  rejectUnauthorizedUser,
-} = require("../modules/authorization-middleware");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const encryptLib = require("../modules/encryption");
@@ -42,9 +36,10 @@ router.post("/email", (req, res, next) => {
   const token = uuidv4();
   const username = req.body.username;
   // SQL for checking if username is valid
-  const checkValidEmailQuery = `SELECT "id", "email" from "user" WHERE "username"=$1;`;
+  // returns the member id and email address
+  const checkValidUsernameQuery = `SELECT "id", "email" from "user" WHERE "username"=$1;`;
   pool
-    .query(checkValidEmailQuery, [username])
+    .query(checkValidUsernameQuery, [username])
     .then((result) => {
         if (result.rows <= 0) {
           res.sendStatus(500);
@@ -52,7 +47,7 @@ router.post("/email", (req, res, next) => {
         }
         const memberId = result.rows[0].id;
         const savedEmail = result.rows[0].email;
-        // Data for email to send to dependent
+        // Data for email to send to user with password reset token
         const msg = {
           to: savedEmail, // address email is being sent
           from: "dvettertest@gmail.com", // account registered with sendGrid
@@ -90,6 +85,60 @@ router.post("/email", (req, res, next) => {
           console.log("Error in INSERT to token table: ", err);
           res.sendStatus(500);
         }); // end INSERT password_token statement
+    })
+    .catch((err) => {
+      console.log("Error in validating password reset email: ", err);
+      sendStatus(500);
+    }); // end SELECT to check for valid email
+});
+
+// This POST will check if the email supplied exists
+// Then will email that email address the username associated with it
+router.post("/username", (req, res, next) => {
+  const email = req.body.email;
+  // SQL for checking if username is valid
+  // returns an array of all the email's associated with
+  // usernames and the email address from the database
+  const checkValidEmailQuery = `SELECT ARRAY_AGG("username") AS "usernames", "email" FROM "user" WHERE "email"=$1 GROUP BY "email";`;
+  pool
+    .query(checkValidEmailQuery, [email])
+    .then((result) => {
+      if (result.rows <= 0) {
+        res.sendStatus(500);
+        return;
+      }
+      const usernames = result.rows[0].usernames;
+      const savedEmail = result.rows[0].email;
+      // Data for email to send list of usernames
+      const msg = {
+        to: savedEmail, // address email is being sent
+        from: "dvettertest@gmail.com", // account registered with sendGrid
+        subject: "Shrine App Testing Emails - Username Request",
+        // Map array to display usernames as comma separated list or singular username
+        text: `The ${
+          usernames.length > 1 ? "usernames" : "username"
+        } for this email ${usernames.length > 1 ? "are" : "is"}  ${usernames
+          .map((u) => String(u))
+          .join(", ")}`, // alternative text
+        // html to display in the body of the email
+        html: `<p>The ${
+          usernames.length > 1 ? "usernames" : "username"
+        } for this email address ${
+          usernames.length > 1 ? "are" : "is"
+        } <strong>${usernames.map((u) => String(u)).join(", ")}</strong>.<br />
+                If you did not make this request please disregard this email.</p>`,
+      };
+      // sends email based on msg above
+      sgMail
+        .send(msg)
+        .then(() => {
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          // log error and send error status if error occurs
+          console.error("Error sending email", error);
+          res.sendStatus(500);
+        }); // end SEND email
     })
     .catch((err) => {
       console.log("Error in validating password reset email: ", err);

@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RequestPasswordReset from "../RequestPasswordReset/RequestPasswordReset";
+import RequestUsername from "../RequestUsername/RequestUsername";
+import './LoginForm.css'
 
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const [showForgotUsername, setShowForgotUsername] = useState(false);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -36,6 +39,16 @@ function LoginForm() {
     event.preventDefault();
     setShowResetPassword(false);
   };
+    // Toggle local 'showResetPassword' state
+    const handleShowForgotUsername = (event) => {
+      event.preventDefault();
+      setShowForgotUsername(true);
+    };
+    // Toggle local 'showResetPassword' state
+    const handleCloseForgotUsername = (event) => {
+      event.preventDefault();
+      setShowForgotUsername(false);
+    };
 
   return (
     <form
@@ -79,13 +92,27 @@ function LoginForm() {
         <button className="btn btn-primary mx-1 mt-3" type="submit">
           Log In
         </button>
-        <button
-          type="button"
-          className="btn-link btn mx-1"
-          onClick={(e) => handleShowResetPassword(e)}
-        >
-          Forgot Password?
-        </button>
+        <div className="d-flex justify-content-between align-items-center">
+          <button
+            type="button"
+            className="btn-link btn mx-1 forgotBtn"
+            onClick={(e) => handleShowForgotUsername(e)}
+          >
+            Forgot Username?
+          </button>
+          <button
+            type="button"
+            className="btn-link btn mx-1 forgotBtn"
+            onClick={(e) => handleShowResetPassword(e)}
+          >
+            Forgot Password?
+          </button>
+        </div>
+        {/* Modal for 'Forgot Username' */}
+        <RequestUsername
+          handleCloseForgotUsername={handleCloseForgotUsername}
+          showForgotUsername={showForgotUsername}
+        />
         {/* Modal for password reset */}
         <RequestPasswordReset
           handleCloseResetPassword={handleCloseResetPassword}
