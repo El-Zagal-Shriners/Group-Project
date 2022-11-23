@@ -35,7 +35,7 @@ function AddVendorModal() {
         website: website,
       },
     });
-    history.push("/admin");
+    setShow(false);
   };
   return (
     <>
