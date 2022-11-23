@@ -133,7 +133,7 @@ function DiscountFilterOffCanvas({
           <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <h2 className="fw-bold">Refine Search</h2>
+          <h2 className="fw-bold text-primary">Refine Search</h2>
           <hr />
           {/* Select a Discount Category  */}
           <div className="m-1 p-1">
@@ -223,7 +223,7 @@ function DiscountFilterOffCanvas({
           <hr />
           {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
           <FilterFeedback />
-
+          <hr />
           <div className="mb-3 d-flex flex-row justify-content-center align-items-center">
             <Button
               size="lg"

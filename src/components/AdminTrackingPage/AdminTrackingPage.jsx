@@ -71,7 +71,7 @@ function AdminTrackingPage() {
                   key={discount.id}
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary">
+                  <h3 className="text-center w-100 text-primary fw-bold">
                     {
                       allVendors[
                         allVendors.findIndex(
@@ -115,7 +115,7 @@ function AdminTrackingPage() {
                     </Card.Body>
                   </Card>
 
-                  <Card className="col mb-1">
+                  <Card className="col">
                     <Card.Body>
                       <Card.Title className="text-center">All-Time</Card.Title>
                       <Card.Text className="text-center">
@@ -130,7 +130,7 @@ function AdminTrackingPage() {
                   key={discount.id}
                   className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary">
+                  <h3 className="text-center w-100 text-primary fw-bold">
                     {
                       allVendors[
                         allVendors.findIndex(

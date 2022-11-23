@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import DiscountModal from "./DiscountModal";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./DiscountItem.css";
 
@@ -13,7 +12,7 @@ function DiscountItem({ discount }) {
       <div className="d-flex justify-content-center">
         <div className="col-10">
           <div className="row">
-            <div className="px-1 py-2 bg-light rounded d-flex justify-content-start align-items-center">
+            <div className="px-1 py-2 rounded d-flex justify-content-start align-items-center">
               <Card
                 key={discount.id}
                 className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
