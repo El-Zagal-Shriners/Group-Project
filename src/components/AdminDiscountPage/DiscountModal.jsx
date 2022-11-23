@@ -14,8 +14,8 @@ function DiscountModal({ discount }) {
   const [discountSummary, setDiscountSummary] = useState(
     discount.discountSummary
   );
-  const [startDate, setStartDate] = useState(discount.start_date);
-  const [expDate, setExpDate] = useState(discount.expiration_date);
+  const [startDate, setStartDate] = useState(discount.start_date===null?'':discount.start_date);
+  const [expDate, setExpDate] = useState(discount.expiration_date===null?'':discount.expiration_date);
   const [discountUsage, setDiscountUsage] = useState(discount.discountUsage);
 
   const handleClose = () => setShow(false);
