@@ -24,7 +24,7 @@ function AdminMembershipPage() {
   return (
     <div className="vw-100">
       <UpdatedNavBar />
-      <h5 className="text-primary fw-bold text-center">Manage Members</h5>
+      <h5 className="text-primary fw-bold text-center mt-2">Manage Members</h5>
       {/* spot for all members
         drop down for dependents */}
       <MemberTable members={primaries} />

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RequestPasswordReset from "../RequestPasswordReset/RequestPasswordReset";
 import RequestUsername from "../RequestUsername/RequestUsername";
-import './LoginForm.css'
+import "./LoginForm.css";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -39,20 +39,20 @@ function LoginForm() {
     event.preventDefault();
     setShowResetPassword(false);
   };
-    // Toggle local 'showResetPassword' state
-    const handleShowForgotUsername = (event) => {
-      event.preventDefault();
-      setShowForgotUsername(true);
-    };
-    // Toggle local 'showResetPassword' state
-    const handleCloseForgotUsername = (event) => {
-      event.preventDefault();
-      setShowForgotUsername(false);
-    };
+  // Toggle local 'showResetPassword' state
+  const handleShowForgotUsername = (event) => {
+    event.preventDefault();
+    setShowForgotUsername(true);
+  };
+  // Toggle local 'showResetPassword' state
+  const handleCloseForgotUsername = (event) => {
+    event.preventDefault();
+    setShowForgotUsername(false);
+  };
 
   return (
     <form
-      className="d-flex flex-column align-items-center bg-light px-5 py-3 rounded-3 border border-2 border-primary shadow-lg mb-3"
+      className="d-flex flex-column align-items-center px-5 py-3 rounded-3 border border-2 border-primary shadow-lg mb-3 registration_background"
       onSubmit={login}
     >
       <h2 className="text-primary">Login</h2>

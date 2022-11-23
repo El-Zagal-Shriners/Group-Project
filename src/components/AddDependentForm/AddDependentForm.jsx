@@ -39,7 +39,7 @@ function AddDependentForm(props) {
         <FloatingLabel
             controlId="dependentEmailLabel"
             label="Email"
-            className="mb-3"
+            className="mt-4"
         >
         <Form.Control type="text" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
         </FloatingLabel>

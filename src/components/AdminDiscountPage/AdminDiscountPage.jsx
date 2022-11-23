@@ -11,8 +11,8 @@ import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -66,25 +66,14 @@ function AdminDiscountPage(vendor) {
   return (
     <>
       <UpdatedNavBar />
-      <h1 className="text-primary text-center">
-        Discount Manager
-      </h1>
-      <br/>
-      <Row xs={1} md={2} className="g-4 d-flex justify-content-center">
-        <Col>
-          <Card>
+      <h1 className="text-primary text-center mt-3 mb-0">Discount Manager</h1>
+      <br />
+      <div className="d-flex justify-content-around">
         <AddVendorModal />
-        </Card>
-        </Col>
-      </Row>
-      <Row xs={1} md={2} className="g-4 d-flex justify-content-center">
-        <Col>
-          <Card>
         <AddDiscountModal />
-        </Card>
-        </Col>
-        </Row>
-      <div className="container text-center col col-lg-6">
+      </div>
+
+      <div className="container text-center col col-lg-6 pb-0">
         <DropdownButton
           as={ButtonGroup}
           key="primary"
@@ -120,13 +109,9 @@ function AdminDiscountPage(vendor) {
         </DropdownButton>
       </div>
       <section className="w-100 flex-wrap">
-        {currentSelected !== "default"
-          ? filteredDiscounts.map((discount) => {
-              return <DiscountItem key={discount.id} discount={discount} />;
-            })
-          : filteredDiscounts.map((discount, vendors) => {
-              return <DiscountItem key={discount.id} discount={discount} />;
-            })}
+        {filteredDiscounts.map((discount) => {
+          return <DiscountItem key={discount.id} discount={discount} />;
+        })}
       </section>
     </>
   );
