@@ -115,11 +115,11 @@ router.post("/username", (req, res, next) => {
         from: "dvettertest@gmail.com", // account registered with sendGrid
         subject: "Shrine App Testing Emails - Username Request",
         // Map array to display usernames as comma separated list or singular username
-        text: `Your username(s): ${
-          usernames.length > 1
-            ? usernames.map((u) => String(u)).join(", ")
-            : usernames[0]
-        }`, // alternative text
+        text: `The ${
+          usernames.length > 1 ? "usernames" : "username"
+        } for this email ${usernames.length > 1 ? "are" : "is"}  ${usernames
+          .map((u) => String(u))
+          .join(", ")}`, // alternative text
         // html to display in the body of the email
         html: `<p>The ${
           usernames.length > 1 ? "usernames" : "username"
