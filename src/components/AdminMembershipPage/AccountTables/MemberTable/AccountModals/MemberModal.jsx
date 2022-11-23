@@ -115,39 +115,53 @@ function MemberModal({ member, members, show, setShow }) {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
-            <Modal.Title>Member Info</Modal.Title>
+          <Modal.Header className="bg-primary text-light">
+            <Modal.Title className="fw-bold">Member Info</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <Container>
               <Row>
                 <Col xs={6}>
-                  <p>First Name</p>
-                  <p>{member.first_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    First Name
+                  </p>
+                  <p className="text-center">{member.first_name}</p>
                 </Col>
                 <Col>
-                  <p>Last Name</p>
-                  <p>{member.last_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Last Name
+                  </p>
+                  <p className="text-center">{member.last_name}</p>
                 </Col>
               </Row>
               <Row>
                 <Col xs={6}>
-                  <p>Member #</p>
-                  <p>{member.membership_number}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Member #
+                  </p>
+                  <p className="text-center">{member.membership_number}</p>
                 </Col>
                 <Col>
-                  <p>Dues Paid</p>
-                  <p>{dues}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Dues Paid
+                  </p>
+                  <p className="text-center">{dues}</p>
                 </Col>
               </Row>
+              <hr />
               <Row>
                 <Col>
-                  <p>Dependents: {dependents.length}</p>
+                  <p className="text-center fw-bold text-primary m-0 pt-2">
+                    Dependents: {dependents.length}
+                  </p>
                 </Col>
                 <Col>
                   {dependents.length > 0 && (
-                    <Button onClick={() => toggleList(!listDependents)}>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => toggleList(!listDependents)}
+                    >
                       List
                     </Button>
                   )}
@@ -172,6 +186,7 @@ function MemberModal({ member, members, show, setShow }) {
               Edit
             </Button>
             <Button
+              variant="outline-primary"
               onClick={() => {
                 setShow(false);
                 closeModal();
@@ -282,7 +297,7 @@ function MemberModal({ member, members, show, setShow }) {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-primary text-light" closeButton>
             <Modal.Title>New Member Info</Modal.Title>
           </Modal.Header>
 
