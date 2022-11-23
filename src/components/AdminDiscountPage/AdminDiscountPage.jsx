@@ -11,8 +11,8 @@ import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -66,24 +66,22 @@ function AdminDiscountPage(vendor) {
   return (
     <>
       <UpdatedNavBar />
-      <h1 className="text-primary text-center">
-        Discount Manager
-      </h1>
-      <br/>
+      <h1 className="text-primary text-center">Discount Manager</h1>
+      <br />
       <Row xs={1} md={2} className="g-4 d-flex justify-content-center">
         <Col>
           <Card>
-        <AddVendorModal />
-        </Card>
+            <AddVendorModal />
+          </Card>
         </Col>
       </Row>
       <Row xs={1} md={2} className="g-4 d-flex justify-content-center">
         <Col>
           <Card>
-        <AddDiscountModal />
-        </Card>
+            <AddDiscountModal />
+          </Card>
         </Col>
-        </Row>
+      </Row>
       <div className="container text-center col col-lg-6">
         <DropdownButton
           as={ButtonGroup}
