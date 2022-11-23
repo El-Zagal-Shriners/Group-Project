@@ -6,7 +6,6 @@ import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
 
 function DiscountModal(props) {
-  console.log('this is discount: ', props.discount);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
