@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Offcanvas from "react-bootstrap/Offcanvas";
-
 import FilterFeedback from "./FilterFeedback";
 
 // react boostrap components

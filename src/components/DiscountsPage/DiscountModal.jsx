@@ -5,7 +5,6 @@ import Accordion from "react-bootstrap/Accordion";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import { IconContext } from "react-icons";
 import Container from "react-bootstrap/Container";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 
 function DiscountModal({
@@ -21,7 +20,6 @@ function DiscountModal({
 
   function handleShowCode() {
     if (alreadyTracked === false) {
-      // console.log("inHandleShowCode", thisDiscount);
       const discountDate = new Date().toUTCString();
       dispatch({
         type: "ADD_TO_DISCOUNT_TRACKER",
