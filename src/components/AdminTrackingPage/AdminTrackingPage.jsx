@@ -36,6 +36,7 @@ function AdminTrackingPage() {
     <>
       <UpdatedNavBar />
       <div className="container d-flex flex-column justify-content-center align-items-center">
+        <h1 className="fw-bold w-100 text-primary text-center">Discount Tracking</h1>
         <DropdownButton
           as={ButtonGroup}
           key="primary"
