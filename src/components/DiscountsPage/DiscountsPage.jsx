@@ -98,11 +98,11 @@ function DiscountsPage() {
     //    => push discounts with both selected cities and categories to new array
     // else both seleceted arrays are empty
     //    => push all discounts to new array
-    if (selectedCities.length > 0 && selectedCategories.length <= 0) {
+    if (selectedCities.length > 0 && selectedCategories.length === 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
         return allSelected.includes(discount.city);
       });
-    } else if (selectedCities.length <= 0 && selectedCategories.length > 0) {
+    } else if (selectedCities.length === 0 && selectedCategories.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
         return allSelected.includes(discount.category_name);
       });
@@ -110,7 +110,7 @@ function DiscountsPage() {
       filteredArray = allMemberDiscounts.filter((discount, index) => {
         return allSelected.includes(discount.city);
       });
-      filteredArray = allMemberDiscounts.filter((discount) => {
+      filteredArray = filteredArray.filter((discount) => {
         return allSelected.includes(discount.category_name);
       });
     } else {
@@ -177,7 +177,7 @@ function DiscountsPage() {
               </Button>
             </div>
             
-            {(selectedCategories.length > 0 || selectedCities.length) > 0 && (
+            {(selectedCategories.length > 0 || selectedCities.length > 0 ) && (
               <FilterFeedback />
             )}
           </div>
