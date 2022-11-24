@@ -13,7 +13,7 @@ import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import EditVendor from "../AddVendor/EditVendor";
+import RemoveVendor from "../AddVendor/RemoveVendor";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -108,11 +108,11 @@ function AdminDiscountPage(vendor) {
             );
           })}
         </DropdownButton>
-        {/* <section className="w-100 flex-wrap">
-        {filteredVendors.map((vendorMap) => {
-          return <EditVendor key={vendorMap.id} vendorMap={vendorMap} />;
-        })}
-        </section> */}
+        <section className="w-100 flex-wrap">
+          {filteredVendors.map((vendorMap) => {
+            return <RemoveVendor key={vendorMap.id} vendorMap={vendorMap} />;
+          })}
+        </section>
       </div>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {

@@ -3,13 +3,14 @@ import Button from "react-bootstrap/Button";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import EditVendorModal from "./EditVendorModal";
 
-function EditVendor({ vendorMap }) {
+function RemoveVendor({ vendorMap }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const vendors = useSelector((store) => store.vendors);
-  const vendor = vendors.find((vend) => vend.id)
+  const vendor = vendors.find((vend) => vend.id);
 
   const removeVendor = (vendorId) => {
     dispatch({
@@ -26,6 +27,7 @@ function EditVendor({ vendorMap }) {
   return (
     <>
       <h1>{vendorMap.name}</h1>
+      <EditVendorModal vendorMap={vendorMap}/>
       <Button variant="warning" onClick={(event) => removeVendor(vendorMap.id)}>
         Remove
       </Button>
@@ -33,4 +35,4 @@ function EditVendor({ vendorMap }) {
   );
 }
 
-export default EditVendor;
+export default RemoveVendor;
