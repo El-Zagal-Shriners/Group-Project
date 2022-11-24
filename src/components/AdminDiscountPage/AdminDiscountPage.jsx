@@ -13,6 +13,7 @@ import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import EditVendor from "../AddVendor/EditVendor";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -22,14 +23,20 @@ function AdminDiscountPage(vendor) {
     (store) => store.discounts.adminDiscountsReducer
   );
 
-  // const[vendorId, setVendorId] = useState(vendors.id);
-
   function addVendor() {
     history.push("/adminaddvendor");
   }
 
   function addDiscount() {
     history.push("/adminadddiscount");
+  }
+
+  let filteredVendors = [...allVendors];
+  const [currentSelectedVendor, setCurrentSelectedVendor] = useState("default");
+  if (currentSelectedVendor !== "default") {
+    filteredVendors = filteredVendors.filter(
+      (vendor) => Number(vendor.id) === Number(currentSelectedVendor)
+    );
   }
 
   let filteredDiscounts = [...discounts];
@@ -97,16 +104,15 @@ function AdminDiscountPage(vendor) {
                 active={Number(currentSelected) === Number(vendor.id) && true}
               >
                 {vendor.name}
-                <Button
-                  variant="warning"
-                  onClick={(event) => removeVendor(vendor.id)}
-                >
-                  Remove
-                </Button>
               </Dropdown.Item>
             );
           })}
         </DropdownButton>
+        {/* <section className="w-100 flex-wrap">
+        {filteredVendors.map((vendorMap) => {
+          return <EditVendor key={vendorMap.id} vendorMap={vendorMap} />;
+        })}
+        </section> */}
       </div>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {
