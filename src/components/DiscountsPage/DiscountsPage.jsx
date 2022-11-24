@@ -176,7 +176,8 @@ function DiscountsPage() {
                 Search
               </Button>
             </div>
-            {(selectedCategories.legth > 0 || selectedCities.length) > 0 && (
+            
+            {(selectedCategories.length > 0 || selectedCities.length) > 0 && (
               <FilterFeedback />
             )}
           </div>
