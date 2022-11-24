@@ -71,6 +71,18 @@ function* resetPassword(action) {
   }
 }
 
+// PUT to request a review for user
+function* requestReview() {
+  try {
+    yield axios.put(`api/user/requestreview`, config);
+    yield put({
+      type: "FETCH_USER",
+    });
+  } catch (err) {
+    console.log("Error requesting a review: ", err);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -93,6 +105,7 @@ function* userSaga() {
   yield takeLatest("SEND_USERNAME", sendForgotUsernameEmail)
   yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
   yield takeLatest("RESET_PASSWORD", resetPassword);
+  yield takeLatest("REQUEST_REVIEW", requestReview);
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 
