@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import LoginPage from "../LoginPage/LoginPage";
 import { useSelector } from "react-redux";
 import RequestReviewPage from "../RequestReviewPage/RequestReviewPage";
+import UnverifiedUserPage from "../UnverifiedUserPage/UnverifiedUserPage";
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -21,6 +22,18 @@ function ProtectedDiscountsRoute({ component, children, ...props }) {
   // or as a child component.
   const ProtectedComponent = component || (() => children);
 
+  // This function will determine if the user is in good standing,
+  // account is turned off or they are a new account waiting for authorization
+  const determineUserStatus = () => {
+    if (user.id && user.is_authorized && user.is_verified){
+        return <ProtectedComponent />
+    } else if (user.id && !user.is_authorized && user.is_verified){
+        return <RequestReviewPage />
+    } else if (user.id && !user.is_authorized && !user.is_verified){
+        return <UnverifiedUserPage />
+    }
+  }
+
   // We return a Route component that gets added to our list of routes
   return (
     <Route
@@ -28,13 +41,7 @@ function ProtectedDiscountsRoute({ component, children, ...props }) {
       // are now passed along to the 'Route' Component
       {...props}
     >
-      {user.id && user.is_authorized && user.is_verified ? (
-        // If the user is logged in, show the protected component
-        <ProtectedComponent />
-      ) : (
-        // Otherwise, redirect to the Loginpage
-        <RequestReviewPage />
-      )}
+      {determineUserStatus()}
     </Route>
   );
 }
