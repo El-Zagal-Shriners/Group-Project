@@ -36,7 +36,9 @@ function AdminTrackingPage() {
     <>
       <UpdatedNavBar />
       <div className="container d-flex flex-column justify-content-center align-items-center">
-        <h1 className="fw-bold w-100 text-primary text-center">Discount Tracking</h1>
+        <h1 className="fw-bold w-100 text-primary text-center">
+          Discount Tracking
+        </h1>
         <DropdownButton
           as={ButtonGroup}
           key="primary"
@@ -66,18 +68,18 @@ function AdminTrackingPage() {
         </DropdownButton>
         {currentSelected !== "default" && (
           <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
-          <h5 className="text-center w-100 mt-1">
-            Vendor:&nbsp;
-            <span className="text-primary fw-bold">
-            {
-              allVendors[
-                allVendors.findIndex(
-                  (item) => Number(item.id) === Number(currentSelected)
-                )
-              ].name
-            }
-            </span>
-          </h5>
+            <h5 className="text-center w-100 mt-1">
+              Vendor:&nbsp;
+              <span className="text-primary fw-bold">
+                {
+                  allVendors[
+                    allVendors.findIndex(
+                      (item) => Number(item.id) === Number(currentSelected)
+                    )
+                  ].name
+                }
+              </span>
+            </h5>
           </div>
         )}
         <section className="w-100 d-flex flex-wrap">
@@ -87,23 +89,13 @@ function AdminTrackingPage() {
                   key={discount.id}
                   className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  {/* <h3 className="text-center w-100 text-light fw-bold">
-                    {
-                      allVendors[
-                        allVendors.findIndex(
-                          (item) =>
-                            Number(item.id) === Number(discount.vendor_id)
-                        )
-                      ].name
-                    }
-                  </h3> */}
                   <div className="bg-light w-100 rounded mb-2">
-                  <h5 className="text-center w-100 fw-bold text-primary">
-                    {discount.discount_summary}
-                  </h5>
-                  <h5 className="text-center w-100">
-                    {discount.discount_description}
-                  </h5>
+                    <h5 className="text-center w-100 fw-bold text-primary">
+                      {discount.discount_summary}
+                    </h5>
+                    <h5 className="text-center w-100">
+                      {discount.discount_description}
+                    </h5>
                   </div>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
@@ -162,12 +154,12 @@ function AdminTrackingPage() {
                     }
                   </h3>
                   <div className="bg-light w-100 rounded mb-2">
-                  <h5 className="text-center w-100 fw-bold text-primary">
-                    {discount.discount_summary}
-                  </h5>
-                  <h5 className="text-center w-100 text-primary">
-                    {discount.discount_description}
-                  </h5>
+                    <h5 className="text-center w-100 fw-bold text-primary">
+                      {discount.discount_summary}
+                    </h5>
+                    <h5 className="text-center w-100 text-primary">
+                      {discount.discount_description}
+                    </h5>
                   </div>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
