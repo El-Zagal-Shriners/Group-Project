@@ -63,15 +63,30 @@ function AdminTrackingPage() {
             );
           })}
         </DropdownButton>
-
+        {currentSelected !== "default" && (
+          <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
+          <h5 className="text-center w-100 mt-1">
+            Vendor:&nbsp;
+            <span className="text-primary fw-bold">
+            {
+              allVendors[
+                allVendors.findIndex(
+                  (item) => Number(item.id) === Number(currentSelected)
+                )
+              ].name
+            }
+            </span>
+          </h5>
+          </div>
+        )}
         <section className="w-100 d-flex flex-wrap">
           {currentSelected !== "default"
             ? filteredDiscountTracker.map((discount) => (
                 <div
                   key={discount.id}
-                  className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                  className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary fw-bold">
+                  {/* <h3 className="text-center w-100 text-light fw-bold">
                     {
                       allVendors[
                         allVendors.findIndex(
@@ -80,10 +95,15 @@ function AdminTrackingPage() {
                         )
                       ].name
                     }
-                  </h3>
-                  <h5 className="text-center w-100 text-primary">
-                    {discount.description}
+                  </h3> */}
+                  <div className="bg-light w-100 rounded mb-2">
+                  <h5 className="text-center w-100 fw-bold text-primary">
+                    {discount.discount_summary}
                   </h5>
+                  <h5 className="text-center w-100">
+                    {discount.discount_description}
+                  </h5>
+                  </div>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
                       <Card.Title className="text-center">
@@ -128,9 +148,9 @@ function AdminTrackingPage() {
             : allDiscountTracker.map((discount) => (
                 <div
                   key={discount.id}
-                  className="w-100 d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                  className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <h3 className="text-center w-100 text-primary fw-bold">
+                  <h3 className="text-center w-100 text-light fw-bold">
                     {
                       allVendors[
                         allVendors.findIndex(
@@ -140,9 +160,14 @@ function AdminTrackingPage() {
                       ]?.name
                     }
                   </h3>
-                  <h5 className="text-center w-100 text-primary">
-                    {discount.description}
+                  <div className="bg-light w-100 rounded mb-2">
+                  <h5 className="text-center w-100 fw-bold text-primary">
+                    {discount.discount_summary}
                   </h5>
+                  <h5 className="text-center w-100 text-primary">
+                    {discount.discount_description}
+                  </h5>
+                  </div>
                   <Card className="col-6 me-1 mb-1">
                     <Card.Body>
                       <Card.Title className="text-center">
@@ -165,7 +190,7 @@ function AdminTrackingPage() {
                     </Card.Body>
                   </Card>
 
-                  <Card className="col-6 me-1">
+                  <Card className="col-6 mb-1 me-1">
                     <Card.Body>
                       <Card.Title className="text-center">Past Year</Card.Title>
                       <Card.Text className="text-center">
