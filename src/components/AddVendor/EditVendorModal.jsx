@@ -39,11 +39,72 @@ function EditVendorModal(vendorMap) {
     setShow(false);
   }
 
+  const removeVendor = () => {
+    dispatch({
+        type: "REMOVE_VENDOR",
+        payload: vendorMap.id
+    })
+  }
+
   return (
     <>
     <Button variant="primary" onClick={handleShow}>
         Edit
     </Button>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+            <Modal.Title className="text-primary"> Edit Vendor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <FloatingLabel className="text-primary" label="Business Name (Required)">
+                <Form.Control 
+                value={vendorName}
+                onChange={(e) => setVendorName(e.target.value)}
+                />
+                </FloatingLabel>
+                <FloatingLabel className="text-primary" label="Address (Required)">
+                <Form.Control 
+                value={vendorAddress}
+                onChange={(e) => setVendorAddress(e.target.value)}
+                />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="City (Required)">
+                <Form.Control 
+                value={vendorCity}
+                onChange={(e) => setVendorCity(e.target.value)}
+                />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="State (Required)">
+                <Form.Control 
+                value={vendorState}
+                onChange={(e) => setVendorState(e.target.value)}
+                />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Zip Code (Required)">
+                <Form.Control 
+                value={vendorZip}
+                onChange={(e) => setVendorZip(e.target.value)}
+                />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Website (If Applicable)">
+                <Form.Control 
+                value={vendorWebsite}
+                onChange={(e) => setVendorWebsite(e.target.value)}
+                />
+            </FloatingLabel>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="primary" onClick={editVendor}>
+                Save Changes
+            </Button>
+            <Button variant="warning" onClick={removeVendor}>
+                Delete Vendor
+            </Button>
+            <Button variant="outline-primary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+    </Modal>
     </>
   
   );
