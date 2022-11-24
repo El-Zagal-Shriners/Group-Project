@@ -86,7 +86,7 @@ function DiscountModal({
               <Accordion.Item eventKey="0">
                 <Accordion.Header onClick={() => handleShowCode()}>
                   <span className="text-center">
-                    Click To Show Discount Code
+                    Click To Show Discount Instructions
                   </span>
                 </Accordion.Header>
                 <Accordion.Body className="text-center fw-bold text-primary">
