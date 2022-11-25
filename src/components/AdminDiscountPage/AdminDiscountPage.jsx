@@ -107,6 +107,22 @@ function AdminDiscountPage(vendor) {
             );
           })}
         </DropdownButton>
+        {currentSelected !== "default" && (
+            <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
+              <h5 className="text-center w-100 mt-1">
+                Vendor:&nbsp;
+                <span className="text-primary fw-bold">
+                  {
+                    allVendors[
+                      allVendors.findIndex(
+                        (item) => Number(item.id) === Number(currentSelected)
+                      )
+                    ]?.name
+                  }
+                </span>
+              </h5>
+            </div>
+          )}
       </div>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {
