@@ -99,6 +99,7 @@ function AdminDiscountPage(vendor) {
                     )
                   ]?.name
                 }
+                <br />
               </span>
             </h5>
             <button className="btn btn-primary mb-1" onClick={removeVendor}>
