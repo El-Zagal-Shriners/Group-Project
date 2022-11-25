@@ -45,7 +45,7 @@ function AdminTrackingPage() {
           id={`discountDropdown`}
           variant="primary"
           title="Select Vendor"
-          className="w-75"
+          className="w-75 mt-1"
           onSelect={handleSelect}
         >
           <Dropdown.Item
@@ -67,7 +67,7 @@ function AdminTrackingPage() {
           })}
         </DropdownButton>
         {currentSelected !== "default" && (
-          <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
+          <div className="border border-primary border-2 rounded px-3 mt-3 w-100">
             <h5 className="text-center w-100 mt-1">
               Vendor:&nbsp;
               <span className="text-primary fw-bold">
@@ -82,14 +82,14 @@ function AdminTrackingPage() {
             </h5>
           </div>
         )}
-        <section className="w-100 d-flex flex-wrap">
+        <section className="col d-flex flex-wrap">
           {currentSelected !== "default"
             ? filteredDiscountTracker.map((discount) => (
                 <div
                   key={discount.id}
                   className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
                 >
-                  <div className="bg-light w-100 rounded mb-2">
+                  <div className="bg-light w-100 rounded mb-1 p-2">
                     <h5 className="text-center w-100 fw-bold text-primary">
                       {discount.discount_summary}
                     </h5>
