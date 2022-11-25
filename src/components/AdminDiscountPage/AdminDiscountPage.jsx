@@ -49,11 +49,12 @@ function AdminDiscountPage(vendor) {
     // console.log("selected value", selectedValue);
   }
 
-  const removeVendor = (vendorId) => {
+  const removeVendor = () => {
     dispatch({
       type: "REMOVE_VENDOR",
-      payload: vendorId,
+      payload: currentSelected
     });
+    setCurrentSelected('default');
     history.push("/admindiscounts");
   };
 
@@ -97,12 +98,12 @@ function AdminDiscountPage(vendor) {
                 active={Number(currentSelected) === Number(vendor.id) && true}
               >
                 {vendor.name}
-                <Button
+                {/* <Button
                   variant="warning"
                   onClick={(event) => removeVendor(vendor.id)}
                 >
                   Remove
-                </Button>
+                </Button> */}
               </Dropdown.Item>
             );
           })}
@@ -121,6 +122,7 @@ function AdminDiscountPage(vendor) {
                   }
                 </span>
               </h5>
+              <button className="btn btn-primary mb-1" onClick={removeVendor}>Remove</button>
             </div>
           )}
       </div>
