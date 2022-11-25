@@ -5,6 +5,7 @@ import "./DiscountItem.css";
 import { IconContext } from "react-icons";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditVendorModal from "../AddVendor/EditVendorModal";
+import { useState } from "react";
 
 function DiscountItem({ discount }) {
   const categories = useSelector((store) => store.categories);
@@ -12,12 +13,13 @@ function DiscountItem({ discount }) {
     (cat) => cat.id === Number(discount.category_id)
   );
   const vendors = useSelector((store) => store.vendors);
+  const [showEditDiscount, setShowEditDiscount] = useState(false);
   const vendor = vendors.find((vend) => vend.id === Number(discount.vendor_id));
 
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div className="hover-shadow mx-1 col col-md-9 col-lg-6 bg-primary rounded my-1 p-1 d-flex justify-content-center align-items-center">
+        <div onClick={()=>setShowEditDiscount(true)}  className="hover-shadow mx-1 col col-md-9 col-lg-6 bg-primary rounded my-1 p-1 d-flex justify-content-center align-items-center">
           <div className="row fill-container">
             <div className="col-2">
               <div className="d-flex text-light flex-column justify-content-center align-items-center fill-container">
@@ -39,7 +41,6 @@ function DiscountItem({ discount }) {
                           {vendor?.address}, {vendor?.city}
                         </small>
                       </div>
-                      <DiscountModal className="d-flex justify-content-center" discount={discount} />
                     </div>
                   </div>
                 </div>
@@ -56,6 +57,7 @@ function DiscountItem({ discount }) {
             </div>
           </div>
         </div>
+        <DiscountModal className="d-flex justify-content-center" setShowEditDiscount={setShowEditDiscount} showEditDiscount={showEditDiscount} discount={discount} />
       </div>
     </>
   );
