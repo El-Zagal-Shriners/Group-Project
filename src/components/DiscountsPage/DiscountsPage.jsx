@@ -72,7 +72,7 @@ function DiscountsPage() {
       }
     })();
     // cleanup function to stop asynchronous tasks
-    // when user switches pages to stop memery leaks and potential
+    // when user switches pages to stop memory leaks and potential
     // app crashes.
     return () => (subscribed = false);
   }, []);
