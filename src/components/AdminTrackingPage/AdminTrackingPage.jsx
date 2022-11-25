@@ -39,6 +39,9 @@ function AdminTrackingPage() {
         <h1 className="fw-bold w-100 text-primary text-center">
           Discount Tracking
         </h1>
+        <span className=" mb-1 fst-italic small text-center">
+          *Discounts are updated when discount code is revealed
+        </span>
         <DropdownButton
           as={ButtonGroup}
           key="primary"
