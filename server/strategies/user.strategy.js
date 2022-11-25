@@ -17,6 +17,8 @@ passport.deserializeUser((id, done) => {
       if (user) {
         // user found
         delete user.password; // remove password so it doesn't get sent
+        //SQL for checking is current user's primary user is_authorized = true
+        const query = `SELECT "is_authorized" FROM `
         // done takes an error (null in this case) and a user
         done(null, user);
       } else {
