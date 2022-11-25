@@ -52,7 +52,7 @@ function DiscountModal(props) {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -90,14 +90,14 @@ function DiscountModal(props) {
           </FloatingLabel>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
           <Button variant="primary" onClick={editDiscount}>
             Save Changes
           </Button>
           <Button variant="warning" onClick={removeDiscount}>
             Delete Discount
+          </Button>
+          <Button variant="outline-primary" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

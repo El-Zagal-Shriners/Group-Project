@@ -8,6 +8,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import DiscountItem from "./DiscountItem";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
+import EditVendorModal from "../AddVendor/EditVendorModal";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -103,6 +104,11 @@ function AdminDiscountPage(vendor) {
             <button className="btn btn-primary mb-1" onClick={removeVendor}>
               Remove
             </button>
+            <br />
+            <EditVendorModal
+              allVendors={allVendors}
+              currentSelected={currentSelected}
+            />
           </div>
         )}
       </div>

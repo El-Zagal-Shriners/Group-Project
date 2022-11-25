@@ -63,21 +63,21 @@ function DependentRegistrationPage() {
     }
   }, [username]);
 
-   // This function will check that the username is only characters or numbers
+  // This function will check that the username is only characters or numbers
   // using regex
   const validateUsername = (username) => {
     return /^[A-Za-z0-9]*$/.test(username);
   };
 
-    // This function will reset all local states to default(empty)
-    const clearLocalState = () => {
-      setUsername('');
-      setPassword('');
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setShowInvalid(false);
-    }
+  // This function will reset all local states to default(empty)
+  const clearLocalState = () => {
+    setUsername("");
+    setPassword("");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setShowInvalid(false);
+  };
 
   return (
     <>
@@ -136,11 +136,16 @@ function DependentRegistrationPage() {
                 type="text"
                 placeholder="name@example.com"
                 value={username}
-                isInvalid={showInvalid?true:false}
+                isInvalid={showInvalid ? true : false}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </FloatingLabel>
-            {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+            {showInvalid && (
+              <p className="text-center text-muted">
+                Username must be longer than 4 characters and CANNOT contain any
+                special characters ie. !, $, %, #, @, etc...
+              </p>
+            )}
 
             <FloatingLabel
               className="mb-1 text-primary"
