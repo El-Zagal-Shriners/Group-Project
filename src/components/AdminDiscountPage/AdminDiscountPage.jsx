@@ -108,17 +108,18 @@ function AdminDiscountPage(vendor) {
             );
           })}
         </DropdownButton>
-        <section className="w-100 flex-wrap">
+     
+      <section className="w-100 flex-wrap">
           {filteredVendors.map((vendorMap) => {
             return <RemoveVendor key={vendorMap.id} vendorMap={vendorMap} />;
           })}
         </section>
-      </div>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {
           return <DiscountItem key={discount.id} discount={discount} />;
         })}
       </section>
+      </div>
     </>
   );
 }

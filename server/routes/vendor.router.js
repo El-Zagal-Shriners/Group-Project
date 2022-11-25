@@ -54,31 +54,40 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 }); // End POST for new vendors
 
 // PUT for editing existing vendor info by vendorId
-router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
-  // Variables from req.body
-  const name = req.body.name;
-  const address = req.body.address;
-  const city = req.body.city;
-  const stateCode = req.body.stateCode;
-  const zip = req.body.zip;
-  const vendorId = req.body.vendorId;
-  // SQL for PUT
-  const query = `UPDATE "vendors"
-                 SET "name"=$1, "address"=$2, "city"=$3, "state_code"=$4, "zip"=$5
-                 WHERE "id"=$6;`;
-  // Run SQL against database
-  pool
-    .query(query, [name, address, city, stateCode, zip, vendorId])
-    .then((result) => {
-      // Send success status
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      // Log error and send error status if error occurs
-      console.log("Error editing vendor ", err);
-      res.sendStatus(500);
-    });
-}); // End vendor editing PUT
+router.put(
+  "/:vendorid",
+  rejectUnauthenticated,
+  rejectUnauthorizedUser,
+  (req, res) => {
+    // Variables from req.body
+    const vendorId = req.params.vendorId;
+    console.log(`inPUT route /vendors/edit/${vendorId}`);
+    
+    const name = req.body.name;
+    const address = req.body.address;
+    const city = req.body.city;
+    const stateCode = req.body.stateCode;
+    const zip = req.body.zip;
+    const website = req.body.website;
+    // const vendorId = req.body.vendorId;
+    // SQL for PUT
+    const query = `UPDATE "vendors"
+                 SET "name"=$1, "address"=$2, "city"=$3, "state_code"=$4, "zip"=$5, "website_url"=$6
+                 WHERE "id"=$7;`;
+    // Run SQL against database
+    pool
+      .query(query, [name, address, city, stateCode, zip, website, vendorId])
+      .then((result) => {
+        // Send success status
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        // Log error and send error status if error occurs
+        console.log("Error editing vendor ", err);
+        res.sendStatus(500);
+      });
+  }
+); // End vendor editing PUT
 
 // DELETE for removing a vendor by vendorId
 router.delete(
