@@ -131,7 +131,7 @@ VALUES ('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky
 ('jareddoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jared', 'Doe', 'jareddoe@gmail.com', 'true', 1, 'true', 'false', '2022/1/1', null, 0),
 ('bobsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 'true', 1, 'true', 'false', '2022/1/1', null, 0),
 ('jimanderson', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jim', 'Anderson', 'jimmy@gmail.com', 'true', 1, 'true', 'false', '2022/1/1', null, 0),
-('admin', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Admin', 'Admin', 'Admin@admin.com', 'true', 6, 'true', 'false', '2022/1/1', 16437, 4),
+('admin', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Admin', 'Admin', 'Admin@admin.com', 'true', 6, 'true', 'false', '2022/1/1', 99999, 4),
 -- Above is base presentation; Below is safe cluster data
 ('susansmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Jackson', 'susanj@gmail.com', 'true', 7, 'true', 'false', '2022/1/1', 26357, 0),
 ('johnsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Jackson', 'johnj@gmail.com', 'true', 7, 'true', 'false', '2022/1/1', null, 0),
