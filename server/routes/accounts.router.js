@@ -21,7 +21,7 @@ router.get("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
     dues_paid,
     membership_number,
     admin_level
-    FROM "user";`;
+    FROM "user" ORDER BY "last_name";`;
   pool
     .query(queryText)
     .then((result) => {

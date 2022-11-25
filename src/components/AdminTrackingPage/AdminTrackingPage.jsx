@@ -39,6 +39,9 @@ function AdminTrackingPage() {
         <h1 className="fw-bold w-100 text-primary text-center">
           Discount Tracking
         </h1>
+        <span className=" mb-1 fst-italic small text-center">
+          *Discounts are updated when discount code is revealed
+        </span>
         <DropdownButton
           as={ButtonGroup}
           key="primary"
@@ -141,7 +144,7 @@ function AdminTrackingPage() {
             : allDiscountTracker.map((discount) => (
                 <div
                   key={discount.id}
-                  className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary p-3 rounded-3 mt-3"
+                  className="w-100 bg-primary d-flex flex-wrap border border-2 border-primary px-3 py-2 rounded-3 mt-3"
                 >
                   <h3 className="text-center w-100 text-light fw-bold">
                     {
@@ -153,7 +156,7 @@ function AdminTrackingPage() {
                       ]?.name
                     }
                   </h3>
-                  <div className="bg-light w-100 rounded mb-2">
+                  <div className="bg-light w-100 rounded mb-1 p-2">
                     <h5 className="text-center w-100 fw-bold text-primary">
                       {discount.discount_summary}
                     </h5>

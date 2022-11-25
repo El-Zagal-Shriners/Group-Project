@@ -76,7 +76,7 @@ function AddDiscountModal() {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="text-primary">Add Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -160,6 +160,9 @@ function AddDiscountModal() {
         <Modal.Footer>
           <Button variant="primary" onClick={addDiscount}>
             Add Discount
+          </Button>
+          <Button variant="outline-primary" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
