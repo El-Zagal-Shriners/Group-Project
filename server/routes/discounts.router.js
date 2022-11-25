@@ -20,7 +20,8 @@ router.get(
   FROM "discounts"
   JOIN "vendors" ON "vendors"."id" = "vendor_id"
   JOIN "categories" ON "categories"."id" = "category_id"
-  WHERE "is_shown"=true;`;
+  WHERE "is_shown"=true AND (("start_date"<CURRENT_DATE OR "start_date" IS NULL) AND ("expiration_date">CURRENT_DATE OR "expiration_date" IS NULL))
+  ORDER BY "discounts"."id";`;
     pool
       .query(query)
       .then((result) => {

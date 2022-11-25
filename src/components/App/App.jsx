@@ -27,6 +27,7 @@ import AddVendor from "../AddVendor/AddVendor";
 import AddDiscount from "../AdminDiscountPage/AddDiscount";
 import AddVendorModal from "../AddVendor/AddVendor";
 import PasswordResetPage from "../PasswordResetPage/PasswordResetPage";
+import ProtectedDiscountsRoute from "../ProtectedDiscountsRoute/ProtectedDiscountsRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,13 +57,13 @@ function App() {
             <UserPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
+          <ProtectedDiscountsRoute
             // logged in brings users to DiscountsPage else shows LoginPage
             exact
             path="/discounts"
           >
             <DiscountsPage />
-          </ProtectedRoute>
+          </ProtectedDiscountsRoute>
 
           <ProtectedAdminRoute
             // logged in brings users to Admin Page else shows LoginPage
