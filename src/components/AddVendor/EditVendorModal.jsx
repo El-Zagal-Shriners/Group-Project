@@ -12,26 +12,30 @@ function EditVendorModal(props) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  // const vendors = useSelector((store) => store.vendors);
-  // const vendor = vendors.find((vend) => vend.id === Number(vendorid));
+  console.log("props.allVendors", props.currentVendor);
 
-console.log("props.allVendors", props.currentVendor);
-
-const getVendor = () => {
-  console.log('In getVendor');
-  // console.log('This is currentVendor: ', allVendors[allVendors.findIndex((item)=>Number(item.id)===Number(currentSelected))]);
-  return(
-    props.allVendors.findIndex(
+  const getVendor = () => {
+    return props.allVendors.findIndex(
       (item) => Number(item.id) === Number(props.currentSelected)
-    ))
-}
+    );
+  };
 
-  const [vendorName, setVendorName] = useState(props.allVendors[getVendor()].name);
-  const [vendorAddress, setVendorAddress] = useState(props.allVendors[getVendor()].address);
-  const [vendorCity, setVendorCity] = useState(props.allVendors[getVendor()].city);
-  const [vendorState, setVendorState] = useState(props.allVendors[getVendor()].state_code);
+  const [vendorName, setVendorName] = useState(
+    props.allVendors[getVendor()].name
+  );
+  const [vendorAddress, setVendorAddress] = useState(
+    props.allVendors[getVendor()].address
+  );
+  const [vendorCity, setVendorCity] = useState(
+    props.allVendors[getVendor()].city
+  );
+  const [vendorState, setVendorState] = useState(
+    props.allVendors[getVendor()].state_code
+  );
   const [vendorZip, setVendorZip] = useState(props.allVendors[getVendor()].zip);
-  const [vendorWebsite, setVendorWebsite] = useState(props.allVendors[getVendor()].website_url);
+  const [vendorWebsite, setVendorWebsite] = useState(
+    props.allVendors[getVendor()].website_url
+  );
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -53,18 +57,6 @@ const getVendor = () => {
     });
     setShow(false);
   };
-
-  // useEffect(() => {
-  //   {
-  //     props.allVendors[
-  //       props.allVendors.findIndex(
-  //         (item) => Number(item.id) === Number(props.currentSelected)
-  //       )
-  //     ]?.name
-  //   }
-
-  //   // setCurrentVendor=
-  // }, []);
 
   return (
     <>
