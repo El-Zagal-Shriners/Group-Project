@@ -24,8 +24,8 @@ function DiscountsPage() {
   };
 
   // use Effect to get the users location on load if user's location services are
-  // enabled, and if not load default location. Also used to handle asynchronous 
-  // tasks. 
+  // enabled, and if not load default location. Also used to handle asynchronous
+  // tasks.
   useEffect(() => {
     // variable set to true when user is on this page.
     let subscribed = true;
@@ -34,7 +34,7 @@ function DiscountsPage() {
       // then get the closest cities.
       const wait = await getPosition()
         .then((response) => {
-          // In the response from getPosition, if subscribed is true, 
+          // In the response from getPosition, if subscribed is true,
           // perform async tasks. Otherwise if subscribed is false,
           // do not perform the async tasks.
           if (subscribed) {
@@ -64,7 +64,7 @@ function DiscountsPage() {
             console.log("Error resolving getPosition", err);
           }
         });
-      // once the above function, getPosition(), resolves check if 
+      // once the above function, getPosition(), resolves check if
       // subscribed is true and if so, set loading equal to false and show
       // the discounts.
       if (subscribed) {
@@ -194,8 +194,8 @@ function DiscountsPage() {
                 Search
               </Button>
             </div>
-            
-            {(selectedCategories.length > 0 || selectedCities.length > 0 ) && (
+
+            {(selectedCategories.length > 0 || selectedCities.length > 0) && (
               <FilterFeedback />
             )}
           </div>
