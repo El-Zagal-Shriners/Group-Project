@@ -2,6 +2,7 @@ import React from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DiscountsPage from "../DiscountsPage/DiscountsPage";
+import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -28,7 +29,7 @@ function ProtectedAdminRoute({ component, children, ...props }) {
         <ProtectedComponent />
       ) : (
         // Otherwise, redirect to the Discounts page
-        <h2>Loading..</h2>
+        <AdminLandingPage />
       )}
     </Route>
   );

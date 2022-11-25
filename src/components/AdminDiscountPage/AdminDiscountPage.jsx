@@ -5,16 +5,9 @@ import UpdatedNavBar from "../Nav/Nav";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import Card from "react-bootstrap/Card";
-import DiscountModal from "./DiscountModal";
 import DiscountItem from "./DiscountItem";
-import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import RemoveVendor from "../AddVendor/RemoveVendor";
-import EditVendorModal from "../AddVendor/EditVendorModal";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -23,22 +16,6 @@ function AdminDiscountPage(vendor) {
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
-
-  function addVendor() {
-    history.push("/adminaddvendor");
-  }
-
-  function addDiscount() {
-    history.push("/adminadddiscount");
-  }
-
-  // let filteredVendors = [...allVendors];
-  // const [currentSelectedVendor, setCurrentSelectedVendor] = useState("default");
-  // if (currentSelectedVendor !== "default") {
-  //   filteredVendors = filteredVendors.filter(
-  //     (vendor) => Number(vendor.id) === Number(currentSelectedVendor)
-  //   );
-  // }
 
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
@@ -54,14 +31,14 @@ function AdminDiscountPage(vendor) {
     if (event.target.type !== "button") {
       setCurrentSelected(selectedValue);
     }
-    // console.log("selected value", selectedValue);
   }
 
-  const removeVendor = (vendorId) => {
+  const removeVendor = () => {
     dispatch({
       type: "REMOVE_VENDOR",
-      payload: vendorId,
+      payload: currentSelected,
     });
+    setCurrentSelected("default");
     history.push("/admindiscounts");
   };
 
@@ -110,22 +87,24 @@ function AdminDiscountPage(vendor) {
           })}
         </DropdownButton>
         {currentSelected !== "default" && (
-            <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
-              <h5 className="text-center w-100 mt-1">
-                Vendor:&nbsp;
-                <span className="text-primary fw-bold">
-                  {
-                    allVendors[
-                      allVendors.findIndex(
-                        (item) => Number(item.id) === Number(currentSelected)
-                      )
-                    ]?.name
-                  }
-                  <EditVendorModal />
-                </span>
-              </h5>
-            </div>
-          )}
+          <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
+            <h5 className="text-center w-100 mt-1">
+              Vendor:&nbsp;
+              <span className="text-primary fw-bold">
+                {
+                  allVendors[
+                    allVendors.findIndex(
+                      (item) => Number(item.id) === Number(currentSelected)
+                    )
+                  ]?.name
+                }
+              </span>
+            </h5>
+            <button className="btn btn-primary mb-1" onClick={removeVendor}>
+              Remove
+            </button>
+          </div>
+        )}
       </div>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {

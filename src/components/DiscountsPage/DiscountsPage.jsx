@@ -23,40 +23,58 @@ function DiscountsPage() {
     });
   };
 
-  // async function to await the retrieval of the user's location
-  // then get the closest cities.
-  const getLocation = async () => {
-    await getPosition()
-      .then((response) => {
-        // bundle the latitude and longitude into a coordinates object
-        const coordinates = {
-          lat: response.coords.latitude,
-          lng: response.coords.longitude,
-        };
-        // dispatch to check if the user's city exists in the DB.
-        dispatch({
-          type: "CHECK_CITY",
-          payload: coordinates,
-        });
-        // dispatch to get the closest ciities.
-        dispatch({
-          type: "GET_CLOSE_CITIES",
-          payload: coordinates,
-        });
-      })
-      .catch((err) => {
-        if (err.code === 1) {
-          dispatch({ type: "GET_ALL_CITIES" });
-        } else {
-          console.log("Error resolving getPosition", err);
-        }
-      });
-    // after getPosition resolves, set loading to false.
-    setLoading(false);
-  };
-  // call get Location on load.
+  // use Effect to get the users location on load if user's location services are
+  // enabled, and if not load default location. Also used to handle asynchronous
+  // tasks.
   useEffect(() => {
-    getLocation();
+    // variable set to true when user is on this page.
+    let subscribed = true;
+    (async () => {
+      // async function to await the retrieval of the user's location
+      // then get the closest cities.
+      const wait = await getPosition()
+        .then((response) => {
+          // In the response from getPosition, if subscribed is true,
+          // perform async tasks. Otherwise if subscribed is false,
+          // do not perform the async tasks.
+          if (subscribed) {
+            // bundle the latitude and longitude into a coordinates object
+            const coordinates = {
+              lat: response.coords.latitude,
+              lng: response.coords.longitude,
+            };
+            // dispatch to check if the user's city exists in the DB.
+            dispatch({
+              type: "CHECK_CITY",
+              payload: coordinates,
+            });
+            // dispatch to get the closest ciities.
+            dispatch({
+              type: "GET_CLOSE_CITIES",
+              payload: coordinates,
+            });
+          }
+        })
+        // if User does not have location services enabled, show default locations.
+        .catch((err) => {
+          // error code 1 appears if user does not have location services enabled.
+          if (err.code === 1) {
+            dispatch({ type: "GET_ALL_CITIES" });
+          } else {
+            console.log("Error resolving getPosition", err);
+          }
+        });
+      // once the above function, getPosition(), resolves check if
+      // subscribed is true and if so, set loading equal to false and show
+      // the discounts.
+      if (subscribed) {
+        setLoading(false);
+      }
+    })();
+    // cleanup function to stop asynchronous tasks
+    // when user switches pages to stop memory leaks and potential
+    // app crashes.
+    return () => (subscribed = false);
   }, []);
 
   // redux stores for managing search parameters
@@ -176,8 +194,8 @@ function DiscountsPage() {
                 Search
               </Button>
             </div>
-            
-            {(selectedCategories.length > 0 || selectedCities.length > 0 ) && (
+
+            {(selectedCategories.length > 0 || selectedCities.length > 0) && (
               <FilterFeedback />
             )}
           </div>
