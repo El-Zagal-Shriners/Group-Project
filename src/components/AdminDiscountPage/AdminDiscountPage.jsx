@@ -130,7 +130,7 @@ function AdminDiscountPage(vendor) {
           return <DiscountItem key={discount.id} discount={discount} />;
         })}
       </section>
-      </div>
+
     </>
   );
 }
