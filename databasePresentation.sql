@@ -1,3 +1,129 @@
+-- Database should be named: el_zagal_shriners
+
+CREATE TABLE "user" (
+	"id" serial NOT NULL,
+	"username" varchar(80) NOT NULL UNIQUE,
+	"password" varchar(1000) NOT NULL,
+	"first_name" varchar(80) NOT NULL,
+	"last_name" varchar(80) NOT NULL,
+	"email" varchar(500) NOT NULL,
+	"primary_member_id" bigint NOT NULL,
+	"is_authorized" BOOLEAN NOT NULL DEFAULT 'false',
+	"is_verified" BOOLEAN NOT NULL DEFAULT 'false',
+	"review_pending" BOOLEAN NOT NULL DEFAULT 'false',
+	"dues_paid" DATE,
+	"membership_number" int,
+	"admin_level" int NOT NULL DEFAULT '0',
+	CONSTRAINT "user_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "vendors" (
+	"id" serial NOT NULL,
+	"name" varchar(1000) NOT NULL,
+	"address" varchar(1000),
+	"city" varchar(100) NOT NULL,
+	"state_code" varchar(2) NOT NULL,
+	"zip" numeric(5,0),
+	"website_url" varchar(1000),
+	CONSTRAINT "vendors_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "discounts" (
+	"id" serial NOT NULL,
+	"vendor_id" bigint NOT NULL,
+	"discount_description" varchar(1000) NOT NULL,
+	"discount_summary" varchar(15) NOT NULL,
+	"start_date" DATE,
+	"expiration_date" DATE,
+	"discount_usage" varchar(255) NOT NULL,
+	"category_id" int NOT NULL,
+	"is_shown" BOOLEAN NOT NULL DEFAULT 'true',
+	"is_regional" BOOLEAN NOT NULL DEFAULT 'false',
+	CONSTRAINT "discounts_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "categories" (
+	"id" serial NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"icon_class" varchar(255) NOT NULL,
+	CONSTRAINT "categories_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "discounts_tracked" (
+	"id" serial NOT NULL,
+	"discount_id" bigint NOT NULL,
+	"user_id" bigint NOT NULL,
+	"date" DATE NOT NULL,
+	CONSTRAINT "discounts_tracked_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "location" (
+	"id" serial NOT NULL,
+	"city" varchar(100) NOT NULL,
+	"state_code" varchar(2) NOT NULL,
+	"lng" DECIMAL NOT NULL,
+	"lat" DECIMAL NOT NULL,
+	CONSTRAINT "location_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE "dependent_tokens" (
+	"id" serial NOT NULL,
+	"primary_member_id" bigint NOT NULL,
+	"token" varchar(75) NOT NULL,
+	"email" varchar(50) NOT NULL,
+	CONSTRAINT "dependent_tokens_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE "password_tokens" (
+	"id" serial NOT NULL,
+	"token" varchar(75) NOT NULL,
+	"email" varchar(50) NOT NULL,
+	"primary_member_id" bigint NOT NULL,
+	CONSTRAINT "password_tokens_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+-- Password token alter statement
+ALTER TABLE "password_tokens" ADD CONSTRAINT "password_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
+
+-- Use this after adding dependent tokens table
+ALTER TABLE "dependent_tokens" ADD CONSTRAINT "dependent_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
+
+ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
+
+-- DOUBLE CHECK THAT THE "DELETE ON CASCADE" IS WORKING AS INTENDED || Tested working in Postico
+ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk0" FOREIGN KEY ("vendor_id") REFERENCES "vendors"("id") ON DELETE CASCADE;
+ALTER TABLE "discounts" ADD CONSTRAINT "discounts_fk1" FOREIGN KEY ("category_id") REFERENCES "categories"("id");
+
+-- DOUBLE CHECK THAT THE "DELETE ON CASCADE" IS WORKING AS INTENDED || Tested working in Postico
+ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk0" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id") ON DELETE CASCADE;
+ALTER TABLE "discounts_tracked" ADD CONSTRAINT "discounts_tracked_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE;
+
 -- SAMPLE USERS 15
 INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", "is_authorized", "primary_member_id", "is_verified", "review_pending", "dues_paid", "membership_number", "admin_level")
 VALUES ('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Doe', 'johndoe@gmail.com', 'true', 1, 'true', 'false', '2022/1/1', 31524, 0),
@@ -85,20 +211,20 @@ VALUES ('Food', 'food'),
 INSERT INTO "vendors"("name","address","city","state_code","zip")
 VALUES ('Joe''s Diner', '123 Main St', 'Fargo', 'ND', '58103'),
 		('Mary''s Flower Shop', '456 Elm St', 'Fargo', 'ND', '58103'),
-		('John''s Barbershop', '789 Oak St', 'Jamestown', 'ND', '53579'),
+		('Bill''s Bar', '987 5th Ave', 'Fargo', 'ND', '58103'),
+		('Joe''s Pizzeria', '123 Main St', 'Williston', 'ND', '55801'),
 		('Sam''s Grocery', '12 3rd Ave', 'Moorhead', 'MN', '56560'),
+		('John''s Barbershop', '789 Oak St', 'Jamestown', 'ND', '53579'),
 		('Anderson''s Bakery', '345 6th St', 'Ada', 'MN', '56234'),
 		('Susan''s Sewing', '678 9th Ave', ' Detroit Lakes', 'MN', '56765'),
 		('Mike''s Mechanic', '901 12th St', 'Mandan', 'ND', '58789'),
 		('Bill''s Books', '234 15th Ave', 'Valley City', 'ND', '58210'),
 		('Joe''s Pizza', '567 18th St', 'Jamestown', 'ND', '58543'),
 		('Tom''s Tailor', '890 21st Ave', 'Moorhead', 'MN', '56560'),
-		('Joe''s Pizzeria', '123 Main St', 'Williston', 'ND', '55801'),
 		('Smith and Co', '456 1st Ave', 'Bismarck', 'ND', '55283'),
 		('Tom''s Diner', '789 2nd St', 'Bismarck', 'ND', '57801'),
 		('Mary''s Beauty Salon', '321 3rd Ave', 'Valley City', 'ND', '58103'),
 		('Mike''s Garage', '654 4th St', 'Valley City', 'ND', '58103'),
-		('Bill''s Bar', '987 5th Ave', 'Fargo', 'ND', '58103'),
 		('John''s Plumbing', '741 6th St', 'Moorhead', 'MN', '56560'),
 		('Susan''s Bookstore', '852 7th Ave', 'Moorhead', 'MN', '56560'),
 		('Larry''s Bakery', '963 8th Ave', 'Ada', 'MN', '56008'),
@@ -107,111 +233,111 @@ VALUES ('Joe''s Diner', '123 Main St', 'Fargo', 'ND', '58103'),
 --Sample discounts 35 items
 INSERT INTO "discounts"("vendor_id","discount_description","discount_summary","start_date","expiration_date","discount_usage","category_id")
 VALUES (1,'Shriners get 10% off any Dinner Purchase','10% Dinner',NULL,NULL,'Show Shriner Card',1),
+		(2,'25% off purchase of flowers','25% off',NULL,NULL,'25OFF',10),
 		(1,'Shriners get 15% off any Lunch Purchase between 11am and 2pm','15% Lunch',NULL,NULL,'Show Shriner Card',1),
 		(1,'Holiday Delivery Discount','20% Delivery','2022/11/20','2022/12/20','SHRINERDELIVERY',1),
-		(1,'Buy one Get one Pie Slices','BOGO Pie Slices',NULL,NULL,'BOGOPIE',1),
-		(2,'25% off purchase of flowers','25% off',NULL,NULL,'25OFF',10),
 		(2,'Free delivery of flowers in town','Free Delivery',NULL,NULL,'DELFREE',10),
-		(16,'Buy One Get One Burgers','BOGO Burgers',NULL,NULL,'Show Shriner ID', 1),
-		(16,'$2 You call it Thursday Happy Hour 5pm - 8pm','$2 You Calls',NULL,NULL,'Show Shriner ID', 1),
-		(4,'Holiday - 15% off Deli foods','15% Deli','2022/11/01','2023/01/01','Show Shriner Card',1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 8 + 1),
-		(random() * 19 + 1,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 8 + 1);
+		(1,'Buy one Get one Pie Slices','BOGO Pie Slices',NULL,NULL,'BOGOPIE',1),
+		(3,'Buy One Get One Burgers','BOGO Burgers',NULL,NULL,'Show Shriner ID', 1),
+		(3,'$2 You call it Thursday Happy Hour 5pm - 8pm','$2 You Calls',NULL,NULL,'Show Shriner ID', 1),
+		(5,'Holiday - 15% off Deli foods','15% Deli','2022/11/01','2023/01/01','Show Shriner Card',1),
+		(4,'Buy one Get one Slice Wednesdays','BOGO Slice',NULL,NULL,'b0g0p13',1),
+		(4,'20% off all Menu price ites','20% off Menu',NULL,NULL,'25OFF',1),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','10% off',NULL,NULL,'Present ID',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','15% off',NULL,NULL,'Sdgljner425',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','20% off',NULL,NULL,'Mention Shriner',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Wings',NULL,NULL,'3gh456herwg',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO Beer',NULL,NULL,'BOGOBEER',random() * 7 + 2),
+		(random() * 15 + 5,'A description of the discount will go here','BOGO 50% off',NULL,NULL,'50 Off',random() * 7 + 2);
 
 --Sample discount tracking
 INSERT INTO "discounts_tracked"("discount_id","user_id","date")
