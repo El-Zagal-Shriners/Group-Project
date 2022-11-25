@@ -8,34 +8,42 @@ import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-function EditVendorModal(vendorMap) {
+function EditVendorModal(props) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  let params = useParams();
-  let vendorid = params.vendorid;
+  // const vendors = useSelector((store) => store.vendors);
+  // const vendor = vendors.find((vend) => vend.id === Number(vendorid));
 
-  const vendors = useSelector((store) => store.vendors);
-  const vendor = vendors.find((vend) => vend.id === Number(vendorid));
+console.log("props.allVendors", props.currentVendor);
 
-  const [vendorName, setVendorName] = useState(vendorMap.name);
-  const [vendorAddress, setVendorAddress] = useState(vendorMap.address);
-  const [vendorCity, setVendorCity] = useState(vendorMap.city);
-  const [vendorState, setVendorState] = useState(vendorMap.state_code);
-  const [vendorZip, setVendorZip] = useState(vendorMap.zip);
-  const [vendorWebsite, setVendorWebsite] = useState(vendorMap.website_url);
+const getVendor = () => {
+  console.log('In getVendor');
+  // console.log('This is currentVendor: ', allVendors[allVendors.findIndex((item)=>Number(item.id)===Number(currentSelected))]);
+  return(
+    props.allVendors.findIndex(
+      (item) => Number(item.id) === Number(props.currentSelected)
+    ))
+}
+
+  const [vendorName, setVendorName] = useState(props.allVendors[getVendor()].name);
+  const [vendorAddress, setVendorAddress] = useState(props.allVendors[getVendor()].address);
+  const [vendorCity, setVendorCity] = useState(props.allVendors[getVendor()].city);
+  const [vendorState, setVendorState] = useState(props.allVendors[getVendor()].state_code);
+  const [vendorZip, setVendorZip] = useState(props.allVendors[getVendor()].zip);
+  const [vendorWebsite, setVendorWebsite] = useState(props.allVendors[getVendor()].website_url);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const vendorObj = {
-    vendorid: Number(vendorid),
-    vendorName,
-    vendorAddress,
-    vendorCity,
-    vendorState,
-    vendorZip,
-    vendorWebsite,
+    vendorId: Number(props.currentSelected),
+    name: vendorName,
+    address: vendorAddress,
+    city: vendorCity,
+    stateCode: vendorState,
+    zip: vendorZip,
+    website: vendorWebsite,
   };
 
   const editVendor = () => {
@@ -46,16 +54,17 @@ function EditVendorModal(vendorMap) {
     setShow(false);
   };
 
-  const removeVendor = (vendorId) => {
-    dispatch({
-      type: "REMOVE_VENDOR",
-      payload: vendorId,
-    });
-  };
+  // useEffect(() => {
+  //   {
+  //     props.allVendors[
+  //       props.allVendors.findIndex(
+  //         (item) => Number(item.id) === Number(props.currentSelected)
+  //       )
+  //     ]?.name
+  //   }
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_VENDORS" });
-  }, []);
+  //   // setCurrentVendor=
+  // }, []);
 
   return (
     <>
@@ -113,9 +122,6 @@ function EditVendorModal(vendorMap) {
         <Modal.Footer>
           <Button variant="primary" onClick={editVendor}>
             Save Changes
-          </Button>
-          <Button variant="warning" onClick={removeVendor}>
-            Delete Vendor
           </Button>
           <Button variant="outline-primary" onClick={handleClose}>
             Close

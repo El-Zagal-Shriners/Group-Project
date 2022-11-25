@@ -8,6 +8,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import DiscountItem from "./DiscountItem";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
+import EditVendorModal from "../AddVendor/EditVendorModal";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function AdminDiscountPage(vendor) {
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
-
+  // const [currentVendor, setCurrentVendor] = useState({});
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
   if (currentSelected !== "default") {
@@ -30,8 +31,19 @@ function AdminDiscountPage(vendor) {
     // the render of vendor discount information when "remove" button was clicked
     if (event.target.type !== "button") {
       setCurrentSelected(selectedValue);
+      // setCurrentVendor(getVendor());
     }
   }
+
+  // const getVendor = () => {
+  //   console.log('In getVendor');
+  //   console.log('This is currentVendor: ', allVendors[allVendors.findIndex((item)=>Number(item.id)===Number(currentSelected))]);
+  //   return allVendors[
+  //     allVendors.findIndex(
+  //       (item) => Number(item.id) === Number(currentSelected)
+  //     )
+  //   ]
+  // }
 
   const removeVendor = () => {
     dispatch({
@@ -103,6 +115,8 @@ function AdminDiscountPage(vendor) {
             <button className="btn btn-primary mb-1" onClick={removeVendor}>
               Remove
             </button>
+            <br/>
+            <EditVendorModal allVendors={allVendors} currentSelected={currentSelected}/>
           </div>
         )}
       </div>
