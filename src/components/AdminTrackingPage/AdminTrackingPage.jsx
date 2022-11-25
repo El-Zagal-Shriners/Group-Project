@@ -76,7 +76,7 @@ function AdminTrackingPage() {
                     allVendors.findIndex(
                       (item) => Number(item.id) === Number(currentSelected)
                     )
-                  ].name
+                  ]?.name
                 }
               </span>
             </h5>
