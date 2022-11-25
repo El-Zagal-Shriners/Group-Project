@@ -5,9 +5,9 @@ import UpdatedNavBar from "../Nav/Nav";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import DiscountItem from "./DiscountItem";
+import DiscountItem from "../AddDiscount/DiscountItem";
 import AddVendorModal from "../AddVendor/AddVendor";
-import AddDiscountModal from "./AddDiscount";
+import AddDiscountModal from "../AddDiscount/AddDiscount";
 import EditVendorModal from "../AddVendor/EditVendorModal";
 
 function AdminDiscountPage(vendor) {

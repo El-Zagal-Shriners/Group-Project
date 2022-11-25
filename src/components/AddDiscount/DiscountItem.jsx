@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import DiscountModal from "./DiscountModal";
 import Card from "react-bootstrap/Card";
 import "./DiscountItem.css";
+import { IconContext } from "react-icons";
+import { allIconComponents } from "../../allIconComponents/allIconComponents";
 
 function DiscountItem({ discount }) {
   const vendors = useSelector((store) => store.vendors);
