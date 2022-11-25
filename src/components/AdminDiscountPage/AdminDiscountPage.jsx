@@ -14,6 +14,7 @@ import AddDiscountModal from "./AddDiscount";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import RemoveVendor from "../AddVendor/RemoveVendor";
+import EditVendorModal from "../AddVendor/EditVendorModal";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -31,13 +32,13 @@ function AdminDiscountPage(vendor) {
     history.push("/adminadddiscount");
   }
 
-  let filteredVendors = [...allVendors];
-  const [currentSelectedVendor, setCurrentSelectedVendor] = useState("default");
-  if (currentSelectedVendor !== "default") {
-    filteredVendors = filteredVendors.filter(
-      (vendor) => Number(vendor.id) === Number(currentSelectedVendor)
-    );
-  }
+  // let filteredVendors = [...allVendors];
+  // const [currentSelectedVendor, setCurrentSelectedVendor] = useState("default");
+  // if (currentSelectedVendor !== "default") {
+  //   filteredVendors = filteredVendors.filter(
+  //     (vendor) => Number(vendor.id) === Number(currentSelectedVendor)
+  //   );
+  // }
 
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
@@ -120,6 +121,7 @@ function AdminDiscountPage(vendor) {
                       )
                     ]?.name
                   }
+                  <EditVendorModal />
                 </span>
               </h5>
             </div>
