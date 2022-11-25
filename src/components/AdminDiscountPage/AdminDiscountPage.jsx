@@ -11,6 +11,8 @@ import DiscountItem from "./DiscountItem";
 import Button from "react-bootstrap/Button";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "./AddDiscount";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ function AdminDiscountPage(vendor) {
       type: "REMOVE_VENDOR",
       payload: vendorId,
     });
+    history.push("/admindiscounts");
   };
 
   useEffect(() => {
@@ -63,13 +66,14 @@ function AdminDiscountPage(vendor) {
   return (
     <>
       <UpdatedNavBar />
-      <div className="justify-content-center container text-center col col-lg-6">
+      <h1 className="text-primary text-center mt-3 mb-0">Discount Manager</h1>
+      <br />
+      <div className="d-flex justify-content-around">
         <AddVendorModal />
-      </div>
-      <div className="container text-center col col-lg-6">
         <AddDiscountModal />
       </div>
-      <div className="container text-center col col-lg-6">
+
+      <div className="container text-center col col-lg-6 pb-0">
         <DropdownButton
           as={ButtonGroup}
           key="primary"
@@ -103,15 +107,27 @@ function AdminDiscountPage(vendor) {
             );
           })}
         </DropdownButton>
+        {currentSelected !== "default" && (
+            <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
+              <h5 className="text-center w-100 mt-1">
+                Vendor:&nbsp;
+                <span className="text-primary fw-bold">
+                  {
+                    allVendors[
+                      allVendors.findIndex(
+                        (item) => Number(item.id) === Number(currentSelected)
+                      )
+                    ]?.name
+                  }
+                </span>
+              </h5>
+            </div>
+          )}
       </div>
       <section className="w-100 flex-wrap">
-        {currentSelected !== "default"
-          ? filteredDiscounts.map((discount) => {
-              return <DiscountItem key={discount.id} discount={discount} />;
-            })
-          : filteredDiscounts.map((discount, vendors) => {
-              return <DiscountItem key={discount.id} discount={discount} />;
-            })}
+        {filteredDiscounts.map((discount) => {
+          return <DiscountItem key={discount.id} discount={discount} />;
+        })}
       </section>
     </>
   );

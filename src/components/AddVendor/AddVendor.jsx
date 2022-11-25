@@ -35,11 +35,11 @@ function AddVendorModal() {
         website: website,
       },
     });
-    history.push("/admin");
+    setShow(false);
   };
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="col-5" variant="primary" onClick={handleShow}>
         Add Vendor
       </Button>
 

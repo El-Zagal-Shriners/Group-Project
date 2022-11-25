@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 // components
 import DiscountCard from "./DiscountCard";
@@ -92,6 +93,9 @@ function DiscountsPage() {
     (store) => store.filter.filteredDiscountsReducer
   );
 
+  // manage input for search bar
+  const [searchBarIn, setSearchBarIn] = useState("");
+
   const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
 
   function filterDiscounts() {
@@ -112,11 +116,11 @@ function DiscountsPage() {
     //    => push discounts with both selected cities and categories to new array
     // else both seleceted arrays are empty
     //    => push all discounts to new array
-    if (selectedCities.length > 0 && selectedCategories.length <= 0) {
+    if (selectedCities.length > 0 && selectedCategories.length === 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
         return allSelected.includes(discount.city);
       });
-    } else if (selectedCities.length <= 0 && selectedCategories.length > 0) {
+    } else if (selectedCities.length === 0 && selectedCategories.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
         return allSelected.includes(discount.category_name);
       });
@@ -124,30 +128,38 @@ function DiscountsPage() {
       filteredArray = allMemberDiscounts.filter((discount, index) => {
         return allSelected.includes(discount.city);
       });
-      filteredArray = filteredArray.filter((discount, index) => {
+      filteredArray = filteredArray.filter((discount) => {
         return allSelected.includes(discount.category_name);
       });
     } else {
       filteredArray = allMemberDiscounts;
     }
 
+    // run filteredArray through search by company search bar
+    if (searchBarIn.length > 0) {
+      filteredArray = filteredArray.filter((discount, index) => {
+        let thisVendorName = discount.vendor_name
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]/g, "");
+        let searchedVendor = searchBarIn
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]/g, "");
+
+        if (thisVendorName.search(searchedVendor) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+
     dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
   }
-
-  // This filters of the above array with one filter and one includes
-  // let testFiltered = allMemberDiscounts.filter((discount) => {
-  //   return testSelected.includes(discount.city && discount.category_name);
-  // });
-
-  // Below would be the search filter where searchInput is the state attached to the search
-  // testFiltered = testFiltered.filter((discount) =>
-  //   discount.vendor_name.contains(searchInput)
-  // );
 
   useEffect(() => dispatch({ type: "GET_MEMBER_DISCOUNTS" }), []);
   useEffect(
     () => filterDiscounts(),
-    [selectedCategories, selectedCities, allMemberDiscounts]
+    [selectedCategories, selectedCities, allMemberDiscounts, searchBarIn]
   );
 
   if (loading) {
@@ -168,8 +180,8 @@ function DiscountsPage() {
         <div className="bg-light p-1 d-flex justify-content-center">
           <h1 className="display-5 text-primary">Your Shriner Discounts</h1>
         </div>
-        <div className="d-flex justify-content-center bg-light sticky-top">
-          <div className="bg-light col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-around">
+        <div className="d-flex col flex-column justify-content-around align-items-center bg-light sticky-top">
+          <div className="bg-light col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-center">
             <div className="d-flex justify-content-center align-items-center">
               <Button
                 variant="primary"
@@ -182,9 +194,21 @@ function DiscountsPage() {
                 Search
               </Button>
             </div>
-            {(selectedCategories.legth > 0 || selectedCities.length) > 0 && (
+            
+            {(selectedCategories.length > 0 || selectedCities.length > 0 ) && (
               <FilterFeedback />
             )}
+          </div>
+          <div className="col-11 col-md-9 col-lg-6">
+            <FloatingLabel controlId="floatingInput" label="Search By Company">
+              <Form.Control
+                className="company-search"
+                value={searchBarIn}
+                type="text"
+                placeholder="Type A Company"
+                onChange={(e) => setSearchBarIn(e.target.value)}
+              />
+            </FloatingLabel>
           </div>
         </div>
 

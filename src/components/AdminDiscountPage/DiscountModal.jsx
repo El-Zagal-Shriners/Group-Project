@@ -5,28 +5,28 @@ import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
 
-function DiscountModal({ discount }) {
+function DiscountModal(props) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
-    discount.discountDescription
+    props.discount.discount_description
   );
   const [discountSummary, setDiscountSummary] = useState(
-    discount.discountSummary
+    props.discount.discount_summary
   );
-  const [startDate, setStartDate] = useState(discount.start_date);
-  const [expDate, setExpDate] = useState(discount.expiration_date);
-  const [discountUsage, setDiscountUsage] = useState(discount.discountUsage);
+  const [startDate, setStartDate] = useState(props.discount.start_date===null?'':props.discount.start_date);
+  const [expDate, setExpDate] = useState(props.discount.expiration_date===null?'':props.discount.expiration_date);
+  const [discountUsage, setDiscountUsage] = useState(props.discount.discount_usage);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   // create edit discount object
   const discountObj = {
-    discountId: discount.id,
+    discountId: props.discount.id,
     discountDescription,
     discountSummary,
-    startDate,
-    expDate,
+    startDate: startDate===''?null:startDate,
+    expDate: expDate===''?null:expDate,
     discountUsage,
   };
   // edit discount
@@ -41,7 +41,7 @@ function DiscountModal({ discount }) {
   const removeDiscount = () => {
     dispatch({
       type: "REMOVE_DISCOUNT",
-      payload: discount.id,
+      payload: props.discount.id,
     });
   };
 
@@ -56,13 +56,13 @@ function DiscountModal({ discount }) {
           <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FloatingLabel className="text-primary" label="Description">
+          <FloatingLabel className="text-primary" label="Description (Required)">
             <Form.Control
               value={discountDescription}
               onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Summary">
+          <FloatingLabel className="text-primary" label="Summary (Required)">
             <Form.Control
               value={discountSummary}
               onChange={(e) => setDiscountSummary(e.target.value)}
@@ -82,7 +82,7 @@ function DiscountModal({ discount }) {
               onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Discount Code">
+          <FloatingLabel className="text-primary" label="Discount Usage (Required)">
             <Form.Control
               value={discountUsage}
               onChange={(e) => setDiscountUsage(e.target.value)}

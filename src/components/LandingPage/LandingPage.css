@@ -6,6 +6,10 @@
   background-repeat: no-repeat;
 }
 
+.title_spacing {
+  margin-bottom: 55%;
+}
+
 @media (min-width: 1025px) {
   .landing_page_size {
     height: 100vh;
@@ -13,6 +17,10 @@
     background-size: 50%;
     background-position: center;
     background-repeat: no-repeat;
+  }
+
+  .title_spacing {
+    margin-bottom: 35%;
   }
 }
 
