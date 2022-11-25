@@ -3,28 +3,28 @@ import { ListGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ConfirmationModal from "./AccountModals/ConfirmationModal";
 
-function DependentItem({ dependent }) {
-  const [show, setShow] = useState(false);
+function DependentItem({ dependent, setShow, setEdit }) {
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   return (
     <>
-      <ListGroup.Item className="border-0 p-0 w-100">
-        <ListGroup horizontal>
-          <ListGroup.Item className="col-4 text-center">
-            {dependent.first_name}
-          </ListGroup.Item>
-          <ListGroup.Item className="col-4 text-center">
-            {dependent.last_name}
-          </ListGroup.Item>
-          <ListGroup.Item className="col text-center">
-            <Button onClick={() => setShow(true)}>Remove</Button>
-          </ListGroup.Item>
-        </ListGroup>
+      <ListGroup.Item className="px-1 d-flex">
+        <div className="col-4 text-center m-0">{dependent.first_name}</div>
+        <div className="col-4 text-center">{dependent.last_name}</div>
+        <div className="col text-center">
+          <Button size="sm" onClick={() => {setShowConfirmation(true);}}>
+            Remove
+          </Button>
+        </div>
       </ListGroup.Item>
       <ConfirmationModal
-        show={show}
+        showConfirmation={showConfirmation}
+        setShowConfirmation={setShowConfirmation}
+        member={dependent}
+        setEdit={setEdit}
+        edit={true}
         setShow={setShow}
-        memberId={dependent.id}
+        show={true}
       />
     </>
   );

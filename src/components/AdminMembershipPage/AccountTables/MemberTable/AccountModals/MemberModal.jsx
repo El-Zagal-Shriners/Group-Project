@@ -100,14 +100,14 @@ function MemberModal({ member, show, setShow }) {
         },
       });
       activate();
-      closeModal();
+      resetState();
       // for success modal
       setShowSuccess(true);
     }
   };
 
   // setup close modal function
-  const closeModal = () => {
+  const resetState = () => {
     // reset local state
     setDuesPaid(null);
     setMemberNumber("");
@@ -123,7 +123,7 @@ function MemberModal({ member, show, setShow }) {
           show={show}
           onHide={() => {
             setShow(false);
-            closeModal();
+            resetState();
             toggleList(false);
           }}
           animation={false}
@@ -189,10 +189,19 @@ function MemberModal({ member, show, setShow }) {
                 </Row>
               )}
             </Container>
-            <ListGroup>
+            <ListGroup className="p-1 d-flex">
               {listDependents &&
                 dependents.map((dependent) => (
-                  <DependentItem key={dependent.id} dependent={dependent} />
+                  <DependentItem
+                    key={dependent.id}
+                    dependent={dependent}
+                    show={show}
+                    setShow={setShow}
+                    setEdit={setEdit}
+                    edit={edit}
+                    setShowConfirmation={setShowConfirmation}
+                    showConfirmation={showConfirmation}
+                  />
                 ))}
             </ListGroup>
           </Modal.Body>
@@ -210,7 +219,7 @@ function MemberModal({ member, show, setShow }) {
               variant="outline-primary"
               onClick={() => {
                 setShow(false);
-                closeModal();
+                resetState();
                 toggleList(false);
               }}
             >
@@ -221,16 +230,13 @@ function MemberModal({ member, show, setShow }) {
 
         <Modal
           // edit modal
+          backdrop="static"
           show={edit}
-          onHide={() => {
-            setEdit(false);
-            closeModal();
-          }}
           animation={false}
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-primary text-light">
             <Modal.Title>Edit Member</Modal.Title>
           </Modal.Header>
 
@@ -265,6 +271,7 @@ function MemberModal({ member, show, setShow }) {
               <Col>
                 <Button
                   onClick={() => {
+                    setEdit(false);
                     setShowConfirmation(true);
                   }}
                 >
@@ -276,24 +283,17 @@ function MemberModal({ member, show, setShow }) {
           </Modal.Body>
 
           <Modal.Footer>
+            <Button onClick={() => updateMember()}>Save</Button>
             <Button
+              variant="outline-primary"
               onClick={() => {
                 setEdit(false);
+                resetState();
                 setShow(true);
               }}
             >
               Back
             </Button>
-            <Button
-              onClick={() => {
-                setEdit(false);
-                closeModal();
-                toggleList(false);
-              }}
-            >
-              Close
-            </Button>
-            <Button onClick={() => updateMember()}>Save</Button>
           </Modal.Footer>
         </Modal>
         <SuccessModal
@@ -301,9 +301,13 @@ function MemberModal({ member, show, setShow }) {
           setShowSuccess={setShowSuccess}
         />
         <ConfirmationModal
-          show={showConfirmation}
-          setShow={setShowConfirmation}
-          memberId={member.id}
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          edit={edit}
+          setEdit={setEdit}
+          setShow={setShow}
+          show={show}
+          member={member}
         />
       </>
     );
@@ -318,7 +322,7 @@ function MemberModal({ member, show, setShow }) {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header className="bg-primary text-light" closeButton>
+          <Modal.Header className="bg-primary text-light">
             <Modal.Title>New Member Info</Modal.Title>
           </Modal.Header>
 
@@ -355,7 +359,14 @@ function MemberModal({ member, show, setShow }) {
               </Row>
               <Row>
                 <Col>
-                  <Button onClick={() => removeMember()}>Remove</Button>
+                  <Button
+                    onClick={() => {
+                      setShow(false);
+                      setShowConfirmation(true);
+                    }}
+                  >
+                    Remove
+                  </Button>
                 </Col>
               </Row>
             </Container>
@@ -363,9 +374,20 @@ function MemberModal({ member, show, setShow }) {
 
           <Modal.Footer>
             <Button onClick={() => approveMember()}>Approve</Button>
-            <Button onClick={() => setShow(false)}>Close</Button>
+            <Button variant="outline-primary" onClick={() => setShow(false)}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
+        <ConfirmationModal
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          setShow={setShow}
+          show={show}
+          edit={edit}
+          setEdit={setEdit}
+          member={member}
+        />
         {/* Success Modal to show member was verified. */}
         <SuccessModal
           showSuccess={showSuccess}
