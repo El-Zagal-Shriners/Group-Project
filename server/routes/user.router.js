@@ -97,12 +97,29 @@ router.put('/', rejectUnauthenticated, (req, res) => {
       req.user.id
     ])
       .then(result => {
-          res.sendStatus(200);
+          res.sendStatus(201);
       })
       .catch(err => {
           console.log('Error editing user: ', err);
           res.sendStatus(500);
       });
+});
+// This will set the review pending for logged in user to true
+router.put("/requestreview", rejectUnauthenticated, (req, res) => {
+  // SQL query to request review
+  const query = `UPDATE "user" 
+                 SET 
+                 "review_pending"=true
+                 WHERE "id"=$1;`;
+  pool
+    .query(query, [req.user.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log("Error requesting review: ", err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
