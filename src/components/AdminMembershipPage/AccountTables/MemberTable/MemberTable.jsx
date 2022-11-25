@@ -104,7 +104,6 @@ function MemberTable() {
               maxHeight: "72vh",
             }}
           >
-            {/* accounts was members */}
             {filterArrays(accounts, search).map((member) => (
               <MemberItem
                 key={member.id}
