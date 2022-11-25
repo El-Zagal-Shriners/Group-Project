@@ -1,29 +1,25 @@
 import MemberItem from "./MemberItem";
-import {
-  Button,
-  ButtonGroup,
-  Col,
-  Form,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-function MemberTable({ members }) {
+function MemberTable() {
+  // access all the accounts from the redux store.
   const accounts = useSelector((store) => store.accounts.accountsReducer);
 
-  // seperate the members that have membership numbers from the members array.
-  const primaries = [...accounts].filter(
-    (acc) => acc.membership_number !== null && acc.is_verified === true
-  );
+  // filter out the members that are verified including dependents.
+  const allMembers = [...accounts].filter((acc) => acc.is_verified === true);
+  // filter out the new members which are accounts that are not verified.
   const newMembers = [...accounts].filter(
     (acc) => acc.is_verified === false && acc.membership_number !== null
   );
+  // filter out members needing review which are accounts where review pending is true.
   const reviewPending = [...accounts].filter(
     (acc) => acc.review_pending === true
   );
 
+  // set up local state for filtering the accounts.
+  // accessed by filter buttons and search filter on page.
   const [filterType, setFilterType] = useState(0);
   const [search, setSearch] = useState("");
 
@@ -79,7 +75,7 @@ function MemberTable({ members }) {
           />
           <ButtonGroup className="me-1">
             <Button size="sm" onClick={() => setFilterType(0)}>
-              All ({primaries.length})
+              All ({allMembers.length})
             </Button>
             <Button size="sm" onClick={() => setFilterType(1)}>
               Review ({reviewPending.length})
@@ -108,8 +104,13 @@ function MemberTable({ members }) {
               maxHeight: "72vh",
             }}
           >
-            {filterArrays(members, search).map((member) => (
-              <MemberItem key={member.id} member={member} members={accounts} />
+            {/* accounts was members */}
+            {filterArrays(accounts, search).map((member) => (
+              <MemberItem
+                key={member.id}
+                member={member}
+                filterType={filterType}
+              />
             ))}
           </div>
         </ListGroup>

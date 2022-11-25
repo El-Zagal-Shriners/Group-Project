@@ -9,20 +9,24 @@ import {
   Row,
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import DependentItem from "../DependentItem";
 import ConfirmationModal from "./ConfirmationModal";
 import SuccessModal from "./SuccessModal";
 
-function MemberModal({ member, members, show, setShow }) {
+function MemberModal({ member, show, setShow }) {
+  const accounts = useSelector((store) => store.accounts.accountsReducer);
   // access members to get the dependents.
-  const dependents = [...members].filter(
+  // dependents are accounts that have a null membership number and
+  // the pimary member id field matches the id of an existing member.
+  const dependents = [...accounts].filter(
     (acc) =>
       acc.membership_number === null &&
       Number(acc.primary_member_id) === member.id
   );
 
-  //   setup local state.
+  // setup local state.
   const [memberNumber, setMemberNumber] = useState("");
   const [duesPaid, setDuesPaid] = useState(null);
   const [listDependents, toggleList] = useState(false);
