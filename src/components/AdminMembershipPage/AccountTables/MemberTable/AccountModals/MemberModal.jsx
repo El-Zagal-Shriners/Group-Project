@@ -74,11 +74,11 @@ function MemberModal({ member, show, setShow }) {
       type: "AUTHORIZE_MEMBER",
       payload: {
         memberId: member.id,
-        authorized,
+        authorized: !member.is_authorized,
       },
     });
     setAuthorized(member.is_authorized);
-    setEdit(false);
+    setShow(false);
     // for success modal
     setShowSuccess(true);
   };
@@ -89,7 +89,6 @@ function MemberModal({ member, show, setShow }) {
       memberNumber === member.membership_number &&
       duesPaid === member.dues_paid
     ) {
-      activate();
     } else {
       dispatch({
         type: "UPDATE_MEMBER_INFO",
@@ -99,7 +98,6 @@ function MemberModal({ member, show, setShow }) {
           duesPaid: duesPaid || member.dues_paid,
         },
       });
-      activate();
       resetState();
       // for success modal
       setShowSuccess(true);
@@ -111,6 +109,7 @@ function MemberModal({ member, show, setShow }) {
     // reset local state
     setDuesPaid(null);
     setMemberNumber("");
+    setAuthorized(member.is_authorized);
   };
 
   // conditionally render the modal displayed depending on if the
@@ -207,13 +206,27 @@ function MemberModal({ member, show, setShow }) {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button
-              onClick={() => {
-                setShow(false);
-                setEdit(true);
-              }}
-            >
-              Edit
+            {member.membership_number ? (
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  setEdit(true);
+                }}
+              >
+                Edit
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  setShowConfirmation(true);
+                }}
+              >
+                Remove
+              </Button>
+            )}
+            <Button onClick={() => activate()}>
+              {authorized ? "Deactivate" : "Activate"}
             </Button>
             <Button
               variant="outline-primary"
@@ -257,18 +270,11 @@ function MemberModal({ member, show, setShow }) {
                 ></Form.Control>
               </FloatingLabel>
             </Form>
-            <Row>
-              <Col></Col>
-              <Col>
-                {authorized ? (
-                  <Button onClick={() => setAuthorized(false)}>
-                    Deactivate
-                  </Button>
-                ) : (
-                  <Button onClick={() => setAuthorized(true)}>Activate</Button>
-                )}
-              </Col>
-              <Col>
+          </Modal.Body>
+
+          <Modal.Footer className="w-100 d-flex">
+            <div className="col d-flex flex-column align-items-center justify-content-center">
+              <div className="w-100 d-flex justify-content-between">
                 <Button
                   onClick={() => {
                     setEdit(false);
@@ -277,23 +283,23 @@ function MemberModal({ member, show, setShow }) {
                 >
                   Remove
                 </Button>
-              </Col>
-              <Col></Col>
-            </Row>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button onClick={() => updateMember()}>Save</Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => {
-                setEdit(false);
-                resetState();
-                setShow(true);
-              }}
-            >
-              Back
-            </Button>
+                <div>
+                  <Button className="mx-2" onClick={() => updateMember()}>
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline-primary"
+                    onClick={() => {
+                      setEdit(false);
+                      resetState();
+                      setShow(true);
+                    }}
+                  >
+                    Back
+                  </Button>
+                </div>
+              </div>
+            </div>
           </Modal.Footer>
         </Modal>
         <SuccessModal
@@ -306,7 +312,7 @@ function MemberModal({ member, show, setShow }) {
           edit={edit}
           setEdit={setEdit}
           setShow={setShow}
-          show={show}
+          show={true}
           member={member}
         />
       </>
@@ -330,49 +336,55 @@ function MemberModal({ member, show, setShow }) {
             <Container>
               <Row>
                 <Col xs={6}>
-                  <p>First Name</p>
-                  <p>{member.first_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    First Name
+                  </p>
+                  <p className="text-center">{member.first_name}</p>
                 </Col>
                 <Col>
-                  <p>Last Name</p>
-                  <p>{member.last_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Last Name
+                  </p>
+                  <p className="text-center">{member.last_name}</p>
                 </Col>
               </Row>
               <Row>
                 <Col xs={6}>
                   {member.membership_number ? (
                     <>
-                      <p>Member #</p>
-                      <p>{member.membership_number}</p>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Member #
+                      </p>
+                      <p className="text-center">{member.membership_number}</p>
                     </>
                   ) : (
                     <>
-                      <p>Primary</p>
-                      <p>{primaryInfo()}</p>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Primary
+                      </p>
+                      <p className="text-center">{primaryInfo()}</p>
                     </>
                   )}
                 </Col>
                 <Col>
-                  <p>Dues Paid</p>
-                  <p>{dues}</p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Button
-                    onClick={() => {
-                      setShow(false);
-                      setShowConfirmation(true);
-                    }}
-                  >
-                    Remove
-                  </Button>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Dues Paid
+                  </p>
+                  <p className="text-center">{dues}</p>
                 </Col>
               </Row>
             </Container>
           </Modal.Body>
 
           <Modal.Footer>
+            <Button
+              onClick={() => {
+                setShow(false);
+                setShowConfirmation(true);
+              }}
+            >
+              Remove
+            </Button>
             <Button onClick={() => approveMember()}>Approve</Button>
             <Button variant="outline-primary" onClick={() => setShow(false)}>
               Close

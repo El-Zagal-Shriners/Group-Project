@@ -20,7 +20,9 @@ function MemberItem({ member, filterType }) {
       <ListGroup.Item onClick={() => setShow(true)} className={classVariant()}>
         <div className="col-4 text-center m-0">{member.first_name}</div>
         <div className="col-4 text-center m-0">{member.last_name}</div>
-        <div className="col text-center m-0">{member.membership_number ? member.membership_number : "Dependent"}</div>
+        <div className="col text-center m-0">
+          {member.membership_number ? member.membership_number : "Dependent"}
+        </div>
       </ListGroup.Item>
       <MemberModal member={member} show={show} setShow={setShow} />
     </>

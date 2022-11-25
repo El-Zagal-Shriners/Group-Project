@@ -25,7 +25,7 @@ function ConfirmationModal({
   };
 
   const handleClose = () => {
-    if (edit === false && show === true) {
+    if (edit === false && show === true && member.membership_number) {
       setEdit(true);
     } else {
       setShow(true);
@@ -38,7 +38,6 @@ function ConfirmationModal({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={showConfirmation}
-      // onShow={() => setEdit(false)}
       backdrop="static"
     >
       <Modal.Header className="bg-primary text-light">

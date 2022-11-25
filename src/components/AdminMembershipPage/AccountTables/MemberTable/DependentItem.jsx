@@ -9,10 +9,15 @@ function DependentItem({ dependent, setShow, setEdit }) {
   return (
     <>
       <ListGroup.Item className="px-1 d-flex">
-        <div className="col-4 text-center m-0">{dependent.first_name}</div>
-        <div className="col-4 text-center">{dependent.last_name}</div>
+        <div className="col-4 text-center m-0 pt-1">{dependent.first_name}</div>
+        <div className="col-4 text-center pt-1">{dependent.last_name}</div>
         <div className="col text-center">
-          <Button size="sm" onClick={() => {setShowConfirmation(true);}}>
+          <Button
+            size="sm"
+            onClick={() => {
+              setShowConfirmation(true);
+            }}
+          >
             Remove
           </Button>
         </div>

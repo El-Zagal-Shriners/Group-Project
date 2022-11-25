@@ -54,7 +54,7 @@ function MemberTable() {
           member.first_name
             .toLowerCase()
             .includes(search.toLocaleLowerCase()) ||
-          member.membership_number.toString().includes(search)
+          member.membership_number?.toString().includes(search)
         ) {
           return true;
         } else {
