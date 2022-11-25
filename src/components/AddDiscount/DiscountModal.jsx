@@ -1,28 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
 
-function DiscountModal(props) {
-  const [show, setShow] = useState(false);
+function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
+  // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
-    props.discount.discount_description
+    discount.discount_description
   );
   const [discountSummary, setDiscountSummary] = useState(
-    props.discount.discount_summary
+    discount.discount_summary
   );
-  const [startDate, setStartDate] = useState(props.discount.start_date===null?'':props.discount.start_date);
-  const [expDate, setExpDate] = useState(props.discount.expiration_date===null?'':props.discount.expiration_date);
-  const [discountUsage, setDiscountUsage] = useState(props.discount.discount_usage);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [startDate, setStartDate] = useState(discount.start_date===null?'':discount.start_date);
+  const [expDate, setExpDate] = useState(discount.expiration_date===null?'':discount.expiration_date);
+  const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
+  const handleClose = () => {
+    console.log('this is handle close', showEditDiscount);
+    // console.log(props)
+    setShowEditDiscount(false);
+  }
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
   // create edit discount object
   const discountObj = {
-    discountId: props.discount.id,
+    discountId: discount.id,
     discountDescription,
     discountSummary,
     startDate: startDate===''?null:startDate,
@@ -35,23 +39,24 @@ function DiscountModal(props) {
       type: "EDIT_DISCOUNT",
       payload: discountObj,
     });
-    setShow(false);
+    setShowEditDiscount(false);
   };
   // remove discount
   const removeDiscount = () => {
     dispatch({
       type: "REMOVE_DISCOUNT",
-      payload: props.discount.id,
+      payload: discount.id,
     });
+    setShowEditDiscount(false);
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Edit
-      </Button>
+      </Button> */}
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEditDiscount} onHide={()=>setShowEditDiscount(false)}>
         <Modal.Header>
           <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
