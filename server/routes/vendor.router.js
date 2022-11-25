@@ -56,19 +56,21 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 // PUT for editing existing vendor info by vendorId
 router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
   // Variables from req.body
+  const vendorId = req.body.vendorId;
   const name = req.body.name;
   const address = req.body.address;
   const city = req.body.city;
   const stateCode = req.body.stateCode;
   const zip = req.body.zip;
-  const vendorId = req.body.vendorId;
+  const website = req.body.website;
+  // const vendorId = req.body.vendorId;
   // SQL for PUT
   const query = `UPDATE "vendors"
-                 SET "name"=$1, "address"=$2, "city"=$3, "state_code"=$4, "zip"=$5
-                 WHERE "id"=$6;`;
+                 SET "name"=$1, "address"=$2, "city"=$3, "state_code"=$4, "zip"=$5, "website_url"=$6
+                 WHERE "id"=$7;`;
   // Run SQL against database
   pool
-    .query(query, [name, address, city, stateCode, zip, vendorId])
+    .query(query, [name, address, city, stateCode, zip, website, vendorId])
     .then((result) => {
       // Send success status
       res.sendStatus(200);

@@ -44,7 +44,7 @@ function AddVendorModal() {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="text-primary">Add Vendor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -97,6 +97,9 @@ function AddVendorModal() {
         <Modal.Footer>
           <Button variant="primary" onClick={addVendor}>
             Add Vendor
+          </Button>
+          <Button variant="outline-primary" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
