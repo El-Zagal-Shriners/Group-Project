@@ -26,6 +26,17 @@ function MemberModal({ member, show, setShow }) {
       Number(acc.primary_member_id) === member.id
   );
 
+  // function to get the current dependent's primary's account info.
+  const primaryInfo = () => {
+    if (member.membership_number === null) {
+      const primary = accounts.find((acc) => {
+        return acc.id === Number(member.primary_member_id);
+      });
+      const primaryName = `${primary.first_name} ${primary.last_name}`;
+      return primaryName;
+    }
+  };
+
   // setup local state.
   const [memberNumber, setMemberNumber] = useState("");
   const [duesPaid, setDuesPaid] = useState(null);
@@ -142,9 +153,13 @@ function MemberModal({ member, show, setShow }) {
               <Row>
                 <Col xs={6}>
                   <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
-                    Member #
+                    {member.membership_number ? "Member #" : "Primary"}
                   </p>
-                  <p className="text-center">{member.membership_number}</p>
+                  <p className="text-center">
+                    {member.membership_number
+                      ? member.membership_number
+                      : primaryInfo()}
+                  </p>
                 </Col>
                 <Col>
                   <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
@@ -154,23 +169,25 @@ function MemberModal({ member, show, setShow }) {
                 </Col>
               </Row>
               <hr />
-              <Row>
-                <Col>
-                  <p className="text-center fw-bold text-primary m-0 pt-2">
-                    Dependents: {dependents.length}
-                  </p>
-                </Col>
-                <Col>
-                  {dependents.length > 0 && (
-                    <Button
-                      variant="outline-primary"
-                      onClick={() => toggleList(!listDependents)}
-                    >
-                      List
-                    </Button>
-                  )}
-                </Col>
-              </Row>
+              {member.membership_number && (
+                <Row>
+                  <Col>
+                    <p className="text-center fw-bold text-primary m-0 pt-2">
+                      Dependents: {dependents.length}
+                    </p>
+                  </Col>
+                  <Col>
+                    {dependents.length > 0 && (
+                      <Button
+                        variant="outline-primary"
+                        onClick={() => toggleList(!listDependents)}
+                      >
+                        List
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              )}
             </Container>
             <ListGroup>
               {listDependents &&
@@ -293,8 +310,8 @@ function MemberModal({ member, show, setShow }) {
   } else {
     return (
       <>
+        {/* Verify Modal / New Member Modal */}
         <Modal
-          // verify modal
           show={show}
           onHide={() => setShow(false)}
           animation={false}
@@ -319,8 +336,17 @@ function MemberModal({ member, show, setShow }) {
               </Row>
               <Row>
                 <Col xs={6}>
-                  <p>Member #</p>
-                  <p>{member.membership_number}</p>
+                  {member.membership_number ? (
+                    <>
+                      <p>Member #</p>
+                      <p>{member.membership_number}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>Primary</p>
+                      <p>{primaryInfo()}</p>
+                    </>
+                  )}
                 </Col>
                 <Col>
                   <p>Dues Paid</p>
@@ -340,6 +366,7 @@ function MemberModal({ member, show, setShow }) {
             <Button onClick={() => setShow(false)}>Close</Button>
           </Modal.Footer>
         </Modal>
+        {/* Success Modal to show member was verified. */}
         <SuccessModal
           showSuccess={showSuccess}
           setShowSuccess={setShowSuccess}

@@ -11,7 +11,7 @@ function MemberTable() {
   const allMembers = [...accounts].filter((acc) => acc.is_verified === true);
   // filter out the new members which are accounts that are not verified.
   const newMembers = [...accounts].filter(
-    (acc) => acc.is_verified === false 
+    (acc) => acc.is_verified === false
     // && acc.membership_number !== null
   );
   // filter out members needing review which are accounts where review pending is true.
