@@ -12,8 +12,6 @@ function EditVendorModal(props) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  console.log("props.allVendors", props.currentVendor);
-
   const getVendor = () => {
     return props.allVendors.findIndex(
       (item) => Number(item.id) === Number(props.currentSelected)
@@ -34,7 +32,7 @@ function EditVendorModal(props) {
   );
   const [vendorZip, setVendorZip] = useState(props.allVendors[getVendor()].zip);
   const [vendorWebsite, setVendorWebsite] = useState(
-    props.allVendors[getVendor()].website_url
+    props.allVendors[getVendor()].website_url===null?"":props.allVendors[getVendor()].website_url
   );
 
   const handleClose = () => setShow(false);
