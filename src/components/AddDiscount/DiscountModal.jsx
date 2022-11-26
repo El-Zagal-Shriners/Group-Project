@@ -28,6 +28,7 @@ function DiscountModal({
       : formatDate(discount.expiration_date)
   );
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
+  const [showInvalid, setShowInvalid] = useState(false);
   // closes modal
   const handleClose = (e) => {
     e.preventDefault();
@@ -46,11 +47,16 @@ function DiscountModal({
   // edit discount
   const editDiscount = (e) => {
     e.preventDefault();
+    if(discountSummary.length < 16) {
     dispatch({
       type: "EDIT_DISCOUNT",
       payload: discountObj,
     });
     setShowEditDiscount(false);
+    setShowInvalid(false);
+  } else {
+    setShowInvalid(true);
+  }
   };
   // remove discount
   const removeDiscount = (e) => {
@@ -66,6 +72,16 @@ function DiscountModal({
     let niceDate = new Date(dateDirty);
     return niceDate.toISOString().split("T")[0];
   }
+  useEffect(() => {
+    // Sets both valid and invalid to false if only newPassword
+    // has entry or both or empty
+    if (discountSummary.length < 16) {
+      setShowInvalid(false);
+      return;
+    } else {
+      setShowInvalid(true);
+    }
+  }, [discountSummary]);
 
   return (
     <>
@@ -83,9 +99,11 @@ function DiscountModal({
                 type="text"
                 required
                 value={discountSummary}
+                isInvalid={showInvalid?true:false}
                 onChange={(e) => setDiscountSummary(e.target.value)}
               />
             </FloatingLabel>
+            {showInvalid && <p>Summary must 15 or less characters</p>}
             <FloatingLabel className="text-primary" label="Description">
               <Form.Control
                 type="text"
