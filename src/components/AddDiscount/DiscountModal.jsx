@@ -204,19 +204,19 @@ function DiscountModal({
           </Modal.Body>
           <Modal.Footer>
             <div className='w-100 d-flex justify-content-end align-items-center flex-wrap'>
-            <Button variant="primary" onClick={toggleActive}>
-              {discount.is_shown?`Turn Off`:`Turn On`}
-            </Button>
-            &nbsp;
-            <Button type="submit" variant="primary">
-              Save
-            </Button>
-            &nbsp;
-            <Button variant="warning" onClick={hideEditShowDeleteConfirmation}>
+            <Button variant="danger" className="col" onClick={hideEditShowDeleteConfirmation}>
               Delete
             </Button>
             &nbsp;
-            <Button variant="outline-primary" onClick={handleClose}>
+            <Button variant="warning" className="col text-nowrap" onClick={toggleActive}>
+              {discount.is_shown?`Turn Off`:`Turn On`}
+            </Button>
+            &nbsp;
+            <Button type="submit" className="col" variant="primary">
+              Save
+            </Button>
+            &nbsp;
+            <Button variant="outline-primary" className="col" onClick={handleClose}>
               Close
             </Button>
             </div>
