@@ -266,7 +266,7 @@ function DiscountsPage() {
         <DiscountFilterOffCanvas
           showFilterOffCanvas={showFilterOffCanvas}
           setShowFilterOffCanvas={setShowFilterOffCanvas}
-          locationPulled = {locationPulled}
+          locationPulled={locationPulled}
         />
       </>
     );
