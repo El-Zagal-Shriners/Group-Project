@@ -68,7 +68,7 @@ function DiscountItem({ discount }) {
                   </div>
                 </div>
                 <div className="col-4 p-1">
-                  <div className="p-1 bg-warning rounded d-flex justify-content-center align-items-center fill-container">
+                  <div className={`p-1 ${(discount.is_shown&&isExpired()&&isStarted())?`bg-warning`:`bg-secondary`} rounded d-flex justify-content-center align-items-center fill-container`}>
                     <div className="discount-text fw-bold">
                       {discount.discount_summary}
                     </div>
