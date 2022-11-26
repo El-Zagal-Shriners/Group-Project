@@ -24,6 +24,10 @@ function ProtectedDiscountsRoute({ component, children, ...props }) {
 
   // This function will determine if the user is in good standing,
   // account is turned off or they are a new account waiting for authorization
+  // If the account is a dependent account and the parent account gets turned off
+  // the dependent will not get access to the discounts until the parent account is
+  // turned back on, if the dependent account is off and the parent is on the depedent
+  // will not see the discounts
   const determineUserStatus = () => {
     if (user.id && user.full_authorized && user.is_verified){
         return <ProtectedComponent />
@@ -31,6 +35,9 @@ function ProtectedDiscountsRoute({ component, children, ...props }) {
         return <RequestReviewPage />
     } else if (user.id && !user.full_authorized && !user.is_verified){
         return <UnverifiedUserPage />
+    } else if (user.id && user.full_authorized && !user.is_verified){
+        // Should this be it's own page?
+        return <RequestReviewPage />
     }
   }
 
