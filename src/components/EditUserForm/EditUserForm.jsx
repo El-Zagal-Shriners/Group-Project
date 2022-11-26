@@ -147,11 +147,11 @@ function EditUserForm(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-primary" onClick={cancelEdit}>
-          Cancel
-        </Button>
         <Button variant="primary" onClick={sendEdit}>
           Confirm Changes
+        </Button>
+        <Button variant="outline-primary" onClick={cancelEdit}>
+          Cancel
         </Button>
       </Modal.Footer>
     </Modal>
