@@ -132,7 +132,7 @@ function DiscountFilterOffCanvas({
       placement="start"
       name="start"
     >
-      <Container className="bg-light fill-container">
+      <Container className="bg-white fill-container">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
