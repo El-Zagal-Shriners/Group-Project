@@ -47,16 +47,16 @@ function DiscountModal({
   // edit discount
   const editDiscount = (e) => {
     e.preventDefault();
-    if(discountSummary.length < 16) {
-    dispatch({
-      type: "EDIT_DISCOUNT",
-      payload: discountObj,
-    });
-    setShowEditDiscount(false);
-    setShowInvalid(false);
-  } else {
-    setShowInvalid(true);
-  }
+    if (discountSummary.length < 16) {
+      dispatch({
+        type: "EDIT_DISCOUNT",
+        payload: discountObj,
+      });
+      setShowEditDiscount(false);
+      setShowInvalid(false);
+    } else {
+      setShowInvalid(true);
+    }
   };
   // remove discount
   const removeDiscount = (e) => {
@@ -99,7 +99,7 @@ function DiscountModal({
                 type="text"
                 required
                 value={discountSummary}
-                isInvalid={showInvalid?true:false}
+                isInvalid={showInvalid ? true : false}
                 onChange={(e) => setDiscountSummary(e.target.value)}
               />
             </FloatingLabel>
