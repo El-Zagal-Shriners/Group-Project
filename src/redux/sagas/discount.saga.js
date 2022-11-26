@@ -40,7 +40,7 @@ function* addDiscount(action) {
   try {
     // console.log("In add discount", action.payload);
     yield axios.post(`api/discounts/`, action.payload);
-    yield put({ type: "GET_DISCOUNTS" });
+    yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
     console.log("Error adding discount: ", err);
   }

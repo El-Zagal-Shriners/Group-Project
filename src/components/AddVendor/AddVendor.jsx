@@ -56,6 +56,7 @@ function AddVendorModal() {
             <Form.Control
               type="text"
               value={name}
+              autoFocus
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>

@@ -46,7 +46,7 @@ function DiscountItem({ discount }) {
           <div className="row fill-container">
             <div className="col-2">
               <div className={`d-flex ${(discount.is_shown&&isExpired()&&isStarted())?`text-light`:`text-primary`} rounded w-100 flex-column justify-content-center align-items-center fill-container`}>
-                {category.icon_class && <IconContext.Provider value={{ size: "2em" }}>
+                {categories.length > 0 && <IconContext.Provider value={{ size: "2em" }}>
                   {allIconComponents[category.icon_class]}
                 </IconContext.Provider>}
               </div>

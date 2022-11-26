@@ -61,7 +61,7 @@ function AddDiscountModal() {
     });
     // Reset the form values.
     resestInputs();
-    history.push("/admin");
+    // history.push("/admindiscounts");
   } else {
     setSubmitCheck(true);
     if(!categoryNotSelected){
