@@ -27,7 +27,7 @@ function FilterFeedback() {
   }
 
   return (
-    <div className="d-flex flex-column bg-light align-items-center">
+    <div className="d-flex flex-column bg-white align-items-center">
       {(selectedCities.length > 0 || selectedCategories.length > 0) && (
         <div>Searching:</div>
       )}
