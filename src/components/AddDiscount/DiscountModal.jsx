@@ -223,7 +223,7 @@ function DiscountModal({
           </Modal.Footer>
         </form>
       </Modal>
-      <ConfirmDeleteModal setShowEditDiscount={setShowEditDiscount} showDeleteConfirmation={showDeleteConfirmation} setShowDeleteConfirmation={setShowDeleteConfirmation} deleteFunction={removeDiscount} deleteType={'discount'}/>
+      <ConfirmDeleteModal parentModalToggleSetter={setShowEditDiscount} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeDiscount} deleteType={'discount'}/>
     </>
   );
 }
