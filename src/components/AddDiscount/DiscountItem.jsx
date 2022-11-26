@@ -55,7 +55,7 @@ function DiscountItem({ discount }) {
               <div className="row">
                 <div className="col-8 p-1">
                   <div className="px-1 py-2 bg-light rounded d-flex justify-content-start align-items-center">
-                    <div className="mx-1 d-flex justify-content-between align-items-center">
+                    <div className="mx-1 d-flex flex-column justify-content-between align-items-start">
                       <div className="text-start">
                         <h5>{vendor?.name}</h5>
                       </div>

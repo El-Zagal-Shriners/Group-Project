@@ -126,6 +126,18 @@ function AdminDiscountPage(vendor) {
       </div>
       <ConfirmDeleteModal parentModalToggleSetter={false} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeVendor} deleteType={'vendor'}/>
       <section className="w-100 flex-wrap">
+        <hr className="mt-2 mb-0"/>
+      <div className="w-100 d-flex justify-content-center align-items-center mt-2 mb-0">
+          <div className="col p-2 d-flex justify-content-between align-items-center">
+            <p className="col text-nowrap m-0">Active:</p>
+            <p className="col badge bg-primary m-0">&nbsp;</p>
+          </div>
+          <div className="col p-2 d-flex justify-content-between align-items-center">
+            <p className="col text-nowrap m-0">In-active:</p>
+            <p className="col border border-1 border-primary bg-light badge m-0">&nbsp;</p>
+          </div>
+        </div>
+        <hr className="my-2"/>
         {filteredDiscounts.map((discount) => {
           return <DiscountItem key={discount.id} discount={discount} />;
         })}
