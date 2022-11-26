@@ -17,6 +17,7 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 function DiscountFilterOffCanvas({
   showFilterOffCanvas,
   setShowFilterOffCanvas,
+  locationPulled,
 }) {
   const dispatch = useDispatch();
 
@@ -94,12 +95,16 @@ function DiscountFilterOffCanvas({
 
   // this function takes an array of city objects and returns
   // a new array with the first three objects only
-  function closestThreeCities() {
-    const firstThreeCities = [];
-    for (let i = 0; i <= 2; i++) {
-      firstThreeCities.push(allCities[i]);
+  function closestCities() {
+    const closestCities = [];
+    if (locationPulled) {
+      for (let i = 0; i <= 2; i++) {
+        closestCities.push(allCities[i]);
+      }
+    } else {
+      closestCities.push({ city: "Fargo" }, { city: "Moorhead" });
     }
-    return firstThreeCities;
+    return closestCities;
   }
 
   useEffect(() => {
@@ -163,11 +168,14 @@ function DiscountFilterOffCanvas({
           {/* Select Nearest Cities  */}
           <div className="d-flex justify-content-between flex-column m-1 p-1">
             <div>
-              <div className="text-center">Select from nearby cities:</div>
-              {/* <div className="text-center">(select multiple)</div> */}
+              {locationPulled ? (
+                <div className="text-center">Select from nearby cities:</div>
+              ) : (
+                <div className="text-center">Select from:</div>
+              )}
             </div>
             <div className="d-flex justify-content-between flex-row p-1">
-              {closestThreeCities().map((thisCity, index) => {
+              {closestCities().map((thisCity, index) => {
                 return (
                   <ToggleButton
                     key={index}

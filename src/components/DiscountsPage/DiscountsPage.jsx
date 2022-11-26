@@ -170,6 +170,7 @@ function DiscountsPage() {
     dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
   }
 
+  // this function orders discounts by the city (closest to furthest away based on current location)
   function orderDiscountsByLocation(array) {
     console.log("location pulled?", locationPulled);
     // if location services were successfully pulled, sort discounts by city distance
@@ -191,7 +192,6 @@ function DiscountsPage() {
           return 0;
         }
       });
-      // if they are not activated, sort discounts by city alphabetically
     } else {
       return array;
     }
@@ -228,8 +228,8 @@ function DiscountsPage() {
         <div className="bg-light p-1 d-flex justify-content-center">
           <h1 className="display-5 text-primary">Your Shriner Discounts</h1>
         </div>
-        <div className="d-flex col flex-column justify-content-around align-items-center bg-light sticky-top">
-          <div className="bg-light col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-center">
+        <div className="d-flex col flex-column justify-content-around align-items-center bg-white sticky-top">
+          <div className="bg-white col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-center">
             <div className="d-flex justify-content-center align-items-center">
               <Button
                 variant="primary"
@@ -266,6 +266,7 @@ function DiscountsPage() {
         <DiscountFilterOffCanvas
           showFilterOffCanvas={showFilterOffCanvas}
           setShowFilterOffCanvas={setShowFilterOffCanvas}
+          locationPulled = {locationPulled}
         />
       </>
     );
