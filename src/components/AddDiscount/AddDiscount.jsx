@@ -28,6 +28,7 @@ function AddDiscountModal() {
   const [categoryId, setCategoryId] = useState(1);
   const [isShown, setIsShown] = useState("True");
   const [isRegional, setIsRegional] = useState("False");
+  const [vendorSelected, setVendorSelected] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -59,15 +60,19 @@ function AddDiscountModal() {
     setExpDate("");
     setDiscountUsage("N/A");
     setShow(false);
+    setVendorSelected(false);
     history.push("/admin");
   };
 
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "GET_CATEGORIES" });
-    // console.log("categories", allCategories);
-    // console.log("vendors", allVendors);
   }, []);
+
+  const handleSelect = (eventKey) => {
+    setVendorId(eventKey);
+    setVendorSelected(true);
+  }
 
   return (
     <>
@@ -80,11 +85,27 @@ function AddDiscountModal() {
           <Modal.Title className="text-primary">Add Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Dropdown onSelect={(eventKey) => setVendorId(eventKey)}>
+        {vendorSelected &&
+          <div>
+            <h5 className="text-center w-100 mt-1">
+              Vendor:&nbsp;
+              <span className="text-primary fw-bold">
+                {
+                  allVendors[
+                    allVendors.findIndex(
+                      (item) => Number(item.id) === Number(vendorId)
+                    )
+                  ]?.name
+                }
+              </span>
+            </h5>
+            </div>}
+          <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}>
             <DropdownButton
               id="category-select-dropdown"
               title="Vendor"
               as={ButtonGroup}
+              className="w-100"
             >
               {allVendors.map((vendor) => {
                 return (
@@ -146,6 +167,7 @@ function AddDiscountModal() {
               id="category-select-dropdown"
               title="Category"
               as={ButtonGroup}
+              className="w-100"
             >
               {allCategories.map((category) => {
                 return (
