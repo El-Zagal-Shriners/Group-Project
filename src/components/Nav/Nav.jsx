@@ -3,9 +3,18 @@ import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function UpdatedNavBar() {
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function handleLogOut() {
+    dispatch({ type: "UNSET_ALL" });
+    dispatch({ type: "LOGOUT", payload: { history } });
+  }
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
@@ -34,6 +43,9 @@ function UpdatedNavBar() {
                 Admin
               </Nav.Link>
             )}
+            <Nav.Link className="fs-4 text-nowrap text-primary" onClick={handleLogOut}>
+              Log Out
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
