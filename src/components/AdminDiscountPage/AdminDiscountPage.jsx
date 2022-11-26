@@ -9,6 +9,8 @@ import DiscountItem from "../AddDiscount/DiscountItem";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "../AddDiscount/AddDiscount";
 import EditVendorModal from "../AddVendor/EditVendorModal";
+import ConfirmDeleteModal from "../AddDiscount/ConfirmDeleteModal";
+import Button from "react-bootstrap/Button";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ function AdminDiscountPage(vendor) {
 
   let filteredDiscounts = [...discounts];
   const [currentSelected, setCurrentSelected] = useState("default");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showEditVendor, setShowEditVendor] = useState(false);
   if (currentSelected !== "default") {
     filteredDiscounts = filteredDiscounts.filter(
       (discount) => Number(discount.vendor_id) === Number(currentSelected)
@@ -40,7 +44,7 @@ function AdminDiscountPage(vendor) {
       payload: currentSelected,
     });
     setCurrentSelected("default");
-    history.push("/admindiscounts");
+    setShowDeleteConfirmation(false);
   };
 
   useEffect(() => {
@@ -103,19 +107,24 @@ function AdminDiscountPage(vendor) {
               </span>
             </h5>
             <div className='w-100 d-flex justify-content-center align-items-center'>
-            <button className="btn btn-primary mb-2 col-6" onClick={removeVendor}>
+            <button className="btn btn-primary mb-2 col-6" onClick={()=>setShowDeleteConfirmation(true)}>
               Remove
             </button>
             &nbsp;
-            <br />
+            <Button variant="primary" className="mb-2 col-6" onClick={()=>setShowEditVendor(true)}>
+            Edit
+            </Button>
             <EditVendorModal
               allVendors={allVendors}
               currentSelected={currentSelected}
+              showEditVendor={showEditVendor}
+              setShowEditVendor={setShowEditVendor}
             />
             </div>
           </div>
         )}
       </div>
+      <ConfirmDeleteModal parentModalToggleSetter={false} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeVendor} deleteType={'vendor'}/>
       <section className="w-100 flex-wrap">
         {filteredDiscounts.map((discount) => {
           return <DiscountItem key={discount.id} discount={discount} />;

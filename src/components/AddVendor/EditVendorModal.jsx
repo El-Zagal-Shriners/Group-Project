@@ -9,7 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function EditVendorModal(props) {
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   const getVendor = () => {
@@ -35,8 +35,8 @@ function EditVendorModal(props) {
     props.allVendors[getVendor()].website_url===null?"":props.allVendors[getVendor()].website_url
   );
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleCloseEditVendor = () => setShow(false);
+  // const handleShowEditVendor = () => setShow(true);
 
   const vendorObj = {
     vendorId: Number(props.currentSelected),
@@ -53,15 +53,15 @@ function EditVendorModal(props) {
       type: "EDIT_VENDOR",
       payload: vendorObj,
     });
-    setShow(false);
+    props.setShowEditVendor(false);
   };
 
   return (
     <>
-      <Button variant="primary" className="mb-2 col-6" onClick={handleShow}>
+      {/* <Button variant="primary" className="mb-2 col-6" onClick={handleShow}>
         Edit
-      </Button>
-      <Modal show={show} onHide={handleClose}>
+      </Button> */}
+      <Modal show={props.showEditVendor} onHide={(()=>props.setShowEditVendor(false))}>
         <Modal.Header>
           <Modal.Title className="text-primary"> Edit Vendor</Modal.Title>
         </Modal.Header>
@@ -113,7 +113,7 @@ function EditVendorModal(props) {
           <Button variant="primary" onClick={editVendor}>
             Save Changes
           </Button>
-          <Button variant="outline-primary" onClick={handleClose}>
+          <Button variant="outline-primary" onClick={()=>props.setShowEditVendor()}>
             Close
           </Button>
         </Modal.Footer>
