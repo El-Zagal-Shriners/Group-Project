@@ -106,47 +106,62 @@ function AdminDiscountPage(vendor) {
                 <br />
               </span>
             </h5>
-            <div className='w-100 d-flex justify-content-center align-items-center'>
-            <button className="btn btn-primary mb-2 col-6" onClick={()=>setShowDeleteConfirmation(true)}>
-              Remove
-            </button>
-            &nbsp;
-            <Button variant="primary" className="mb-2 col-6" onClick={()=>setShowEditVendor(true)}>
-            Edit
-            </Button>
-            <EditVendorModal
-              allVendors={allVendors}
-              currentSelected={currentSelected}
-              showEditVendor={showEditVendor}
-              setShowEditVendor={setShowEditVendor}
-            />
+            <div className="w-100 d-flex justify-content-center align-items-center">
+              <button
+                className="btn btn-primary mb-2 col-6"
+                onClick={() => setShowDeleteConfirmation(true)}
+              >
+                Remove
+              </button>
+              &nbsp;
+              <Button
+                variant="primary"
+                className="mb-2 col-6"
+                onClick={() => setShowEditVendor(true)}
+              >
+                Edit
+              </Button>
+              <EditVendorModal
+                allVendors={allVendors}
+                currentSelected={currentSelected}
+                showEditVendor={showEditVendor}
+                setShowEditVendor={setShowEditVendor}
+              />
             </div>
           </div>
         )}
       </div>
-      <ConfirmDeleteModal parentModalToggleSetter={false} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeVendor} deleteType={'vendor'}/>
+      <ConfirmDeleteModal
+        parentModalToggleSetter={false}
+        hideThisModalToggle={showDeleteConfirmation}
+        hideThisModalToggleSetter={setShowDeleteConfirmation}
+        deleteFunction={removeVendor}
+        deleteType={"vendor"}
+      />
       <div className="w-100 d-flex justify-content-center align-items-center col col-md-9 col-lg-6">
-      <section className="col col-md-9 col-lg-6 w-100">
-        <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto"/>
-      <div className="w-lg-50 w-md-100 mx-auto col col-md-9 col-lg-6 d-flex justify-content-center align-items-center mt-2 mb-0">
-          <div className="col p-2 d-flex justify-content-around align-items-center">
-            <p className="col text-nowrap m-0">Active:</p>
-            <div className="w-100 d-flex justify-content-center mx-3">
-            <p className="col badge bg-primary m-0">&nbsp;</p>
+        <section className="col col-md-9 col-lg-6 w-100">
+          <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto" />
+          <div className="w-lg-50 w-md-100 mx-auto col col-md-9 col-lg-6 d-flex justify-content-center align-items-center mt-2 mb-0">
+            <div className="col p-2 d-flex justify-content-around align-items-center">
+              <p className="col text-nowrap m-0">Active:</p>
+              <div className="w-100 d-flex justify-content-center mx-3">
+                <p className="col badge bg-primary m-0">&nbsp;</p>
+              </div>
+            </div>
+            <div className="col p-2 d-flex justify-content-around align-items-center">
+              <p className="col text-nowrap m-0">In-active:</p>
+              <div className="w-100 d-flex justify-content-center mx-3">
+                <p className="col mx-auto border border-1 border-primary bg-light badge m-0">
+                  &nbsp;
+                </p>
+              </div>
             </div>
           </div>
-          <div className="col p-2 d-flex justify-content-around align-items-center">
-            <p className="col text-nowrap m-0">In-active:</p>
-            <div className="w-100 d-flex justify-content-center mx-3">
-            <p className="col mx-auto border border-1 border-primary bg-light badge m-0">&nbsp;</p>
-            </div>
-          </div>
-        </div>
-        <hr className="my-2 mx-auto col col-md-9 col-lg-6"/>
-        {filteredDiscounts.map((discount) => {
-          return <DiscountItem key={discount.id} discount={discount} />;
-        })}
-      </section>
+          <hr className="my-2 mx-auto col col-md-9 col-lg-6" />
+          {filteredDiscounts.map((discount) => {
+            return <DiscountItem key={discount.id} discount={discount} />;
+          })}
+        </section>
       </div>
     </>
   );
