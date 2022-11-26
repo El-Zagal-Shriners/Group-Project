@@ -102,14 +102,17 @@ function AdminDiscountPage(vendor) {
                 <br />
               </span>
             </h5>
-            <button className="btn btn-primary mb-1" onClick={removeVendor}>
+            <div className='w-100 d-flex justify-content-center align-items-center'>
+            <button className="btn btn-primary mb-2 col-6" onClick={removeVendor}>
               Remove
             </button>
+            &nbsp;
             <br />
             <EditVendorModal
               allVendors={allVendors}
               currentSelected={currentSelected}
             />
+            </div>
           </div>
         )}
       </div>

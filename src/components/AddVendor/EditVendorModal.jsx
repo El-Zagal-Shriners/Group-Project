@@ -60,7 +60,7 @@ function EditVendorModal(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" className="mb-2 col-6" onClick={handleShow}>
         Edit
       </Button>
       <Modal show={show} onHide={handleClose}>
