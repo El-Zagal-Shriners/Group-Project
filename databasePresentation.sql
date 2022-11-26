@@ -109,10 +109,10 @@ CREATE TABLE "password_tokens" (
 );
 
 -- Password token alter statement
-ALTER TABLE "password_tokens" ADD CONSTRAINT "password_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
+ALTER TABLE "password_tokens" ADD CONSTRAINT "password_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id") ON DELETE CASCADE;
 
 -- Use this after adding dependent tokens table
-ALTER TABLE "dependent_tokens" ADD CONSTRAINT "dependent_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
+ALTER TABLE "dependent_tokens" ADD CONSTRAINT "dependent_tokens_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id") ON DELETE CASCADE;
 
 ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("primary_member_id") REFERENCES "user"("id");
 
