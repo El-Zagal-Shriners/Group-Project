@@ -67,11 +67,63 @@ function DiscountModal({
     });
     setShowEditDiscount(false);
   };
+  // toggle if discount is active or not
+  const toggleActive = (e) => {
+    e.preventDefault();
+    console.log('This is discount.id: ', discount.id);
+    dispatch({
+      type: "TOGGLE_ACTIVE_DISCOUNT",
+      payload: {
+        discountId: discount.id,
+      },
+    });
+  }
   // cleans up the date to only display yyyy/mm/dd
   function formatDate(dateDirty) {
     let niceDate = new Date(dateDirty);
     return niceDate.toISOString().split("T")[0];
   }
+
+  const isExpired = () => {
+    let today = new Date().toLocaleDateString();
+    let expDate = new Date(discount.expiration_date).toLocaleDateString();
+    if (expDate > today){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const isStarted = () => {
+    let today = new Date().toLocaleDateString();
+    let startDate = new Date(discount.start_date).toLocaleDateString();
+    if (startDate < today){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const inactiveOrExpired = () => {
+    if (discount.is_shown && isExpired() && isStarted()){
+      return `text-success fw-bold`;
+    } else {
+      return `text-danger fw-bold`;
+    }
+  }
+
+  const inactiveMessage = () => {
+    if (discount.is_shown && isExpired() && isStarted()){
+      return `Active`
+    } else if (discount.is_shown && !isExpired()){
+      return `Expired`
+    } else if (!discount.is_shown){
+      return `Inactive`
+    } else if (discount.is_shown && !isStarted()) {
+      return `Not Started`
+    }
+  }
+
   useEffect(() => {
     // Sets both valid and invalid to false if only newPassword
     // has entry or both or empty
@@ -92,7 +144,10 @@ function DiscountModal({
           </Modal.Header>
           <Modal.Body>
             {vendor && (
+              <div className='d-flex flex-column justify-content-center align-items-center'>
               <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>
+              <h6 className={inactiveOrExpired()}>Status: {inactiveMessage()}</h6>
+              </div>
             )}
             <FloatingLabel className="text-primary" label="Summary">
               <Form.Control
@@ -136,15 +191,23 @@ function DiscountModal({
             </FloatingLabel>
           </Modal.Body>
           <Modal.Footer>
+            <div className='w-100 d-flex justify-content-end align-items-center flex-wrap'>
+            <Button variant="primary" onClick={toggleActive}>
+              {discount.is_shown?`Turn Off`:`Turn On`}
+            </Button>
+            &nbsp;
             <Button type="submit" variant="primary">
-              Save Changes
+              Save
             </Button>
+            &nbsp;
             <Button variant="warning" onClick={removeDiscount}>
-              Delete Discount
+              Delete
             </Button>
+            &nbsp;
             <Button variant="outline-primary" onClick={handleClose}>
               Close
             </Button>
+            </div>
           </Modal.Footer>
         </form>
       </Modal>

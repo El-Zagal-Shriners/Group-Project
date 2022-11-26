@@ -139,6 +139,28 @@ router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
     });
 }); // End edit discount PUT
 
+// This PUT will toggle the is_shown for a discount by id
+router.put("/active", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+  console.log("In discount PUT with: ", req.body);
+  const discountId = req.body.discountId;
+  const query = `UPDATE "discounts"
+                 SET "is_shown"=NOT "is_shown"
+                 WHERE "id"=$1;`;
+  pool
+    .query(query, [
+      discountId
+    ])
+    .then((result) => {
+      // Send success status
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      // log error and send back error code if error occurred
+      console.log("Error toggline discount is_shown: ", err);
+      res.sendStatus(500);
+    });
+}); // End toggling discount is_shown PUT
+
 // Delete a discount by discount ID
 router.delete(
   "/:discountid",

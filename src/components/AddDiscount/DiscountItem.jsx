@@ -23,9 +23,9 @@ function DiscountItem({ discount }) {
           <div className="row fill-container">
             <div className="col-2">
               <div className="d-flex text-light flex-column justify-content-center align-items-center fill-container">
-                <IconContext.Provider value={{ size: "2em" }}>
+                {category.icon_class && <IconContext.Provider value={{ size: "2em" }}>
                   {allIconComponents[category.icon_class]}
-                </IconContext.Provider>
+                </IconContext.Provider>}
               </div>
             </div>
             <div className="col-10">
