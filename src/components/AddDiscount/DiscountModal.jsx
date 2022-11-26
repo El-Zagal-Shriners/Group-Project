@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 function DiscountModal({
   setShowEditDiscount,
@@ -29,6 +30,7 @@ function DiscountModal({
   );
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
   const [showInvalid, setShowInvalid] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   // closes modal
   const handleClose = (e) => {
     e.preventDefault();
@@ -88,7 +90,7 @@ function DiscountModal({
   const isExpired = () => {
     let today = new Date().toLocaleDateString();
     let expDate = new Date(discount.expiration_date).toLocaleDateString();
-    if (expDate > today){
+    if ((expDate > today)||discount.expiration_date===null){
       return true;
     } else {
       return false;
@@ -99,7 +101,7 @@ function DiscountModal({
   const isStarted = () => {
     let today = new Date().toLocaleDateString();
     let startDate = new Date(discount.start_date).toLocaleDateString();
-    if (startDate < today){
+    if ((startDate < today)||discount.start_date===null){
       return true;
     } else {
       return false;
@@ -108,7 +110,7 @@ function DiscountModal({
   // this function will return the classnames
   // needed for displaying the current discount status
   const inactiveOrExpired = () => {
-    if (discount.is_shown && isExpired() && isStarted()){
+    if (discount.is_shown && (isExpired() && isStarted())){
       return `text-success fw-bold`;
     } else {
       return `text-danger fw-bold`;
@@ -116,7 +118,7 @@ function DiscountModal({
   }
   // This function returns the proper status message for a discount depending on its status
   const inactiveMessage = () => {
-    if (discount.is_shown && isExpired() && isStarted()){
+    if (discount.is_shown && (isExpired()||null) && (isStarted()||null)){
       return `Active`
     } else if (discount.is_shown && !isExpired()){
       return `Expired`
@@ -125,6 +127,13 @@ function DiscountModal({
     } else if (discount.is_shown && !isStarted()) {
       return `Not Started`
     }
+  }
+  // This function will toggle the edit modal off
+  // and show the delete confirmation
+  const hideEditShowDeleteConfirmation = (e) => {
+    e.preventDefault();
+    setShowEditDiscount(false);
+    setShowDeleteConfirmation(true);
   }
 
   useEffect(() => {
@@ -203,7 +212,7 @@ function DiscountModal({
               Save
             </Button>
             &nbsp;
-            <Button variant="warning" onClick={removeDiscount}>
+            <Button variant="warning" onClick={hideEditShowDeleteConfirmation}>
               Delete
             </Button>
             &nbsp;
@@ -214,6 +223,7 @@ function DiscountModal({
           </Modal.Footer>
         </form>
       </Modal>
+      <ConfirmDeleteModal setShowEditDiscount={setShowEditDiscount} showDeleteConfirmation={showDeleteConfirmation} setShowDeleteConfirmation={setShowDeleteConfirmation} deleteFunction={removeDiscount} deleteType={'discount'}/>
     </>
   );
 }
