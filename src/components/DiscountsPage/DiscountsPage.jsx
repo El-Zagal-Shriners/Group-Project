@@ -13,9 +13,37 @@ import FilterFeedback from "./FilterFeedback";
 
 function DiscountsPage() {
   const dispatch = useDispatch();
+
+  // redux stores for managing search parameters
+  const selectedCities = useSelector(
+    (store) => store.filter.selectedCitiesReducer
+  );
+  const selectedCategories = useSelector(
+    (store) => store.filter.selectedCategoriesReducer
+  );
+  // redux store containing all available member discounts
+  const allMemberDiscounts = useSelector(
+    (store) => store.discounts.memberDiscountsReducer
+  );
+  // redux store containing current filtered list of member discounts
+  const filteredDiscounts = useSelector(
+    (store) => store.filter.filteredDiscountsReducer
+  );
+
+  // redux store containing all cities (ordered by location or not, based on if user allowed location services)
+  const allCities = useSelector((store) => store.cities.allCitiesReducer);
+
+  // manage input for search bar
+  const [searchBarIn, setSearchBarIn] = useState("");
+
+  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
+
   // Location services:
   // local state to see if services are loading.
   const [loading, setLoading] = useState(true);
+
+  const [locationPulled, setLocationPulled] = useState(false);
+
   // create a promise to get the user's current location.
   const getPosition = () => {
     return new Promise((resolve, reject) => {
@@ -34,6 +62,9 @@ function DiscountsPage() {
       // then get the closest cities.
       const wait = await getPosition()
         .then((response) => {
+          // location was pulled, set locationPulled to true;
+          setLocationPulled(true);
+
           // In the response from getPosition, if subscribed is true,
           // perform async tasks. Otherwise if subscribed is false,
           // do not perform the async tasks.
@@ -53,6 +84,7 @@ function DiscountsPage() {
               type: "GET_CLOSE_CITIES",
               payload: coordinates,
             });
+            dispatch({ type: "GET_MEMBER_DISCOUNTS" });
           }
         })
         // if User does not have location services enabled, show default locations.
@@ -60,6 +92,7 @@ function DiscountsPage() {
           // error code 1 appears if user does not have location services enabled.
           if (err.code === 1) {
             dispatch({ type: "GET_ALL_CITIES" });
+            dispatch({ type: "GET_MEMBER_DISCOUNTS" });
           } else {
             console.log("Error resolving getPosition", err);
           }
@@ -76,27 +109,6 @@ function DiscountsPage() {
     // app crashes.
     return () => (subscribed = false);
   }, []);
-
-  // redux stores for managing search parameters
-  const selectedCities = useSelector(
-    (store) => store.filter.selectedCitiesReducer
-  );
-  const selectedCategories = useSelector(
-    (store) => store.filter.selectedCategoriesReducer
-  );
-  // redux store containing all available member discounts
-  const allMemberDiscounts = useSelector(
-    (store) => store.discounts.memberDiscountsReducer
-  );
-  // redux store containing current filtered list of member discounts
-  const filteredDiscounts = useSelector(
-    (store) => store.filter.filteredDiscountsReducer
-  );
-
-  // manage input for search bar
-  const [searchBarIn, setSearchBarIn] = useState("");
-
-  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
 
   function filterDiscounts() {
     // push all search filter parameters into one array
@@ -153,14 +165,50 @@ function DiscountsPage() {
       });
     }
 
+    filteredArray = orderDiscountsByLocation(filteredArray);
+
     dispatch({ type: "SET_FILTERED_DISCOUNTS", payload: filteredArray });
   }
 
-  useEffect(() => dispatch({ type: "GET_MEMBER_DISCOUNTS" }), []);
+  function orderDiscountsByLocation(array) {
+    console.log("location pulled?", locationPulled);
+    // if location services were successfully pulled, sort discounts by city distance
+    if (locationPulled) {
+      return array?.sort((thisDiscount, nextDiscount) => {
+        // this returns the index of the discount's city in the allCities array (which is ordered by distance)
+        let thisDiscountCityIndex = allCities.findIndex((thisCity) => {
+          return thisCity.city === thisDiscount.city;
+        });
+        let nextDiscountCityIndex = allCities.findIndex((thisCity) => {
+          return thisCity.city === nextDiscount.city;
+        });
+
+        if (thisDiscountCityIndex < nextDiscountCityIndex) {
+          return -1;
+        } else if (thisDiscountCityIndex > nextDiscountCityIndex) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      // if they are not activated, sort discounts by city alphabetically
+    } else {
+      return array;
+    }
+  }
+
   useEffect(
     () => filterDiscounts(),
-    [selectedCategories, selectedCities, allMemberDiscounts, searchBarIn]
+    [
+      selectedCategories,
+      selectedCities,
+      allMemberDiscounts,
+      searchBarIn,
+      loading,
+    ]
   );
+
+  // useEffect(()=> console.log('filtered Ds', filteredDiscounts));
 
   if (loading) {
     return (
