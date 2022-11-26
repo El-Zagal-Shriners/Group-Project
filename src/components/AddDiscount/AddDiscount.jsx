@@ -129,8 +129,8 @@ function AddDiscountModal() {
 
       <Modal show={show}>
         <form onSubmit={addDiscount}>
-        <Modal.Header>
-          <Modal.Title className="text-primary">Add Discount</Modal.Title>
+        <Modal.Header className="bg-primary text-light">
+          <Modal.Title className="text-light fw-bold">Add Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="d-flex flex-column justify-content-center p-1">

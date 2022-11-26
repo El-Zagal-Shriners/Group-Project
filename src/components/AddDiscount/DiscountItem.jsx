@@ -61,7 +61,7 @@ function DiscountItem({ discount }) {
                       </div>
                       <div className="discount-address ms-2 text-start text-muted fw-light">
                         <small>
-                          {vendor?.address}, {vendor?.city}
+                          {vendor?.address}, {vendor?.city}, {vendor?.state_code}
                         </small>
                       </div>
                     </div>

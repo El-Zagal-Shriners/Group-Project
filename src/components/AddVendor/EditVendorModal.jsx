@@ -62,8 +62,8 @@ function EditVendorModal(props) {
         Edit
       </Button> */}
       <Modal show={props.showEditVendor} onHide={(()=>props.setShowEditVendor(false))}>
-        <Modal.Header>
-          <Modal.Title className="text-primary"> Edit Vendor</Modal.Title>
+        <Modal.Header className="bg-primary text-light">
+          <Modal.Title className="text-light fw-bold"> Edit Vendor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FloatingLabel

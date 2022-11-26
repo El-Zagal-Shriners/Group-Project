@@ -58,7 +58,7 @@ function AdminDiscountPage(vendor) {
       <UpdatedNavBar />
       <h1 className="text-primary text-center mt-3 mb-0">Discount Manager</h1>
       <br />
-      <div className="d-flex justify-content-around">
+      <div className="w-md-100 w-lg-50 mx-auto d-flex justify-content-around align-items-center col-md-9 col-lg-6">
         <AddVendorModal />
         <AddDiscountModal />
       </div>
@@ -125,9 +125,10 @@ function AdminDiscountPage(vendor) {
         )}
       </div>
       <ConfirmDeleteModal parentModalToggleSetter={false} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeVendor} deleteType={'vendor'}/>
-      <section className="w-100 flex-wrap">
-        <hr className="mt-2 mb-0"/>
-      <div className="w-100 d-flex justify-content-center align-items-center mt-2 mb-0">
+      <div className="w-100 d-flex justify-content-center align-items-center col col-md-9 col-lg-6">
+      <section className="col col-md-9 col-lg-6 w-100">
+        <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto"/>
+      <div className="w-lg-50 w-md-100 mx-auto col col-md-9 col-lg-6 d-flex justify-content-center align-items-center mt-2 mb-0">
           <div className="col p-2 d-flex justify-content-between align-items-center">
             <p className="col text-nowrap m-0">Active:</p>
             <p className="col badge bg-primary m-0">&nbsp;</p>
@@ -137,11 +138,12 @@ function AdminDiscountPage(vendor) {
             <p className="col border border-1 border-primary bg-light badge m-0">&nbsp;</p>
           </div>
         </div>
-        <hr className="my-2"/>
+        <hr className="my-2 mx-auto col col-md-9 col-lg-6"/>
         {filteredDiscounts.map((discount) => {
           return <DiscountItem key={discount.id} discount={discount} />;
         })}
       </section>
+      </div>
     </>
   );
 }

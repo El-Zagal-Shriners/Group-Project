@@ -11,7 +11,7 @@ function ConfirmDeleteModal(props) {
   // Renders a modal to confirm if the user wants to remove the selected dependent account
   return (
     <Modal show={props.hideThisModalToggle} onHide={handleClose}>
-      <Modal.Header className="bg-primary text-light" closeButton>
+      <Modal.Header className="bg-primary text-light">
         <Modal.Title className="fw-bold">Confirm Delete</Modal.Title>
       </Modal.Header>
       <Modal.Body>
