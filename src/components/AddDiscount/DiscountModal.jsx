@@ -5,7 +5,12 @@ import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
 
-function DiscountModal({setShowEditDiscount,showEditDiscount,discount, vendor}) {
+function DiscountModal({
+  setShowEditDiscount,
+  showEditDiscount,
+  discount,
+  vendor,
+}) {
   // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
@@ -14,22 +19,28 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount, vendor}) 
   const [discountSummary, setDiscountSummary] = useState(
     discount.discount_summary
   );
-  const [startDate, setStartDate] = useState(discount.start_date===null?'':formatDate(discount.start_date));
-  const [expDate, setExpDate] = useState(discount.expiration_date===null?'':formatDate(discount.expiration_date));
+  const [startDate, setStartDate] = useState(
+    discount.start_date === null ? "" : formatDate(discount.start_date)
+  );
+  const [expDate, setExpDate] = useState(
+    discount.expiration_date === null
+      ? ""
+      : formatDate(discount.expiration_date)
+  );
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
   // closes modal
   const handleClose = (e) => {
     e.preventDefault();
     setShowEditDiscount(false);
-  }
+  };
 
   // create edit discount object
   const discountObj = {
     discountId: discount.id,
     discountDescription,
     discountSummary,
-    startDate: startDate===''?null:startDate,
-    expDate: expDate===''?null:expDate,
+    startDate: startDate === "" ? null : startDate,
+    expDate: expDate === "" ? null : expDate,
     discountUsage,
   };
   // edit discount
@@ -50,71 +61,73 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount, vendor}) 
     });
     setShowEditDiscount(false);
   };
-    // cleans up the date to only display yyyy/mm/dd
-    function formatDate(dateDirty) {
-      let niceDate = new Date(dateDirty);
-      return niceDate.toISOString().split('T')[0];
-    }
+  // cleans up the date to only display yyyy/mm/dd
+  function formatDate(dateDirty) {
+    let niceDate = new Date(dateDirty);
+    return niceDate.toISOString().split("T")[0];
+  }
 
   return (
     <>
-      <Modal show={showEditDiscount} onHide={()=>setShowEditDiscount(false)}>
+      <Modal show={showEditDiscount} onHide={() => setShowEditDiscount(false)}>
         <form onSubmit={editDiscount}>
-        <Modal.Header>
-          <Modal.Title className="text-primary">Edit Discount</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {vendor && <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>}
-          <FloatingLabel className="text-primary" label="Summary">
-            <Form.Control
-              type='text'
-              required
-              value={discountSummary}
-              onChange={(e) => setDiscountSummary(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Description">
-            <Form.Control
-              type="text"
-              required
-              value={discountDescription}
-              onChange={(e) => setDiscountDescription(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Start Date">
-            <Form.Control
-              value={startDate}
-              type="date"
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Expiration Date">
-            <Form.Control
-              value={expDate}
-              type="date"
-              onChange={(e) => setExpDate(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Discount Usage">
-            <Form.Control
-              type='text'
-              required
-              value={discountUsage}
-              onChange={(e) => setDiscountUsage(e.target.value)}
-            />
-          </FloatingLabel>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button type='submit' variant="primary">
-            Save Changes
-          </Button>
-          <Button variant="warning" onClick={removeDiscount}>
-            Delete Discount
-          </Button>
-          <Button variant="outline-primary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
+          <Modal.Header>
+            <Modal.Title className="text-primary">Edit Discount</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {vendor && (
+              <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>
+            )}
+            <FloatingLabel className="text-primary" label="Summary">
+              <Form.Control
+                type="text"
+                required
+                value={discountSummary}
+                onChange={(e) => setDiscountSummary(e.target.value)}
+              />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Description">
+              <Form.Control
+                type="text"
+                required
+                value={discountDescription}
+                onChange={(e) => setDiscountDescription(e.target.value)}
+              />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Start Date">
+              <Form.Control
+                value={startDate}
+                type="date"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Expiration Date">
+              <Form.Control
+                value={expDate}
+                type="date"
+                onChange={(e) => setExpDate(e.target.value)}
+              />
+            </FloatingLabel>
+            <FloatingLabel className="text-primary" label="Discount Usage">
+              <Form.Control
+                type="text"
+                required
+                value={discountUsage}
+                onChange={(e) => setDiscountUsage(e.target.value)}
+              />
+            </FloatingLabel>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit" variant="primary">
+              Save Changes
+            </Button>
+            <Button variant="warning" onClick={removeDiscount}>
+              Delete Discount
+            </Button>
+            <Button variant="outline-primary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
         </form>
       </Modal>
     </>
