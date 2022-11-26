@@ -38,15 +38,6 @@ function DiscountItem({ discount }) {
       return false;
     }
   }
-  // this function will return the classnames
-  // needed for displaying the current discount status
-  const inactiveOrExpired = () => {
-    if (discount.is_shown && (isExpired() && isStarted())){
-      return `text-success fw-bold`;
-    } else {
-      return `text-danger fw-bold`;
-    }
-  }
 
   return (
     <>
