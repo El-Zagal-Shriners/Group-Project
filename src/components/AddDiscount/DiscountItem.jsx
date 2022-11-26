@@ -16,13 +16,45 @@ function DiscountItem({ discount }) {
   const [showEditDiscount, setShowEditDiscount] = useState(false);
   const vendor = vendors.find((vend) => vend.id === Number(discount.vendor_id));
 
+    // This function will compare the current date with the expiration date on
+  // this discount returning if the discount is expired or running
+  const isExpired = () => {
+    let today = new Date().toLocaleDateString();
+    let expDate = new Date(discount.expiration_date).toLocaleDateString();
+    if ((expDate > today)||discount.expiration_date===null){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // This function will compare the date with the start date and return
+  // if the discount has started or not
+  const isStarted = () => {
+    let today = new Date().toLocaleDateString();
+    let startDate = new Date(discount.start_date).toLocaleDateString();
+    if ((startDate < today)||discount.start_date===null){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // this function will return the classnames
+  // needed for displaying the current discount status
+  const inactiveOrExpired = () => {
+    if (discount.is_shown && (isExpired() && isStarted())){
+      return `text-success fw-bold`;
+    } else {
+      return `text-danger fw-bold`;
+    }
+  }
+
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div onClick={()=>setShowEditDiscount(true)}  className="hover-shadow mx-1 col col-md-9 col-lg-6 bg-primary rounded my-1 p-1 d-flex justify-content-center align-items-center">
+        <div onClick={()=>setShowEditDiscount(true)}  className={`hover-shadow mx-1 col col-md-9 col-lg-6 ${(discount.is_shown&&isExpired()&&isStarted())?`bg-primary`:`bg-light`} rounded border border-primary border-1 my-1 p-1 d-flex justify-content-center align-items-center`}>
           <div className="row fill-container">
             <div className="col-2">
-              <div className="d-flex text-light flex-column justify-content-center align-items-center fill-container">
+              <div className={`d-flex ${(discount.is_shown&&isExpired()&&isStarted())?`text-light`:`text-primary`} rounded w-100 flex-column justify-content-center align-items-center fill-container`}>
                 {category.icon_class && <IconContext.Provider value={{ size: "2em" }}>
                   {allIconComponents[category.icon_class]}
                 </IconContext.Provider>}
