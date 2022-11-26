@@ -57,7 +57,7 @@ function DiscountItem({ discount }) {
             </div>
           </div>
         </div>
-        <DiscountModal className="d-flex justify-content-center" setShowEditDiscount={setShowEditDiscount} showEditDiscount={showEditDiscount} discount={discount} />
+        <DiscountModal className="d-flex justify-content-center" setShowEditDiscount={setShowEditDiscount} showEditDiscount={showEditDiscount} discount={discount} vendor={vendor} />
       </div>
     </>
   );

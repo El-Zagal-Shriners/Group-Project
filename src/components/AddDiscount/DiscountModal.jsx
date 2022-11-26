@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { FloatingLabel } from "react-bootstrap";
 
-function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
+function DiscountModal({setShowEditDiscount,showEditDiscount,discount, vendor}) {
   // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
@@ -17,13 +17,12 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
   const [startDate, setStartDate] = useState(discount.start_date===null?'':formatDate(discount.start_date));
   const [expDate, setExpDate] = useState(discount.expiration_date===null?'':formatDate(discount.expiration_date));
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
-  const handleClose = () => {
-    console.log('this is handle close', showEditDiscount);
-    // console.log(props)
+  // closes modal
+  const handleClose = (e) => {
+    e.preventDefault();
     setShowEditDiscount(false);
   }
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+
   // create edit discount object
   const discountObj = {
     discountId: discount.id,
@@ -34,7 +33,8 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
     discountUsage,
   };
   // edit discount
-  const editDiscount = () => {
+  const editDiscount = (e) => {
+    e.preventDefault();
     dispatch({
       type: "EDIT_DISCOUNT",
       payload: discountObj,
@@ -42,7 +42,8 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
     setShowEditDiscount(false);
   };
   // remove discount
-  const removeDiscount = () => {
+  const removeDiscount = (e) => {
+    e.preventDefault();
     dispatch({
       type: "REMOVE_DISCOUNT",
       payload: discount.id,
@@ -57,25 +58,27 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Edit
-      </Button> */}
-
       <Modal show={showEditDiscount} onHide={()=>setShowEditDiscount(false)}>
+        <form onSubmit={editDiscount}>
         <Modal.Header>
           <Modal.Title className="text-primary">Edit Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FloatingLabel className="text-primary" label="Description (Required)">
+          {vendor && <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>}
+          <FloatingLabel className="text-primary" label="Summary">
             <Form.Control
-              value={discountDescription}
-              onChange={(e) => setDiscountDescription(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Summary (Required)">
-            <Form.Control
+              type='text'
+              required
               value={discountSummary}
               onChange={(e) => setDiscountSummary(e.target.value)}
+            />
+          </FloatingLabel>
+          <FloatingLabel className="text-primary" label="Description">
+            <Form.Control
+              type="text"
+              required
+              value={discountDescription}
+              onChange={(e) => setDiscountDescription(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="text-primary" label="Start Date">
@@ -92,15 +95,17 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
               onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
-          <FloatingLabel className="text-primary" label="Discount Usage (Required)">
+          <FloatingLabel className="text-primary" label="Discount Usage">
             <Form.Control
+              type='text'
+              required
               value={discountUsage}
               onChange={(e) => setDiscountUsage(e.target.value)}
             />
           </FloatingLabel>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={editDiscount}>
+          <Button type='submit' variant="primary">
             Save Changes
           </Button>
           <Button variant="warning" onClick={removeDiscount}>
@@ -110,6 +115,7 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
             Close
           </Button>
         </Modal.Footer>
+        </form>
       </Modal>
     </>
   );
