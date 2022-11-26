@@ -14,8 +14,8 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
   const [discountSummary, setDiscountSummary] = useState(
     discount.discount_summary
   );
-  const [startDate, setStartDate] = useState(discount.start_date===null?'':discount.start_date);
-  const [expDate, setExpDate] = useState(discount.expiration_date===null?'':discount.expiration_date);
+  const [startDate, setStartDate] = useState(discount.start_date===null?'':formatDate(discount.start_date));
+  const [expDate, setExpDate] = useState(discount.expiration_date===null?'':formatDate(discount.expiration_date));
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
   const handleClose = () => {
     console.log('this is handle close', showEditDiscount);
@@ -49,6 +49,11 @@ function DiscountModal({setShowEditDiscount,showEditDiscount,discount}) {
     });
     setShowEditDiscount(false);
   };
+    // cleans up the date to only display yyyy/mm/dd
+    function formatDate(dateDirty) {
+      let niceDate = new Date(dateDirty);
+      return niceDate.toISOString().split('T')[0];
+    }
 
   return (
     <>
