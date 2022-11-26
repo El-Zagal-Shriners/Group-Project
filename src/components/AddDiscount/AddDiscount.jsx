@@ -19,24 +19,32 @@ function AddDiscountModal() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [show, setShow] = useState(false);
-  const [vendorId, setVendorId] = useState(1);
+  const [vendorId, setVendorId] = useState(undefined);
   const [discountDescription, setDiscountDescription] = useState("");
   const [discountSummary, setDiscountSummary] = useState("");
   const [startDate, setStartDate] = useState("");
   const [expDate, setExpDate] = useState("");
-  const [discountUsage, setDiscountUsage] = useState("N/A");
-  const [categoryId, setCategoryId] = useState(1);
+  const [discountUsage, setDiscountUsage] = useState("");
+  const [categoryId, setCategoryId] = useState(undefined);
   const [isShown, setIsShown] = useState("True");
   const [isRegional, setIsRegional] = useState("False");
   const [vendorSelected, setVendorSelected] = useState(false);
+  const [categorySelected, setCategorySelected] = useState(false);
+  const [vendorNotSelected, setVendorNotSelected] = useState(false);
+  const [categoryNotSelected, setCategoryNotSelected] = useState(false);
+  const [submitCheck, setSubmitCheck] = useState(false);
+  const [showInvalid, setShowInvalid] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = (e) => {
+    e.preventDefault();
+    resestInputs();
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
 
   const addDiscount = (event) => {
-    // console.log("In addDiscount() vendorId;", vendorId, "categoryId:", categoryId);
     event.preventDefault();
-
+    if (vendorSelected && categorySelected && discountSummary.length < 16){
     dispatch({
       type: "ADD_DISCOUNT",
       payload: {
@@ -52,6 +60,23 @@ function AddDiscountModal() {
       },
     });
     // Reset the form values.
+    resestInputs();
+    history.push("/admin");
+  } else {
+    setSubmitCheck(true);
+    if(!categoryNotSelected){
+      setCategoryNotSelected(true);
+    }
+    if(!vendorNotSelected){
+      setVendorNotSelected(true);
+    }
+    if(discountSummary.length > 15){
+      setShowInvalid(true);
+    }
+  }
+  };
+  // This function will resest the form
+  const resestInputs = () => {
     setVendorId(1);
     setCategoryId(1);
     setDiscountDescription("");
@@ -61,18 +86,40 @@ function AddDiscountModal() {
     setDiscountUsage("N/A");
     setShow(false);
     setVendorSelected(false);
-    history.push("/admin");
-  };
+    setCategorySelected(false);
+    setCategoryNotSelected(false);
+    setVendorNotSelected(false);
+    setSubmitCheck(false);
+    setShowInvalid(false);
+  }
 
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "GET_CATEGORIES" });
   }, []);
 
-  const handleSelect = (eventKey) => {
+  const handleSelectVendor = (eventKey) => {
     setVendorId(eventKey);
     setVendorSelected(true);
+    setVendorNotSelected(true);
   }
+
+  const handleSelectCategory = (eventKey) => {
+    setCategoryId(eventKey);
+    setCategorySelected(true);
+    setVendorNotSelected(true);
+  }
+
+  useEffect(() => {
+    // Sets both valid and invalid to false if only newPassword
+    // has entry or both or empty
+    if (discountSummary.length < 16) {
+      setShowInvalid(false);
+      return;
+    } else {
+      setShowInvalid(true);
+    }
+  }, [discountSummary]);
 
   return (
     <>
@@ -80,11 +127,13 @@ function AddDiscountModal() {
         Add Discount
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show}>
+        <form onSubmit={addDiscount}>
         <Modal.Header>
           <Modal.Title className="text-primary">Add Discount</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div className="d-flex flex-column justify-content-center p-1">
         {vendorSelected &&
           <div>
             <h5 className="text-center w-100 mt-1">
@@ -100,12 +149,13 @@ function AddDiscountModal() {
               </span>
             </h5>
             </div>}
-          <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}>
+            {!vendorSelected && submitCheck && <p>Please select a vendor!</p>}
+          <Dropdown onSelect={(eventKey) => handleSelectVendor(eventKey)}>
             <DropdownButton
               id="category-select-dropdown"
               title="Vendor"
               as={ButtonGroup}
-              className="w-100"
+              className="w-100 mb-2"
             >
               {allVendors.map((vendor) => {
                 return (
@@ -116,6 +166,18 @@ function AddDiscountModal() {
               })}
             </DropdownButton>
           </Dropdown>
+          <FloatingLabel className="mb-1 text-primary" label="Discount Summary">
+            <Form.Control
+              type="text"
+              placeholder="Discount Summary"
+              required
+              value={discountSummary}
+              className="mx-0"
+              isInvalid={showInvalid ? true : false}
+              onChange={(e) => setDiscountSummary(e.target.value)}
+            />
+          </FloatingLabel>
+          {showInvalid && <p className="text-danger text-center">Summary must be 15 or less characters</p>}
           <FloatingLabel
             className="mb-1 text-primary"
             label="Discount Description"
@@ -123,16 +185,10 @@ function AddDiscountModal() {
             <Form.Control
               type="text"
               placeholder="Discount Description"
+              required
+              className="mx-0"
               value={discountDescription}
               onChange={(e) => setDiscountDescription(e.target.value)}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="mb-1 text-primary" label="Discount Summary">
-            <Form.Control
-              type="text"
-              placeholder="Discount Summary"
-              value={discountSummary}
-              onChange={(e) => setDiscountSummary(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel className="mb-1 text-primary" label="Start Date">
@@ -140,6 +196,7 @@ function AddDiscountModal() {
               type="date"
               placeholder="Start Date"
               value={startDate}
+              className="mx-0"
               onChange={(e) => setStartDate(e.target.value)}
             />
           </FloatingLabel>
@@ -148,21 +205,40 @@ function AddDiscountModal() {
               type="date"
               placeholder="Expiration Date"
               value={expDate}
+              className="mx-0"
               onChange={(e) => setExpDate(e.target.value)}
             />
           </FloatingLabel>
           <FloatingLabel
             className="mb-1 text-primary"
-            label="Discount Usage (If Applicable)"
+            label="Discount Usage"
           >
             <Form.Control
               type="text"
-              placeholder="Discount Usage (If Applicable)"
+              placeholder="Discount Usage"
+              required
               value={discountUsage}
+              className="mx-0"
               onChange={(e) => setDiscountUsage(e.target.value)}
             />
           </FloatingLabel>
-          <Dropdown onSelect={(eventKey) => setCategoryId(eventKey)}>
+          {categorySelected &&
+          <div>
+            <h5 className="text-center w-100 mt-1">
+              Category:&nbsp;
+              <span className="text-primary fw-bold">
+                {
+                  allCategories[
+                    allCategories.findIndex(
+                      (item) => Number(item.id) === Number(categoryId)
+                    )
+                  ]?.name
+                }
+              </span>
+            </h5>
+            </div>}
+            {!categorySelected && submitCheck && <p>Please select a category!</p>}
+          <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
             <DropdownButton
               id="category-select-dropdown"
               title="Category"
@@ -178,15 +254,17 @@ function AddDiscountModal() {
               })}
             </DropdownButton>
           </Dropdown>
+          </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={addDiscount}>
+          <Button variant="primary" type='submit'>
             Add Discount
           </Button>
           <Button variant="outline-primary" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
+        </form>
       </Modal>
     </>
   );
