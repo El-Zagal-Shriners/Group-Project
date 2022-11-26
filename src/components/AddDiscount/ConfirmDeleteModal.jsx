@@ -15,7 +15,8 @@ function ConfirmDeleteModal(props) {
         <Modal.Title className="fw-bold">Confirm Delete</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {`Are you sure you would like to remove this ${props.deleteType}?`}
+        <h6>{`Are you sure you would like to remove this ${props.deleteType}?`}</h6>
+        {props.deleteType==='vendor'&&<p className='fst-italic text-muted'>This will also delete <strong>ALL</strong> discounts for this vendor and can <strong>NOT</strong> be undone.</p>}
       </Modal.Body>
       <Modal.Footer>
         <Button
