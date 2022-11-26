@@ -83,7 +83,8 @@ function DiscountModal({
     let niceDate = new Date(dateDirty);
     return niceDate.toISOString().split("T")[0];
   }
-
+  // This function will compare the current date with the expiration date on
+  // this discount returning if the discount is expired or running
   const isExpired = () => {
     let today = new Date().toLocaleDateString();
     let expDate = new Date(discount.expiration_date).toLocaleDateString();
@@ -93,7 +94,8 @@ function DiscountModal({
       return false;
     }
   }
-
+  // This function will compare the date with the start date and return
+  // if the discount has started or not
   const isStarted = () => {
     let today = new Date().toLocaleDateString();
     let startDate = new Date(discount.start_date).toLocaleDateString();
@@ -103,7 +105,8 @@ function DiscountModal({
       return false;
     }
   }
-
+  // this function will return the classnames
+  // needed for displaying the current discount status
   const inactiveOrExpired = () => {
     if (discount.is_shown && isExpired() && isStarted()){
       return `text-success fw-bold`;
@@ -111,7 +114,7 @@ function DiscountModal({
       return `text-danger fw-bold`;
     }
   }
-
+  // This function returns the proper status message for a discount depending on its status
   const inactiveMessage = () => {
     if (discount.is_shown && isExpired() && isStarted()){
       return `Active`
