@@ -130,7 +130,7 @@ router.put("/change", rejectUnauthenticated, (req, res) => {
   const newPassword = encryptLib.encryptPassword(req.body.newPassword);
   // SQL to get the encrypted version of user's password stored in the datebase
   const getCurrentPasswordQuery = `SELECT "password" FROM "user" 
-                                   WHERE "id"=$1;`
+                                   WHERE "id"=$1;`;
   pool.query(getCurrentPasswordQuery, [req.user.id])
       .then((result) => {
         if (encryptLib.comparePassword(currentPassword, result.rows[0].password)){

@@ -83,6 +83,18 @@ function* requestReview() {
   }
 }
 
+// PUT to change the current users password
+function* changePassword() {
+  try {
+    yield axios.put(`api/user/change`, config);
+    yield put({
+      type: "FETCH_USER",
+    });
+  } catch (err) {
+    console.log("Error changing password: ", err);
+  }
+}
+
 // Begin function to reset all data on logout
 function* unsetAll(action) {
   try {
@@ -106,6 +118,7 @@ function* userSaga() {
   yield takeLatest("SEND_RESET_PASSWORD_EMAIL", sendPasswordResetEmail);
   yield takeLatest("RESET_PASSWORD", resetPassword);
   yield takeLatest("REQUEST_REVIEW", requestReview);
+  yield takeLatest("CHANGE_PASSWORD", changePassword);
   yield takeEvery("UNSET_ALL", unsetAll);
 }
 
