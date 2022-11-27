@@ -37,6 +37,7 @@ router.get(
 ); // End GET discounts
 
 // This GET will return all discounts in the database (for admin page)
+// ADMIN ONLY
 router.get(
   "/admin",
   rejectUnauthenticated,
@@ -66,6 +67,7 @@ router.get(
 ); // End GET discounts
 
 // This POST will add a new discount to the discount table
+// ADMIN ONLY
 router.post("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   // console.log("Adding discount:" ,req.body);
   const vendorId = req.body.vendorId;
@@ -105,6 +107,7 @@ router.post("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
 }); // End POST new discount
 
 // This PUT will edit an existing discount by ID number
+// ADMIN ONLY
 router.put("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
@@ -141,6 +144,7 @@ router.put("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
 }); // End edit discount PUT
 
 // This PUT will toggle the is_shown for a discount by id
+// ADMIN ONLY
 router.put("/active", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   const discountId = req.body.discountId;
   const query = `UPDATE "discounts"
@@ -162,6 +166,7 @@ router.put("/active", rejectUnauthenticated, rejectNonAdministrator, (req, res) 
 }); // End toggling discount is_shown PUT
 
 // Delete a discount by discount ID
+// ADMIN ONLY
 router.delete(
   "/:discountid",
   rejectUnauthenticated,
