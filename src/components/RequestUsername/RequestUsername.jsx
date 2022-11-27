@@ -71,14 +71,14 @@ function RequestUsername(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
+        <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
+          Submit
+        </Button>
         <Button
           variant="outline-primary"
           onClick={(e) => cancelRequestUsername(e)}
         >
           Cancel
-        </Button>
-        <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
-          Submit
         </Button>
       </Modal.Footer>
     </Modal>

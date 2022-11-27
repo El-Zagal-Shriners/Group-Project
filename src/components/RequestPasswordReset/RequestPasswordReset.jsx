@@ -88,14 +88,14 @@ function RequestPasswordReset(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
+        <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
+          Submit
+        </Button>
         <Button
           variant="outline-primary"
           onClick={(e) => cancelRequestPassword(e)}
         >
           Cancel
-        </Button>
-        <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
-          Submit
         </Button>
       </Modal.Footer>
     </Modal>

@@ -40,7 +40,7 @@ function* addDiscount(action) {
   try {
     // console.log("In add discount", action.payload);
     yield axios.post(`api/discounts/`, action.payload);
-    yield put({ type: "GET_DISCOUNTS" });
+    yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
     console.log("Error adding discount: ", err);
   }
@@ -51,6 +51,16 @@ function* editDiscount(action) {
   try {
     // console.log("In edit discount with: ", action.payload);
     yield axios.put(`api/discounts`, action.payload);
+    yield put({ type: "GET_ADMIN_DISCOUNTS" });
+  } catch (err) {
+    console.log("Error editing discount: ", err);
+  }
+} // End edit discount
+
+// PUT to toggle discount is_shown by discount_id
+function* toggleActiveDiscount(action) {
+  try {
+    yield axios.put(`api/discounts/active`, action.payload);
     yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
     console.log("Error editing discount: ", err);
@@ -73,6 +83,7 @@ function* discountSaga() {
   yield takeLatest("GET_ADMIN_DISCOUNTS", getAdminDiscounts);
   yield takeLatest("ADD_DISCOUNT", addDiscount);
   yield takeLatest("EDIT_DISCOUNT", editDiscount);
+  yield takeLatest("TOGGLE_ACTIVE_DISCOUNT", toggleActiveDiscount);
   yield takeLatest("REMOVE_DISCOUNT", removeDiscount);
 }
 

@@ -9,10 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function EditVendorModal(props) {
-  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-
-  console.log("props.allVendors", props.currentVendor);
 
   const getVendor = () => {
     return props.allVendors.findIndex(
@@ -34,11 +31,8 @@ function EditVendorModal(props) {
   );
   const [vendorZip, setVendorZip] = useState(props.allVendors[getVendor()].zip);
   const [vendorWebsite, setVendorWebsite] = useState(
-    props.allVendors[getVendor()].website_url
+    props.allVendors[getVendor()].website_url===null?"":props.allVendors[getVendor()].website_url
   );
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const vendorObj = {
     vendorId: Number(props.currentSelected),
@@ -55,17 +49,14 @@ function EditVendorModal(props) {
       type: "EDIT_VENDOR",
       payload: vendorObj,
     });
-    setShow(false);
+    props.setShowEditVendor(false);
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Edit
-      </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title className="text-primary"> Edit Vendor</Modal.Title>
+      <Modal show={props.showEditVendor} onHide={(()=>props.setShowEditVendor(false))}>
+        <Modal.Header className="bg-primary text-light">
+          <Modal.Title className="text-light fw-bold"> Edit Vendor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FloatingLabel
@@ -115,7 +106,7 @@ function EditVendorModal(props) {
           <Button variant="primary" onClick={editVendor}>
             Save Changes
           </Button>
-          <Button variant="outline-primary" onClick={handleClose}>
+          <Button variant="outline-primary" onClick={()=>props.setShowEditVendor()}>
             Close
           </Button>
         </Modal.Footer>
