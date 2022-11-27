@@ -7,7 +7,7 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditVendorModal from "../AddVendor/EditVendorModal";
 import { useState } from "react";
 
-function DiscountItem({ discount }) {
+function DiscountItem({ discount, today }) {
   const categories = useSelector((store) => store.categories);
   const category = categories.find(
     (cat) => cat.id === Number(discount.category_id)
@@ -16,12 +16,25 @@ function DiscountItem({ discount }) {
   const [showEditDiscount, setShowEditDiscount] = useState(false);
   const vendor = vendors.find((vend) => vend.id === Number(discount.vendor_id));
 
-    // This function will compare the current date with the expiration date on
+  const expiredResult = isExpired();
+  const startedResult = isStarted();
+
+  // This function will return a formatted date to YYYY/MM/DD
+  // returns current date if null was passed in
+  function formatDate(dateDirty) {
+    if (dateDirty === null) {
+      return today;
+    }
+    let niceDate = new Date(dateDirty);
+    return niceDate.toISOString().split("T")[0];
+  }
+  // This function will compare the current date with the expiration date on
   // this discount returning if the discount is expired or running
-  const isExpired = () => {
-    let today = new Date().toLocaleDateString();
-    let expDate = new Date(discount.expiration_date).toLocaleDateString();
-    if ((expDate > today)||discount.expiration_date===null){
+  function isExpired() {
+    if (
+      formatDate(discount.expiration_date) >= today ||
+      discount.expiration_date === null
+    ) {
       return true;
     } else {
       return false;
@@ -29,10 +42,11 @@ function DiscountItem({ discount }) {
   }
   // This function will compare the date with the start date and return
   // if the discount has started or not
-  const isStarted = () => {
-    let today = new Date().toLocaleDateString();
-    let startDate = new Date(discount.start_date).toLocaleDateString();
-    if ((startDate < today)||discount.start_date===null){
+  function isStarted() {
+    if (
+      formatDate(discount.start_date) <= today ||
+      discount.start_date === null
+    ) {
       return true;
     } else {
       return false;
@@ -42,13 +56,28 @@ function DiscountItem({ discount }) {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div onClick={()=>setShowEditDiscount(true)}  className={`hover-shadow mx-1 col col-md-9 col-lg-6 ${(discount.is_shown&&isExpired()&&isStarted())?`bg-primary`:`bg-light`} rounded border border-primary border-1 my-1 p-1 d-flex justify-content-center align-items-center`}>
+        <div
+          onClick={() => setShowEditDiscount(true)}
+          className={`hover-shadow mx-1 col col-md-9 col-lg-6 ${
+            discount.is_shown && expiredResult && startedResult
+              ? `bg-primary`
+              : `bg-light`
+          } rounded border border-primary border-1 my-1 p-1 d-flex justify-content-center align-items-center`}
+        >
           <div className="row fill-container">
             <div className="col-2">
-              <div className={`d-flex ${(discount.is_shown&&isExpired()&&isStarted())?`text-light`:`text-primary`} rounded w-100 flex-column justify-content-center align-items-center fill-container`}>
-                {categories.length > 0 && <IconContext.Provider value={{ size: "2em" }}>
-                  {allIconComponents[category.icon_class]}
-                </IconContext.Provider>}
+              <div
+                className={`d-flex ${
+                  discount.is_shown && expiredResult && startedResult
+                    ? `text-light`
+                    : `text-primary`
+                } rounded w-100 flex-column justify-content-center align-items-center fill-container`}
+              >
+                {categories.length > 0 && (
+                  <IconContext.Provider value={{ size: "2em" }}>
+                    {allIconComponents[category.icon_class]}
+                  </IconContext.Provider>
+                )}
               </div>
             </div>
             <div className="col-10">
@@ -61,26 +90,40 @@ function DiscountItem({ discount }) {
                       </div>
                       <div className="discount-address ms-2 text-start text-muted fw-light">
                         <small>
-                          {vendor?.address}, {vendor?.city}, {vendor?.state_code}
+                          {vendor?.address}, {vendor?.city},{" "}
+                          {vendor?.state_code}
                         </small>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-4 p-1">
-                  <div className={`p-1 ${(discount.is_shown&&isExpired()&&isStarted())?`bg-warning`:`bg-secondary`} rounded d-flex justify-content-center align-items-center fill-container`}>
+                  <div
+                    className={`p-1 ${
+                      discount.is_shown && expiredResult && startedResult
+                        ? `bg-warning`
+                        : `bg-secondary`
+                    } rounded d-flex justify-content-center align-items-center fill-container`}
+                  >
                     <div className="discount-text fw-bold">
                       {discount.discount_summary}
                     </div>
-                    <div>
-                    </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <DiscountModal className="d-flex justify-content-center" setShowEditDiscount={setShowEditDiscount} showEditDiscount={showEditDiscount} discount={discount} vendor={vendor} />
+        <DiscountModal
+          className="d-flex justify-content-center"
+          isExpired={isExpired}
+          isStarted={isStarted}
+          setShowEditDiscount={setShowEditDiscount}
+          showEditDiscount={showEditDiscount}
+          discount={discount}
+          vendor={vendor}
+        />
       </div>
     </>
   );

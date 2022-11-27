@@ -24,6 +24,8 @@ function AdminDiscountPage(vendor) {
   const [currentSelected, setCurrentSelected] = useState("default");
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showEditVendor, setShowEditVendor] = useState(false);
+  // variable to store the current date
+  let today = new Date().toISOString().split("T")[0];
   if (currentSelected !== "default") {
     filteredDiscounts = filteredDiscounts.filter(
       (discount) => Number(discount.vendor_id) === Number(currentSelected)
@@ -159,7 +161,7 @@ function AdminDiscountPage(vendor) {
           </div>
           <hr className="my-2 mx-auto col col-md-9 col-lg-6" />
           {filteredDiscounts.map((discount) => {
-            return <DiscountItem key={discount.id} discount={discount} />;
+            return <DiscountItem key={discount.id} discount={discount} today={today}/>;
           })}
         </section>
       </div>

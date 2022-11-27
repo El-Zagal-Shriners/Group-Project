@@ -11,8 +11,9 @@ function DiscountModal({
   showEditDiscount,
   discount,
   vendor,
+  isExpired,
+  isStarted,
 }) {
-  // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [discountDescription, setDiscountDescription] = useState(
     discount.discount_description
@@ -31,6 +32,10 @@ function DiscountModal({
   const [discountUsage, setDiscountUsage] = useState(discount.discount_usage);
   const [showInvalid, setShowInvalid] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const statusMessage = inactiveMessage();
+  const inactiveExpiredTextColor = inactiveOrExpired();
+
   // closes modal
   const handleClose = (e) => {
     e.preventDefault();
@@ -72,60 +77,39 @@ function DiscountModal({
   // toggle if discount is active or not
   const toggleActive = (e) => {
     e.preventDefault();
-    console.log('This is discount.id: ', discount.id);
+    console.log("This is discount.id: ", discount.id);
     dispatch({
       type: "TOGGLE_ACTIVE_DISCOUNT",
       payload: {
         discountId: discount.id,
       },
     });
-  }
+  };
   // cleans up the date to only display yyyy/mm/dd
   function formatDate(dateDirty) {
     let niceDate = new Date(dateDirty);
     return niceDate.toISOString().split("T")[0];
   }
-  // This function will compare the current date with the expiration date on
-  // this discount returning if the discount is expired or running
-  const isExpired = () => {
-    let today = new Date().toLocaleDateString();
-    let expDate = new Date(discount.expiration_date).toLocaleDateString();
-    if ((expDate > today)||discount.expiration_date===null){
-      return true;
-    } else {
-      return false;
-    }
-  }
-  // This function will compare the date with the start date and return
-  // if the discount has started or not
-  const isStarted = () => {
-    let today = new Date().toLocaleDateString();
-    let startDate = new Date(discount.start_date).toLocaleDateString();
-    if ((startDate < today)||discount.start_date===null){
-      return true;
-    } else {
-      return false;
-    }
-  }
+
   // this function will return the classnames
   // needed for displaying the current discount status
-  const inactiveOrExpired = () => {
-    if (discount.is_shown && (isExpired() && isStarted())){
+  function inactiveOrExpired() {
+    if (discount.is_shown && isExpired() && isStarted()) {
       return `text-success fw-bold`;
     } else {
       return `text-danger fw-bold`;
     }
   }
   // This function returns the proper status message for a discount depending on its status
-  const inactiveMessage = () => {
-    if (discount.is_shown && (isExpired()||null) && (isStarted()||null)){
-      return `Active`
-    } else if (discount.is_shown && !isExpired()){
-      return `Expired`
-    } else if (!discount.is_shown){
-      return `Inactive`
+  function inactiveMessage() {
+    if (discount.is_shown && (isExpired() || null) && (isStarted() || null)) {
+      return `Active`;
+    } else if (discount.is_shown && !isExpired()) {
+      return `Expired`;
+    } else if (!discount.is_shown) {
+      return `Inactive`;
     } else if (discount.is_shown && !isStarted()) {
-      return `Not Started`
+      return `Not Started`;
     }
   }
   // This function will toggle the edit modal off
@@ -134,7 +118,7 @@ function DiscountModal({
     e.preventDefault();
     setShowEditDiscount(false);
     setShowDeleteConfirmation(true);
-  }
+  };
 
   useEffect(() => {
     // Sets both valid and invalid to false if only newPassword
@@ -151,14 +135,18 @@ function DiscountModal({
     <>
       <Modal show={showEditDiscount} onHide={() => setShowEditDiscount(false)}>
         <form onSubmit={editDiscount}>
-          <Modal.Header>
-            <Modal.Title className="text-primary">Edit Discount</Modal.Title>
+          <Modal.Header className="bg-primary text-light">
+            <Modal.Title className="text-light fw-bold">
+              Edit Discount
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {vendor && (
-              <div className='d-flex flex-column justify-content-center align-items-center'>
-              <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>
-              <h6 className={inactiveOrExpired()}>Status: {inactiveMessage()}</h6>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <h4 className="text-primary fw-bold mx-2">{vendor.name}</h4>
+                <h6 className={inactiveExpiredTextColor}>
+                  Status: {statusMessage}
+                </h6>
               </div>
             )}
             <FloatingLabel className="text-primary" label="Summary">
@@ -203,27 +191,45 @@ function DiscountModal({
             </FloatingLabel>
           </Modal.Body>
           <Modal.Footer>
-            <div className='w-100 d-flex justify-content-end align-items-center flex-wrap'>
-            <Button variant="danger" className="col" onClick={hideEditShowDeleteConfirmation}>
-              Delete
-            </Button>
-            &nbsp;
-            <Button variant="warning" className="col text-nowrap" onClick={toggleActive}>
-              {discount.is_shown?`Turn Off`:`Turn On`}
-            </Button>
-            &nbsp;
-            <Button type="submit" className="col" variant="primary">
-              Save
-            </Button>
-            &nbsp;
-            <Button variant="outline-primary" className="col" onClick={handleClose}>
-              Close
-            </Button>
+            <div className="w-100 d-flex justify-content-end align-items-center flex-wrap">
+              <Button
+                variant="danger"
+                className="col"
+                onClick={hideEditShowDeleteConfirmation}
+              >
+                Delete
+              </Button>
+              &nbsp;
+              <Button
+                variant="warning"
+                className="col text-nowrap"
+                onClick={toggleActive}
+              >
+                {discount.is_shown ? `Turn Off` : `Turn On`}
+              </Button>
+              &nbsp;
+              <Button type="submit" className="col" variant="primary">
+                Save
+              </Button>
+              &nbsp;
+              <Button
+                variant="outline-primary"
+                className="col"
+                onClick={handleClose}
+              >
+                Close
+              </Button>
             </div>
           </Modal.Footer>
         </form>
       </Modal>
-      <ConfirmDeleteModal parentModalToggleSetter={setShowEditDiscount} hideThisModalToggle={showDeleteConfirmation} hideThisModalToggleSetter={setShowDeleteConfirmation} deleteFunction={removeDiscount} deleteType={'discount'}/>
+      <ConfirmDeleteModal
+        parentModalToggleSetter={setShowEditDiscount}
+        hideThisModalToggle={showDeleteConfirmation}
+        hideThisModalToggleSetter={setShowDeleteConfirmation}
+        deleteFunction={removeDiscount}
+        deleteType={"discount"}
+      />
     </>
   );
 }
