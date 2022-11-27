@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import FilterFeedback from "./FilterFeedback";
+import "./DiscountCard.css";
 
 // react boostrap components
 import Container from "react-bootstrap/Container";
@@ -13,6 +14,8 @@ import { Button } from "react-bootstrap";
 
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 function DiscountFilterOffCanvas({
   showFilterOffCanvas,
@@ -131,7 +134,7 @@ function DiscountFilterOffCanvas({
         <Offcanvas.Header closeButton>
           <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="vh-100">
           <h2 className="fw-bold text-primary">Refine Search</h2>
           <hr />
           {/* Select a Discount Category  */}
@@ -140,20 +143,22 @@ function DiscountFilterOffCanvas({
               <label htmlFor="category-select-dropdown" className="mx-1">
                 Select categories:
               </label>
-              <DropdownButton id="category-select-dropdown" title="Select">
-                <Dropdown.ItemText>Select</Dropdown.ItemText>
-                {allCategories.map((thisCat, index) => {
-                  return (
-                    <Dropdown.Item
-                      as="button"
-                      key={index}
-                      onClick={() => handleCategorySelection(thisCat, false)}
-                    >
-                      {thisCat.name}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
+              <Dropdown id="category-select-dropdown" title="Select">
+                <Dropdown.Toggle>Select</Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
+                  {allCategories.map((thisCat, index) => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        key={index}
+                        onClick={() => handleCategorySelection(thisCat, false)}
+                      >
+                        {thisCat.name}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -202,21 +207,22 @@ function DiscountFilterOffCanvas({
               <label htmlFor="city-select-dropdown" className="mx-1">
                 Or select any city:
               </label>
-
-              <DropdownButton id="city-select-dropdown" title="Select">
-                <Dropdown.ItemText>Select cities</Dropdown.ItemText>
-                {allCities.map((thisCity, index) => {
-                  return (
-                    <Dropdown.Item
-                      as="button"
-                      key={index}
-                      onClick={() => handleCitySelection(thisCity, false)}
-                    >
-                      {thisCity.city}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
+              <Dropdown>
+                <Dropdown.Toggle> Select Cities</Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
+                  {allCities.map((thisCity, index) => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        key={index}
+                        onClick={() => handleCitySelection(thisCity, false)}
+                      >
+                        {thisCity.city}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
           <hr />
