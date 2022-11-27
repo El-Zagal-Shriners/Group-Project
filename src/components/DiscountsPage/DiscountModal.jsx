@@ -28,6 +28,18 @@ function DiscountModal({
       setAlreadyTracked(true);
     }
   }
+
+  // Begin function to display readable date format
+  function displayCorrectedDate(date) {
+    if (!date) return "No expiration";
+
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7);
+    const day = date.slice(8, 10);
+
+    return `${month}/${day}/${year}`;
+  } // End displayCorrectedDate
+
   return (
     <>
       <Modal
@@ -74,8 +86,9 @@ function DiscountModal({
               <hr />
               <h6>{thisDiscount.discount_description}</h6>
               {thisDiscount.expiration_date && (
-                <h5 className="">
-                  <em>Expires: {thisDiscount.expiration_date}</em>
+                <h5 className="fst-italic">
+                  {"Expires: " +
+                    displayCorrectedDate(thisDiscount.expiration_date)}
                 </h5>
               )}
             </div>
