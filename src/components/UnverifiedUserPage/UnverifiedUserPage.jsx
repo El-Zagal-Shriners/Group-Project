@@ -2,7 +2,7 @@ import UpdatedNavBar from "../Nav/Nav";
 
 function UnverifiedUserPage() {
   return (
-    <div>
+    <>
       <UpdatedNavBar />
       <div className="container col col-lg-6 d-flex flex-column align-items-center p-3 h-100">
         <div className="text-light text-center bg-primary w-100 m-0 py-2 mb-1 rounded-2">
@@ -14,7 +14,7 @@ function UnverifiedUserPage() {
           take a couple days to complete.
         </p>
       </div>
-    </div>
+    </>
   );
 }
 
