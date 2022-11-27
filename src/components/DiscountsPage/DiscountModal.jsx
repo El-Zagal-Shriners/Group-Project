@@ -46,15 +46,11 @@ function DiscountModal({
         show={showDiscountModal}
         onHide={() => setShowDiscountModal(false)}
       >
-        <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
         <Modal.Body className="p-2">
           <Container className="bg-primary text-light rounded">
             <div className="mb-3 text-center">
               <h1 className="fw-bold">{thisDiscount.vendor_name}</h1>
             </div>
-
             <div className="row bg-light text-primary rounded-3 py-2 mx-2">
               <div className="col-5">
                 <div className="d-flex justify-content-center align-items-center">
@@ -111,7 +107,15 @@ function DiscountModal({
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+            {thisDiscount.website_url && 
+            <div className="text-center mt-3">
+              <a href={thisDiscount.website_url} target="_blank">
+                <Button variant="warning" >Go To Vendor Site</Button>
+              </a>
+            </div>
+            }
           </Container>
+
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
