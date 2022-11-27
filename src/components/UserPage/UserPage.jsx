@@ -76,7 +76,6 @@ function UserPage() {
             {allIconComponents.editUser} Edit Info
           </button>
           <div className="w-100 d-flex justify-content-center">
-          <LogOutButton className="btn btn-primary mt-2 col col-md-9 col-lg-6" />
         </div>
           <hr />
           {/* Edit user information modal */}

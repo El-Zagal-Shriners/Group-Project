@@ -6,6 +6,7 @@ const {
 const {
   rejectUnauthorizedUser,
 } = require("../modules/authorization-middleware");
+const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const router = express.Router();
 
 // This GET will return all discounts with their parent vendor info and category info
@@ -140,8 +141,7 @@ router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 }); // End edit discount PUT
 
 // This PUT will toggle the is_shown for a discount by id
-router.put("/active", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
-  console.log("In discount PUT with: ", req.body);
+router.put("/active", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   const discountId = req.body.discountId;
   const query = `UPDATE "discounts"
                  SET "is_shown"=NOT "is_shown"

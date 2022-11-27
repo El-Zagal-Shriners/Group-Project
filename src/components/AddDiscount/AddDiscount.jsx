@@ -107,7 +107,7 @@ function AddDiscountModal() {
   const handleSelectCategory = (eventKey) => {
     setCategoryId(eventKey);
     setCategorySelected(true);
-    setVendorNotSelected(true);
+    setCategoryNotSelected(true);
   }
 
   useEffect(() => {

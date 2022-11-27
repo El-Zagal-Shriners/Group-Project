@@ -60,7 +60,6 @@ function* editDiscount(action) {
 // PUT to toggle discount is_shown by discount_id
 function* toggleActiveDiscount(action) {
   try {
-    console.log("In toggle discount with: ", action.payload);
     yield axios.put(`api/discounts/active`, action.payload);
     yield put({ type: "GET_ADMIN_DISCOUNTS" });
   } catch (err) {
