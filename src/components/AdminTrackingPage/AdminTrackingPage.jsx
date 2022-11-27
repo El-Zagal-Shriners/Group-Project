@@ -1,11 +1,10 @@
 import UpdatedNavBar from "../Nav/Nav";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import "./AdminTrackingPage.css";
 
 function AdminTrackingPage() {
   // Setup redux variables
@@ -28,6 +27,12 @@ function AdminTrackingPage() {
     );
   }
 
+  // Function to handle selection of filtered vendor.
+  // Must be separate function as onSelect with anon function is deprecated
+  function handleSelect(event) {
+    setCurrentSelected(event);
+  } // End handleSelect
+
   // useEffect to set needed redux stores on page load
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
@@ -45,36 +50,9 @@ function AdminTrackingPage() {
         <span className=" mb-1 fst-italic small text-center">
           *Discounts are updated when discount code is revealed
         </span>
-        {/* <DropdownButton
-          as={ButtonGroup}
-          key="primary"
-          id={`discountDropdown`}
-          variant="primary"
-          title="Select Vendor"
-          className="w-75 mt-1"
-          onSelect={() => setCurrentSelected(event)}
-        >
-          <Dropdown.Item
-            eventKey="default"
-            active={currentSelected === "default" && true}
-          >
-            All
-          </Dropdown.Item>
-          {allVendors.map((vendor) => {
-            return (
-              <Dropdown.Item
-                key={vendor.id}
-                eventKey={vendor.id}
-                active={Number(currentSelected) === Number(vendor.id) && true}
-              >
-                {vendor.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton> */}
-        <Dropdown>
+        <Dropdown onSelect={handleSelect} className="col mt-1">
           <Dropdown.Toggle>Select a Vendor</Dropdown.Toggle>
-          <Dropdown.Menu className="custom_scroll">
+          <Dropdown.Menu className="custom-tracking-scroll">
             <Dropdown.Item
               eventKey="default"
               active={currentSelected === "default" && true}
