@@ -67,16 +67,22 @@ function DiscountModal({
                 </div>
               </div>
               <div className="col-7">
-                <div className="d-flex justify-content-center flex-column">
-                  {thisDiscount.address}
-                  <br />
-                  <div>
-                    {thisDiscount.city},<span> </span>
-                    {thisDiscount.state_code}
-                    <span> </span>
-                    {thisDiscount.zip}
+                {thisDiscount.is_regional ? (
+                  <div className="d-flex justify-content-center flex-column">
+                    Regional Discount <br /> (Details Below)
                   </div>
-                </div>
+                ) : (
+                  <div className="d-flex justify-content-center flex-column">
+                    {thisDiscount.address}
+                    <br />
+                    <div>
+                      {thisDiscount.city},<span> </span>
+                      {thisDiscount.state_code}
+                      <span> </span>
+                      {thisDiscount.zip}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

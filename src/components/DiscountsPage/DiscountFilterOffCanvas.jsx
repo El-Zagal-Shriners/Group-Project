@@ -11,6 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Button } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
 
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
@@ -210,7 +211,7 @@ function DiscountFilterOffCanvas({
             </div>
           </div>
           {/* Choose City From Dropdown  */}
-          <div>
+          <div className="d-flex flex-column justify-content-center align-items-center">
             <div className="m-3 d-flex flex-row justify-content-center align-items-center">
               <label htmlFor="city-select-dropdown" className="mx-1">
                 Or select any city:
@@ -233,6 +234,7 @@ function DiscountFilterOffCanvas({
               </Dropdown>
             </div>
           </div>
+
           <hr />
           {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
           <FilterFeedback />
