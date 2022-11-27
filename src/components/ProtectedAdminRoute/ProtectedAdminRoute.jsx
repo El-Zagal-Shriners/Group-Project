@@ -27,7 +27,7 @@ function ProtectedAdminRoute({ component, children, ...props }) {
         // If the user is logged in and has an administrative level, show the protected component
         <ProtectedComponent />
       ) : (
-        // Otherwise, redirect to the Discounts page
+        // Otherwise, display spinner while retrieving user
         <>
           <UpdatedNavBar />
           <div className="vw-100 text-center">
