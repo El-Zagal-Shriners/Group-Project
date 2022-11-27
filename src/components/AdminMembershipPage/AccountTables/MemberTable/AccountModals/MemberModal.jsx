@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import DependentItem from "../DependentItem";
 import ConfirmationModal from "./ConfirmationModal";
-import SuccessModal from "./SuccessModal";
 
 function MemberModal({ member, show, setShow }) {
   const accounts = useSelector((store) => store.accounts.accountsReducer);
@@ -43,8 +42,7 @@ function MemberModal({ member, show, setShow }) {
   const [listDependents, toggleList] = useState(false);
   const [edit, setEdit] = useState(false);
   const [authorized, setAuthorized] = useState(member.is_authorized);
-  // setup state for showing success modals.
-  const [showSuccess, setShowSuccess] = useState(false);
+  // setup state for showing confirmation modal.
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   // access use dispatch
@@ -64,8 +62,6 @@ function MemberModal({ member, show, setShow }) {
       },
     });
     setShow(false);
-    // for success modal
-    setShowSuccess(true);
   };
 
   // changes member's authorization status
@@ -79,8 +75,6 @@ function MemberModal({ member, show, setShow }) {
     });
     setAuthorized(member.is_authorized);
     setShow(false);
-    // for success modal
-    setShowSuccess(true);
   };
 
   // updates member's paid date and or number
@@ -99,8 +93,6 @@ function MemberModal({ member, show, setShow }) {
         },
       });
       resetState();
-      // for success modal
-      setShowSuccess(true);
     }
   };
 
@@ -302,10 +294,6 @@ function MemberModal({ member, show, setShow }) {
             </div>
           </Modal.Footer>
         </Modal>
-        <SuccessModal
-          showSuccess={showSuccess}
-          setShowSuccess={setShowSuccess}
-        />
         <ConfirmationModal
           showConfirmation={showConfirmation}
           setShowConfirmation={setShowConfirmation}
@@ -399,11 +387,6 @@ function MemberModal({ member, show, setShow }) {
           edit={edit}
           setEdit={setEdit}
           member={member}
-        />
-        {/* Success Modal to show member was verified. */}
-        <SuccessModal
-          showSuccess={showSuccess}
-          setShowSuccess={setShowSuccess}
         />
       </>
     );
