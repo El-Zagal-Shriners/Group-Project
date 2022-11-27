@@ -9,7 +9,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function EditVendorModal(props) {
-  // const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   const getVendor = () => {
@@ -35,9 +34,6 @@ function EditVendorModal(props) {
     props.allVendors[getVendor()].website_url===null?"":props.allVendors[getVendor()].website_url
   );
 
-  // const handleCloseEditVendor = () => setShow(false);
-  // const handleShowEditVendor = () => setShow(true);
-
   const vendorObj = {
     vendorId: Number(props.currentSelected),
     name: vendorName,
@@ -58,9 +54,6 @@ function EditVendorModal(props) {
 
   return (
     <>
-      {/* <Button variant="primary" className="mb-2 col-6" onClick={handleShow}>
-        Edit
-      </Button> */}
       <Modal show={props.showEditVendor} onHide={(()=>props.setShowEditVendor(false))}>
         <Modal.Header className="bg-primary text-light">
           <Modal.Title className="text-light fw-bold"> Edit Vendor</Modal.Title>
