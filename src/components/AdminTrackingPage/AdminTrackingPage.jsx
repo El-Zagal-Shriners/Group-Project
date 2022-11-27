@@ -8,24 +8,27 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 function AdminTrackingPage() {
+  // Setup redux variables
   const dispatch = useDispatch();
   const allVendors = useSelector((store) => store.vendors);
+
+  // Pull Store data
   const allDiscountTracker = useSelector(
     (store) => store.discounts.adminDiscountsReducer
   );
+
+  // Setup local state and filtered discount variable
   let filteredDiscountTracker = [];
   const [currentSelected, setCurrentSelected] = useState("default");
 
+  // If a vendor is selected, filter discounts based on vendor selected
   if (currentSelected !== "default") {
     filteredDiscountTracker = allDiscountTracker?.filter(
       (discount) => Number(discount.vendor_id) === Number(currentSelected)
     );
   }
 
-  function handleSelect(event) {
-    setCurrentSelected(event);
-  }
-
+  // useEffect to set needed redux stores on page load
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "FETCH_DISCOUNT_TRACKER" });
@@ -42,14 +45,14 @@ function AdminTrackingPage() {
         <span className=" mb-1 fst-italic small text-center">
           *Discounts are updated when discount code is revealed
         </span>
-        <DropdownButton
+        {/* <DropdownButton
           as={ButtonGroup}
           key="primary"
           id={`discountDropdown`}
           variant="primary"
           title="Select Vendor"
           className="w-75 mt-1"
-          onSelect={handleSelect}
+          onSelect={() => setCurrentSelected(event)}
         >
           <Dropdown.Item
             eventKey="default"
@@ -68,7 +71,29 @@ function AdminTrackingPage() {
               </Dropdown.Item>
             );
           })}
-        </DropdownButton>
+        </DropdownButton> */}
+        <Dropdown>
+          <Dropdown.Toggle>Select a Vendor</Dropdown.Toggle>
+          <Dropdown.Menu className="custom_scroll">
+            <Dropdown.Item
+              eventKey="default"
+              active={currentSelected === "default" && true}
+            >
+              All
+            </Dropdown.Item>
+            {allVendors.map((vendor) => {
+              return (
+                <Dropdown.Item
+                  key={vendor.id}
+                  eventKey={vendor.id}
+                  active={Number(currentSelected) === Number(vendor.id) && true}
+                >
+                  {vendor.name}
+                </Dropdown.Item>
+              );
+            })}
+          </Dropdown.Menu>
+        </Dropdown>
         {currentSelected !== "default" && (
           <div className="border border-primary border-2 rounded px-3 mt-3 w-100">
             <h5 className="text-center w-100 mt-1">
