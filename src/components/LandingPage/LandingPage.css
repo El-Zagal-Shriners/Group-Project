@@ -14,13 +14,13 @@
   .landing_page_size {
     height: 100vh;
     background: url("../../../public/images/Theshriner.png");
-    background-size: 50%;
+    background-size: 35%;
     background-position: center;
     background-repeat: no-repeat;
   }
 
   .title_spacing {
-    margin-bottom: 35%;
+    margin-bottom: 25%;
   }
 }
 

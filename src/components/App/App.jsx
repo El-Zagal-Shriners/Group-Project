@@ -23,7 +23,6 @@ import AdminDiscountPage from "../AdminDiscountPage/AdminDiscountPage";
 import AdminTrackingPage from "../AdminTrackingPage/AdminTrackingPage";
 import DependentRegistrationPage from "../DependentRegistrationPage/DependentRegistration";
 import ProtectedAdminRoute from "../ProtectedAdminRoute/ProtectedAdminRoute";
-import AddVendor from "../AddVendor/AddVendor";
 import AddDiscount from "../AddDiscount/AddDiscount";
 import AddVendorModal from "../AddVendor/AddVendor";
 import PasswordResetPage from "../PasswordResetPage/PasswordResetPage";

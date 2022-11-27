@@ -6,6 +6,7 @@ const {
 const {
   rejectUnauthorizedUser,
 } = require("../modules/authorization-middleware");
+const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const router = express.Router();
 
 // This GET will return all discounts with their parent vendor info and category info
@@ -36,10 +37,11 @@ router.get(
 ); // End GET discounts
 
 // This GET will return all discounts in the database (for admin page)
+// ADMIN ONLY
 router.get(
   "/admin",
   rejectUnauthenticated,
-  rejectUnauthorizedUser,
+  rejectNonAdministrator,
   (req, res) => {
     // select all from discounts with calculated number of discount uses for 7 days, 30 days, 1 year and all time
     const query = `SELECT "discounts".*,
@@ -65,7 +67,8 @@ router.get(
 ); // End GET discounts
 
 // This POST will add a new discount to the discount table
-router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+// ADMIN ONLY
+router.post("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   // console.log("Adding discount:" ,req.body);
   const vendorId = req.body.vendorId;
   const discountDescription = req.body.discountDescription;
@@ -104,7 +107,8 @@ router.post("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
 }); // End POST new discount
 
 // This PUT will edit an existing discount by ID number
-router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
+// ADMIN ONLY
+router.put("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   // console.log("In discount PUT with: ", req.body);
   const discountId = req.body.discountId;
   const discountDescription = req.body.discountDescription;
@@ -139,11 +143,34 @@ router.put("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
     });
 }); // End edit discount PUT
 
+// This PUT will toggle the is_shown for a discount by id
+// ADMIN ONLY
+router.put("/active", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
+  const discountId = req.body.discountId;
+  const query = `UPDATE "discounts"
+                 SET "is_shown"=NOT "is_shown"
+                 WHERE "id"=$1;`;
+  pool
+    .query(query, [
+      discountId
+    ])
+    .then((result) => {
+      // Send success status
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      // log error and send back error code if error occurred
+      console.log("Error toggline discount is_shown: ", err);
+      res.sendStatus(500);
+    });
+}); // End toggling discount is_shown PUT
+
 // Delete a discount by discount ID
+// ADMIN ONLY
 router.delete(
   "/:discountid",
   rejectUnauthenticated,
-  rejectUnauthorizedUser,
+  rejectNonAdministrator,
   (req, res) => {
     // console.log("In delete a discount with: ", req.params.discountid);
     const discountId = req.params.discountid;

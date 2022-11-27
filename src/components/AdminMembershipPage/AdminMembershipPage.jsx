@@ -1,18 +1,9 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
 import MemberTable from "./AccountTables/MemberTable/MemberTable";
 
 function AdminMembershipPage() {
-  // access the list of current accounts from the redux store.
-  const accounts = useSelector((store) => store.accounts.accountsReducer);
-
-  // filter out the primary accounts, which have a membership number.
-  const primaries = [...accounts].filter(
-    (acc) => acc.membership_number !== null
-  );
-
   // access to useDispatch
   const dispatch = useDispatch();
 
@@ -27,7 +18,7 @@ function AdminMembershipPage() {
       <h5 className="text-primary fw-bold text-center mt-2">Manage Members</h5>
       {/* spot for all members
         drop down for dependents */}
-      <MemberTable members={primaries} />
+      <MemberTable />
     </div>
   );
 }

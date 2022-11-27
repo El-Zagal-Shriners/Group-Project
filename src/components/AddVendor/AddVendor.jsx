@@ -18,7 +18,10 @@ function AddVendorModal() {
   const [zip, setZip] = useState("");
   const [website, setWebsite] = useState("");
 
-  const handleClose = () => setShow(false);
+  const handleClose = (e) => {
+    e.preventDefault();
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
 
   const addVendor = (event) => {
@@ -43,15 +46,17 @@ function AddVendorModal() {
         Add Vendor
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title className="text-primary">Add Vendor</Modal.Title>
+      <Modal show={show}>
+        <form onSubmit={addVendor} >
+        <Modal.Header className="bg-primary text-light">
+          <Modal.Title className="text-light fw-bold">Add Vendor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FloatingLabel className="mb-1 text-primary" label="Business Name">
             <Form.Control
               type="text"
               value={name}
+              autoFocus
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
@@ -95,13 +100,14 @@ function AddVendorModal() {
           </FloatingLabel>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={addVendor}>
+          <Button variant="primary" type="submit">
             Add Vendor
           </Button>
           <Button variant="outline-primary" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
+        </form>
       </Modal>
     </>
   );

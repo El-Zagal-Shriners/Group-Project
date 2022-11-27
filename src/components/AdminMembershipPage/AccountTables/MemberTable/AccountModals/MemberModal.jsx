@@ -9,27 +9,40 @@ import {
   Row,
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import DependentItem from "../DependentItem";
 import ConfirmationModal from "./ConfirmationModal";
-import SuccessModal from "./SuccessModal";
 
-function MemberModal({ member, members, show, setShow }) {
+function MemberModal({ member, show, setShow }) {
+  const accounts = useSelector((store) => store.accounts.accountsReducer);
   // access members to get the dependents.
-  const dependents = [...members].filter(
+  // dependents are accounts that have a null membership number and
+  // the pimary member id field matches the id of an existing member.
+  const dependents = [...accounts].filter(
     (acc) =>
       acc.membership_number === null &&
       Number(acc.primary_member_id) === member.id
   );
 
-  //   setup local state.
+  // function to get the current dependent's primary's account info.
+  const primaryInfo = () => {
+    if (member.membership_number === null) {
+      const primary = accounts.find((acc) => {
+        return acc.id === Number(member.primary_member_id);
+      });
+      const primaryName = `${primary.first_name} ${primary.last_name}`;
+      return primaryName;
+    }
+  };
+
+  // setup local state.
   const [memberNumber, setMemberNumber] = useState("");
   const [duesPaid, setDuesPaid] = useState(null);
   const [listDependents, toggleList] = useState(false);
   const [edit, setEdit] = useState(false);
   const [authorized, setAuthorized] = useState(member.is_authorized);
-  // setup state for showing success modals.
-  const [showSuccess, setShowSuccess] = useState(false);
+  // setup state for showing confirmation modal.
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   // access use dispatch
@@ -49,8 +62,6 @@ function MemberModal({ member, members, show, setShow }) {
       },
     });
     setShow(false);
-    // for success modal
-    setShowSuccess(true);
   };
 
   // changes member's authorization status
@@ -59,13 +70,11 @@ function MemberModal({ member, members, show, setShow }) {
       type: "AUTHORIZE_MEMBER",
       payload: {
         memberId: member.id,
-        authorized,
+        authorized: !member.is_authorized,
       },
     });
     setAuthorized(member.is_authorized);
-    setEdit(false);
-    // for success modal
-    setShowSuccess(true);
+    setShow(false);
   };
 
   // updates member's paid date and or number
@@ -74,7 +83,6 @@ function MemberModal({ member, members, show, setShow }) {
       memberNumber === member.membership_number &&
       duesPaid === member.dues_paid
     ) {
-      activate();
     } else {
       dispatch({
         type: "UPDATE_MEMBER_INFO",
@@ -84,18 +92,16 @@ function MemberModal({ member, members, show, setShow }) {
           duesPaid: duesPaid || member.dues_paid,
         },
       });
-      activate();
-      closeModal();
-      // for success modal
-      setShowSuccess(true);
+      resetState();
     }
   };
 
   // setup close modal function
-  const closeModal = () => {
+  const resetState = () => {
     // reset local state
     setDuesPaid(null);
     setMemberNumber("");
+    setAuthorized(member.is_authorized);
   };
 
   // conditionally render the modal displayed depending on if the
@@ -108,7 +114,7 @@ function MemberModal({ member, members, show, setShow }) {
           show={show}
           onHide={() => {
             setShow(false);
-            closeModal();
+            resetState();
             toggleList(false);
           }}
           animation={false}
@@ -138,9 +144,13 @@ function MemberModal({ member, members, show, setShow }) {
               <Row>
                 <Col xs={6}>
                   <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
-                    Member #
+                    {member.membership_number ? "Member #" : "Primary"}
                   </p>
-                  <p className="text-center">{member.membership_number}</p>
+                  <p className="text-center">
+                    {member.membership_number
+                      ? member.membership_number
+                      : primaryInfo()}
+                  </p>
                 </Col>
                 <Col>
                   <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
@@ -150,46 +160,71 @@ function MemberModal({ member, members, show, setShow }) {
                 </Col>
               </Row>
               <hr />
-              <Row>
-                <Col>
-                  <p className="text-center fw-bold text-primary m-0 pt-2">
-                    Dependents: {dependents.length}
-                  </p>
-                </Col>
-                <Col>
-                  {dependents.length > 0 && (
-                    <Button
-                      variant="outline-primary"
-                      onClick={() => toggleList(!listDependents)}
-                    >
-                      List
-                    </Button>
-                  )}
-                </Col>
-              </Row>
+              {member.membership_number && (
+                <Row>
+                  <Col>
+                    <p className="text-center fw-bold text-primary m-0 pt-2">
+                      Dependents: {dependents.length}
+                    </p>
+                  </Col>
+                  <Col>
+                    {dependents.length > 0 && (
+                      <Button
+                        variant="outline-primary"
+                        onClick={() => toggleList(!listDependents)}
+                      >
+                        List
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              )}
             </Container>
-            <ListGroup>
+            <ListGroup className="p-1 d-flex">
               {listDependents &&
                 dependents.map((dependent) => (
-                  <DependentItem key={dependent.id} dependent={dependent} />
+                  <DependentItem
+                    key={dependent.id}
+                    dependent={dependent}
+                    show={show}
+                    setShow={setShow}
+                    setEdit={setEdit}
+                    edit={edit}
+                    setShowConfirmation={setShowConfirmation}
+                    showConfirmation={showConfirmation}
+                  />
                 ))}
             </ListGroup>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button
-              onClick={() => {
-                setShow(false);
-                setEdit(true);
-              }}
-            >
-              Edit
+            {member.membership_number ? (
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  setEdit(true);
+                }}
+              >
+                Edit
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setShow(false);
+                  setShowConfirmation(true);
+                }}
+              >
+                Remove
+              </Button>
+            )}
+            <Button onClick={() => activate()}>
+              {authorized ? "Deactivate" : "Activate"}
             </Button>
             <Button
               variant="outline-primary"
               onClick={() => {
                 setShow(false);
-                closeModal();
+                resetState();
                 toggleList(false);
               }}
             >
@@ -200,16 +235,13 @@ function MemberModal({ member, members, show, setShow }) {
 
         <Modal
           // edit modal
+          backdrop="static"
           show={edit}
-          onHide={() => {
-            setEdit(false);
-            closeModal();
-          }}
           animation={false}
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-primary text-light">
             <Modal.Title>Edit Member</Modal.Title>
           </Modal.Header>
 
@@ -230,74 +262,61 @@ function MemberModal({ member, members, show, setShow }) {
                 ></Form.Control>
               </FloatingLabel>
             </Form>
-            <Row>
-              <Col></Col>
-              <Col>
-                {authorized ? (
-                  <Button onClick={() => setAuthorized(false)}>
-                    Deactivate
-                  </Button>
-                ) : (
-                  <Button onClick={() => setAuthorized(true)}>Activate</Button>
-                )}
-              </Col>
-              <Col>
+          </Modal.Body>
+
+          <Modal.Footer className="w-100 d-flex">
+            <div className="col d-flex flex-column align-items-center justify-content-center">
+              <div className="w-100 d-flex justify-content-between">
                 <Button
                   onClick={() => {
+                    setEdit(false);
                     setShowConfirmation(true);
                   }}
                 >
                   Remove
                 </Button>
-              </Col>
-              <Col></Col>
-            </Row>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button
-              onClick={() => {
-                setEdit(false);
-                setShow(true);
-              }}
-            >
-              Back
-            </Button>
-            <Button
-              onClick={() => {
-                setEdit(false);
-                closeModal();
-                toggleList(false);
-              }}
-            >
-              Close
-            </Button>
-            <Button onClick={() => updateMember()}>Save</Button>
+                <div>
+                  <Button className="mx-2" onClick={() => updateMember()}>
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline-primary"
+                    onClick={() => {
+                      setEdit(false);
+                      resetState();
+                      setShow(true);
+                    }}
+                  >
+                    Back
+                  </Button>
+                </div>
+              </div>
+            </div>
           </Modal.Footer>
         </Modal>
-        <SuccessModal
-          showSuccess={showSuccess}
-          setShowSuccess={setShowSuccess}
-        />
         <ConfirmationModal
-          show={showConfirmation}
-          setShow={setShowConfirmation}
-          memberId={member.id}
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          edit={edit}
+          setEdit={setEdit}
+          setShow={setShow}
+          show={true}
+          member={member}
         />
       </>
     );
   } else {
     return (
       <>
+        {/* Verify Modal / New Member Modal */}
         <Modal
-          // verify modal
           show={show}
           onHide={() => setShow(false)}
           animation={false}
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header className="bg-primary text-light" closeButton>
+          <Modal.Header className="bg-primary text-light">
             <Modal.Title>New Member Info</Modal.Title>
           </Modal.Header>
 
@@ -305,40 +324,69 @@ function MemberModal({ member, members, show, setShow }) {
             <Container>
               <Row>
                 <Col xs={6}>
-                  <p>First Name</p>
-                  <p>{member.first_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    First Name
+                  </p>
+                  <p className="text-center">{member.first_name}</p>
                 </Col>
                 <Col>
-                  <p>Last Name</p>
-                  <p>{member.last_name}</p>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Last Name
+                  </p>
+                  <p className="text-center">{member.last_name}</p>
                 </Col>
               </Row>
               <Row>
                 <Col xs={6}>
-                  <p>Member #</p>
-                  <p>{member.membership_number}</p>
+                  {member.membership_number ? (
+                    <>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Member #
+                      </p>
+                      <p className="text-center">{member.membership_number}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Primary
+                      </p>
+                      <p className="text-center">{primaryInfo()}</p>
+                    </>
+                  )}
                 </Col>
                 <Col>
-                  <p>Dues Paid</p>
-                  <p>{dues}</p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Button onClick={() => removeMember()}>Remove</Button>
+                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                    Dues Paid
+                  </p>
+                  <p className="text-center">{dues}</p>
                 </Col>
               </Row>
             </Container>
           </Modal.Body>
 
           <Modal.Footer>
+            <Button
+              onClick={() => {
+                setShow(false);
+                setShowConfirmation(true);
+              }}
+            >
+              Remove
+            </Button>
             <Button onClick={() => approveMember()}>Approve</Button>
-            <Button onClick={() => setShow(false)}>Close</Button>
+            <Button variant="outline-primary" onClick={() => setShow(false)}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
-        <SuccessModal
-          showSuccess={showSuccess}
-          setShowSuccess={setShowSuccess}
+        <ConfirmationModal
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          setShow={setShow}
+          show={show}
+          edit={edit}
+          setEdit={setEdit}
+          member={member}
         />
       </>
     );

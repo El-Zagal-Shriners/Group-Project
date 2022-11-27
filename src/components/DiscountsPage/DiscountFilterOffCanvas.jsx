@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import FilterFeedback from "./FilterFeedback";
+import "./DiscountCard.css";
 
 // react boostrap components
 import Container from "react-bootstrap/Container";
@@ -13,10 +14,13 @@ import { Button } from "react-bootstrap";
 
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 function DiscountFilterOffCanvas({
   showFilterOffCanvas,
   setShowFilterOffCanvas,
+  locationPulled,
 }) {
   const dispatch = useDispatch();
 
@@ -94,12 +98,16 @@ function DiscountFilterOffCanvas({
 
   // this function takes an array of city objects and returns
   // a new array with the first three objects only
-  function closestThreeCities() {
-    const firstThreeCities = [];
-    for (let i = 0; i <= 2; i++) {
-      firstThreeCities.push(allCities[i]);
+  function closestCities() {
+    const closestCities = [];
+    if (locationPulled) {
+      for (let i = 0; i <= 2; i++) {
+        closestCities.push(allCities[i]);
+      }
+    } else {
+      closestCities.push({ city: "Fargo" }, { city: "Moorhead" });
     }
-    return firstThreeCities;
+    return closestCities;
   }
 
   useEffect(() => {
@@ -127,11 +135,11 @@ function DiscountFilterOffCanvas({
       placement="start"
       name="start"
     >
-      <Container className="bg-light fill-container">
+      <Container className="bg-white fill-container">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="vh-100">
           <h2 className="fw-bold text-primary">Refine Search</h2>
           <hr />
           {/* Select a Discount Category  */}
@@ -140,20 +148,22 @@ function DiscountFilterOffCanvas({
               <label htmlFor="category-select-dropdown" className="mx-1">
                 Select categories:
               </label>
-              <DropdownButton id="category-select-dropdown" title="Select">
-                <Dropdown.ItemText>Select</Dropdown.ItemText>
-                {allCategories.map((thisCat, index) => {
-                  return (
-                    <Dropdown.Item
-                      as="button"
-                      key={index}
-                      onClick={() => handleCategorySelection(thisCat, false)}
-                    >
-                      {thisCat.name}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
+              <Dropdown id="category-select-dropdown" title="Select">
+                <Dropdown.Toggle>Select</Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
+                  {allCategories.map((thisCat, index) => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        key={index}
+                        onClick={() => handleCategorySelection(thisCat, false)}
+                      >
+                        {thisCat.name}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -163,11 +173,14 @@ function DiscountFilterOffCanvas({
           {/* Select Nearest Cities  */}
           <div className="d-flex justify-content-between flex-column m-1 p-1">
             <div>
-              <div className="text-center">Select from nearby cities:</div>
-              {/* <div className="text-center">(select multiple)</div> */}
+              {locationPulled ? (
+                <div className="text-center">Select from nearby cities:</div>
+              ) : (
+                <div className="text-center">Select from:</div>
+              )}
             </div>
             <div className="d-flex justify-content-between flex-row p-1">
-              {closestThreeCities().map((thisCity, index) => {
+              {closestCities().map((thisCity, index) => {
                 return (
                   <ToggleButton
                     key={index}
@@ -202,21 +215,22 @@ function DiscountFilterOffCanvas({
               <label htmlFor="city-select-dropdown" className="mx-1">
                 Or select any city:
               </label>
-
-              <DropdownButton id="city-select-dropdown" title="Select">
-                <Dropdown.ItemText>Select cities</Dropdown.ItemText>
-                {allCities.map((thisCity, index) => {
-                  return (
-                    <Dropdown.Item
-                      as="button"
-                      key={index}
-                      onClick={() => handleCitySelection(thisCity, false)}
-                    >
-                      {thisCity.city}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
+              <Dropdown>
+                <Dropdown.Toggle> Select Cities</Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
+                  {allCities.map((thisCity, index) => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        key={index}
+                        onClick={() => handleCitySelection(thisCity, false)}
+                      >
+                        {thisCity.city}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
           <hr />

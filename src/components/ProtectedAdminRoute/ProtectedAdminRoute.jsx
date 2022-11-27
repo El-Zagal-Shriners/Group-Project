@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
-import DiscountsPage from "../DiscountsPage/DiscountsPage";
-import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
+import Spinner from "react-bootstrap/Spinner";
+import UpdatedNavBar from "../Nav/Nav";
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -14,7 +14,6 @@ import AdminLandingPage from "../AdminLandingPage/AdminLandingPage";
 
 function ProtectedAdminRoute({ component, children, ...props }) {
   const user = useSelector((store) => store.user);
-  const history = useHistory();
 
   // Get component from props
   const ProtectedComponent = component || (() => children);
@@ -28,8 +27,13 @@ function ProtectedAdminRoute({ component, children, ...props }) {
         // If the user is logged in and has an administrative level, show the protected component
         <ProtectedComponent />
       ) : (
-        // Otherwise, redirect to the Discounts page
-        <AdminLandingPage />
+        // Otherwise, display spinner while retrieving user
+        <>
+          <UpdatedNavBar />
+          <div className="vw-100 text-center">
+            <Spinner animation="border" variant="primary" />
+          </div>
+        </>
       )}
     </Route>
   );

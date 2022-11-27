@@ -1,21 +1,38 @@
-.hover-shadow:hover{
-    box-shadow: 1px 1px 10px -1px;
+.hover-shadow:hover {
+  box-shadow: 1px 1px 10px -1px;
 }
 
-.fill-container{
-    width: 100%;
-    height: 100%;
-    text-align: center;
+.fill-container {
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 
-.bg-muted-primary{
-    background-color: #820a1e32;
+.bg-muted-primary {
+  background-color: #820a1e32;
 }
 
-.discount-address{
-    line-height: 100%;
+.discount-address {
+  line-height: 100%;
 }
 
-.company-search{
-    margin: 5px 0px !important;
+.company-search {
+  margin: 5px 0px !important;
+}
+
+.custom-scroll {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 5px;
+  background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #820a1e;
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
