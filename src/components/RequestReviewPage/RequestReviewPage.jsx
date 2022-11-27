@@ -27,12 +27,14 @@ function RequestReviewPage() {
               Review has been requested
             </h5>
           ) : (
+            <div className="w-100 bg-white d-flex justify-content-center rounded">
             <button
-              className="shadow-md btn btn-primary border border-2 border-light"
+              className="my-1 btn btn-primary border border-2 border-light"
               onClick={requestReview}
             >
               Request Review
             </button>
+            </div>
           )}
         </div>
       </div>
