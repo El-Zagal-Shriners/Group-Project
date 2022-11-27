@@ -65,7 +65,7 @@ function AdminDiscountPage(vendor) {
         <AddDiscountModal />
       </div>
 
-      <div className="container text-center col col-lg-6 pb-0">
+      <div className="container text-center col col-lg-6 pt-2 pb-0">
         <DropdownButton
           as={ButtonGroup}
           key="primary"

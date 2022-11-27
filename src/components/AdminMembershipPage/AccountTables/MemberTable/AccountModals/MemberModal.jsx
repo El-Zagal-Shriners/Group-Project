@@ -159,7 +159,7 @@ function MemberModal({ member, show, setShow }) {
                   <p className="text-center">{dues}</p>
                 </Col>
               </Row>
-              <hr />
+              {member.membership_number && <hr />}
               {member.membership_number && (
                 <Row>
                   <Col>
