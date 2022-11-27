@@ -88,7 +88,7 @@ function DiscountItem({ discount, today }) {
                       <div className="text-start">
                         <h5>{vendor?.name}</h5>
                       </div>
-                      <div className="discount-address ms-2 text-start text-muted fw-light">
+                      <div className="discount-address text-start text-muted fw-light">
                         <small>
                           {vendor?.address}, {vendor?.city},{" "}
                           {vendor?.state_code}
