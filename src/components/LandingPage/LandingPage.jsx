@@ -4,15 +4,8 @@ import "./LandingPage.css";
 import Button from "react-bootstrap/Button";
 
 function LandingPage() {
+  // Setup router variable
   const history = useHistory();
-
-  const onLogin = (event) => {
-    history.push("/login");
-  };
-
-  const onEvents = (event) => {
-    window.location.href = "https://www.elzagal.org/events/";
-  };
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center landing_page_size">
@@ -23,14 +16,16 @@ function LandingPage() {
       <Button
         className="col-9 col-lg-6 mb-3 landing_buttons"
         variant="primary"
-        onClick={onLogin}
+        onClick={() => history.push("/login")}
       >
         Login
       </Button>
       <Button
         className="col-9 col-lg-6 mb-3 landing_buttons"
         variant="primary"
-        onClick={onEvents}
+        onClick={() =>
+          (window.location.href = "https://www.elzagal.org/events/")
+        }
       >
         Upcoming Events
       </Button>

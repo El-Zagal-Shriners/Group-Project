@@ -1,0 +1,16 @@
+.custom-tracking-scroll {
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 5px;
+  background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #820a1e;
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
