@@ -60,12 +60,14 @@ router.put(
   (req, res) => {
     // get the memberId of member to edit from params.
     const memberId = req.params.memberId;
-    // boolean value that can set both is_verified and is_authorized.
+    // boolean value that can set both is_verified
     const verification = req.body.verification;
+    // boolean value that can set both is_authorized.
+    const authorized = req.body.authorized;
     // setup query text to update the member's verification and authorized status.
-    const queryText = `UPDATE "user" SET "is_authorized"=$1, "is_verified"=$1 WHERE "id"=$2;`;
+    const queryText = `UPDATE "user" SET "is_authorized"=$1, "is_verified"=$2 WHERE "id"=$3;`;
     pool
-      .query(queryText, [verification, memberId])
+      .query(queryText, [authorized, verification, memberId])
       .then((response) => {
         res.sendStatus(201);
       })

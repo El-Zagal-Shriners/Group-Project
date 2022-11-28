@@ -27,7 +27,10 @@ function* approveMember(action) {
     const memberId = action.payload.memberId;
     yield axios.put(
       `/api/admin/verify/${memberId}`,
-      { verification: action.payload.verification },
+      {
+        verification: action.payload.verification,
+        authorized: action.payload.authorized,
+      },
       config
     );
     yield put({ type: "GET_ACCOUNTS" });

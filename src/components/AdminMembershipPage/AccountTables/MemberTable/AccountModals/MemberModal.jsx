@@ -55,11 +55,12 @@ function MemberModal({ member, show, setShow }) {
     : "";
 
   // used to set the approval status of a member.
-  const approveMember = () => {
+  const approveMember = (boolean) => {
     dispatch({
       type: "APPROVE_MEMBER",
       payload: {
         memberId: member.id,
+        authorized: boolean,
         verification: true,
       },
     });
@@ -409,12 +410,13 @@ function MemberModal({ member, show, setShow }) {
             <Button
               onClick={() => {
                 setShow(false);
-                setShowConfirmation(true);
+                // setShowConfirmation(true);
+                approveMember(false);
               }}
             >
-              Remove
+              Deny
             </Button>
-            <Button onClick={() => approveMember()}>Approve</Button>
+            <Button onClick={() => approveMember(true)}>Approve</Button>
             <Button variant="outline-primary" onClick={() => setShow(false)}>
               Close
             </Button>
