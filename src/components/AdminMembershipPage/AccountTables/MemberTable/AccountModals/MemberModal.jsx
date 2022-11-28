@@ -49,8 +49,10 @@ function MemberModal({ member, show, setShow }) {
   const dispatch = useDispatch();
 
   // display for dues and dueDate
-  const dues = member.dues_paid.split("-")[0];
-  const dueDate = member.dues_paid.split("T")[0];
+  const dues = member.membership_number ? member.dues_paid.split("-")[0] : "";
+  const dueDate = member.membership_number
+    ? member.dues_paid.split("T")[0]
+    : "";
 
   // used to set the approval status of a member.
   const approveMember = () => {
@@ -166,7 +168,7 @@ function MemberModal({ member, show, setShow }) {
                   </p>
                 </Col>
                 <Col>
-                  {(member.dues_paid && member.membership_number) && (
+                  {member.dues_paid && member.membership_number && (
                     <>
                       <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
                         Dues Paid

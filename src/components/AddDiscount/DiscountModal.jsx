@@ -77,7 +77,7 @@ function DiscountModal({
   // toggle if discount is active or not
   const toggleActive = (e) => {
     e.preventDefault();
-    console.log("This is discount.id: ", discount.id);
+    // console.log("This is discount.id: ", discount.id);
     dispatch({
       type: "TOGGLE_ACTIVE_DISCOUNT",
       payload: {

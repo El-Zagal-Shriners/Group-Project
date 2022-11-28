@@ -147,7 +147,7 @@ function DiscountsPage() {
       filteredArray = allMemberDiscounts;
     }
 
-    
+
 
 
 
@@ -176,7 +176,7 @@ function DiscountsPage() {
 
   // this function orders discounts by the city (closest to furthest away based on current location)
   function orderDiscountsByLocation(array) {
-    console.log("location pulled?", locationPulled);
+    // console.log("location pulled?", locationPulled);
     // if location services were successfully pulled, sort discounts by city distance
     if (locationPulled) {
       return array?.sort((thisDiscount, nextDiscount) => {
