@@ -129,8 +129,8 @@ INSERT INTO "user" ("username", "password", "first_name", "last_name", "email", 
 VALUES ('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'John', 'Doe', 'johndoe@gmail.com', 'true', 1, 'true', 'false', '2022/1/1', 31524, 0),
 ('janedoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jane', 'Doe', 'janedoe@gmail.com', 'true', 1, 'true', 'false', null, null, 0),
 ('jareddoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jared', 'Doe', 'jareddoe@gmail.com', 'true', 1, 'true', 'false', null, null, 0),
-('bobsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 'true', 1, 'true', 'false', null, null, 0),
-('jimanderson', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jim', 'Anderson', 'jimmy@gmail.com', 'false', 1, 'true', 'false', null, null, 0),
+('bobsmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Bob', 'Smith', 'bobsmith@gmail.com', 'true', 6, 'true', 'false', null, null, 0),
+('jimanderson', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jim', 'Anderson', 'jimmy@gmail.com', 'false', 6, 'true', 'false', null, null, 0),
 ('admin', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Admin', 'Admin', 'Admin@admin.com', 'true', 6, 'true', 'false', '2022/1/1', 99999, 4),
 -- Above is base presentation; Below is safe cluster data
 ('susansmith', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Susan', 'Jackson', 'susanj@gmail.com', 'true', 7, 'true', 'false', '2022/1/1', 26357, 0),
@@ -176,7 +176,7 @@ VALUES ('johndoe', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky
 -- Below will be the problem child accounts
 ('jaxster', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Jax', 'Jefferson', 'Jaxj@gmail.com', 'false', 47, 'true', 'false', '2021/1/1', 83452, 0),
 ('lorijef', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Lori', 'Jefferson', 'Lorij@gmail.com', 'true', 47, 'true', 'false', null, null, 0),
-('alexster', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Alex', 'Enderson', 'Alexe@gmail.com', 'false', 49, 'true', 'true', '2022/1/1', 34683, 0),
+('alexster', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Alex', 'Johnson', 'Alexe@gmail.com', 'false', 49, 'true', 'true', '2021/1/1', 34683, 0),
 ('henderson', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Henry', 'Henderson', 'Hennyson@gmail.com', 'false', 50, 'true', 'true', '2022/1/1', 58943, 0),
 ('lexiasto', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Alexia', 'Lecton', 'Alexton@gmail.com', 'false', 51, 'false', 'false', '2021/1/1', 63457, 0),
 ('billyjo', '$2a$10$UrXwP8Jo9s3YzM/1ce8miuhKR8RnoymEzKVM5Y1yyznu5z2QRT8ky', 'Billy-Jo', 'Johnson', 'bjohnson@gmail.com', 'false', 52, 'false', 'false', '2022/1/1', 24844, 0);
@@ -240,7 +240,7 @@ VALUES (1,'Shriners get 10% off any Dinner Purchase','10% Dinner',NULL,NULL,'Sho
 		(2,'Free delivery of flowers in town','Free Delivery',NULL,NULL,'DELFREE',10),
 		(6,'Buy one Get one Deserts','BOGO Deserts',NULL,NULL,'BOGODESERT',1),
 		(3,'Buy One Get One Burgers','BOGO Burgers',NULL,NULL,'Show Shriner ID', 1),
-		(3,'$2 You call it Thursday Happy Hour 5pm - 8pm','$2 You Calls',NULL,NULL,'Show Shriner ID', 1),
+		(3,'$2 You call it Thursday Happy Hour 5pm - 8pm','$2 You Calls',NULL,NULL,'Show Shriner ID', 2),
 		(5,'Holiday - 15% off Deli foods','15% Deli','2022/11/01','2023/01/01','Show Shriner Card',1),
 		(4,'Buy one Get one Slice Wednesdays','BOGO Slice',NULL,NULL,'b0g0p13',1),
 		(4,'20% off all Menu price ites','20% off Menu',NULL,NULL,'25OFF',1),
