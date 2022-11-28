@@ -60,6 +60,18 @@ function FaqAdmin() {
             </div>
           </Accordion.Body>
         </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>
+            <div className="text-primary fw-bold">
+              What if a vendor wants to honor the discount at more than one location?
+            </div>
+          </Accordion.Header>
+          <Accordion.Body>
+            <div className="text-primary">
+              No Problem! If a vendor wants to honor the discount at more than one location, the admin can simply toggle between 'This Location' for the specific location, or 'Regional' if it's allowed at more than one location
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
         <Accordion.Item eventKey="3">
           <Accordion.Header>
             <div className="text-primary fw-bold">Are disconts tracked?</div>
