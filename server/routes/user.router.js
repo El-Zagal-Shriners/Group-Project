@@ -106,13 +106,15 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 });
 // This will set the review pending for logged in user to true
 router.put("/requestreview", rejectUnauthenticated, (req, res) => {
+  const duesPaid = req.body.duesPaid
   // SQL query to request review
   const query = `UPDATE "user" 
                  SET 
-                 "review_pending"=true
-                 WHERE "id"=$1;`;
+                 "review_pending"=true,
+                 "dues_paid"=$1
+                 WHERE "id"=$2;`;
   pool
-    .query(query, [req.user.id])
+    .query(query, [duesPaid, req.user.id])
     .then((result) => {
       res.sendStatus(201);
     })

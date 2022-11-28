@@ -49,8 +49,10 @@ function MemberModal({ member, show, setShow }) {
   const dispatch = useDispatch();
 
   // display for dues and dueDate
-  const dues = member.dues_paid.split("-")[0];
-  const dueDate = member.dues_paid.split("T")[0];
+  const dues = member.membership_number ? member.dues_paid.split("-")[0] : "";
+  const dueDate = member.membership_number
+    ? member.dues_paid.split("T")[0]
+    : "";
 
   // used to set the approval status of a member.
   const approveMember = () => {
@@ -114,6 +116,10 @@ function MemberModal({ member, show, setShow }) {
     }
   }
 
+  function handleAdmin(level) {
+    dispatch({ type: "TOGGLE_ADMIN", payload: { level, member: member.id } });
+  }
+
   // conditionally render the modal displayed depending on if the
   // user is verified or not.
   if (member.is_verified) {
@@ -166,7 +172,7 @@ function MemberModal({ member, show, setShow }) {
                   </p>
                 </Col>
                 <Col>
-                  {(member.dues_paid && member.membership_number) && (
+                  {member.dues_paid && member.membership_number && (
                     <>
                       <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
                         Dues Paid
@@ -278,6 +284,20 @@ function MemberModal({ member, show, setShow }) {
                   onChange={(evt) => setDuesPaid(evt.target.value)}
                 ></Form.Control>
               </FloatingLabel>
+              <div className="d-flex justify-content-between">
+                <span className="ps-3 pt-2">Admin Access? </span>
+                {member.admin_level === 4 ? (
+                  <>
+                    <span className="pt-2 fw-bold text-danger">Yes</span>
+                    <Button onClick={() => handleAdmin(0)}>Remove Admin</Button>
+                  </>
+                ) : (
+                  <>
+                    <span className="pt-2 fw-bold text-success">No</span>
+                    <Button onClick={() => handleAdmin(4)}>Add Admin</Button>
+                  </>
+                )}
+              </div>
             </Form>
           </Modal.Body>
 

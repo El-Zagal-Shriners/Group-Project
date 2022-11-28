@@ -75,12 +75,22 @@ function* addToDiscountTracker(action) {
   }
 }
 
+function* toggleAdmin(action) {
+  try {
+    yield axios.put("api/admin/toggle", action.payload);
+    yield put({ type: "GET_ACCOUNTS" });
+  } catch (error) {
+    console.log("error caught in toggleAdmin :>> ", error);
+  }
+}
+
 function* adminSaga() {
   yield takeEvery("UPDATE_MEMBER_INFO", updateMemberInfo);
   yield takeEvery("APPROVE_MEMBER", approveMember);
   yield takeEvery("AUTHORIZE_MEMBER", authorizeMember);
   yield takeEvery("ADMIN_DELETE_MEMBER", deleteMember);
   yield takeEvery("ADD_TO_DISCOUNT_TRACKER", addToDiscountTracker);
+  yield takeEvery("TOGGLE_ADMIN", toggleAdmin);
 }
 
 export default adminSaga;

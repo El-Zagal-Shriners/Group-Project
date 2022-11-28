@@ -1,13 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import UpdatedNavBar from "../Nav/Nav";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import { useState } from "react";
+
 function RequestReviewPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const requestReview = () => {
+  const [duesPaid, setDuesPaid] = useState("");
+
+  const requestReview = (e) => {
+    e.preventDefault();
     dispatch({
       type: "REQUEST_REVIEW",
+      payload: {
+        duesPaid,
+      },
     });
+    setDuesPaid("");
   };
+
   return (
     <>
       <UpdatedNavBar />
@@ -29,9 +41,25 @@ function RequestReviewPage() {
             Review has been requested
           </h5>
         ) : (
-          <button className="btn btn-primary fw-bold" onClick={requestReview}>
-            Request Review
-          </button>
+          <form
+            onSubmit={requestReview}
+            className="w-100 d-flex flex-column justify-content-around align-items-center"
+          >
+            <FloatingLabel
+              className="mb-1 text-primary w-100"
+              label="Last Dues Payment"
+            >
+              <Form.Control
+                type="date"
+                placeholder="Last Dues Payment"
+                value={duesPaid}
+                required
+                className="col mx-0 w-100"
+                onChange={(e) => setDuesPaid(e.target.value)}
+              />
+            </FloatingLabel>
+            <button className="btn btn-primary fw-bold">Request Review</button>
+          </form>
         )}
       </div>
     </>

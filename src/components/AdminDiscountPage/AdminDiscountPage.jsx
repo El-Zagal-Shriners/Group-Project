@@ -66,33 +66,28 @@ function AdminDiscountPage(vendor) {
       </div>
 
       <div className="container text-center col col-lg-6 pt-2 pb-0">
-        <DropdownButton
-          as={ButtonGroup}
-          key="primary"
-          id={`discountDropdown`}
-          variant="primary"
-          title="Select Vendor"
-          className="w-75"
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item
-            eventKey="default"
-            active={currentSelected === "default" && true}
-          >
-            All
-          </Dropdown.Item>
-          {allVendors.map((vendor) => {
-            return (
-              <Dropdown.Item
-                key={vendor.id}
-                eventKey={vendor.id}
-                active={Number(currentSelected) === Number(vendor.id) && true}
-              >
-                {vendor.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
+        <Dropdown className="col" onSelect={handleSelect}>
+          <Dropdown.Toggle>Select Vendor</Dropdown.Toggle>
+          <Dropdown.Menu className="custom-scroll">
+            <Dropdown.Item
+              eventKey="default"
+              active={currentSelected === "default" && true}
+            >
+              All
+            </Dropdown.Item>
+            {allVendors.map((vendor) => {
+              return (
+                <Dropdown.Item
+                  key={vendor.id}
+                  eventKey={vendor.id}
+                  active={Number(currentSelected) === Number(vendor.id) && true}
+                >
+                  {vendor.name}
+                </Dropdown.Item>
+              );
+            })}
+          </Dropdown.Menu>
+        </Dropdown>
         {currentSelected !== "default" && (
           <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
             <h5 className="text-center w-100 mt-1">

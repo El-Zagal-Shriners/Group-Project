@@ -72,9 +72,9 @@ function* resetPassword(action) {
 }
 
 // PUT to request a review for user
-function* requestReview() {
+function* requestReview(action) {
   try {
-    yield axios.put(`api/user/requestreview`, config);
+    yield axios.put(`api/user/requestreview`, action.payload, config);
     yield put({
       type: "FETCH_USER",
     });

@@ -32,7 +32,7 @@ function* addVendor(action) {
 // PUT to edit an existing vendor
 function* editVendor(action) {
   try {
-    console.log('action.payload', action.payload)
+    // console.log('action.payload', action.payload)
     yield axios.put(`/api/vendors/`, action.payload);
     yield put({ type: "FETCH_VENDORS" });
   } catch (err) {
