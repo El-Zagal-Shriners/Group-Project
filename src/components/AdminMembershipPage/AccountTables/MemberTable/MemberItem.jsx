@@ -9,7 +9,7 @@ function MemberItem({ member, filterType }) {
   // setup conditional render for class name.
   const classVariant = () => {
     if (member.is_authorized === false && filterType === 0) {
-      return "px-1 mb-1 d-flex bg-danger text-light";
+      return "px-1 mb-1 d-flex bg-secondary text-black";
     } else {
       return "px-1 mb-1 d-flex";
     }
