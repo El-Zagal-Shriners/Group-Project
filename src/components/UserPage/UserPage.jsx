@@ -184,6 +184,7 @@ function UserPage() {
                     value={currentPassword}
                     className="mx-0"
                     required
+                    autoFocus
                     onChange={(e) => setCurrentPassword(e.target.value)}
                   />
                 </FloatingLabel>
