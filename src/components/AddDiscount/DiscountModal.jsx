@@ -147,6 +147,13 @@ function DiscountModal({
                 <h6 className={inactiveExpiredTextColor}>
                   Status: {statusMessage}
                 </h6>
+                <Button
+                  variant={`${discount.is_shown ? "warning" : "success"}`}
+                  className="border border-1 border-primary text-primary"
+                  onClick={toggleActive}
+                >
+                  {discount.is_shown ? `Deactivate` : `Activate`}
+                </Button>
               </div>
             )}
             <FloatingLabel className="text-primary" label="Summary">
@@ -207,14 +214,6 @@ function DiscountModal({
                 onClick={hideEditShowDeleteConfirmation}
               >
                 Delete
-              </Button>
-              &nbsp;
-              <Button
-                variant="warning"
-                className="col text-nowrap border border-1 border-primary text-primary"
-                onClick={toggleActive}
-              >
-                {discount.is_shown ? `Turn Off` : `Turn On`}
               </Button>
               &nbsp;
               <Button type="submit" className="col" variant="primary">
