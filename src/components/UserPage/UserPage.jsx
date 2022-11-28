@@ -19,12 +19,12 @@ function UserPage() {
   const [showAddDependent, setShowAddDependent] = useState(false);
   const [deleteDependent, setDeleteDependent] = useState("");
   const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [showInvalid, setShowInvalid] = useState(false);
   const [showValid, setShowValid] = useState(false);
-  const [duesPaid, setDuesPaid] = useState('');
+  const [duesPaid, setDuesPaid] = useState("");
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -44,7 +44,7 @@ function UserPage() {
   const handleShowEdit = (e) => {
     setShowEdit(true);
     handleClosePasswordForm(e);
-  }
+  };
   // Toggle local 'show' state
   const handleCloseEdit = () => setShowEdit(false);
   // Toggle local 'show' state
@@ -68,10 +68,10 @@ function UserPage() {
     dispatch({
       type: "REQUEST_REVIEW",
       payload: {
-        duesPaid
-      }
+        duesPaid,
+      },
     });
-    setDuesPaid('');
+    setDuesPaid("");
   };
 
   // This send the current and new password to the server
@@ -82,7 +82,7 @@ function UserPage() {
       type: "CHANGE_PASSWORD",
       payload: {
         currentPassword,
-        newPassword
+        newPassword,
       },
     });
     handleClosePasswordForm(e);
@@ -92,22 +92,22 @@ function UserPage() {
   // if they match or displays the inputs as invalid
   const handlePasswordForm = (e) => {
     e.preventDefault();
-    if(newPassword===confirmNewPassword){
+    if (newPassword === confirmNewPassword) {
       changePassword(e);
     } else {
       setShowInvalid(true);
     }
-  }
+  };
   // function to close the password form and clear the local states
   const handleClosePasswordForm = (e) => {
     e.preventDefault();
-    setConfirmNewPassword('');
-    setNewPassword('');
-    setCurrentPassword('');
+    setConfirmNewPassword("");
+    setNewPassword("");
+    setCurrentPassword("");
     setShowPasswordForm(false);
-  }
+  };
 
-    // toggle if password box should invalid or valid
+  // toggle if password box should invalid or valid
   // based on the two passwords entered
   useEffect(() => {
     // Sets both valid and invalid to false if only newPassword
@@ -136,46 +136,69 @@ function UserPage() {
       <UpdatedNavBar />
       <div className="container col col-lg-6">
         {/* Block rendered if the is not authorized but is verified and not previously requested a review */}
-        {!user.is_authorized && !user.review_pending && user.is_verified &&
+        {!user.is_authorized && !user.review_pending && user.is_verified && (
           <>
-          <div>
-          <h4>Status: <strong className="text-primary">Unauthorized</strong></h4>
-          <p>This account appears to be turned off. This may be due to unpaid dues or other reasons.
-              Please entered the date you last paid your dues and use the button to request a review of
-              your account standing.
-          </p>
-            <form onSubmit={requestReview} className="w-100 d-flex flex-column justify-content-around align-items-center">
-          <FloatingLabel className="mb-1 text-primary w-100" label="Last Dues Payment">
-                <Form.Control
-                  type="date"
-                  placeholder="Last Dues Payment"
-                  value={duesPaid}
-                  required
-                  className="col mx-0 w-100"
-                  onChange={(e) => setDuesPaid(e.target.value)}
-                />
-              </FloatingLabel>
-          <button className="btn btn-primary mb-1 text-nowrap col w-100">Request Review</button>
-          </form>
-          </div>
-          <hr/>
+            <div>
+              <h4>
+                Status: <strong className="text-primary">Unauthorized</strong>
+              </h4>
+              <p>
+                This account appears to be turned off. This may be due to unpaid
+                dues or other reasons. Please entered the date you last paid
+                your dues and use the button to request a review of your account
+                standing.
+              </p>
+              <form
+                onSubmit={requestReview}
+                className="w-100 d-flex flex-column justify-content-around align-items-center"
+              >
+                <FloatingLabel
+                  className="mb-1 text-primary w-100"
+                  label="Last Dues Payment"
+                >
+                  <Form.Control
+                    type="date"
+                    placeholder="Last Dues Payment"
+                    value={duesPaid}
+                    required
+                    className="col mx-0 w-100"
+                    onChange={(e) => setDuesPaid(e.target.value)}
+                  />
+                </FloatingLabel>
+                <button className="btn btn-primary mb-1 text-nowrap col w-100">
+                  Request Review
+                </button>
+              </form>
+            </div>
+            <hr />
           </>
-          }
-          {/* Block rendered if the user is not authorized but has a review already requested and previously verified */}
-          {!user.is_authorized && user.review_pending && user.is_verified &&
+        )}
+        {/* Block rendered if the user is not authorized but has a review already requested and previously verified */}
+        {!user.is_authorized && user.review_pending && user.is_verified && (
           <>
-            <h4>Status: <strong className="text-primary">Review Requested</strong></h4>
-            <hr/>
+            <h4>
+              Status: <strong className="text-primary">Review Requested</strong>
+            </h4>
+            <hr />
           </>
-          }
-          {/* Block that displays if the is not authorized and not verified (new account awaiting initial approval) */}
-          {!user.is_authorized && !user.is_verified &&
+        )}
+        {/* Block that displays if the is not authorized and not verified (new account awaiting initial approval) */}
+        {!user.is_authorized && !user.is_verified && (
           <>
-            <h4>Status:<br/> <strong className="text-primary">Initial Verification Pending</strong></h4>
-            <p className="text-muted fst-italic">This process may take a few days. Please contact El Zagal for more information.</p>
-            <hr/>
+            <h4>
+              Status:
+              <br />{" "}
+              <strong className="text-primary">
+                Initial Verification Pending
+              </strong>
+            </h4>
+            <p className="text-muted fst-italic">
+              This process may take a few days. Please contact El Zagal for more
+              information.
+            </p>
+            <hr />
           </>
-          }
+        )}
         {/* Render user's basic information */}
         <h2 className="fw-bolder text-primary">
           Hi, {user.first_name} {user.last_name}!
@@ -201,25 +224,30 @@ function UserPage() {
           </p>
           {/* Button to show edit modal */}
           <div className="d-flex justify-content-center align-items-center">
-          <button className="btn btn-primary mx-1 mb-1 col" onClick={handleShowEdit}>
-            {allIconComponents.editUser} Edit Info
-          </button>
-          {/* Toggle password form showing button */}
-          {!showPasswordForm && (
             <button
-              className="btn btn-outline-primary col mx-1 mb-1 text-primary text-nowrap text-decoration-underline fw-bold"
-              onClick={() => setShowPasswordForm(true)}
+              className="btn btn-primary mx-1 mb-1 col"
+              onClick={handleShowEdit}
             >
-              Change Password
+              {allIconComponents.editUser} Edit Info
             </button>
-          )}
+            {/* Toggle password form showing button */}
+            {!showPasswordForm && (
+              <button
+                className="btn btn-outline-primary col mx-1 mb-1 text-primary text-nowrap text-decoration-underline fw-bold"
+                onClick={() => setShowPasswordForm(true)}
+              >
+                Change Password
+              </button>
+            )}
           </div>
           {/* Password change form */}
           {showPasswordForm && (
             <div className="border border-2 border-primary rounded p-1">
               <form onSubmit={handlePasswordForm}>
-                <h4 className="fw-bold mx-1 text-decoration-underline text-primary">Change Password</h4>
-                <div className='d-flex justify-content-around align-items-center'>
+                <h4 className="fw-bold mx-1 text-decoration-underline text-primary">
+                  Change Password
+                </h4>
+                <div className="d-flex justify-content-around align-items-center">
                   <button type="submit" className="btn btn-primary col mx-1">
                     Submit
                   </button>
