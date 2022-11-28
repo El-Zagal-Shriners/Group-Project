@@ -17,7 +17,7 @@ function UserDependentConfirmation(props) {
         </Button>
         <Button
           variant="primary"
-          onClick={() => props.removeDependent(props.dependentId)}
+          onClick={(e) => props.removeDependent(props.dependentId, e)}
         >
           Confirm Delete
         </Button>
