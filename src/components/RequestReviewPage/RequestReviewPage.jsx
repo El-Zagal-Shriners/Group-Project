@@ -7,17 +7,17 @@ import { useState } from "react";
 function RequestReviewPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const [duesPaid, setDuesPaid] = useState('');
-  
+  const [duesPaid, setDuesPaid] = useState("");
+
   const requestReview = (e) => {
-   e.preventDefault();
+    e.preventDefault();
     dispatch({
       type: "REQUEST_REVIEW",
       payload: {
-        duesPaid
-      }
+        duesPaid,
+      },
     });
-    setDuesPaid('');
+    setDuesPaid("");
   };
 
   return (
@@ -41,20 +41,24 @@ function RequestReviewPage() {
             Review has been requested
           </h5>
         ) : (
-          <form onSubmit={requestReview} className="w-100 d-flex flex-column justify-content-around align-items-center">
-          <FloatingLabel className="mb-1 text-primary w-100" label="Last Dues Payment">
-          <Form.Control
-            type="date"
-            placeholder="Last Dues Payment"
-            value={duesPaid}
-            required
-            className="col mx-0 w-100"
-            onChange={(e) => setDuesPaid(e.target.value)}
-          />
-        </FloatingLabel>
-          <button className="btn btn-primary fw-bold">
-            Request Review
-          </button>
+          <form
+            onSubmit={requestReview}
+            className="w-100 d-flex flex-column justify-content-around align-items-center"
+          >
+            <FloatingLabel
+              className="mb-1 text-primary w-100"
+              label="Last Dues Payment"
+            >
+              <Form.Control
+                type="date"
+                placeholder="Last Dues Payment"
+                value={duesPaid}
+                required
+                className="col mx-0 w-100"
+                onChange={(e) => setDuesPaid(e.target.value)}
+              />
+            </FloatingLabel>
+            <button className="btn btn-primary fw-bold">Request Review</button>
           </form>
         )}
       </div>
