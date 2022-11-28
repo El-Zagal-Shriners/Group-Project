@@ -135,6 +135,19 @@ function UserPage() {
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container col col-lg-6">
+        {user.is_authorized && !user.full_authorized && (
+          <>
+            <h4 className="fw-bold">
+              Status: <span className="text-primary">Inactive</span>
+            </h4>
+            <p>
+              The associated account appears to be unauthorized at this time.
+              Please have the owner of that account request an account review if
+              this status should be changed.
+            </p>
+            <hr/>
+          </>
+        )}
         {/* Block rendered if the is not authorized but is verified and not previously requested a review */}
         {!user.is_authorized && !user.review_pending && user.is_verified && (
           <>
