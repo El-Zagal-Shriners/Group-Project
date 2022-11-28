@@ -30,12 +30,15 @@ function DiscountCard({ thisDiscount }) {
                       <div className="text-start">
                         <h5>{thisDiscount.vendor_name}</h5>
                       </div>
-                      <div className="discount-address ms-2 text-start text-muted fw-light">
+                      <div className="discount-address text-start text-muted fw-light">
                         {thisDiscount.is_regional ? (
-                          <small>Regional Discount <br/> (Click for Details)</small>
+                          <small>
+                            Regional Discount <br /> (Click for Details)
+                          </small>
                         ) : (
                           <small>
-                            {thisDiscount.address}, {thisDiscount.city}
+                            {thisDiscount?.address} <br />
+                            {thisDiscount?.city}, {thisDiscount?.state_code}
                           </small>
                         )}
                       </div>

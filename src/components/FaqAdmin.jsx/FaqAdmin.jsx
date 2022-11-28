@@ -16,7 +16,7 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary outline-warning">
-              The admin can add a discount through 'Discount Manager'. Admin clicks on the 'Add Discount' button, selects vendor from dropdown, fills in required inputs for discount infomration, seletcs  
+              The admin can add a discount through 'Discount Manager'. Admin clicks on the 'Add Discount' button, selects vendor from dropdown, fills in required inputs for discount information, selects
             </div>
           </Accordion.Body>
         </Accordion.Item>
@@ -68,7 +68,7 @@ function FaqAdmin() {
           <Accordion.Body>
             <div className="text-primary outline-warning">
               Yes! By clicking on 'Manage Members', the Admin can approve new
-              member's access, activate or deactive members and their
+              member's access, activate or deactivate members and their
               dependents, and view a list of all members, dependents, and their
               status!
             </div>
@@ -81,7 +81,7 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-             Yessss! By clicking on the member in 'Manage Members', the admin would then click on the member they want to remove, click the 'edit' button, and then 'remove' to delete/remove that member.
+             Yes! By clicking on the member in 'Manage Members', the admin would then click on the member they want to remove, click the 'edit' button, and then 'remove' to delete/remove that member.
             </div>
           </Accordion.Body>
         </Accordion.Item>
@@ -92,13 +92,13 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-             Yep! By clicking on the member in 'Manage Members', the current admin can grant administrative access to any member. By clicking on their name and then clicking the edit button, the admin can add and remove admin access. 
+             Yep! By clicking on the member in 'Manage Members', the current admin can grant administrative access to any member. By clicking on their name and then clicking the edit button, the admin can add and remove admin access.
             </div>
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="6">
           <Accordion.Header>
-            <div className="text-primary fw-bold">Are disconts tracked?</div>
+            <div className="text-primary fw-bold">Are discounts tracked?</div>
           </Accordion.Header>
           <br/>
           <Accordion.Body>

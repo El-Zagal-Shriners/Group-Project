@@ -229,7 +229,7 @@ function DiscountsPage() {
     return (
       <>
         <UpdatedNavBar />
-        <div className="bg-light p-1 d-flex justify-content-center">
+        <div className="bg-white p-1 d-flex justify-content-center">
           <h1 className="display-5 text-primary">Your Shriner Discounts</h1>
         </div>
         <div className="d-flex col flex-column justify-content-around align-items-center bg-white sticky-top">

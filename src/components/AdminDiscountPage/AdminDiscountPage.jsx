@@ -137,7 +137,7 @@ function AdminDiscountPage(vendor) {
       />
       <div className="w-100 d-flex justify-content-center align-items-center col col-md-9 col-lg-6">
         <section className="col col-md-9 col-lg-6 w-100">
-          <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto" />
+          {/* <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto" />
           <h4 className="my-0 text-center text-primary">Legend:</h4>
           <div className="w-lg-50 w-md-100 mx-auto col col-md-9 col-lg-6 d-flex justify-content-center align-items-center mt-2 mb-0">
             <div className="col p-1 d-flex justify-content-around align-items-center">
@@ -154,7 +154,7 @@ function AdminDiscountPage(vendor) {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
           <hr className="my-2 mx-auto col col-md-9 col-lg-6" />
           {filteredDiscounts.map((discount) => {
             return (

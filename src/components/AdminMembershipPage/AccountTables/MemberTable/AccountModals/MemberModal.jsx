@@ -55,11 +55,12 @@ function MemberModal({ member, show, setShow }) {
     : "";
 
   // used to set the approval status of a member.
-  const approveMember = () => {
+  const approveMember = (boolean) => {
     dispatch({
       type: "APPROVE_MEMBER",
       payload: {
         memberId: member.id,
+        authorized: boolean,
         verification: true,
       },
     });
@@ -288,12 +289,12 @@ function MemberModal({ member, show, setShow }) {
                 <span className="ps-3 pt-2">Admin Access? </span>
                 {member.admin_level === 4 ? (
                   <>
-                    <span className="pt-2 fw-bold text-danger">Yes</span>
+                    <span className="pt-2 fw-bold text-success">Yes</span>
                     <Button onClick={() => handleAdmin(0)}>Remove Admin</Button>
                   </>
                 ) : (
                   <>
-                    <span className="pt-2 fw-bold text-success">No</span>
+                    <span className="pt-2 fw-bold text-danger">No</span>
                     <Button onClick={() => handleAdmin(4)}>Add Admin</Button>
                   </>
                 )}
@@ -392,10 +393,14 @@ function MemberModal({ member, show, setShow }) {
                   )}
                 </Col>
                 <Col>
-                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
-                    Dues Paid
-                  </p>
-                  <p className="text-center">{dues}</p>
+                  {member.membership_number && (
+                    <>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Dues Paid
+                      </p>
+                      <p className="text-center">{dues}</p>
+                    </>
+                  )}
                 </Col>
               </Row>
             </Container>
@@ -405,12 +410,13 @@ function MemberModal({ member, show, setShow }) {
             <Button
               onClick={() => {
                 setShow(false);
-                setShowConfirmation(true);
+                // setShowConfirmation(true);
+                approveMember(false);
               }}
             >
-              Remove
+              Deny
             </Button>
-            <Button onClick={() => approveMember()}>Approve</Button>
+            <Button onClick={() => approveMember(true)}>Approve</Button>
             <Button variant="outline-primary" onClick={() => setShow(false)}>
               Close
             </Button>

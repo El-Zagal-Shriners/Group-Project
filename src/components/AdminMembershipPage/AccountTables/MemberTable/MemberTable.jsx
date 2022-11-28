@@ -69,19 +69,38 @@ function MemberTable() {
       <div className="col col-lg-6 d-flex flex-column align-items-center justify-content-center">
         <div className="w-100 d-flex align-items-center justify-content-between">
           <Form.Control
+            value={search}
             className="text-center"
             style={{ width: "36%" }}
             placeholder="Search Member"
             onChange={(e) => setSearch(e.target.value)}
           />
           <ButtonGroup className="me-1">
-            <Button size="sm" onClick={() => setFilterType(0)}>
+            <Button
+              size="sm"
+              onClick={() => {
+                setFilterType(0);
+                setSearch("");
+              }}
+            >
               All ({allMembers.length})
             </Button>
-            <Button size="sm" onClick={() => setFilterType(1)}>
+            <Button
+              size="sm"
+              onClick={() => {
+                setFilterType(1);
+                setSearch("");
+              }}
+            >
               Review ({reviewPending.length})
             </Button>
-            <Button size="sm" onClick={() => setFilterType(2)}>
+            <Button
+              size="sm"
+              onClick={() => {
+                setFilterType(2);
+                setSearch("");
+              }}
+            >
               New ({newMembers.length})
             </Button>
           </ButtonGroup>
