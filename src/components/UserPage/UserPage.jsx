@@ -24,6 +24,7 @@ function UserPage() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [showInvalid, setShowInvalid] = useState(false);
   const [showValid, setShowValid] = useState(false);
+  const [duesPaid, setDuesPaid] = useState('');
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -59,6 +60,18 @@ function UserPage() {
       payload: id,
     });
     handleClose();
+  };
+
+  // This function will update the user's dues paid date and toggle
+  // review pending on their account to true
+  const requestReview = () => {
+    dispatch({
+      type: "REQUEST_REVIEW",
+      payload: {
+        duesPaid
+      }
+    });
+    setDuesPaid('');
   };
 
   // This send the current and new password to the server
@@ -122,6 +135,33 @@ function UserPage() {
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container col col-lg-6">
+        {!user.is_authorized&&!user.review_pending? 
+          <>
+          <div>
+          <h4>Status: <strong className="text-primary">Unauthorized</strong></h4>
+          <p>This account appears to be turned off. This may be due to unpaid dues or other reasons.
+              Please entered the date you last paid your dues and use the button to request a review of
+              your account standing.
+          </p>
+            <form onSubmit={requestReview} className="w-100 d-flex flex-column justify-content-around align-items-center">
+          <FloatingLabel className="mb-1 text-primary w-100" label="Last Dues Payment">
+                <Form.Control
+                  type="date"
+                  placeholder="Last Dues Payment"
+                  value={duesPaid}
+                  required
+                  className="col mx-0 w-100"
+                  onChange={(e) => setDuesPaid(e.target.value)}
+                />
+              </FloatingLabel>
+          <button className="btn btn-primary mb-1 text-nowrap col w-100">Request Review</button>
+          </form>
+          </div>
+          <hr/>
+          </>
+          :
+          <><h4>Status: <strong className="text-primary">Review Requested</strong></h4><hr/></>
+          }
         {/* Render user's basic information */}
         <h2 className="fw-bolder text-primary">
           Hi, {user.first_name} {user.last_name}!
