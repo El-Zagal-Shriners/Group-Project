@@ -95,8 +95,8 @@ function DiscountItem({ discount, today }) {
                           </small>
                         ) : (
                           <small>
-                            {vendor?.address}, {vendor?.city},{" "}
-                            {vendor?.state_code}
+                            {vendor?.address} <br />
+                            {vendor?.city}, {vendor?.state_code}
                           </small>
                         )}
                       </div>
