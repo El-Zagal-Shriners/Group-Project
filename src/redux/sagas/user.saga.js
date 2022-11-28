@@ -84,9 +84,9 @@ function* requestReview() {
 }
 
 // PUT to change the current users password
-function* changePassword() {
+function* changePassword(action) {
   try {
-    yield axios.put(`api/user/change`, config);
+    yield axios.put(`api/user/change`, action.payload, config);
     yield put({
       type: "FETCH_USER",
     });
