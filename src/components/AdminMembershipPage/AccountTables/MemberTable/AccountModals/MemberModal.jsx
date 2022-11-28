@@ -288,12 +288,12 @@ function MemberModal({ member, show, setShow }) {
                 <span className="ps-3 pt-2">Admin Access? </span>
                 {member.admin_level === 4 ? (
                   <>
-                    <span className="pt-2 fw-bold text-danger">Yes</span>
+                    <span className="pt-2 fw-bold text-success">Yes</span>
                     <Button onClick={() => handleAdmin(0)}>Remove Admin</Button>
                   </>
                 ) : (
                   <>
-                    <span className="pt-2 fw-bold text-success">No</span>
+                    <span className="pt-2 fw-bold text-danger">No</span>
                     <Button onClick={() => handleAdmin(4)}>Add Admin</Button>
                   </>
                 )}
