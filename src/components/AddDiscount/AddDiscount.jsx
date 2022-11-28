@@ -27,8 +27,8 @@ function AddDiscountModal() {
   const [expDate, setExpDate] = useState("");
   const [discountUsage, setDiscountUsage] = useState("");
   const [categoryId, setCategoryId] = useState(undefined);
-  const [isShown, setIsShown] = useState("True");
-  const [isRegional, setIsRegional] = useState("False");
+  const [isShown, setIsShown] = useState(true);
+  const [isRegional, setIsRegional] = useState(false);
   const [vendorSelected, setVendorSelected] = useState(false);
   const [categorySelected, setCategorySelected] = useState(false);
   const [vendorNotSelected, setVendorNotSelected] = useState(false);
@@ -92,6 +92,7 @@ function AddDiscountModal() {
     setVendorNotSelected(false);
     setSubmitCheck(false);
     setShowInvalid(false);
+    setIsRegional(false);
   };
 
   useEffect(() => {
