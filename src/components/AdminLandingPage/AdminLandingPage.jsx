@@ -18,6 +18,10 @@ function AdminLandingPage() {
     history.push("/admintracking");
   }
 
+  function adminFAQ() {
+    history.push("/adminfaq");
+  }
+
   // three bootstrap cards that direct the administrator to make changes
   //to membership information, discounts, and track discounts
   return (
@@ -68,6 +72,21 @@ function AdminLandingPage() {
         >
           Track Discounts
         </Button>
+      </div>
+      <div className="container text-center col col-lg-6">
+        <div>
+          <h5 className="card-title text-primary fw-bold">Admin FAQ</h5>{" "}
+          <br />
+          <p className="card-text">Frequently asked questions on how to add, edit, active/deactivate, and delete vendors and discounts.</p>
+          <Button
+            size="lg"
+            variant="primary"
+            onClick={adminFAQ}
+            className="me-2 d-flex justify-content-center container text-center"
+          >
+            FAQ
+          </Button>
+        </div>
       </div>
     </>
   );

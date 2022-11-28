@@ -27,6 +27,8 @@ import AddDiscount from "../AddDiscount/AddDiscount";
 import AddVendorModal from "../AddVendor/AddVendor";
 import PasswordResetPage from "../PasswordResetPage/PasswordResetPage";
 import ProtectedDiscountsRoute from "../ProtectedDiscountsRoute/ProtectedDiscountsRoute";
+import FaqAdmin from "../FaqAdmin.jsx/FaqAdmin";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +80,14 @@ function App() {
             path="/adminmembership"
           >
             <AdminMembershipPage />
+          </ProtectedAdminRoute>
+
+          <ProtectedAdminRoute
+            // logged in brings users to Admin Membership Page else shows LoginPage
+            exact
+            path="/adminfaq"
+          >
+            <FaqAdmin />
           </ProtectedAdminRoute>
 
           <ProtectedAdminRoute
