@@ -130,7 +130,7 @@ function DiscountsPage() {
     //    => push all discounts to new array
     if (selectedCities.length > 0 && selectedCategories.length === 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
-        return allSelected.includes(discount.city);
+        return (allSelected.includes(discount.city) || discount.is_regional);
       });
     } else if (selectedCities.length === 0 && selectedCategories.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
@@ -138,7 +138,7 @@ function DiscountsPage() {
       });
     } else if (selectedCities.length > 0 && selectedCities.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount, index) => {
-        return allSelected.includes(discount.city);
+        return (allSelected.includes(discount.city) || discount.is_regional);
       });
       filteredArray = filteredArray.filter((discount) => {
         return allSelected.includes(discount.category_name);
@@ -146,6 +146,10 @@ function DiscountsPage() {
     } else {
       filteredArray = allMemberDiscounts;
     }
+
+    
+
+
 
     // run filteredArray through search by company search bar
     if (searchBarIn.length > 0) {
