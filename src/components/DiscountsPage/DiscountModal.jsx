@@ -110,7 +110,7 @@ function DiscountModal({
             {thisDiscount.website_url && 
             <div className="text-center mt-3">
               <a href={thisDiscount.website_url} target="_blank">
-                <Button variant="warning" >Go To Vendor Site</Button>
+                <Button variant="warning" size="lg">Go To Vendor Site</Button>
               </a>
             </div>
             }
