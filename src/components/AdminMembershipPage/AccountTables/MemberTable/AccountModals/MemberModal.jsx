@@ -392,10 +392,14 @@ function MemberModal({ member, show, setShow }) {
                   )}
                 </Col>
                 <Col>
-                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
-                    Dues Paid
-                  </p>
-                  <p className="text-center">{dues}</p>
+                  {member.membership_number && (
+                    <>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Dues Paid
+                      </p>
+                      <p className="text-center">{dues}</p>
+                    </>
+                  )}
                 </Col>
               </Row>
             </Container>
