@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import DiscountModal from "./DiscountModal";
-import Card from "react-bootstrap/Card";
 import "./DiscountItem.css";
 import { IconContext } from "react-icons";
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
-import EditVendorModal from "../AddVendor/EditVendorModal";
 import { useState } from "react";
 
 function DiscountItem({ discount, today }) {
@@ -61,24 +59,24 @@ function DiscountItem({ discount, today }) {
           className={`hover-shadow mx-1 col col-md-9 col-lg-6 ${
             discount.is_shown && expiredResult && startedResult
               ? `bg-primary`
-              : `bg-light`
-          } rounded border border-primary border-1 my-1 p-1 d-flex justify-content-center align-items-center`}
+              : `bg-secondary text-muted`
+          } rounded my-1 p-1 d-flex justify-content-center align-items-center`}
         >
           <div className="row fill-container">
-            <div className="col-2">
-              <div
-                className={`d-flex ${
-                  discount.is_shown && expiredResult && startedResult
-                    ? `text-light`
-                    : `text-primary`
-                } rounded w-100 flex-column justify-content-center align-items-center fill-container`}
-              >
-                {categories.length > 0 && (
-                  <IconContext.Provider value={{ size: "2em" }}>
-                    {allIconComponents[category.icon_class]}
-                  </IconContext.Provider>
-                )}
-              </div>
+            <div className="col-2 p-0 d-flex flex-column justify-content-center">
+              {discount.is_shown && expiredResult && startedResult ? (
+                <div
+                  className={`d-flex text-light rounded w-100 flex-column justify-content-center align-items-center fill-container`}
+                >
+                  {categories.length > 0 && (
+                    <IconContext.Provider value={{ size: "2em" }}>
+                      {allIconComponents[category.icon_class]}
+                    </IconContext.Provider>
+                  )}
+                </div>
+              ) : (
+                <span className="">Inactive</span>
+              )}
             </div>
             <div className="col-10">
               <div className="row">
@@ -89,10 +87,18 @@ function DiscountItem({ discount, today }) {
                         <h5>{vendor?.name}</h5>
                       </div>
                       <div className="discount-address text-start text-muted fw-light">
-                        {discount.is_regional ? <small>Regional Discount<br />(Click for details)</small>:<small>
-                          {vendor?.address}, {vendor?.city},{" "}
-                          {vendor?.state_code}
-                        </small>}
+                        {discount.is_regional ? (
+                          <small>
+                            Regional Discount
+                            <br />
+                            (Click for details)
+                          </small>
+                        ) : (
+                          <small>
+                            {vendor?.address}, {vendor?.city},{" "}
+                            {vendor?.state_code}
+                          </small>
+                        )}
                       </div>
                     </div>
                   </div>
