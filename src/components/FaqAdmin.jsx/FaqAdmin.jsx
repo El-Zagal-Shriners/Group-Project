@@ -81,7 +81,7 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-             Yessss! By clicking on the member in 'Manage Members', the admin would then click on the member they want to remove, click the 'edit' button, and then 'remove' to delete/remove that member.
+             Yes! By clicking on the member in 'Manage Members', the admin would then click on the member they want to remove, click the 'edit' button, and then 'remove' to delete/remove that member.
             </div>
           </Accordion.Body>
         </Accordion.Item>
