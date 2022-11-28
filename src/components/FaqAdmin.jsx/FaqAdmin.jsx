@@ -45,7 +45,19 @@ function FaqAdmin() {
             </div>
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="5"></Accordion.Item>
+        <Accordion.Item eventKey="4">
+          <Accordion.Header>
+            <div className="text-primary fw-bold">
+              What if a vendor wants to offer the discount at more than one location?
+            </div>
+          </Accordion.Header>
+          <Accordion.Body>
+            <div className="text-primary">
+              No Problem! If a vendor wants to honor the discount at more than one location, the admin can simply toggle between 'This Location' for the specific location, or 'Regional' if it's allowed at more than one location.
+            </div>
+          </Accordion.Body>
+          <br/>
+        </Accordion.Item>
         <Accordion.Item eventKey="1">
           <Accordion.Header>
             <div className="text-primary fw-bold">
@@ -62,29 +74,14 @@ function FaqAdmin() {
             </div>
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="4">
+        <Accordion.Item eventKey="7">
           <Accordion.Header>
-            <div className="text-primary fw-bold">
-              What if a vendor wants to honor the discount at more than one location?
-            </div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <div className="text-primary">
-              No Problem! If a vendor wants to honor the discount at more than one location, the admin can simply toggle between 'This Location' for the specific location, or 'Regional' if it's allowed at more than one location
-            </div>
-          </Accordion.Body>
-          <br/>
-        </Accordion.Item>
-        <Accordion.Item eventKey="6">
-          <Accordion.Header>
-            <div className="text-primary fw-bold">Are disconts tracked?</div>
+            <div className="text-primary fw-bold">Can I remove a member?</div>
           </Accordion.Header>
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-              Absolutely! The admin can view how many times a discount has been
-              revealed to a member in the last 7 days, past month, past year,
-              and all-time!
+             Yessss! By clicking on the member in 'Manage Members', the admin would then click on the member they want to remove, click the 'edit' button, and then 'remove' to delete/remove that member.
             </div>
           </Accordion.Body>
         </Accordion.Item>
@@ -95,7 +92,20 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-             Yep! By clicking on the member in 'Manage Members', the current admin can grant access to administrative capabilities 
+             Yep! By clicking on the member in 'Manage Members', the current admin can grant administrative access to any member. By clicking on their name and then clicking the edit button, the admin can add and remove admin access. 
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="6">
+          <Accordion.Header>
+            <div className="text-primary fw-bold">Are disconts tracked?</div>
+          </Accordion.Header>
+          <br/>
+          <Accordion.Body>
+            <div className="text-primary">
+              Absolutely! The admin can view the amount of times a discount has been
+              revealed to a member in the last 7 days, past month, past year,
+              and all-time!
             </div>
           </Accordion.Body>
         </Accordion.Item>
