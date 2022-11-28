@@ -300,8 +300,6 @@ function UserPage() {
                     value={newPassword}
                     className="mx-0"
                     required
-                    isInvalid={showInvalid ? true : false}
-                    isValid={showValid ? true : false}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                 </FloatingLabel>
