@@ -135,7 +135,7 @@ function UserPage() {
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container col col-lg-6">
-        {!user.is_authorized&&!user.review_pending? 
+        {!user.is_authorized && !user.review_pending && user.is_verified &&
           <>
           <div>
           <h4>Status: <strong className="text-primary">Unauthorized</strong></h4>
@@ -159,8 +159,19 @@ function UserPage() {
           </div>
           <hr/>
           </>
-          :
-          <><h4>Status: <strong className="text-primary">Review Requested</strong></h4><hr/></>
+          }
+          {!user.is_authorized && user.review_pending && user.is_verified &&
+          <>
+            <h4>Status: <strong className="text-primary">Review Requested</strong></h4>
+            <hr/>
+          </>
+          }
+          {!user.is_authorized && !user.is_verified &&
+          <>
+            <h4>Status:<br/> <strong className="text-primary">Initial Verification Pending</strong></h4>
+            <p className="text-muted fst-italic">This process may take a few days. Please contact El Zagal for more information.</p>
+            <hr/>
+          </>
           }
         {/* Render user's basic information */}
         <h2 className="fw-bolder text-primary">
