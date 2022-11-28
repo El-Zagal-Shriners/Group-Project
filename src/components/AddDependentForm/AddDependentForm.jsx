@@ -46,11 +46,11 @@ function AddDependentForm(props) {
         </>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-primary" onClick={cancelDependentAdd}>
-            Cancel
-          </Button>
           <Button variant="primary" onClick={sendDependentEmail}>
             Add Dependent
+          </Button>
+          <Button variant="outline-primary" onClick={cancelDependentAdd}>
+            Cancel
           </Button>
         </Modal.Footer>
       </Modal>

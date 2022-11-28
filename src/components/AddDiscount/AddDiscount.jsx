@@ -27,8 +27,8 @@ function AddDiscountModal() {
   const [expDate, setExpDate] = useState("");
   const [discountUsage, setDiscountUsage] = useState("");
   const [categoryId, setCategoryId] = useState(undefined);
-  const [isShown, setIsShown] = useState("True");
-  const [isRegional, setIsRegional] = useState("False");
+  const [isShown, setIsShown] = useState(true);
+  const [isRegional, setIsRegional] = useState(false);
   const [vendorSelected, setVendorSelected] = useState(false);
   const [categorySelected, setCategorySelected] = useState(false);
   const [vendorNotSelected, setVendorNotSelected] = useState(false);
@@ -92,6 +92,7 @@ function AddDiscountModal() {
     setVendorNotSelected(false);
     setSubmitCheck(false);
     setShowInvalid(false);
+    setIsRegional(false);
   };
 
   useEffect(() => {
@@ -236,7 +237,42 @@ function AddDiscountModal() {
                   onChange={(e) => setDiscountUsage(e.target.value)}
                 />
               </FloatingLabel>
-              <ButtonGroup className="row my-3">
+              {!categorySelected && submitCheck && (
+                <p>Please select a category!</p>
+              )}
+                {categorySelected && (
+                  <div>
+                    <h5 className="text-center w-100 mt-1">
+                      Category:&nbsp;
+                      <span className="text-primary fw-bold">
+                        {
+                          allCategories[
+                            allCategories.findIndex(
+                              (item) => Number(item.id) === Number(categoryId)
+                            )
+                          ]?.name
+                        }
+                      </span>
+                    </h5>
+                  </div>
+                )}
+              <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
+                <DropdownButton
+                  id="category-select-dropdown"
+                  title="Category"
+                  as={ButtonGroup}
+                  className="w-100"
+                >
+                  {allCategories.map((category) => {
+                    return (
+                      <Dropdown.Item key={category.id} eventKey={category.id}>
+                        {category.name}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+              </Dropdown>
+              <ButtonGroup className="my-3">
                 <ToggleButton
                   className="col-6"
                   type="radio"
@@ -267,23 +303,7 @@ function AddDiscountModal() {
                   use at all Restaurant-X locations across North Dakota)
                 </small>
               ) : null}
-              {categorySelected && (
-                <div>
-                  <h5 className="text-center w-100 mt-1">
-                    Category:&nbsp;
-                    <span className="text-primary fw-bold">
-                      {
-                        allCategories[
-                          allCategories.findIndex(
-                            (item) => Number(item.id) === Number(categoryId)
-                          )
-                        ]?.name
-                      }
-                    </span>
-                  </h5>
-                </div>
-              )}
-              {!categorySelected && submitCheck && (
+              {/* {!categorySelected && submitCheck && (
                 <p>Please select a category!</p>
               )}
               <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
@@ -301,7 +321,7 @@ function AddDiscountModal() {
                     );
                   })}
                 </DropdownButton>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </Modal.Body>
           <Modal.Footer>
