@@ -74,7 +74,7 @@ function FaqAdmin() {
             </div>
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="7">
+        <Accordion.Item eventKey="8">
           <Accordion.Header>
             <div className="text-primary fw-bold">Can I remove a member?</div>
           </Accordion.Header>
