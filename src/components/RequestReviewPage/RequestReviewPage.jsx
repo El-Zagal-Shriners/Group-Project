@@ -31,6 +31,7 @@ function RequestReviewPage() {
         is unauthorized but their account is authorized */}
           {!user.full_authorized && user.membership_number === null && (
             <>
+            {/* Check if the user is unauthorized or the parent account is */}
               {user.is_authorized ? (
                 <>
                   <p>

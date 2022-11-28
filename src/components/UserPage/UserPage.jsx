@@ -146,6 +146,7 @@ function UserPage() {
             </h4>
             {
               <>
+              {/* Check if the user is unauthorized or the parent account is */}
                 {user.is_authorized ? (
                   <>
                     <p>
