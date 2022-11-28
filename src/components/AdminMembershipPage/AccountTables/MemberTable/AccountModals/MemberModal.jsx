@@ -73,7 +73,7 @@ function MemberModal({ member, show, setShow }) {
         authorized: !member.is_authorized,
       },
     });
-    setAuthorized(member.is_authorized);
+    setAuthorized(!member.is_authorized);
     setShow(false);
   };
 
@@ -104,6 +104,16 @@ function MemberModal({ member, show, setShow }) {
     setAuthorized(member.is_authorized);
   };
 
+  // this function will return the classnames
+  // needed for displaying the current member status
+  function inactiveOrExpired() {
+    if (member.is_authorized) {
+      return `text-success fw-bold text-center`;
+    } else {
+      return `text-danger fw-bold text-center`;
+    }
+  }
+
   // conditionally render the modal displayed depending on if the
   // user is verified or not.
   if (member.is_verified) {
@@ -126,6 +136,9 @@ function MemberModal({ member, show, setShow }) {
           </Modal.Header>
 
           <Modal.Body>
+                <h6 className={inactiveOrExpired()}>
+                  Status: {member.is_authorized ? "Active" : "Inactive"}
+                </h6>
             <Container>
               <Row>
                 <Col xs={6}>
