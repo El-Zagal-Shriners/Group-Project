@@ -248,7 +248,7 @@ function UserPage() {
             {/* Toggle password form showing button */}
             {!showPasswordForm && (
               <button
-                className="btn btn-outline-primary col mx-1 mb-1 text-primary text-nowrap text-decoration-underline fw-bold"
+                className="btn btn-outline-primary col mx-1 mb-1 text-nowrap text-decoration-underline fw-bold"
                 onClick={() => setShowPasswordForm(true)}
               >
                 Change Password
