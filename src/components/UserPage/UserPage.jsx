@@ -135,6 +135,8 @@ function UserPage() {
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container col col-lg-6">
+        {/* Block that displays for dependent accounts if the parent account
+        is unauthorized but their account is authorized */}
         {user.is_authorized && !user.full_authorized && (
           <>
             <h4 className="fw-bold">
