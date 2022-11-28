@@ -107,15 +107,16 @@ function DiscountModal({
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            {thisDiscount.website_url && 
-            <div className="text-center mt-3">
-              <a href={thisDiscount.website_url} target="_blank">
-                <Button variant="warning" size="lg">Go To Vendor Site</Button>
-              </a>
-            </div>
-            }
+            {thisDiscount.website_url && (
+              <div className="text-center mt-3">
+                <a href={thisDiscount.website_url} target="_blank">
+                  <Button variant="warning" size="lg">
+                    Go To Vendor Site
+                  </Button>
+                </a>
+              </div>
+            )}
           </Container>
-
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button

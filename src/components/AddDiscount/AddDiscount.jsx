@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { DropdownButton, ButtonGroup } from "react-bootstrap";
 import UpdatedNavBar from "../Nav/Nav";
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 function AddDiscountModal() {
   //grab all categories
@@ -237,30 +237,36 @@ function AddDiscountModal() {
                 />
               </FloatingLabel>
               <ButtonGroup className="row my-3">
-                  <ToggleButton
-                    className="col-6"
-                    type="radio"
-                    variant="outline-primary"
-                    name="radio"
-                    checked={!isRegional}
-                    onClick={() => setIsRegional(false)}
-                  >
-                    This Location
-                  </ToggleButton>
-                  <ToggleButton
-                    className="col-6"
-                    type="radio"
-                    variant="outline-primary"
-                    name="radio"
-                    checked={isRegional}
-                    onClick={() => setIsRegional(true)}
-                  >
-                    Regional
-                  </ToggleButton>
+                <ToggleButton
+                  className="col-6"
+                  type="radio"
+                  variant="outline-primary"
+                  name="radio"
+                  checked={!isRegional}
+                  onClick={() => setIsRegional(false)}
+                >
+                  This Location
+                </ToggleButton>
+                <ToggleButton
+                  className="col-6"
+                  type="radio"
+                  variant="outline-primary"
+                  name="radio"
+                  checked={isRegional}
+                  onClick={() => setIsRegional(true)}
+                >
+                  Regional
+                </ToggleButton>
               </ButtonGroup>
-              {isRegional ? <small className="text-muted text-center mb-3">Note: Regional discounts do not apply to specific vendor location, but to multiple locations of the same vendor.
-                Ensure that you provide sufficient detail in your discount description about where members can use this discount (E.G. use at all Restaurant-X locations across North Dakota)
-              </small>: null}
+              {isRegional ? (
+                <small className="text-muted text-center mb-3">
+                  Note: Regional discounts do not apply to specific vendor
+                  location, but to multiple locations of the same vendor. Ensure
+                  that you provide sufficient detail in your discount
+                  description about where members can use this discount (E.G.
+                  use at all Restaurant-X locations across North Dakota)
+                </small>
+              ) : null}
               {categorySelected && (
                 <div>
                   <h5 className="text-center w-100 mt-1">
