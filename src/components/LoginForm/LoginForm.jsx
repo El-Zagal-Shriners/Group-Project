@@ -10,6 +10,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [showResetPassword, setShowResetPassword] = useState(false);
   const [showForgotUsername, setShowForgotUsername] = useState(false);
+  const [hidePasswords, setHidePasswords] = useState(true);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -69,6 +70,7 @@ function LoginForm() {
             type="text"
             name="username"
             required
+            autoFocus
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
@@ -79,7 +81,7 @@ function LoginForm() {
           Password:
           <input
             className="border-primary w-auto me-auto rounded-2"
-            type="password"
+            type={hidePasswords?`password`:`text`}
             name="password"
             required
             value={password}
@@ -92,6 +94,7 @@ function LoginForm() {
         <button className="btn btn-primary mx-1 mt-3" type="submit">
           Log In
         </button>
+        <button type="button" className="btn btn-primary text-nowrap mx-1 mt-2 col me-1" onClick={()=>setHidePasswords(!hidePasswords)}>{hidePasswords?`Show Password`:`Hide Password`}</button>
         <div className="d-flex justify-content-between align-items-center">
           <button
             type="button"
