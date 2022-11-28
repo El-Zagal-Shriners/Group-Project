@@ -38,7 +38,7 @@ function AddDiscountModal() {
 
   const handleClose = (e) => {
     e.preventDefault();
-    resestInputs();
+    resetInputs();
     setShow(false);
   };
   const handleShow = () => setShow(true);
@@ -61,7 +61,7 @@ function AddDiscountModal() {
         },
       });
       // Reset the form values.
-      resestInputs();
+      resetInputs();
       // history.push("/admindiscounts");
     } else {
       setSubmitCheck(true);
@@ -77,7 +77,7 @@ function AddDiscountModal() {
     }
   };
   // This function will resest the form
-  const resestInputs = () => {
+  const resetInputs = () => {
     setVendorId(1);
     setCategoryId(1);
     setDiscountDescription("");
@@ -155,13 +155,14 @@ function AddDiscountModal() {
                 </div>
               )}
               {!vendorSelected && submitCheck && <p>Please select a vendor!</p>}
-              <Dropdown onSelect={(eventKey) => handleSelectVendor(eventKey)}>
-                <DropdownButton
-                  id="category-select-dropdown"
-                  title="Vendor"
-                  as={ButtonGroup}
-                  className="w-100 mb-2"
-                >
+              <Dropdown
+                onSelect={(eventKey) => handleSelectVendor(eventKey)}
+                className="mb-2"
+              >
+                <Dropdown.Toggle className="w-100">
+                  Select Vendor
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
                   {allVendors.map((vendor) => {
                     return (
                       <Dropdown.Item key={vendor.id} eventKey={vendor.id}>
@@ -169,7 +170,7 @@ function AddDiscountModal() {
                       </Dropdown.Item>
                     );
                   })}
-                </DropdownButton>
+                </Dropdown.Menu>
               </Dropdown>
               <FloatingLabel
                 className="mb-1 text-primary"
@@ -240,29 +241,27 @@ function AddDiscountModal() {
               {!categorySelected && submitCheck && (
                 <p>Please select a category!</p>
               )}
-                {categorySelected && (
-                  <div>
-                    <h5 className="text-center w-100 mt-1">
-                      Category:&nbsp;
-                      <span className="text-primary fw-bold">
-                        {
-                          allCategories[
-                            allCategories.findIndex(
-                              (item) => Number(item.id) === Number(categoryId)
-                            )
-                          ]?.name
-                        }
-                      </span>
-                    </h5>
-                  </div>
-                )}
+              {categorySelected && (
+                <div>
+                  <h5 className="text-center w-100 mt-1">
+                    Category:&nbsp;
+                    <span className="text-primary fw-bold">
+                      {
+                        allCategories[
+                          allCategories.findIndex(
+                            (item) => Number(item.id) === Number(categoryId)
+                          )
+                        ]?.name
+                      }
+                    </span>
+                  </h5>
+                </div>
+              )}
               <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
-                <DropdownButton
-                  id="category-select-dropdown"
-                  title="Category"
-                  as={ButtonGroup}
-                  className="w-100"
-                >
+                <Dropdown.Toggle className="w-100">
+                  Select Category
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="custom-scroll">
                   {allCategories.map((category) => {
                     return (
                       <Dropdown.Item key={category.id} eventKey={category.id}>
@@ -270,7 +269,7 @@ function AddDiscountModal() {
                       </Dropdown.Item>
                     );
                   })}
-                </DropdownButton>
+                </Dropdown.Menu>
               </Dropdown>
               <ButtonGroup className="my-3">
                 <ToggleButton
