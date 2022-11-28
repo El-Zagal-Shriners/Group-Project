@@ -9,6 +9,24 @@ const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
 
+router.put(
+  "/toggle",
+  rejectUnauthenticated,
+  rejectNonAdministrator,
+  (req, res) => {
+    const queryText = `UPDATE "user" SET "admin_level"=$1 WHERE "id"=$2;`;
+
+    pool
+      .query(queryText, [req.body.level, req.body.member])
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log("error caught in toggle Admin :>> ", error);
+      });
+  }
+);
+
 // route to update member's membership number and dues paid date
 router.put(
   "/:memberId",

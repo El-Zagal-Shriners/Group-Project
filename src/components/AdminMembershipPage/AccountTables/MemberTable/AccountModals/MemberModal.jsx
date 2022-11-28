@@ -116,6 +116,10 @@ function MemberModal({ member, show, setShow }) {
     }
   }
 
+  function handleAdmin(level) {
+    dispatch({ type: "TOGGLE_ADMIN", payload: { level, member: member.id } });
+  }
+
   // conditionally render the modal displayed depending on if the
   // user is verified or not.
   if (member.is_verified) {
@@ -280,6 +284,20 @@ function MemberModal({ member, show, setShow }) {
                   onChange={(evt) => setDuesPaid(evt.target.value)}
                 ></Form.Control>
               </FloatingLabel>
+              <div className="d-flex justify-content-between">
+                <span className="ps-3 pt-2">Admin Access? </span>
+                {member.admin_level === 4 ? (
+                  <>
+                    <span className="pt-2 fw-bold text-danger">Yes</span>
+                    <Button onClick={() => handleAdmin(0)}>Remove Admin</Button>
+                  </>
+                ) : (
+                  <>
+                    <span className="pt-2 fw-bold text-success">No</span>
+                    <Button onClick={() => handleAdmin(4)}>Add Admin</Button>
+                  </>
+                )}
+              </div>
             </Form>
           </Modal.Body>
 
