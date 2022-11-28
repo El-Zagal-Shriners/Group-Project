@@ -135,6 +135,7 @@ function UserPage() {
       {/* Render NAV BAR at top of page */}
       <UpdatedNavBar />
       <div className="container col col-lg-6">
+        {/* Block rendered if the is not authorized but is verified and not previously requested a review */}
         {!user.is_authorized && !user.review_pending && user.is_verified &&
           <>
           <div>
@@ -160,12 +161,14 @@ function UserPage() {
           <hr/>
           </>
           }
+          {/* Block rendered if the user is not authorized but has a review already requested and previously verified */}
           {!user.is_authorized && user.review_pending && user.is_verified &&
           <>
             <h4>Status: <strong className="text-primary">Review Requested</strong></h4>
             <hr/>
           </>
           }
+          {/* Block that displays if the is not authorized and not verified (new account awaiting initial approval) */}
           {!user.is_authorized && !user.is_verified &&
           <>
             <h4>Status:<br/> <strong className="text-primary">Initial Verification Pending</strong></h4>
