@@ -39,7 +39,7 @@ function UserPage() {
   };
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
-  // Toggle local 'show' state
+  // Toggle local 'show' state and close the password form
   const handleShowEdit = (e) => {
     setShowEdit(true);
     handleClosePasswordForm(e);
@@ -74,7 +74,9 @@ function UserPage() {
     });
     handleClosePasswordForm(e);
   };
-
+  // compares the entered passwords and runs
+  // the function to send new password to the server
+  // if they match or displays the inputs as invalid
   const handlePasswordForm = (e) => {
     e.preventDefault();
     if(newPassword===confirmNewPassword){
@@ -83,7 +85,7 @@ function UserPage() {
       setShowInvalid(true);
     }
   }
-
+  // function to close the password form and clear the local states
   const handleClosePasswordForm = (e) => {
     e.preventDefault();
     setConfirmNewPassword('');
@@ -158,6 +160,7 @@ function UserPage() {
             </button>
           )}
           </div>
+          {/* Password change form */}
           {showPasswordForm && (
             <div className="border border-2 border-primary rounded p-1">
               <form onSubmit={handlePasswordForm}>

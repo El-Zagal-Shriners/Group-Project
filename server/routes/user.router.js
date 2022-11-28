@@ -133,6 +133,7 @@ router.put("/change", rejectUnauthenticated, (req, res) => {
                                    WHERE "id"=$1;`;
   pool.query(getCurrentPasswordQuery, [req.user.id])
       .then((result) => {
+        // returns true if the password match or otherwise false
         if (encryptLib.comparePassword(currentPassword, result.rows[0].password)){
           // SQL to update the password for the current user by current user id
           const passwordUpdateQuery = `UPDATE "user" 
