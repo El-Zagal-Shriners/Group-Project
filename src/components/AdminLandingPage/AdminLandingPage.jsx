@@ -77,7 +77,7 @@ function AdminLandingPage() {
         <div>
           <h5 className="card-title text-primary fw-bold">Admin FAQ</h5>{" "}
           <br />
-          <p className="card-text">Frequently asked questions on how to add, edit, active/deactivate, and delete vendors and discounts.</p>
+          <p className="card-text">Frequently asked questions on member, vendor, discount, and discount tracking information.</p>
           <Button
             size="lg"
             variant="primary"
