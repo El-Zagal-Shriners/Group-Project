@@ -139,57 +139,79 @@ function UserPage() {
       <div className="container col col-lg-6">
         {/* Block that displays for dependent accounts if the parent account
         is unauthorized but their account is authorized */}
-        {user.is_authorized && !user.full_authorized && (
+        {!user.full_authorized && user.membership_number === null && user.is_verified && (
           <>
             <h4 className="fw-bold">
               Status: <span className="text-primary">Inactive</span>
             </h4>
-            <p>
-              The associated account appears to be unauthorized at this time.
-              Please have the owner of that account request an account review if
-              this status should be changed.
-            </p>
-            <hr/>
+            {
+              <>
+              {/* Check if the user is unauthorized or the parent account is */}
+                {user.is_authorized ? (
+                  <>
+                    <p>
+                      The associated account appears to be unauthorized at this
+                      time. Please have the owner of that account request an
+                      account review if this status should be changed or contact
+                      El Zagal Temple for more information.
+                    </p>
+                    <hr />
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      Your account appears to be inactive. Please contact the
+                      active member your account is through or the El Zagal
+                      Temple for more information.
+                    </p>
+                    <hr />
+                  </>
+                )}
+              </>
+            }
           </>
         )}
         {/* Block rendered if the is not authorized but is verified and not previously requested a review */}
-        {!user.is_authorized && !user.review_pending && user.is_verified && (
-          <>
-            <div>
-              <h4>
-                Status: <strong className="text-primary">Unauthorized</strong>
-              </h4>
-              <p>
-                This account appears to be turned off. This may be due to unpaid
-                dues or other reasons. Please entered the date you last paid
-                your dues and use the button to request a review of your account
-                standing.
-              </p>
-              <form
-                onSubmit={requestReview}
-                className="w-100 d-flex flex-column justify-content-around align-items-center"
-              >
-                <FloatingLabel
-                  className="mb-1 text-primary w-100"
-                  label="Last Dues Payment"
+        {!user.is_authorized &&
+          !user.review_pending &&
+          user.is_verified &&
+          user.membership_number && (
+            <>
+              <div>
+                <h4>
+                  Status: <strong className="text-primary">Unauthorized</strong>
+                </h4>
+                <p>
+                  This account appears to be turned off. This may be due to
+                  unpaid dues or other reasons. Please entered the date you last
+                  paid your dues and use the button to request a review of your
+                  account standing.
+                </p>
+                <form
+                  onSubmit={requestReview}
+                  className="w-100 d-flex flex-column justify-content-around align-items-center"
                 >
-                  <Form.Control
-                    type="date"
-                    placeholder="Last Dues Payment"
-                    value={duesPaid}
-                    required
-                    className="col mx-0 w-100"
-                    onChange={(e) => setDuesPaid(e.target.value)}
-                  />
-                </FloatingLabel>
-                <button className="btn btn-primary mb-1 text-nowrap col w-100">
-                  Request Review
-                </button>
-              </form>
-            </div>
-            <hr />
-          </>
-        )}
+                  <FloatingLabel
+                    className="mb-1 text-primary w-100"
+                    label="Last Dues Payment"
+                  >
+                    <Form.Control
+                      type="date"
+                      placeholder="Last Dues Payment"
+                      value={duesPaid}
+                      required
+                      className="col mx-0 w-100"
+                      onChange={(e) => setDuesPaid(e.target.value)}
+                    />
+                  </FloatingLabel>
+                  <button className="btn btn-primary mb-1 text-nowrap col w-100">
+                    Request Review
+                  </button>
+                </form>
+              </div>
+              <hr />
+            </>
+          )}
         {/* Block rendered if the user is not authorized but has a review already requested and previously verified */}
         {!user.is_authorized && user.review_pending && user.is_verified && (
           <>
@@ -281,7 +303,7 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type={hidePasswords?`password`:`text`}
+                    type={hidePasswords ? `password` : `text`}
                     placeholder="Current Password"
                     value={currentPassword}
                     className="mx-0"
@@ -296,7 +318,7 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type={hidePasswords?`password`:`text`}
+                    type={hidePasswords ? `password` : `text`}
                     placeholder="New Password"
                     value={newPassword}
                     className="mx-0"
@@ -310,7 +332,7 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type={hidePasswords?`password`:`text`}
+                    type={hidePasswords ? `password` : `text`}
                     placeholder="Confirm New Password"
                     value={confirmNewPassword}
                     className="mx-0"
@@ -320,7 +342,13 @@ function UserPage() {
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                   />
                 </FloatingLabel>
-                <button type="button" className="btn btn-primary col w-100" onClick={()=>setHidePasswords(!hidePasswords)}>{hidePasswords?`Show Passwords`:`Hide Passwords`}</button>
+                <button
+                  type="button"
+                  className="btn btn-primary col w-100"
+                  onClick={() => setHidePasswords(!hidePasswords)}
+                >
+                  {hidePasswords ? `Show Passwords` : `Hide Passwords`}
+                </button>
               </form>
             </div>
           )}
