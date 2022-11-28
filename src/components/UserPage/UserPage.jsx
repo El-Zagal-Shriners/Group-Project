@@ -6,6 +6,8 @@ import { allIconComponents } from "../../allIconComponents/allIconComponents";
 import EditUserForm from "../EditUserForm/EditUserForm";
 import UserDependentConfirmation from "./UserDependentConfirmation";
 import AddDependentForm from "../AddDependentForm/AddDependentForm";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -16,6 +18,12 @@ function UserPage() {
   const [showEdit, setShowEdit] = useState(false);
   const [showAddDependent, setShowAddDependent] = useState(false);
   const [deleteDependent, setDeleteDependent] = useState("");
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showInvalid, setShowInvalid] = useState(false);
+  const [showValid, setShowValid] = useState(false);
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -31,8 +39,11 @@ function UserPage() {
   };
   // Toggle local 'show' state
   const handleClose = () => setShow(false);
-  // Toggle local 'show' state
-  const handleShowEdit = () => setShowEdit(true);
+  // Toggle local 'show' state and close the password form
+  const handleShowEdit = (e) => {
+    setShowEdit(true);
+    handleClosePasswordForm(e);
+  }
   // Toggle local 'show' state
   const handleCloseEdit = () => setShowEdit(false);
   // Toggle local 'show' state
@@ -41,13 +52,70 @@ function UserPage() {
   const handleCloseDependent = () => setShowAddDependent(false);
   // function sends dependent id to delete to removal saga
   // then close the modal
-  const removeDependent = (id) => {
+  const removeDependent = (id, e) => {
+    e.preventDefault();
     dispatch({
       type: "REMOVE_DEPENDENT",
       payload: id,
     });
     handleClose();
   };
+
+  // This send the current and new password to the server
+  // for comparision
+  const changePassword = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "CHANGE_PASSWORD",
+      payload: {
+        currentPassword,
+        newPassword
+      },
+    });
+    handleClosePasswordForm(e);
+  };
+  // compares the entered passwords and runs
+  // the function to send new password to the server
+  // if they match or displays the inputs as invalid
+  const handlePasswordForm = (e) => {
+    e.preventDefault();
+    if(newPassword===confirmNewPassword){
+      changePassword(e);
+    } else {
+      setShowInvalid(true);
+    }
+  }
+  // function to close the password form and clear the local states
+  const handleClosePasswordForm = (e) => {
+    e.preventDefault();
+    setConfirmNewPassword('');
+    setNewPassword('');
+    setCurrentPassword('');
+    setShowPasswordForm(false);
+  }
+
+    // toggle if password box should invalid or valid
+  // based on the two passwords entered
+  useEffect(() => {
+    // Sets both valid and invalid to false if only newPassword
+    // has entry or both or empty
+    if (
+      (!newPassword && !confirmNewPassword) ||
+      (newPassword && !confirmNewPassword)
+    ) {
+      setShowInvalid(false);
+      setShowValid(false);
+      return;
+    }
+    // show invalid when both passwords don't match
+    newPassword === confirmNewPassword
+      ? setShowInvalid(false)
+      : setShowInvalid(true);
+    // show valid when both passwords match
+    newPassword === confirmNewPassword
+      ? setShowValid(true)
+      : setShowValid(false);
+  }, [confirmNewPassword, newPassword]);
 
   return (
     <>
@@ -58,7 +126,9 @@ function UserPage() {
         <h2 className="fw-bolder text-primary">
           Hi, {user.first_name} {user.last_name}!
         </h2>
-        <h4 className="fw-bold text-decoration-underline text-primary">Current Information:</h4>
+        <h4 className="fw-bold text-decoration-underline text-primary">
+          Current Information:
+        </h4>
         <div className="d-flex-column align-items-center">
           <p className="mb-1 ">
             <strong>First Name:</strong> {user.first_name}
@@ -69,14 +139,94 @@ function UserPage() {
             <br />
             <strong>Email:</strong> {user.email}
             <br />
-            {user.membership_number > 0 && <span><strong>Member Number:</strong> {user.membership_number}</span>}
+            {user.membership_number > 0 && (
+              <span>
+                <strong>Member Number:</strong> {user.membership_number}
+              </span>
+            )}
           </p>
           {/* Button to show edit modal */}
-          <button className="btn btn-primary mb-2" onClick={handleShowEdit}>
+          <div className="d-flex justify-content-center align-items-center">
+          <button className="btn btn-primary mx-1 mb-1 col" onClick={handleShowEdit}>
             {allIconComponents.editUser} Edit Info
           </button>
-          <div className="w-100 d-flex justify-content-center">
-        </div>
+          {/* Toggle password form showing button */}
+          {!showPasswordForm && (
+            <button
+              className="btn btn-outline-primary col mx-1 mb-1 text-primary text-nowrap text-decoration-underline fw-bold"
+              onClick={() => setShowPasswordForm(true)}
+            >
+              Change Password
+            </button>
+          )}
+          </div>
+          {/* Password change form */}
+          {showPasswordForm && (
+            <div className="border border-2 border-primary rounded p-1">
+              <form onSubmit={handlePasswordForm}>
+                <h4 className="fw-bold mx-1 text-decoration-underline text-primary">Change Password</h4>
+                <div className='d-flex justify-content-around align-items-center'>
+                  <button type="submit" className="btn btn-primary col mx-1">
+                    Submit
+                  </button>
+                  <button
+                    onClick={handleClosePasswordForm}
+                    className="btn btn-outline-primary col mx-1"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <FloatingLabel
+                  controlId="currentPassword"
+                  label="Current Password"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    type="password"
+                    placeholder="Current Password"
+                    value={currentPassword}
+                    className="mx-0"
+                    required
+                    autoFocus
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId="newPassword"
+                  label="New Password"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    type="password"
+                    placeholder="New Password"
+                    value={newPassword}
+                    className="mx-0"
+                    required
+                    isInvalid={showInvalid ? true : false}
+                    isValid={showValid ? true : false}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId="confirmNewPassword"
+                  label="Confirm New Password"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm New Password"
+                    value={confirmNewPassword}
+                    className="mx-0"
+                    required
+                    isInvalid={showInvalid ? true : false}
+                    isValid={showValid ? true : false}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  />
+                </FloatingLabel>
+              </form>
+            </div>
+          )}
+          <div className="w-100 d-flex justify-content-center"></div>
           <hr />
           {/* Edit user information modal */}
           <EditUserForm
@@ -89,19 +239,25 @@ function UserPage() {
         {/* Render list of dependents if any */}
         <div className="d-flex align-items-center justify-content-center">
           {/* Hide dependent accounts list if dependent account */}
-          {user.membership_number > 0 &&
-          <>
-          <h5 className=" p-0 text-primary text-center mb-0 mt-2 text-decoration-underline fw-bold d-flex justify-content-between align-items-center">
-           Dependent Accounts
-          </h5>
-          <div onClick={handleShowDependent} className="bg-primary px-3 py-1 mt-2 text-white rounded d-flex align-items-center mb-0 mt-0 ms-3">+ Add</div>
-          </>}
+          {user.membership_number > 0 && (
+            <>
+              <h5 className=" p-0 text-primary text-center mb-0 mt-1 text-decoration-underline fw-bold d-flex justify-content-between align-items-center">
+                Dependent Accounts
+              </h5>
+              <div
+                onClick={handleShowDependent}
+                className="bg-primary px-3 py-1 mt-1 text-white rounded d-flex align-items-center mb-0 mt-0 ms-3"
+              >
+                + Add
+              </div>
+            </>
+          )}
           <AddDependentForm
             showAddDependent={showAddDependent}
             handleCloseDependent={handleCloseDependent}
           />
         </div>
-        {accounts.accountDependents.length > 0 && user.membership_number &&
+        {accounts.accountDependents.length > 0 && user.membership_number && (
           <>
             {accounts.accountDependents.map((dependent) => (
               <div
@@ -110,7 +266,8 @@ function UserPage() {
               >
                 {/* List of dependents and their info */}
                 <p className="mb-1">
-                  <strong>Name:</strong> {dependent.first_name} {dependent.last_name} <br />
+                  <strong>Name:</strong> {dependent.first_name}{" "}
+                  {dependent.last_name} <br />
                   <strong>Username:</strong> {dependent.username}
                   <br /> <strong>Email:</strong> {dependent.email}
                 </p>
@@ -131,7 +288,7 @@ function UserPage() {
               </div>
             ))}
           </>
-        }
+        )}
       </div>
     </>
   );

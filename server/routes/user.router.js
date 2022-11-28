@@ -122,4 +122,40 @@ router.put("/requestreview", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// This function will change the password for the current user
+// It accepts the 'current' password and 'new' password
+// Changes if old matches
+router.put("/change", rejectUnauthenticated, (req, res) => {
+  const currentPassword = req.body.currentPassword;
+  const newPassword = encryptLib.encryptPassword(req.body.newPassword);
+  // SQL to get the encrypted version of user's password stored in the datebase
+  const getCurrentPasswordQuery = `SELECT "password" FROM "user" 
+                                   WHERE "id"=$1;`;
+  pool.query(getCurrentPasswordQuery, [req.user.id])
+      .then((result) => {
+        // returns true if the password match or otherwise false
+        if (encryptLib.comparePassword(currentPassword, result.rows[0].password)){
+          // SQL to update the password for the current user by current user id
+          const passwordUpdateQuery = `UPDATE "user" 
+                                       SET "password"=$1 
+                                       WHERE "id"=$2;`;
+          pool.query(passwordUpdateQuery, [newPassword, req.user.id])
+              .then((result)=> {
+                res.sendStatus(201);
+              })
+              .catch((err)=>{
+                console.log('Error in changing password for user: ', err);
+                res.sendStatus(500);
+              })
+        } else {
+          console.log('Passwords did not match!');
+          res.sendStatus(500);
+        }
+      })
+      .catch((err)=> {
+        console.log('Error in checking password for changing: ', err);
+        res.sendStatus(500);
+      })
+});
+
 module.exports = router;

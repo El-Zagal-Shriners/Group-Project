@@ -189,11 +189,20 @@ function DiscountModal({
                 onChange={(e) => setDiscountUsage(e.target.value)}
               />
             </FloatingLabel>
+            {discount.is_regional ? (
+              <div className="text-center text-muted">
+                This is a Regional Discount
+              </div>
+            ) : (
+              <div className="text-center text-muted">
+                This Discount Is Specific to One Vendor Location
+              </div>
+            )}
           </Modal.Body>
           <Modal.Footer>
             <div className="w-100 d-flex justify-content-end align-items-center flex-wrap">
               <Button
-                variant="danger"
+                variant="primary"
                 className="col"
                 onClick={hideEditShowDeleteConfirmation}
               >
@@ -202,7 +211,7 @@ function DiscountModal({
               &nbsp;
               <Button
                 variant="warning"
-                className="col text-nowrap"
+                className="col text-nowrap border border-1 border-primary text-primary"
                 onClick={toggleActive}
               >
                 {discount.is_shown ? `Turn Off` : `Turn On`}
