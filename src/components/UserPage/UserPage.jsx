@@ -106,6 +106,7 @@ function UserPage() {
     setNewPassword("");
     setCurrentPassword("");
     setShowPasswordForm(false);
+    setHidePasswords(true);
   };
 
   // toggle if password box should invalid or valid
