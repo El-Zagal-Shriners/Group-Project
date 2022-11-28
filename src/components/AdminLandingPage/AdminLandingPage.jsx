@@ -18,17 +18,20 @@ function AdminLandingPage() {
     history.push("/admintracking");
   }
 
+  function adminFAQ() {
+    history.push("/adminfaq");
+  }
+
   // three bootstrap cards that direct the administrator to make changes
   //to membership information, discounts, and track discounts
   return (
     <>
       <UpdatedNavBar />
       <div className="d-flex flex-column justify-content-center align-items-center">
-        <div className="container text-center col col-lg-6">
+        <div className="container text-center col col-lg-6 p-0 pt-2 px-2">
           <h5 className="text-primary fw-bold">Manage Shriner Members</h5>
           <p>
-            Activate, deactivate, approve, and remove members and their
-            dependents.
+            Manage access for members and their dependent accounts.
           </p>
           <Button
             size="lg"
@@ -41,7 +44,7 @@ function AdminLandingPage() {
         </div>
       </div>
 
-      <div className="container text-center col col-lg-6">
+      <div className="container text-center col col-lg-6 p-0 pt-2 px-2">
         <div>
           <h5 className="card-title text-primary fw-bold">Discount Manager</h5>{" "}
           <br />
@@ -57,7 +60,7 @@ function AdminLandingPage() {
         </div>
       </div>
 
-      <div className="container text-center col col-lg-6">
+      <div className="container text-center col col-lg-6 p-0 pt-2 px-2">
         <h5 className="text-primary fw-bold">Discount Tracker</h5>
         <p>View information on discount usage.</p>
         <Button
@@ -68,6 +71,22 @@ function AdminLandingPage() {
         >
           Track Discounts
         </Button>
+      </div>
+      
+      <div className="container text-center col col-lg-6 p-0 pt-2 px-2">
+        <div>
+          <h5 className="card-title text-primary fw-bold">Admin FAQ</h5>{" "}
+          <br />
+          <p className="card-text">Frequently asked administrative questions.</p>
+          <Button
+            size="lg"
+            variant="primary"
+            onClick={adminFAQ}
+            className="me-2 d-flex justify-content-center container text-center"
+          >
+            FAQ
+          </Button>
+        </div>
       </div>
     </>
   );
