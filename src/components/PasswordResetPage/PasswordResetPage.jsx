@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import UpdatedNavBar from "../Nav/Nav";
 
 function PasswordResetPage() {
   const tokenCheck = useSelector(
@@ -12,6 +13,7 @@ function PasswordResetPage() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [showInvalid, setShowInvalid] = useState(false);
   const [showValid, setShowValid] = useState(false);
+  const [hidePasswords, setHidePasswords] = useState(true);
   const dispatch = useDispatch();
   const { token } = useParams();
   const history = useHistory();
@@ -64,6 +66,8 @@ function PasswordResetPage() {
       : setShowValid(false);
   }, [confirmNewPassword, newPassword]);
   return (
+    <>
+    <UpdatedNavBar/>
     <form
       className="d-flex flex-column align-items-center p-5 rounded-3 border border-2 border-primary shadow-lg mb-3"
       onSubmit={submitReset}
@@ -71,17 +75,18 @@ function PasswordResetPage() {
       <h2 className="text-primary">Reset Password</h2>
       {tokenCheck === "true" ? (
         <>
-          <div>
+          <div className="w-100">
             <FloatingLabel
               controlId="newPasswordInput"
               label="New Password"
               className={`mb-1 text-primary`}
             >
               <Form.Control
-                type="password"
+                type={hidePasswords?`password`:`text`}
                 name="newPassword"
                 value={newPassword}
                 placeholder="New Password"
+                className="col mx-0"
                 required
                 onChange={(event) => setNewPassword(event.target.value)}
               />
@@ -93,25 +98,30 @@ function PasswordResetPage() {
               className="mb-1 text-primary"
             >
               <Form.Control
-                type="password"
+                type={hidePasswords?`password`:`text`}
                 name="confirmNewPassword"
                 value={confirmNewPassword}
                 placeholder="Confirm New Password"
                 required
+                className="col mx-0"
                 isInvalid={showInvalid ? true : false}
                 isValid={showValid ? true : false}
                 onChange={(event) => setConfirmNewPassword(event.target.value)}
               />
             </FloatingLabel>
           </div>
-          <button className="btn btn-primary" type="submit">
+          <div className="d-flex justify-content-around align-items-center w-100">
+          <button type="button" className="btn btn-primary text-nowrap col me-1" onClick={()=>setHidePasswords(!hidePasswords)}>{hidePasswords?`Show Passwords`:`Hide Passwords`}</button>
+          <button className="btn btn-primary col ms-1" type="submit">
             Submit
           </button>
+          </div>
         </>
       ) : (
         <h4>This link is invalid. Make sure to use the link from the email.</h4>
       )}
     </form>
+    </>
   );
 }
 

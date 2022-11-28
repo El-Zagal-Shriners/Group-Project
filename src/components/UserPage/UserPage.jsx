@@ -25,6 +25,7 @@ function UserPage() {
   const [showInvalid, setShowInvalid] = useState(false);
   const [showValid, setShowValid] = useState(false);
   const [duesPaid, setDuesPaid] = useState("");
+  const [hidePasswords, setHidePasswords] = useState(true);
 
   // Get dependents for current user on load
   useEffect(() => {
@@ -105,6 +106,7 @@ function UserPage() {
     setNewPassword("");
     setCurrentPassword("");
     setShowPasswordForm(false);
+    setHidePasswords(true);
   };
 
   // toggle if password box should invalid or valid
@@ -279,7 +281,7 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type="password"
+                    type={hidePasswords?`password`:`text`}
                     placeholder="Current Password"
                     value={currentPassword}
                     className="mx-0"
@@ -294,13 +296,11 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type="password"
+                    type={hidePasswords?`password`:`text`}
                     placeholder="New Password"
                     value={newPassword}
                     className="mx-0"
                     required
-                    isInvalid={showInvalid ? true : false}
-                    isValid={showValid ? true : false}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                 </FloatingLabel>
@@ -310,7 +310,7 @@ function UserPage() {
                   className="mb-3"
                 >
                   <Form.Control
-                    type="password"
+                    type={hidePasswords?`password`:`text`}
                     placeholder="Confirm New Password"
                     value={confirmNewPassword}
                     className="mx-0"
@@ -320,6 +320,7 @@ function UserPage() {
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                   />
                 </FloatingLabel>
+                <button type="button" className="btn btn-primary col w-100" onClick={()=>setHidePasswords(!hidePasswords)}>{hidePasswords?`Show Passwords`:`Hide Passwords`}</button>
               </form>
             </div>
           )}
