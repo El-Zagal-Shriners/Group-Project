@@ -136,9 +136,9 @@ function MemberModal({ member, show, setShow }) {
           </Modal.Header>
 
           <Modal.Body>
-                <h6 className={inactiveOrExpired()}>
-                  Status: {member.is_authorized ? "Active" : "Inactive"}
-                </h6>
+            <h6 className={inactiveOrExpired()}>
+              Status: {member.is_authorized ? "Active" : "Inactive"}
+            </h6>
             <Container>
               <Row>
                 <Col xs={6}>
@@ -166,10 +166,14 @@ function MemberModal({ member, show, setShow }) {
                   </p>
                 </Col>
                 <Col>
-                  <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
-                    Dues Paid
-                  </p>
-                  <p className="text-center">{dues}</p>
+                  {(member.dues_paid && member.membership_number) && (
+                    <>
+                      <p className="text-center fw-bold text-primary m-0 text-decoration-underline">
+                        Dues Paid
+                      </p>
+                      <p className="text-center">{dues}</p>
+                    </>
+                  )}
                 </Col>
               </Row>
               {member.membership_number && <hr />}
