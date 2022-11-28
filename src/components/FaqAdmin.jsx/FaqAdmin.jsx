@@ -32,8 +32,7 @@ function FaqAdmin() {
           <br/>
           <Accordion.Body>
             <div className="text-primary">
-              Once inside 'Manage Discounts', the Admin simply clicks on "Add
-              Discount", selects the vendor's name from the dropdown, inputs the
+              The Admin simply clicks on "Add Discount", selects the vendor's name from the dropdown, inputs the
               discount information on the form, selects what category the
               discount belongs in and clicks "Add Discount"
             </div>
