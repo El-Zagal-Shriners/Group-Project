@@ -29,15 +29,12 @@ function ProtectedDiscountsRoute({ component, children, ...props }) {
   // turned back on, if the dependent account is off and the parent is on the depedent
   // will not see the discounts
   const determineUserStatus = () => {
-    if (user.id && user.full_authorized && user.is_verified){
+    if (user.id && user.full_authorized){
         return <ProtectedComponent />
     } else if (user.id && !user.full_authorized && user.is_verified){
         return <RequestReviewPage />
     } else if (user.id && !user.full_authorized && !user.is_verified){
         return <UnverifiedUserPage />
-    } else if (user.id && user.full_authorized && !user.is_verified){
-        // Should this be it's own page?
-        return <RequestReviewPage />
     }
   }
 
