@@ -89,7 +89,7 @@ function DiscountItem({ discount, today }) {
                         <h5>{vendor?.name}</h5>
                       </div>
                       <div className="discount-address text-start text-muted fw-light">
-                        {discount.is_regional ? <small>Regional Discount<br />(Click for more information)</small>:<small>
+                        {discount.is_regional ? <small>Regional Discount<br />(Click for details)</small>:<small>
                           {vendor?.address}, {vendor?.city},{" "}
                           {vendor?.state_code}
                         </small>}
