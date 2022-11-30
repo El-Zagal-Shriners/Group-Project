@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+// Reducer to store accounts
 const accountsReducer = (state = [], action) => {
   switch (action.type) {
     case "FETCH_ACCOUNTS":
@@ -11,6 +12,7 @@ const accountsReducer = (state = [], action) => {
   }
 };
 
+// Reducer to store account dependents
 const accountDependents = (state = [], action) => {
   switch (action.type) {
     case "SET_DEPENDENTS":

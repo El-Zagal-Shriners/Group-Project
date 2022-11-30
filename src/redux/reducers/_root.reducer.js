@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   cities, // contains the allCitiesReducer and closeCitiesReducer
   categories,
   filter,
-  tokenCheck
+  tokenCheck,
 });
 
 export default rootReducer;

@@ -6,6 +6,7 @@ const config = {
   withCredentials: true,
 };
 
+// SAGA to get all accounts
 function* fetchAllAccounts() {
   try {
     const accounts = yield axios.get("/api/accounts", config);
@@ -14,7 +15,7 @@ function* fetchAllAccounts() {
   } catch (err) {
     // console.log("GET accounts error", err);
   }
-}
+} // End SAGA to get all accounts
 
 // SAGA to get all dependent accounts for the current user
 function* getDependents() {
