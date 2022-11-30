@@ -41,23 +41,23 @@ router.post("/email", (req, res, next) => {
   pool
     .query(checkValidUsernameQuery, [username])
     .then((result) => {
-        if (result.rows <= 0) {
-          res.sendStatus(500);
-          return;
-        }
-        const memberId = result.rows[0].id;
-        const savedEmail = result.rows[0].email;
-        // Data for email to send to user with password reset token
-        const msg = {
-          to: savedEmail, // address email is being sent
-          from: "dvettertest@gmail.com", // account registered with sendGrid
-          subject: "Shrine App Testing Emails - Password Reset",
-          text: `Please follow this link to register. http://localhost:3000/#/reset/${token}`, // alternative text
-          // html to display in the body of the email
-          html: `<p>You have requested to reset your password on the El Zagal Shrine Member Discounts Portal.
+      if (result.rows <= 0) {
+        res.sendStatus(500);
+        return;
+      }
+      const memberId = result.rows[0].id;
+      const savedEmail = result.rows[0].email;
+      // Data for email to send to user with password reset token
+      const msg = {
+        to: savedEmail, // address email is being sent
+        from: "dvettertest@gmail.com", // account registered with sendGrid
+        subject: "Shrine App Testing Emails - Password Reset",
+        text: `Please follow this link to register. http://localhost:3000/#/reset/${token}`, // alternative text
+        // html to display in the body of the email
+        html: `<p>You have requested to reset your password on the El Zagal Shrine Member Discounts Portal.
               Please click the following link to complete your request.</p>
               <a href="http://localhost:3000/#/reset/${token}">Reset Password</a>`,
-        };
+      };
       // SQL for INSERT new password token entry
       const insertQuery = `INSERT INTO "password_tokens"
                                 (
@@ -90,7 +90,7 @@ router.post("/email", (req, res, next) => {
       console.log("Error in validating password reset email: ", err);
       sendStatus(500);
     }); // end SELECT to check for valid email
-});
+}); // End POST for password token
 
 // This POST will check if the email supplied exists
 // Then will email that email address the username associated with it
@@ -144,7 +144,7 @@ router.post("/username", (req, res, next) => {
       console.log("Error in validating password reset email: ", err);
       sendStatus(500);
     }); // end SELECT to check for valid email
-});
+}); // End post email
 
 // this will check if the user's token exists in the database password_tokens table
 // if a match is found the user's password is updated in database
@@ -195,7 +195,7 @@ router.post("/", (req, res) => {
       console.log("Error checking valid password reset token: ", error);
       res.sendStatus(500);
     }); // end SELECT to check token
-});
+}); // End POST to check email
 
 // export the router
 module.exports = router;

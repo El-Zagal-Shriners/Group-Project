@@ -69,10 +69,10 @@ router.post(
         res.sendStatus(500);
       });
   }
-);
+); // End POST for dependent token
 
 // this will check if the user token exists and the email matches in the database
-// if a match is found the user infomation is inserted to database
+// if a match is found the user information is inserted to database
 // the token record in the database is then deleted
 router.post("/", (req, res) => {
   const token = req.body.token;
@@ -145,7 +145,7 @@ router.post("/", (req, res) => {
       console.log("Error checking token ", error);
       res.sendStatus(500);
     });
-});
+}); // End POST to verify token
 
 // GET to check if the user's token exists in database
 router.get("/:token", (req, res) => {

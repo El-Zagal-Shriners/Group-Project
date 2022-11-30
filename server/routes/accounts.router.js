@@ -6,7 +6,7 @@ const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-// GET all member accounts without password
+// GET all member accounts without password - Admin only
 router.get("/", rejectUnauthenticated, rejectNonAdministrator, (req, res) => {
   const queryText = `SELECT
     id,
@@ -58,7 +58,7 @@ router.get("/dependents", rejectUnauthenticated, (req, res) => {
     });
 }); // End GET dependents
 
-// DELETE a dependent account
+// DELETE a dependent account by param ID - Admin only
 router.delete(
   "/dependent/:userid",
   rejectUnauthenticated,
