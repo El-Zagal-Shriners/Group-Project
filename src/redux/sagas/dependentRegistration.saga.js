@@ -5,6 +5,7 @@ const config = {
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 };
+
 //ADD_DEPENDENT to fire with /api/registration/dependent route
 function* addDependent(action) {
   try {
@@ -13,15 +14,17 @@ function* addDependent(action) {
   } catch (error) {
     console.log("Error POSTING dependent registration:", error);
   }
-}
+} // End saga to add dependent
 
+// Saga to send dependent email
 function* sendDependentEmail(action) {
   try {
     yield axios.post("/api/register/dependent/email", action.payload, config);
   } catch (error) {
     console.log("Error in saga POST for dependent email:", error);
   }
-}
+} // End saga to send dependent email
+
 // Check if user's token is valid
 function* tokenCheck(action) {
   try {
@@ -30,7 +33,7 @@ function* tokenCheck(action) {
   } catch (error) {
     console.log("Error in checking token:", error);
   }
-}
+} // End saga to check users token
 
 // ADD_DEPENDENT to connect with client-side input values
 function* dependentSaga() {

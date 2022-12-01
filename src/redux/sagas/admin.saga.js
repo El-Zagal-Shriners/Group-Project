@@ -19,7 +19,7 @@ function* updateMemberInfo(action) {
   } catch (err) {
     console.log("Error updating member info", err);
   }
-}
+} // End saga to update member number
 
 // saga to approve a new member.
 function* approveMember(action) {
@@ -37,7 +37,7 @@ function* approveMember(action) {
   } catch (err) {
     console.log("Error approving member", err);
   }
-}
+} // End saga to approve member
 
 // saga to to set member's authorization status
 function* authorizeMember(action) {
@@ -52,7 +52,7 @@ function* authorizeMember(action) {
   } catch (err) {
     console.log("Error setting authorization status", err);
   }
-}
+} // End saga to set authorization of member
 
 // saga to delete member and their dependents.
 function* deleteMember(action) {
@@ -63,8 +63,9 @@ function* deleteMember(action) {
   } catch (err) {
     console.log("Error deleting member account", err);
   }
-}
+} // End saga to delete member and dependents
 
+// SAGA to update discount tracker when discount is accessed
 function* addToDiscountTracker(action) {
   // console.log("in add to tracker", action);
   try {
@@ -76,8 +77,9 @@ function* addToDiscountTracker(action) {
   } catch (err) {
     console.log("Error deleting member account", err);
   }
-}
+} // End SAGA to update discount tracker
 
+// SAGA to toggle admin level
 function* toggleAdmin(action) {
   try {
     yield axios.put("api/admin/toggle", action.payload);
@@ -85,7 +87,7 @@ function* toggleAdmin(action) {
   } catch (error) {
     console.log("error caught in toggleAdmin :>> ", error);
   }
-}
+} // End SAGA to update admin level
 
 function* adminSaga() {
   yield takeEvery("UPDATE_MEMBER_INFO", updateMemberInfo);

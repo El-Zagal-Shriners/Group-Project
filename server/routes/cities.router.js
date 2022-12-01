@@ -25,7 +25,7 @@ router.get("/", rejectUnauthenticated, rejectUnauthorizedUser, (req, res) => {
       console.log("Error fetching all cities", err);
       res.sendStatus(500);
     });
-});
+}); // End GET for all cities
 
 // route to get the closest cities to the user.
 router.get(
@@ -57,7 +57,7 @@ router.get(
         res.sendStatus(500);
       });
   }
-);
+); // End GET for closest cities
 
 // a get route to check if a users location already exists,
 // if not post the location to the database.
@@ -115,6 +115,6 @@ router.get(
           });
       });
   }
-);
+); // End GET to check if location is in database and post if not
 
 module.exports = router;

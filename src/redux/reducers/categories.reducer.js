@@ -1,3 +1,4 @@
+// Reducer to store categories
 const categoriesReducer = (state = [], action) => {
   if (action.type === "SET_CATEGORIES") {
     return action.payload;

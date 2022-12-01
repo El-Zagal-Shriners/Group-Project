@@ -54,7 +54,7 @@ router.post("/register", (req, res, next) => {
       console.log("User registration failed: ", err);
       res.sendStatus(500);
     });
-});
+}); // End POST to register user
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
@@ -69,47 +69,48 @@ router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
-});
+}); // End Logout
 
 // PUT to edit the current user
-router.put('/', rejectUnauthenticated, (req, res) => {
+router.put("/", rejectUnauthenticated, (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const username = req.body.username;
   const email = req.body.email;
   const memberNumber = req.body.memberNumber;
   // SQL query
-  const query = `UPDATE "user" 
-                 SET 
+  const query = `UPDATE "user"
+                 SET
                  "username"=$1,
-                 "first_name"=$2, 
-                 "last_name"=$3, 
-                 "email"=$4, 
+                 "first_name"=$2,
+                 "last_name"=$3,
+                 "email"=$4,
                  "membership_number"=$5
                  WHERE "id"=$6;`;
-  pool.query(query, 
-    [
+  pool
+    .query(query, [
       username,
-      firstName, 
-      lastName, 
+      firstName,
+      lastName,
       email,
       memberNumber,
-      req.user.id
+      req.user.id,
     ])
-      .then(result => {
-          res.sendStatus(201);
-      })
-      .catch(err => {
-          console.log('Error editing user: ', err);
-          res.sendStatus(500);
-      });
-});
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log("Error editing user: ", err);
+      res.sendStatus(500);
+    });
+}); // End PUT to update user
+
 // This will set the review pending for logged in user to true
 router.put("/requestreview", rejectUnauthenticated, (req, res) => {
-  const duesPaid = req.body.duesPaid
+  const duesPaid = req.body.duesPaid;
   // SQL query to request review
-  const query = `UPDATE "user" 
-                 SET 
+  const query = `UPDATE "user"
+                 SET
                  "review_pending"=true,
                  "dues_paid"=$1
                  WHERE "id"=$2;`;
@@ -122,7 +123,7 @@ router.put("/requestreview", rejectUnauthenticated, (req, res) => {
       console.log("Error requesting review: ", err);
       res.sendStatus(500);
     });
-});
+}); // End PUT to toggle review pending
 
 // This function will change the password for the current user
 // It accepts the 'current' password and 'new' password
@@ -131,33 +132,37 @@ router.put("/change", rejectUnauthenticated, (req, res) => {
   const currentPassword = req.body.currentPassword;
   const newPassword = encryptLib.encryptPassword(req.body.newPassword);
   // SQL to get the encrypted version of user's password stored in the datebase
-  const getCurrentPasswordQuery = `SELECT "password" FROM "user" 
+  const getCurrentPasswordQuery = `SELECT "password" FROM "user"
                                    WHERE "id"=$1;`;
-  pool.query(getCurrentPasswordQuery, [req.user.id])
-      .then((result) => {
-        // returns true if the password match or otherwise false
-        if (encryptLib.comparePassword(currentPassword, result.rows[0].password)){
-          // SQL to update the password for the current user by current user id
-          const passwordUpdateQuery = `UPDATE "user" 
-                                       SET "password"=$1 
+  pool
+    .query(getCurrentPasswordQuery, [req.user.id])
+    .then((result) => {
+      // returns true if the password match or otherwise false
+      if (
+        encryptLib.comparePassword(currentPassword, result.rows[0].password)
+      ) {
+        // SQL to update the password for the current user by current user id
+        const passwordUpdateQuery = `UPDATE "user"
+                                       SET "password"=$1
                                        WHERE "id"=$2;`;
-          pool.query(passwordUpdateQuery, [newPassword, req.user.id])
-              .then((result)=> {
-                res.sendStatus(201);
-              })
-              .catch((err)=>{
-                console.log('Error in changing password for user: ', err);
-                res.sendStatus(500);
-              })
-        } else {
-          console.log('Passwords did not match!');
-          res.sendStatus(500);
-        }
-      })
-      .catch((err)=> {
-        console.log('Error in checking password for changing: ', err);
+        pool
+          .query(passwordUpdateQuery, [newPassword, req.user.id])
+          .then((result) => {
+            res.sendStatus(201);
+          })
+          .catch((err) => {
+            console.log("Error in changing password for user: ", err);
+            res.sendStatus(500);
+          });
+      } else {
+        console.log("Passwords did not match!");
         res.sendStatus(500);
-      })
-});
+      }
+    })
+    .catch((err) => {
+      console.log("Error in checking password for changing: ", err);
+      res.sendStatus(500);
+    });
+}); // End update password
 
 module.exports = router;

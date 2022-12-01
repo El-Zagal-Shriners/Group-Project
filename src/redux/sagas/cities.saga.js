@@ -23,7 +23,7 @@ function* getAllCities() {
   } catch (err) {
     console.log("Error in getting all cities", err);
   }
-}
+} // End saga to get all cities
 
 // saga to get cities closest to user.
 function* getCloseCities(action) {
@@ -41,7 +41,7 @@ function* getCloseCities(action) {
   } catch (err) {
     console.log("Error in getting cities closest to user", err);
   }
-}
+} // End saga to get closest cities
 
 // saga to check if the user's location is not in the DB and add it if it is not.
 function* checkCity(action) {
@@ -56,6 +56,6 @@ function* checkCity(action) {
   } catch (err) {
     console.log("Error in adding city closest to user", err);
   }
-}
+} // End saga to check city
 
 export default citiesSaga;

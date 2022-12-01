@@ -26,6 +26,7 @@ const selectedCategoriesReducer = (state = [], action) => {
   }
 };
 
+// Reducer to store filtered discounts
 const filteredDiscountsReducer = (state = [], action) => {
   if (action.type === "SET_FILTERED_DISCOUNTS") {
     // console.log("in filteredDiscounts reducer", action.payload);

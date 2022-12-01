@@ -1,3 +1,4 @@
+// Reducer to store vendor
 const vendorReducer = (state = [], action) => {
   switch (action.type) {
     case "SET_VENDORS":

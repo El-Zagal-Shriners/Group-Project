@@ -21,7 +21,8 @@ function* fetchUser() {
   } catch (error) {
     console.log("User get request failed", error);
   }
-}
+} // End saga to fetch users
+
 // Saga to edit current user
 function* editUser(action) {
   try {
@@ -32,7 +33,7 @@ function* editUser(action) {
   } catch (err) {
     console.log("Error updating user information", err);
   }
-}
+} // End saga to edit current user
 
 // Check if user's token is valid
 function* resetTokenCheck(action) {
@@ -42,7 +43,7 @@ function* resetTokenCheck(action) {
   } catch (error) {
     console.log("Error in checking password reset token:", error);
   }
-}
+} // End saga to check users token
 
 // Send password reset email
 function* sendForgotUsernameEmail(action) {
@@ -51,7 +52,7 @@ function* sendForgotUsernameEmail(action) {
   } catch (error) {
     console.log("Error in saga POST for forgot username email:", error);
   }
-}
+} // End saga to send username reset email
 
 // Send password reset email
 function* sendPasswordResetEmail(action) {
@@ -60,7 +61,7 @@ function* sendPasswordResetEmail(action) {
   } catch (error) {
     console.log("Error in saga POST for password reset email:", error);
   }
-}
+} // End saga to send password reset email
 
 // POST to send new password to db
 function* resetPassword(action) {
@@ -69,7 +70,7 @@ function* resetPassword(action) {
   } catch (error) {
     console.log("Error in saga POST for password reset:", error);
   }
-}
+} // End saga to save new password
 
 // PUT to request a review for user
 function* requestReview(action) {
@@ -81,7 +82,7 @@ function* requestReview(action) {
   } catch (err) {
     console.log("Error requesting a review: ", err);
   }
-}
+} // end put to request a review
 
 // PUT to change the current users password
 function* changePassword(action) {
@@ -93,7 +94,7 @@ function* changePassword(action) {
   } catch (err) {
     console.log("Error changing password: ", err);
   }
-}
+} // End saga to change users password
 
 // Begin function to reset all data on logout
 function* unsetAll(action) {
@@ -108,7 +109,7 @@ function* unsetAll(action) {
   } catch (err) {
     console.log("Error unsetting all", err);
   }
-}
+} // End saga to unset all redux on logout
 
 function* userSaga() {
   yield takeLatest("FETCH_USER", fetchUser);

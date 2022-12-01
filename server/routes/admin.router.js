@@ -9,6 +9,7 @@ const { rejectNonAdministrator } = require("../modules/admin-middleware");
 const pool = require("../modules/pool");
 const router = express.Router();
 
+// Route to toggle admin level of a user
 router.put(
   "/toggle",
   rejectUnauthenticated,
@@ -25,7 +26,7 @@ router.put(
         console.log("error caught in toggle Admin :>> ", error);
       });
   }
-);
+); // End PUT for admin toggle
 
 // route to update member's membership number and dues paid date
 router.put(
@@ -50,7 +51,7 @@ router.put(
         res.sendStatus(500);
       });
   }
-);
+); // End PUT to update member number and dues paid
 
 // route to approve a new member
 router.put(
@@ -76,7 +77,7 @@ router.put(
         res.sendStatus(500);
       });
   }
-);
+); // End PUT to approve a new member
 
 // route to activate and deactivate members access to discounts
 router.put(
@@ -99,7 +100,7 @@ router.put(
         res.sendStatus(500);
       });
   }
-);
+); // End route to toggle member authorization
 
 // route to delete a member also for deleting dependent.
 router.delete(
@@ -120,7 +121,7 @@ router.delete(
         res.sendStatus(500);
       });
   }
-);
+); // End route to DELETE member/dependent
 
 // route will add a new row to discounts_tracked
 router.post(
