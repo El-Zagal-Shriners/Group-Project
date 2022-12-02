@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useHistory } from "react-router-dom";
 
 function AddVendorModal() {
   const dispatch = useDispatch();
