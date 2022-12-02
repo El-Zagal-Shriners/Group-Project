@@ -34,7 +34,7 @@ function RequestUsername(props) {
     props.handleCloseForgotUsername(e);
     setShowInvalid(false);
   };
-
+  // render modal to enter an email and request the usernames for an email
   return (
     <Modal show={props.showForgotUsername} onHide={cancelRequestUsername}>
       <Modal.Header className="bg-primary">
@@ -49,6 +49,7 @@ function RequestUsername(props) {
           <em>
             Your username will be sent the email below.
           </em>
+          {/* email input */}
           <FloatingLabel
             controlId="dependentEmailLabel"
             label="Email"
@@ -63,6 +64,7 @@ function RequestUsername(props) {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FloatingLabel>
+          {/* Message to indicate user needs to enter an email */}
           {showInvalid && (
             <p className="text-center text-muted">
               Please enter a valid email address...
@@ -71,6 +73,7 @@ function RequestUsername(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
+        {/* Buttons to submit or cancel request a username */}
         <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
           Submit
         </Button>

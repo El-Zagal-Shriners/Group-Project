@@ -9,7 +9,8 @@ function RequestReviewPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [duesPaid, setDuesPaid] = useState("");
-
+  // dispatch to set the user's request review status to true
+  // and update the dues paid date on their account
   const requestReview = (e) => {
     e.preventDefault();
     dispatch({
@@ -18,9 +19,11 @@ function RequestReviewPage() {
         duesPaid,
       },
     });
+    // resest dues paid local state to default
     setDuesPaid("");
   };
-
+  // renders a page with messages depending on the account status
+  // button and date input for user to update dues paid and request review of account
   return (
     <>
       <UpdatedNavBar />
@@ -32,6 +35,7 @@ function RequestReviewPage() {
           {!user.full_authorized && user.membership_number === null && (
             <>
             {/* Check if the user is unauthorized or the parent account is */}
+            {/* BEGIN TERNARY */}
               {user.is_authorized ? (
                 <>
                   <p>
@@ -53,7 +57,8 @@ function RequestReviewPage() {
                 </>
               )}
             </>
-          )}
+          )} 
+          {/* END TERNARY */}
           {!user.review_pending && user.membership_number && (
             <h4 className="fw-bold text-secondary">Request Review</h4>
           )}
@@ -63,6 +68,7 @@ function RequestReviewPage() {
             Review has been requested
           </h5>
         )}
+        {/* Conditional form if user doesn't have a reveiw requested currently */}
         {!user.review_pending && user.membership_number && !user.full_authorized && (
           <form
             onSubmit={requestReview}
