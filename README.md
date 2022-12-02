@@ -57,16 +57,8 @@ If you would like to name your database something else, you will need to change 
 
 ## Production Build
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+Before pushing to a hosting site, run `npm run build` in terminal. This will create a build folder that contains the code the hosting site will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
 
 - Start postgres if not running already by using `brew services start postgresql`
 - Run `npm start`
 - Navigate to `localhost:5000`
-
-## Deployment
-
-#### Using Heroku
-
-###### Steps
-
-1. 
