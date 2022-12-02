@@ -2,7 +2,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 function ConfirmDeleteModal(props) {
-    const handleClose = () => {
+  // function that closes the modal and redisplays the parent modal  
+  const handleClose = () => {
         props.hideThisModalToggleSetter(false);
         if (props.parentModalToggleSetter){
             props.parentModalToggleSetter(true);
