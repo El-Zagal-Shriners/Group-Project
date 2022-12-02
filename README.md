@@ -6,22 +6,31 @@ With a robust administrative section, head Shriners will have the ability to add
 
 ## Preview
 
+#### Discount Page
 ![homepage](public/preview_images/discount_page_1.png)
 
+#### Discount Filter
 ![discountfilter](public/preview_images/discount_filter_1.png)
 
+#### Navigation Bar
 ![navigationbar](public/preview_images/navigation_bar.png)
 
+#### Profile Page
 ![profile](public/preview_images/profile_page.png)
 
+#### Admin Landing Page
 ![adminpage](public/preview_images/admin_landing_page.png)
 
+#### Admin Member Management Page
 ![memberpage](public/preview_images/admin_member_page.png)
 
+#### Admin Discount Page
 ![admindiscount](public/preview_images/admin_discount_page.png)
 
+#### Admin Discount Tracker Page
 ![discounttracker](public/preview_images/admin_discount_page.png)
 
+#### Admin FAQ Page
 ![adminfaq](public/preview_images/admin_faq_page.png)
 
 ## Prerequisites
