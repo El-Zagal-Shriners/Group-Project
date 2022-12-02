@@ -14,17 +14,14 @@ import FilterFeedback from "./FilterFeedback";
 function DiscountsPage() {
   const dispatch = useDispatch();
 
-  // redux stores for managing search parameters
-  const selectedCities = useSelector(
-    (store) => store.filter.selectedCitiesReducer
-  );
-  const selectedCategories = useSelector(
-    (store) => store.filter.selectedCategoriesReducer
-  );
+  // state to toggle filter off canvas display
+  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
+
   // redux store containing all available member discounts
   const allMemberDiscounts = useSelector(
     (store) => store.discounts.memberDiscountsReducer
   );
+
   // redux store containing current filtered list of member discounts
   const filteredDiscounts = useSelector(
     (store) => store.filter.filteredDiscountsReducer
@@ -33,15 +30,22 @@ function DiscountsPage() {
   // redux store containing all cities (ordered by location or not, based on if user allowed location services)
   const allCities = useSelector((store) => store.cities.allCitiesReducer);
 
+  // redux stores for storing search filter parameters
+  const selectedCities = useSelector(
+    (store) => store.filter.selectedCitiesReducer
+  );
+  const selectedCategories = useSelector(
+    (store) => store.filter.selectedCategoriesReducer
+  );
+
   // manage input for search bar
   const [searchBarIn, setSearchBarIn] = useState("");
-
-  const [showFilterOffCanvas, setShowFilterOffCanvas] = useState(false);
 
   // Location services:
   // local state to see if services are loading.
   const [loading, setLoading] = useState(true);
 
+  // if location was pulled from user, this will set to true
   const [locationPulled, setLocationPulled] = useState(false);
 
   // create a promise to get the user's current location.
@@ -121,16 +125,16 @@ function DiscountsPage() {
 
     // ~~~ Create new array with filtered results
     // if cities are selected, but no categories are selected
-    //    => push discounts with selected cities to new array
-    // else if categories are selecte, but not cities are selected
+    //    => push discounts with selected cities (or is_regional == true) to new array
+    // else if categories are selected, but not cities are selected
     //    => push discounts with selected categories to new array
     // else if both cities and categories are selected
-    //    => push discounts with both selected cities and categories to new array
-    // else both seleceted arrays are empty
+    //    => push discounts with both selected cities and categories and (or is_regional == true) to new array
+    // else both selected arrays are empty
     //    => push all discounts to new array
     if (selectedCities.length > 0 && selectedCategories.length === 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
-        return (allSelected.includes(discount.city) || discount.is_regional);
+        return allSelected.includes(discount.city) || discount.is_regional;
       });
     } else if (selectedCities.length === 0 && selectedCategories.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount) => {
@@ -138,7 +142,7 @@ function DiscountsPage() {
       });
     } else if (selectedCities.length > 0 && selectedCities.length > 0) {
       filteredArray = allMemberDiscounts.filter((discount, index) => {
-        return (allSelected.includes(discount.city) || discount.is_regional);
+        return allSelected.includes(discount.city) || discount.is_regional;
       });
       filteredArray = filteredArray.filter((discount) => {
         return allSelected.includes(discount.category_name);
@@ -147,11 +151,7 @@ function DiscountsPage() {
       filteredArray = allMemberDiscounts;
     }
 
-
-
-
-
-    // run filteredArray through search by company search bar
+    // run filteredArray through 'search by company' search bar
     if (searchBarIn.length > 0) {
       filteredArray = filteredArray.filter((discount, index) => {
         let thisVendorName = discount.vendor_name
@@ -176,7 +176,6 @@ function DiscountsPage() {
 
   // this function orders discounts by the city (closest to furthest away based on current location)
   function orderDiscountsByLocation(array) {
-    // console.log("location pulled?", locationPulled);
     // if location services were successfully pulled, sort discounts by city distance
     if (locationPulled) {
       return array?.sort((thisDiscount, nextDiscount) => {
@@ -201,6 +200,7 @@ function DiscountsPage() {
     }
   }
 
+  // run filter when parameters are changed, or on page load
   useEffect(
     () => filterDiscounts(),
     [
@@ -212,8 +212,9 @@ function DiscountsPage() {
     ]
   );
 
-  // useEffect(()=> console.log('filtered Ds', filteredDiscounts));
-
+  // wait for getPosition (location services stuff) to return a list of cities
+  // and list of discounts orderd by location (or not). When those are loaded,
+  // render discount list
   if (loading) {
     return (
       <>
@@ -235,6 +236,7 @@ function DiscountsPage() {
         <div className="d-flex col flex-column justify-content-around align-items-center bg-white sticky-top">
           <div className="bg-white col col-md-9 col-lg-6 p-2 rounded-bottom d-flex justify-content-center">
             <div className="d-flex justify-content-center align-items-center">
+              {/* display filter OffCanvas */}
               <Button
                 variant="primary"
                 onClick={() => setShowFilterOffCanvas(true)}
@@ -247,10 +249,13 @@ function DiscountsPage() {
               </Button>
             </div>
 
+            {/* display filter feedback if filter parameters are selected */}
             {(selectedCategories.length > 0 || selectedCities.length > 0) && (
               <FilterFeedback />
             )}
           </div>
+
+          {/* search by company name */}
           <div className="col-11 col-md-9 col-lg-6">
             <FloatingLabel controlId="floatingInput" label="Search By Company">
               <Form.Control
@@ -264,9 +269,12 @@ function DiscountsPage() {
           </div>
         </div>
 
+        {/* map list of filtered discounts */}
         {filteredDiscounts.map((thisDiscount, index) => {
           return <DiscountCard key={index} thisDiscount={thisDiscount} />;
         })}
+
+        {/* filter OffCanvas (not shown on page load) */}
         <DiscountFilterOffCanvas
           showFilterOffCanvas={showFilterOffCanvas}
           setShowFilterOffCanvas={setShowFilterOffCanvas}

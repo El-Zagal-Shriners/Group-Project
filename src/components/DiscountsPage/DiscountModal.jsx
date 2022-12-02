@@ -12,13 +12,15 @@ function DiscountModal({
   showDiscountModal,
   setShowDiscountModal,
 }) {
-  // if the user has already clicked on "show discount code" button while
-  // in the discount page => set to true,
-  // this prevents a second click from being sent to the discount tracker
-  const [alreadyTracked, setAlreadyTracked] = useState(false);
   const dispatch = useDispatch();
 
-  function handleShowCode() {
+  // if the user has already clicked on "show discount instructions" button while
+  // in the discount page => set alreadyTracked to true,
+  // this prevents a second click from being sent to the discount tracker
+  const [alreadyTracked, setAlreadyTracked] = useState(false);
+
+  // when show instructions button is clicked, add a new row to the discount tracker table
+  function handleShowInstructions() {
     if (alreadyTracked === false) {
       const discountDate = new Date().toUTCString();
       dispatch({
@@ -27,7 +29,7 @@ function DiscountModal({
       });
       setAlreadyTracked(true);
     }
-  }
+  } // End handleShowInstructions
 
   // Begin function to display readable date format
   function displayCorrectedDate(date) {
@@ -97,7 +99,7 @@ function DiscountModal({
 
             <Accordion>
               <Accordion.Item eventKey="0">
-                <Accordion.Header onClick={() => handleShowCode()}>
+                <Accordion.Header onClick={() => handleShowInstructions()}>
                   <span className="text-center">
                     Click To Show Discount Instructions
                   </span>

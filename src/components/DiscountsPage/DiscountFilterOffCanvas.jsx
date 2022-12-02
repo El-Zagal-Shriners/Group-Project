@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import FilterFeedback from "./FilterFeedback";
@@ -8,15 +8,11 @@ import "./DiscountCard.css";
 // react boostrap components
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Button } from "react-bootstrap";
-import InputGroup from "react-bootstrap/InputGroup";
 
 // react icons object imported from module
 import { allIconComponents } from "../../allIconComponents/allIconComponents";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 function DiscountFilterOffCanvas({
   showFilterOffCanvas,
@@ -25,19 +21,14 @@ function DiscountFilterOffCanvas({
 }) {
   const dispatch = useDispatch();
 
-  // selects array of objects from discounts reducer with all available discounts
-  const allDiscounts = useSelector((store) => store.discounts.discountsReducer);
-
   // selects all cities
+  // if location was grabbed, these will be in order nearest to farthest
   const allCities = useSelector((store) => store.cities.allCitiesReducer);
 
   // select all categories
   const allCategories = useSelector((store) => store.categories);
 
-  // select all close cities
-  // const closeCities = useSelector(store => store.cities.closeCitiesReducer);
-
-  // redux stores for managing search parameters
+  // redux stores for managing search filter parameters
   const selectedCities = useSelector(
     (store) => store.filter.selectedCitiesReducer
   );
@@ -49,17 +40,14 @@ function DiscountFilterOffCanvas({
     // if city is already selected, remove it from the selectedCities array
     // else (city not yet selected), add it to the selected Cities array
     if (cityIsSelected) {
-      // console.log("in handleCitySelection, deselecting city", updatedCitiesArr);
       const updatedCitiesArr = removeObjectFromArray(thisCity, selectedCities);
       dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
     } else {
       // if thisCity is already in selectedCities arrray, don't add it again (return)
       // else add thisCity to selectedCities array
       if (selectedCities.includes(thisCity)) {
-        // console.log("city is already in array, dont add again");
         return;
       } else {
-        // console.log("adding this city to array");
         const updatedCitiesArr = [...selectedCities];
         updatedCitiesArr.push(thisCity);
         dispatch({ type: "SET_SELECTED_CITIES", payload: updatedCitiesArr });
@@ -68,14 +56,12 @@ function DiscountFilterOffCanvas({
   }
 
   // takes a category object
-  function handleCategorySelection(thisCat, catIsSelected) {
+  function handleCategorySelection(thisCat) {
     // if thisCat is already in selectedCategories arrray, don't add it again (return)
     // else add thisC to selectedCategories array
     if (selectedCategories.some((catObj) => thisCat.id === catObj.id)) {
-      // console.log("cat is already in array, dont add again");
       return;
     } else {
-      // console.log("adding this cat to array");
       const updatedCategoriesArr = [...selectedCategories];
       updatedCategoriesArr.push(thisCat);
       dispatch({
@@ -157,7 +143,7 @@ function DiscountFilterOffCanvas({
                       <Dropdown.Item
                         as="button"
                         key={index}
-                        onClick={() => handleCategorySelection(thisCat, false)}
+                        onClick={() => handleCategorySelection(thisCat)}
                       >
                         {thisCat.name}
                       </Dropdown.Item>
@@ -168,12 +154,12 @@ function DiscountFilterOffCanvas({
             </div>
           </div>
 
-          {/* <div className="m-2 d-flex justify-content-center m-1">IN</div> */}
           <hr />
 
           {/* Select Nearest Cities  */}
           <div className="d-flex justify-content-between flex-column m-1 p-1">
             <div>
+              {/* if location was pulled display closest three cities. Else display Fargo and Moorhead */}
               {locationPulled ? (
                 <div className="text-center">Select from nearby cities:</div>
               ) : (
@@ -210,7 +196,7 @@ function DiscountFilterOffCanvas({
               })}
             </div>
           </div>
-          {/* Choose City From Dropdown  */}
+          {/* Choose City From Dropdown */}
           <div className="d-flex flex-column justify-content-center align-items-center">
             <div className="m-3 d-flex flex-row justify-content-center align-items-center">
               <label htmlFor="city-select-dropdown" className="mx-1">
@@ -236,7 +222,7 @@ function DiscountFilterOffCanvas({
           </div>
 
           <hr />
-          {/* FEEDBACK: Searching for CATEGORIES in CITIES */}
+          {/* FEEDBACK => Searching for CATEGORIES in CITIES */}
           <FilterFeedback />
           <hr />
           <div className="mb-3 d-flex flex-row justify-content-center align-items-center">
