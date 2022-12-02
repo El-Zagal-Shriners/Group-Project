@@ -51,21 +51,24 @@ function DiscountModal({
     expDate: expDate === "" ? null : expDate,
     discountUsage,
   };
-  // edit discount
+  // dispath edit discount object if the edits are valid
   const editDiscount = (e) => {
     e.preventDefault();
+    // checks for valid discount summary length (less than 16 characters)
     if (discountSummary.length < 16) {
       dispatch({
         type: "EDIT_DISCOUNT",
         payload: discountObj,
       });
+      // reset local states
       setShowEditDiscount(false);
       setShowInvalid(false);
     } else {
+      // show discount summary invalid if length to long
       setShowInvalid(true);
     }
   };
-  // remove discount
+  // remove discount by discount id
   const removeDiscount = (e) => {
     e.preventDefault();
     dispatch({
@@ -74,10 +77,9 @@ function DiscountModal({
     });
     setShowEditDiscount(false);
   };
-  // toggle if discount is active or not
+  // toggle if discount is active or not by discount id
   const toggleActive = (e) => {
     e.preventDefault();
-    // console.log("This is discount.id: ", discount.id);
     dispatch({
       type: "TOGGLE_ACTIVE_DISCOUNT",
       payload: {
@@ -87,7 +89,9 @@ function DiscountModal({
   };
   // cleans up the date to only display yyyy/mm/dd
   function formatDate(dateDirty) {
+    // holds the new date formatted to YYYY/MM/DD
     let niceDate = new Date(dateDirty);
+    // returns only the data portion of the new date
     return niceDate.toISOString().split("T")[0];
   }
 
@@ -121,8 +125,8 @@ function DiscountModal({
   };
 
   useEffect(() => {
-    // Sets both valid and invalid to false if only newPassword
-    // has entry or both or empty
+    // sets the discount summary input to show as invalid if
+    // the string is more than 16 characters
     if (discountSummary.length < 16) {
       setShowInvalid(false);
       return;
@@ -130,7 +134,7 @@ function DiscountModal({
       setShowInvalid(true);
     }
   }, [discountSummary]);
-
+  // renders a modal to edit a selected discounts information
   return (
     <>
       <Modal show={showEditDiscount} onHide={() => setShowEditDiscount(false)}>
@@ -156,6 +160,7 @@ function DiscountModal({
                 </Button>
               </div>
             )}
+            {/* Input for discount summary - Max length is 15 characters */}
             <FloatingLabel className="text-primary" label="Summary">
               <Form.Control
                 type="text"
@@ -165,7 +170,9 @@ function DiscountModal({
                 onChange={(e) => setDiscountSummary(e.target.value)}
               />
             </FloatingLabel>
+            {/* message to indicate discount summary must be under 16 characters */}
             {showInvalid && <p>Summary must 15 or less characters</p>}
+            {/* Input for the discount description */}
             <FloatingLabel className="text-primary" label="Description">
               <Form.Control
                 type="text"
@@ -174,6 +181,7 @@ function DiscountModal({
                 onChange={(e) => setDiscountDescription(e.target.value)}
               />
             </FloatingLabel>
+            {/* Input for the Start date */}
             <FloatingLabel className="text-primary" label="Start Date">
               <Form.Control
                 value={startDate}
@@ -181,6 +189,7 @@ function DiscountModal({
                 onChange={(e) => setStartDate(e.target.value)}
               />
             </FloatingLabel>
+            {/* Input for the expiration date */}
             <FloatingLabel className="text-primary" label="Expiration Date">
               <Form.Control
                 value={expDate}
@@ -188,6 +197,7 @@ function DiscountModal({
                 onChange={(e) => setExpDate(e.target.value)}
               />
             </FloatingLabel>
+            {/* Input for the discount usage (how to use the discount - code, show member id, etc) */}
             <FloatingLabel className="text-primary" label="Discount Usage">
               <Form.Control
                 type="text"
@@ -196,6 +206,7 @@ function DiscountModal({
                 onChange={(e) => setDiscountUsage(e.target.value)}
               />
             </FloatingLabel>
+            {/* Conditionally display if discount is regional or not */}
             {discount.is_regional ? (
               <div className="text-center text-muted">
                 This is a Regional Discount
@@ -207,6 +218,7 @@ function DiscountModal({
             )}
           </Modal.Body>
           <Modal.Footer>
+            {/* Modal buttons to delete, submit changes or cancel edit on discount */}
             <div className="w-100 d-flex justify-content-end align-items-center flex-wrap">
               <Button
                 variant="primary"
@@ -231,6 +243,7 @@ function DiscountModal({
           </Modal.Footer>
         </form>
       </Modal>
+      {/* Renders a confirm delete modal with appropriate propss */}
       <ConfirmDeleteModal
         parentModalToggleSetter={setShowEditDiscount}
         hideThisModalToggle={showDeleteConfirmation}
