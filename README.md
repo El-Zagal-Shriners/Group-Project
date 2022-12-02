@@ -41,7 +41,7 @@ Before you get started, make sure you have the following software installed on y
 
 Create a new database called `el_zagal_shriners`.
 
-
+![ERD](public/preview_images/erd.jpg)
 
 All tables and SQL queries can be found in the `databaseSetup.sql` file.
 
