@@ -13,8 +13,10 @@ function DiscountItem({ discount, today }) {
   const vendors = useSelector((store) => store.vendors);
   const [showEditDiscount, setShowEditDiscount] = useState(false);
   const vendor = vendors.find((vend) => vend.id === Number(discount.vendor_id));
-
+  
+  // set to the value returned from isExpired function
   const expiredResult = isExpired();
+  // set to the value returned from isStarted function
   const startedResult = isStarted();
 
   // This function will return a formatted date to YYYY/MM/DD
@@ -23,13 +25,19 @@ function DiscountItem({ discount, today }) {
     if (dateDirty === null) {
       return today;
     }
+    // new date object based on the passed date
     let niceDate = new Date(dateDirty);
+    // returns only the date portion of the formatted date - YYYY/MM/DD format
     return niceDate.toISOString().split("T")[0];
   }
   // This function will compare the current date with the expiration date on
   // this discount returning if the discount is expired or running
   function isExpired() {
     if (
+      // format the date and check if it's today's date or a future date
+      // returns true if the date is future or today
+      // otherwise returns false
+      // compares dates in YYYY/MM/DD
       formatDate(discount.expiration_date) >= today ||
       discount.expiration_date === null
     ) {
@@ -40,6 +48,9 @@ function DiscountItem({ discount, today }) {
   }
   // This function will compare the date with the start date and return
   // if the discount has started or not
+  // returns true if the start date is today or a past date
+  // otherwises returns false
+  // Compares in YYYY/MM/DD format
   function isStarted() {
     if (
       formatDate(discount.start_date) <= today ||
@@ -50,7 +61,9 @@ function DiscountItem({ discount, today }) {
       return false;
     }
   }
-
+  // renders a card for each discount with basic information about each
+  // discount, display colors and infomation is conditional to the 
+  // status of the discount (active or inactive)
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -87,6 +100,7 @@ function DiscountItem({ discount, today }) {
                         <h5>{vendor?.name}</h5>
                       </div>
                       <div className="discount-address text-start text-muted fw-light">
+                        {/* BEGIN TERNARY - Conditional message if the discount is regional or not */}
                         {discount.is_regional ? (
                           <small>
                             Regional Discount
@@ -99,17 +113,20 @@ function DiscountItem({ discount, today }) {
                             {vendor?.city}, {vendor?.state_code}
                           </small>
                         )}
+                        {/* End ternary */}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-4 p-1">
                   <div
+                  // BEGIN TERNARY
                     className={`p-1 ${
                       discount.is_shown && expiredResult && startedResult
                         ? `bg-warning`
                         : `bg-secondary`
                     } rounded d-flex justify-content-center align-items-center fill-container`}
+                    // END TERNARY
                   >
                     <div className="discount-text fw-bold">
                       {discount.discount_summary}
@@ -121,6 +138,7 @@ function DiscountItem({ discount, today }) {
             </div>
           </div>
         </div>
+        {/*  Modal for displaying/editting a discount - show on click of discount summary card */}
         <DiscountModal
           className="d-flex justify-content-center"
           isExpired={isExpired}
