@@ -1,15 +1,13 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function AddVendorModal() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -17,13 +15,15 @@ function AddVendorModal() {
   const [stateCode, setStateCode] = useState("");
   const [zip, setZip] = useState("");
   const [website, setWebsite] = useState("");
-
+  // sets modal control state to false, hides modal
   const handleClose = (e) => {
     e.preventDefault();
     setShow(false);
   }
+  // sets modal state to true, shows the modal
   const handleShow = () => setShow(true);
-
+  // submits the new vendor information to the database
+  // sets the modal control state to false - hides modal
   const addVendor = (event) => {
     event.preventDefault();
 
@@ -40,6 +40,8 @@ function AddVendorModal() {
     });
     setShow(false);
   };
+  // renders modal for inputting the required information to add a new
+  // vendor to the system
   return (
     <>
       <Button className="col-5" variant="primary" onClick={handleShow}>
@@ -52,6 +54,7 @@ function AddVendorModal() {
           <Modal.Title className="text-light fw-bold">Add Vendor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* Business name input */}
           <FloatingLabel className="mb-1 text-primary" label="Business Name">
             <Form.Control
               type="text"
@@ -60,6 +63,7 @@ function AddVendorModal() {
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
+          {/* Address input */}
           <FloatingLabel className="mb-1 text-primary" label="Address">
             <Form.Control
               type="text"
@@ -67,6 +71,7 @@ function AddVendorModal() {
               onChange={(e) => setAddress(e.target.value)}
             />
           </FloatingLabel>
+          {/* City input */}
           <FloatingLabel className="mb-1 text-primary" label="City">
             <Form.Control
               type="text"
@@ -74,6 +79,7 @@ function AddVendorModal() {
               onChange={(e) => setCity(e.target.value)}
             />
           </FloatingLabel>
+          {/* State code input */}
           <FloatingLabel className="mb-1 text-primary" label="State Code">
             <Form.Control
               type="text"
@@ -81,6 +87,7 @@ function AddVendorModal() {
               onChange={(e) => setStateCode(e.target.value)}
             />
           </FloatingLabel>
+          {/* zip code input */}
           <FloatingLabel className="mb-1 text-primary" label="Zip">
             <Form.Control
               type="text"
@@ -88,6 +95,7 @@ function AddVendorModal() {
               onChange={(e) => setZip(e.target.value)}
             />
           </FloatingLabel>
+          {/* website url input */}
           <FloatingLabel
             className="mb-1 text-primary"
             label="Website (If Applicable)"
@@ -100,6 +108,7 @@ function AddVendorModal() {
           </FloatingLabel>
         </Modal.Body>
         <Modal.Footer>
+          {/* modal buttons to submit vendor information or cancel */}
           <Button variant="primary" type="submit">
             Add Vendor
           </Button>
