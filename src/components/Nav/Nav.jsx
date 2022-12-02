@@ -17,7 +17,7 @@ function UpdatedNavBar() {
   }
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="dark" className="shadow-sm">
       <Container className="pb-0">
         <Navbar.Brand className="w-75" href="#home">
           <img
