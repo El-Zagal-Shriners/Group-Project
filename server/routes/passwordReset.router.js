@@ -50,7 +50,7 @@ router.post("/email", (req, res, next) => {
       // Data for email to send to user with password reset token
       const msg = {
         to: savedEmail, // address email is being sent
-        from: "dvettertest@gmail.com", // account registered with sendGrid
+        from: "elzagalcommunityportalservice@gmail.com", // account registered with sendGrid
         subject: "Shrine App Testing Emails - Password Reset",
         text: `Please follow this link to register. http://localhost:3000/#/reset/${token}`, // alternative text
         // html to display in the body of the email
@@ -112,7 +112,7 @@ router.post("/username", (req, res, next) => {
       // Data for email to send list of usernames
       const msg = {
         to: savedEmail, // address email is being sent
-        from: "dvettertest@gmail.com", // account registered with sendGrid
+        from: "elzagalcommunityportalservice@gmail.com", // account registered with sendGrid
         subject: "Shrine App Testing Emails - Username Request",
         // Map array to display usernames as comma separated list or singular username
         text: `The ${
