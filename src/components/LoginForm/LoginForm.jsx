@@ -13,10 +13,10 @@ function LoginForm() {
   const [hidePasswords, setHidePasswords] = useState(true);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
-
+  // function to login to application
   const login = (event) => {
     event.preventDefault();
-
+    // dispatch user login information if user entered a username and password
     if (username && password) {
       dispatch({
         type: "LOGIN",
@@ -50,7 +50,9 @@ function LoginForm() {
     event.preventDefault();
     setShowForgotUsername(false);
   };
-
+  // Render a login form with username and password inputs
+  // buttons to request username and reset password
+  // button to submit login information and show/hide password entry
   return (
     <form
       className="d-flex flex-column align-items-center px-5 py-3 rounded-3 border border-2 border-primary shadow-lg mb-3 registration_background"
