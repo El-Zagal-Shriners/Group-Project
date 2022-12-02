@@ -32,7 +32,7 @@ router.post(
     // Data for email to send to dependent
     const msg = {
       to: email, // address email is being sent
-      from: "dvettertest@gmail.com", // account registered with sendGrid
+      from: "elzagalcommunityportalservice@gmail.com", // account registered with sendGrid
       subject: "Shrine App Testing Emails",
       text: `Please follow this link to register. http://localhost:3000/#/dependents/${token}`, // alternative text
       // html to display in the body of the email
