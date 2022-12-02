@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import UpdatedNavBar from "../Nav/Nav";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import DiscountItem from "../AddDiscount/DiscountItem";
 import AddVendorModal from "../AddVendor/AddVendor";
 import AddDiscountModal from "../AddDiscount/AddDiscount";
@@ -14,7 +11,6 @@ import Button from "react-bootstrap/Button";
 
 function AdminDiscountPage(vendor) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const allVendors = useSelector((store) => store.vendors);
   const discounts = useSelector(
     (store) => store.discounts.adminDiscountsReducer
@@ -39,7 +35,8 @@ function AdminDiscountPage(vendor) {
       setCurrentSelected(selectedValue);
     }
   }
-
+  // function to remove a vendor by id
+  // resets currentSelected and delete confirmation control state to default
   const removeVendor = () => {
     dispatch({
       type: "REMOVE_VENDOR",
@@ -48,13 +45,13 @@ function AdminDiscountPage(vendor) {
     setCurrentSelected("default");
     setShowDeleteConfirmation(false);
   };
-
+  // get admin discounts, vendors and catergories on page load
   useEffect(() => {
     dispatch({ type: "GET_ADMIN_DISCOUNTS" });
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "GET_CATEGORIES" });
   }, []);
-
+  // render the admin discount page
   return (
     <>
       <UpdatedNavBar />
@@ -66,6 +63,7 @@ function AdminDiscountPage(vendor) {
       </div>
 
       <div className="container text-center col col-lg-6 pt-2 pb-0">
+        {/* Dropdown to select vendor */}
         <Dropdown className="col" onSelect={handleSelect}>
           <Dropdown.Toggle>Select Vendor</Dropdown.Toggle>
           <Dropdown.Menu className="custom-scroll">
@@ -88,6 +86,7 @@ function AdminDiscountPage(vendor) {
             })}
           </Dropdown.Menu>
         </Dropdown>
+        {/* Display the current selected vendor after one is selected */}
         {currentSelected !== "default" && (
           <div className="border border-primary border-2 rounded px-3 mt-2 w-100">
             <h5 className="text-center w-100 mt-1">
@@ -103,6 +102,7 @@ function AdminDiscountPage(vendor) {
                 <br />
               </span>
             </h5>
+            {/* Buttons to remove or edit the selected vendor */}
             <div className="w-100 d-flex justify-content-center align-items-center">
               <button
                 className="btn btn-primary mb-2 col-6"
@@ -128,6 +128,7 @@ function AdminDiscountPage(vendor) {
           </div>
         )}
       </div>
+      {/* Modal to confirm delete a vendor */}
       <ConfirmDeleteModal
         parentModalToggleSetter={false}
         hideThisModalToggle={showDeleteConfirmation}
@@ -135,26 +136,9 @@ function AdminDiscountPage(vendor) {
         deleteFunction={removeVendor}
         deleteType={"vendor"}
       />
+      {/* Display the discount cards */}
       <div className="w-100 d-flex justify-content-center align-items-center col col-md-9 col-lg-6">
         <section className="col col-md-9 col-lg-6 w-100">
-          {/* <hr className="mt-2 mb-0 col col-md-9 col-lg-6 mx-auto" />
-          <h4 className="my-0 text-center text-primary">Legend:</h4>
-          <div className="w-lg-50 w-md-100 mx-auto col col-md-9 col-lg-6 d-flex justify-content-center align-items-center mt-2 mb-0">
-            <div className="col p-1 d-flex justify-content-around align-items-center">
-              <p className="col text-nowrap m-0">Active:</p>
-              <div className="w-100 d-flex justify-content-center mx-3">
-                <p className="col badge bg-primary m-0">&nbsp;</p>
-              </div>
-            </div>
-            <div className="col p-1 d-flex justify-content-around align-items-center">
-              <p className="col text-nowrap m-0">Inactive:</p>
-              <div className="w-100 d-flex justify-content-center mx-3">
-                <p className="col mx-auto border border-1 border-primary bg-light badge m-0">
-                  &nbsp;
-                </p>
-              </div>
-            </div>
-          </div> */}
           <hr className="my-2 mx-auto col col-md-9 col-lg-6" />
           {filteredDiscounts.map((discount) => {
             return (
