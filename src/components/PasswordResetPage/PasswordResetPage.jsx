@@ -23,8 +23,8 @@ function PasswordResetPage() {
       type: "RESET_PASSWORD_TOKEN_CHECK",
       payload: token,
     });
-    // console.log("this is tokenCheck: ", tokenCheck);
   }, []);
+
   // function to submit the new password
   const submitReset = (e) => {
     e.preventDefault();
@@ -39,10 +39,12 @@ function PasswordResetPage() {
       history.push("/");
     }
   };
+
   // compare the two passwords
   const passwordCompare = () => {
     return newPassword === confirmNewPassword ? true : false;
   };
+
   // toggle if password box should invalid or valid
   // based on the two passwords entered
   useEffect(() => {
@@ -65,6 +67,7 @@ function PasswordResetPage() {
       ? setShowValid(true)
       : setShowValid(false);
   }, [confirmNewPassword, newPassword]);
+  // renders inputs for entering the new password
   return (
     <>
     <UpdatedNavBar/>
@@ -73,6 +76,7 @@ function PasswordResetPage() {
       onSubmit={submitReset}
     >
       <h2 className="text-primary">Reset Password</h2>
+      {/* BEGIN TERNARY */}
       {tokenCheck === "true" ? (
         <>
           <div className="w-100">
@@ -110,6 +114,7 @@ function PasswordResetPage() {
               />
             </FloatingLabel>
           </div>
+          {/* Buttons to submit the new password */}
           <div className="d-flex justify-content-around align-items-center w-100">
           <button type="button" className="btn btn-primary text-nowrap col me-1" onClick={()=>setHidePasswords(!hidePasswords)}>{hidePasswords?`Show Passwords`:`Hide Passwords`}</button>
           <button className="btn btn-primary col ms-1" type="submit">
@@ -118,8 +123,10 @@ function PasswordResetPage() {
           </div>
         </>
       ) : (
+        // Message that displays in the token in the url is invalid
         <h4>This link is invalid. Make sure to use the link from the email.</h4>
       )}
+      {/* END TERNARY */}
     </form>
     </>
   );
