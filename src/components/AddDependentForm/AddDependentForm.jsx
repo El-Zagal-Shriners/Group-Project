@@ -27,7 +27,7 @@ function AddDependentForm(props) {
         setEmail('');
         props.handleCloseDependent();
     }
-
+    // renders modal to enter an email
     return (
         <Modal show={props.showAddDependent} onHide={props.handleCloseDependent}>
         <Modal.Header className="bg-primary">
@@ -36,6 +36,7 @@ function AddDependentForm(props) {
         <Modal.Body>
         <>
         Please enter the email address for who you want to add as dependent account.
+        {/* Email input */}
         <FloatingLabel
             controlId="dependentEmailLabel"
             label="Email"
@@ -46,6 +47,7 @@ function AddDependentForm(props) {
         </>
         </Modal.Body>
         <Modal.Footer>
+          {/* Modal submit or cancel buttons */}
           <Button variant="primary" onClick={sendDependentEmail}>
             Add Dependent
           </Button>

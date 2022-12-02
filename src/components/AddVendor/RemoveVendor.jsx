@@ -8,10 +8,10 @@ import EditVendorModal from "./EditVendorModal";
 function RemoveVendor({ vendorMap }) {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  // grab vendors from redux
   const vendors = useSelector((store) => store.vendors);
   const vendor = vendors.find((vend) => vend.id);
-
+  // dispatch vendor id to removal from database
   const removeVendor = (vendorId) => {
     dispatch({
       type: "REMOVE_VENDOR",
@@ -19,11 +19,11 @@ function RemoveVendor({ vendorMap }) {
     });
     history.push("/admindiscounts");
   };
-
+  // get the vendors
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
   }, []);
-
+  // render the edit vendor and remove vendor buttons
   return (
     <>
       <h1>{vendorMap.name}</h1>

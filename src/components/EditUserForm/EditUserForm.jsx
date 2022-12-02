@@ -84,6 +84,7 @@ function EditUserForm(props) {
       </Modal.Header>
       <Modal.Body>
         <>
+        {/* username input */}
           <FloatingLabel
             controlId="usernameEditLabel"
             label="Username"
@@ -98,7 +99,9 @@ function EditUserForm(props) {
               onChange={(e) => setUsername(e.target.value)}
             />
           </FloatingLabel>
+          {/* Conditional message if username not long enough */}
           {showInvalid && <p className="text-center text-muted">Username must be longer than 4 characters and CANNOT contain any special characters ie. !, $, %, #, @, etc...</p>}
+          {/* Input for first name */}
           <FloatingLabel
             controlId="firstNameEditLabel"
             label="First Name"
@@ -111,6 +114,7 @@ function EditUserForm(props) {
               onChange={(e) => setFirstName(e.target.value)}
             />
           </FloatingLabel>
+          {/* Input for last name */}
           <FloatingLabel
             controlId="lastNameEditLabel"
             label="Last Name"
@@ -123,6 +127,7 @@ function EditUserForm(props) {
               onChange={(e) => setLastName(e.target.value)}
             />
           </FloatingLabel>
+          {/* Input for email */}
           <FloatingLabel controlId="Email" label="Email" className="mb-3">
             <Form.Control
               type="email"
@@ -131,6 +136,7 @@ function EditUserForm(props) {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FloatingLabel>
+          {/* input for a membership number (only displays if user is a member) */}
           {props.user.membership_number &&
           <FloatingLabel
             controlId="membershipNumberEditLabel"
@@ -147,6 +153,7 @@ function EditUserForm(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
+        {/* Buttons for submitting or canceling changes */}
         <Button variant="primary" onClick={sendEdit}>
           Confirm Changes
         </Button>

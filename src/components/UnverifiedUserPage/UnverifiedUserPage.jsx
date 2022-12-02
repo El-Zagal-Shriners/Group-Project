@@ -1,6 +1,8 @@
 import UpdatedNavBar from "../Nav/Nav";
 
 function UnverifiedUserPage() {
+  // Render a page that indicates to user that they are still a new account
+  // and need to be verified by an admin
   return (
     <>
       <UpdatedNavBar />

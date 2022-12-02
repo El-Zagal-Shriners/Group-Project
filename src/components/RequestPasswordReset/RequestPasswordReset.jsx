@@ -49,7 +49,7 @@ function RequestPasswordReset(props) {
       setShowInvalid(true);
     }
   }, [username]);
-
+  // render a modal with an input for entering a username for password reset
   return (
     <Modal show={props.showResetPassword} onHide={cancelRequestPassword}>
       <Modal.Header className="bg-primary">
@@ -65,6 +65,7 @@ function RequestPasswordReset(props) {
             Password reset instructions will be sent to the email address on the
             account.
           </em>
+          {/* Input for username */}
           <FloatingLabel
             controlId="dependentEmailLabel"
             label="Username"
@@ -79,6 +80,7 @@ function RequestPasswordReset(props) {
               onChange={(e) => setUsername(e.target.value)}
             />
           </FloatingLabel>
+          {/* message to indicate the username is invalid */}
           {showInvalid && (
             <p className="text-center text-muted">
               Username must be longer than 4 characters and CANNOT contain any
@@ -88,6 +90,7 @@ function RequestPasswordReset(props) {
         </>
       </Modal.Body>
       <Modal.Footer>
+        {/* Buttons for submitting or cancel password reset request */}
         <Button variant="primary" onClick={(e) => sendResetEmail(e)}>
           Submit
         </Button>
