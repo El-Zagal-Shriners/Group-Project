@@ -7,8 +7,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import { DropdownButton, ButtonGroup } from "react-bootstrap";
-import UpdatedNavBar from "../Nav/Nav";
+import { ButtonGroup } from "react-bootstrap";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 function AddDiscountModal() {
@@ -19,6 +18,7 @@ function AddDiscountModal() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  // local states
   const [show, setShow] = useState(false);
   const [vendorId, setVendorId] = useState(undefined);
   const [discountDescription, setDiscountDescription] = useState("");
@@ -36,13 +36,18 @@ function AddDiscountModal() {
   const [submitCheck, setSubmitCheck] = useState(false);
   const [showInvalid, setShowInvalid] = useState(false);
 
+  // function to close the add discount modal
   const handleClose = (e) => {
     e.preventDefault();
     resetInputs();
-    setShow(false);
   };
+  // toggle show local state to true
+  // displays add discount modal
   const handleShow = () => setShow(true);
 
+  // function that checks if vendor and category are selected
+  // and discount summary input is valid, dispatch new discount 
+  // object for INSERT to database
   const addDiscount = (event) => {
     event.preventDefault();
     if (vendorSelected && categorySelected && discountSummary.length < 16) {
@@ -62,21 +67,27 @@ function AddDiscountModal() {
       });
       // Reset the form values.
       resetInputs();
-      // history.push("/admindiscounts");
     } else {
+      // true if atleast one submit has occurred with invalid information
       setSubmitCheck(true);
       if (!categoryNotSelected) {
+        // displays select category message if the user didn't select one before
+        // trying to submit a new discount
         setCategoryNotSelected(true);
       }
       if (!vendorNotSelected) {
+        // displays select vendor message if the user didn't select one before
+        // trying to submit a new discount
         setVendorNotSelected(true);
       }
       if (discountSummary.length > 15) {
+        // displays a message to indicate to the user that the
+        // discount summary is too long
         setShowInvalid(true);
       }
     }
   };
-  // This function will resest the form
+  // This function will resest the form to default state
   const resetInputs = () => {
     setVendorId(1);
     setCategoryId(1);
@@ -94,30 +105,31 @@ function AddDiscountModal() {
     setShowInvalid(false);
     setIsRegional(false);
   };
-
+  // Grabs the current vendors and categories on page load
   useEffect(() => {
     dispatch({ type: "FETCH_VENDORS" });
     dispatch({ type: "GET_CATEGORIES" });
   }, []);
 
+  // Function that sets the local states for the currently selected vendor
   const handleSelectVendor = (eventKey) => {
     setVendorId(eventKey);
     setVendorSelected(true);
     setVendorNotSelected(true);
   };
-
+  // Function that sets the local states for the currently selected category
   const handleSelectCategory = (eventKey) => {
     setCategoryId(eventKey);
     setCategorySelected(true);
     setCategoryNotSelected(true);
   };
-
+  // 
   useEffect(() => {
-    // Sets both valid and invalid to false if only newPassword
-    // has entry or both or empty
+    // checks the discount summary input on the change
+    // for a valid length
+    // indicates to the user if the input string is too long
     if (discountSummary.length < 16) {
       setShowInvalid(false);
-      return;
     } else {
       setShowInvalid(true);
     }
@@ -125,6 +137,7 @@ function AddDiscountModal() {
 
   return (
     <>
+      {/* Add discount button that shows the modal*/}
       <Button className="col-5" variant="primary" onClick={handleShow}>
         Add Discount
       </Button>
@@ -138,6 +151,7 @@ function AddDiscountModal() {
           </Modal.Header>
           <Modal.Body>
             <div className="d-flex flex-column justify-content-center p-1">
+              {/* Display the selected vendor after a vendor has been selected */}
               {vendorSelected && (
                 <div>
                   <h5 className="text-center w-100 mt-1">
@@ -154,7 +168,9 @@ function AddDiscountModal() {
                   </h5>
                 </div>
               )}
+              {/* Display a message if the user did not select a vendor and tried submitting */}
               {!vendorSelected && submitCheck && <p>Please select a vendor!</p>}
+              {/* Dropdown for selecting a vendor */}
               <Dropdown
                 onSelect={(eventKey) => handleSelectVendor(eventKey)}
                 className="mb-2"
@@ -172,6 +188,7 @@ function AddDiscountModal() {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+              {/* Input for discount summary (must be less than 16 characters) */}
               <FloatingLabel
                 className="mb-1 text-primary"
                 label="Discount Summary"
@@ -186,11 +203,13 @@ function AddDiscountModal() {
                   onChange={(e) => setDiscountSummary(e.target.value)}
                 />
               </FloatingLabel>
+              {/* Message if the summary is over 15 characters */}
               {showInvalid && (
                 <p className="text-danger text-center">
                   Summary must be 15 or less characters
                 </p>
               )}
+              {/* Input for discount description */}
               <FloatingLabel
                 className="mb-1 text-primary"
                 label="Discount Description"
@@ -204,6 +223,7 @@ function AddDiscountModal() {
                   onChange={(e) => setDiscountDescription(e.target.value)}
                 />
               </FloatingLabel>
+              {/* Input for start date */}
               <FloatingLabel className="mb-1 text-primary" label="Start Date">
                 <Form.Control
                   type="date"
@@ -213,6 +233,7 @@ function AddDiscountModal() {
                   onChange={(e) => setStartDate(e.target.value)}
                 />
               </FloatingLabel>
+              {/* Input for expiration date */}
               <FloatingLabel
                 className="mb-1 text-primary"
                 label="Expiration Date"
@@ -225,6 +246,7 @@ function AddDiscountModal() {
                   onChange={(e) => setExpDate(e.target.value)}
                 />
               </FloatingLabel>
+              {/* Input for discount usage */}
               <FloatingLabel
                 className="mb-1 text-primary"
                 label="Discount Usage"
@@ -238,9 +260,11 @@ function AddDiscountModal() {
                   onChange={(e) => setDiscountUsage(e.target.value)}
                 />
               </FloatingLabel>
+              {/* Message if user didn't select a category */}
               {!categorySelected && submitCheck && (
                 <p>Please select a category!</p>
               )}
+              {/* Display the currently selected category */}
               {categorySelected && (
                 <div>
                   <h5 className="text-center w-100 mt-1">
@@ -257,6 +281,7 @@ function AddDiscountModal() {
                   </h5>
                 </div>
               )}
+              {/* Dropdown list to select a category */}
               <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
                 <Dropdown.Toggle className="w-100">
                   Select Category
@@ -271,6 +296,7 @@ function AddDiscountModal() {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+              {/* Buttons to select local or regional discount */}
               <ButtonGroup className="my-3">
                 <ToggleButton
                   className="col-6"
@@ -293,6 +319,7 @@ function AddDiscountModal() {
                   Regional
                 </ToggleButton>
               </ButtonGroup>
+              {/* Conditional message if the discount is marked regional */}
               {isRegional ? (
                 <small className="text-muted text-center mb-3">
                   Note: Regional discounts do not apply to specific vendor
@@ -302,28 +329,10 @@ function AddDiscountModal() {
                   use at all Restaurant-X locations across North Dakota)
                 </small>
               ) : null}
-              {/* {!categorySelected && submitCheck && (
-                <p>Please select a category!</p>
-              )}
-              <Dropdown onSelect={(eventKey) => handleSelectCategory(eventKey)}>
-                <DropdownButton
-                  id="category-select-dropdown"
-                  title="Category"
-                  as={ButtonGroup}
-                  className="w-100"
-                >
-                  {allCategories.map((category) => {
-                    return (
-                      <Dropdown.Item key={category.id} eventKey={category.id}>
-                        {category.name}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </DropdownButton>
-              </Dropdown> */}
             </div>
           </Modal.Body>
           <Modal.Footer>
+            {/* modal buttons to submit or cancel form */}
             <Button variant="primary" type="submit">
               Add Discount
             </Button>
